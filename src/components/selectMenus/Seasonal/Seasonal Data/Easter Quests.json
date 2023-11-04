@@ -1,0 +1,142 @@
+[
+    {
+        "description": "Победите 5 раз на карте Library в Murder Mystery",
+        "id": 1,
+        "req_wins": 5,
+        "code": "MurderMystery.wins_library",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Победите 5 раз на карте Towerfall в Murder Mystery",
+        "id": 2,
+        "req_wins": 5,
+        "code": "MurderMystery.wins_towerfall",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Бросьте 150 яиц в SkyWars",
+        "id": 3,
+        "req_wins": 150,
+        "code": "SkyWars.egg_thrown",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Lucky Blocks",
+        "id": 4,
+        "req_wins": 1,
+        "code": "SkyWars.lab_win_lucky_blocks_lab",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 1 игру в TNT Run",
+        "id": 5,
+        "req_wins": 1,
+        "code": "TNTGames.wins_tntrun",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Сделайте 10 убийств в TNT Wizards, играя за Storm Wizard",
+        "id": 6,
+        "req_wins": 10,
+        "code": "TNTGames.new_stormwizard_kills",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Выиграйте 1 игру в The Bridge Duels Solo",
+        "id": 7,
+        "req_wins": 1,
+        "code": "Duels.bridge_duel_wins",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Забейте 10 голов в The Bridge",
+        "id": 8,
+        "req_wins": 10,
+        "code": "Duels.goals",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Выиграйте 1 игру в Bed Wars",
+        "id": 9,
+        "req_wins": 1,
+        "code": "Bedwars.wins_bedwars",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Сыграйте 3 игры в Build Battle",
+        "id": 10,
+        "req_wins": 3,
+        "code": "BuildBattle.games_played",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Сделайте 25 побед в Murder Mystery",
+        "id": 11,
+        "req_wins": 25,
+        "code": "MurderMystery.wins",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Выиграйте за детектива в Murder Mystery",
+        "id": 12,
+        "req_wins": 1,
+        "code": "MurderMystery.detective_wins",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Выполните любое испытание в Bed Wars",
+        "id": 13,
+        "req_wins": 1,
+        "code": "Bedwars.total_challenges_completed",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Проживите 30 раундов в Pixel Party",
+        "id": 14,
+        "req_wins": 30,
+        "code": "Arcade.pixel_party.rounds_completed",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 1 игру в Pixel Party",
+        "id": 15,
+        "req_wins": 1,
+        "code": "Arcade.pixel_party.wins",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Заработайте 15 звёзд в Party Games",
+        "id": 16,
+        "req_wins": 15,
+        "code": "Arcade.total_stars_party",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 5 игр в SkyWars Duels",
+        "id": 17,
+        "req_wins": 5,
+        "code": "Duels.sw_duel_wins",
+        "reward": "1007718117809606736"
+    },
+    {
+        "description": "Сделайте 30 убийств в SkyWars",
+        "id": 18,
+        "req_wins": 30,
+        "code": "SkyWars.kills",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Выиграйте 3 игры в SkyWars",
+        "id": 19,
+        "req_wins": 3,
+        "code": "SkyWars.wins",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Убейте 10 игроков в The Pit",
+        "id": 20,
+        "req_wins": 10,
+        "code": "Pit.pit_stats_ptl.kills",
+        "reward": "1007718117809606736"
+    }
+]

@@ -1,0 +1,218 @@
+[
+    {
+        "description": "Сделайте 10 побед в Duels",
+        "id": 1,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "Duels.wins",
+                "amount": 10,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Сделайте 5 побед в SkyWars",
+        "id": 2,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "SkyWars.wins",
+                "amount": 5,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Совершите убийство в Murder Mystery при помощи ножа \"Rudolph's Nose\"",
+        "id": 3,
+        "requirements": [
+            {
+                "type": "cosmetic",
+                "code": "MurderMystery.active_knife_skin",
+                "name": "knife_skin_rudolphs_nose",
+                "description": "Экипированный косметический предмет"
+            },
+            {
+                "type": "number",
+                "code": "MurderMystery.kills_as_murderer",
+                "amount": 1,
+                "description": "Количество убийств"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 2
+        },
+        "type": "Unique"
+    },
+    {
+        "description": "Сделайте 3 победы в Bedwars",
+        "id": 4,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "Bedwars.wins_bedwars",
+                "amount": 3,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Сделайте 3 победы в Wool Wars",
+        "id": 5,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "WoolGames.wool_wars.stats.wins",
+                "amount": 3,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Сделайте 3 победы в SkyWars, используя клетку \"Замок из Песка\"",
+        "id": 7,
+        "requirements": [
+            {
+                "type": "cosmetic",
+                "code": "SkyWars.active_cage",
+                "name": "cage_sand_castle",
+                "description": "Экипированный косметический предмет"
+            },
+            {
+                "type": "number",
+                "code": "SkyWars.wins",
+                "amount": 3,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 2
+        },
+        "type": "Unique"
+    },
+    {
+        "description": "Совершите 3 победы в Skywars Solo Normal, используя набор \"Фараон\"",
+        "id": 8,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "SkyWars.wins_kit_basic_solo_pharaoh",
+                "amount": 3,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 2
+        },
+        "type": "Unique"
+    },
+    {
+        "description": "Совершите 2 победы в OP Duel",
+        "id": 9,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "Duels.op_duel_wins",
+                "amount": 2,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Совершите 15 убийств в игре \"Bounty Hunter\"",
+        "id": 10,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "Arcade.kills_oneinthequiver",
+                "amount": 15,
+                "description": "Количество убийств"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Совершите 10 убийств в The Pit",
+        "id": 11,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "Pit.pit_stats_ptl.kills",
+                "amount": 10,
+                "description": "Количество убийств"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    },
+    {
+        "description": "Сделайте 5 побед с испытаниями в SkyWars",
+        "id": 12,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "SkyWars.challenge_wins",
+                "amount": 5,
+                "description": "Количество побед"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 2
+        },
+        "type": "Unique"
+    },
+    {
+        "description": "Убейте 3 жертвы в Murder Mystery Assassins",
+        "id": 13,
+        "requirements": [
+            {
+                "type": "number",
+                "code": "MurderMystery.kills_MURDER_ASSASSINS",
+                "amount": 3,
+                "description": "Количество убийств"
+            }
+        ],
+        "reward": {
+            "roleID": "1104095303054934168",
+            "amount": 1
+        },
+        "type": "Normal"
+    }
+]

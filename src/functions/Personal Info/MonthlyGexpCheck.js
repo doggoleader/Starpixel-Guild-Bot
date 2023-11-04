@@ -1,0 +1,121 @@
+const { User } = require(`../../schemas/userdata`)
+const { Birthday } = require(`../../schemas/birthday`)
+const chalk = require(`chalk`);
+const { EmbedBuilder, ChannelType } = require(`discord.js`)
+const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`);
+const { Guild } = require('../../schemas/guilddata');
+const { Apply } = require('../../schemas/applications');
+const { monthName } = require('../../functions');
+const { checkPlugin } = require("../../functions");
+const plugin = {
+    id: "admin",
+    name: "Административное"
+}
+
+module.exports = (client) => {
+    client.MonthlyGEXPCheck = async () => {
+        try {
+            const guild = await client.guilds.fetch("320193302844669959")
+            if (!await checkPlugin("320193302844669959", plugin.id)) return;
+            const channel = await guild.channels.fetch("1124049794386628721")
+            const userDatas = await User.find();
+            for (const userData of userDatas) {
+                const member = await guild.members.fetch(userData.userid)
+                const thread = await channel.threads.fetch(userData.pers_info.channel)
+                let sort1 = userData.gexp_info.sort((a, b) => {
+                    let splA = a.date.split(`-`)
+                    let splB = b.date.split(`-`)
+                    let yearA = splA[0]
+                    let yearB = splB[0]
+                    return yearB - yearA
+                })
+                let sort2 = sort1.sort((a, b) => {
+                    let splA = a.date.split(`-`)
+                    let splB = b.date.split(`-`)
+                    let monthA = splA[1]
+                    let monthB = splB[1]
+                    return monthB - monthA
+                })
+                let sort = sort2.sort((a, b) => {
+                    let splA = a.date.split(`-`)
+                    let splB = b.date.split(`-`)
+                    let dayA = splA[2]
+                    let dayB = splB[2]
+                    return dayB - dayA
+                })
+                let curDate = new Date()
+                let curMonth = curDate.getMonth() + 1
+                let totalMonths = (curDate.getFullYear() - 1) * 12 + curMonth
+                let n = curDate.getMonth() + 1, m = curDate.getFullYear()
+                let filt = sort.filter(a => {
+                    let spl = a.date.split('-')
+                    let year = spl[0], month = spl[1]
+                    let allMonths = (Number(year) - 1) * 12 + Number(month)
+                    return totalMonths - 3 >= allMonths
+                })
+                for (let i = n - 3; i >= 0; i--) {
+                    if (i > 0) {
+                        let filt2 = filt.filter(s => {
+                            let spl = s.date.split(`-`)
+                            let month = spl[1], year = spl[0]
+                            return month == i && year == m
+                        })
+                        if (filt2.length > 0) {
+                            let monthSum = 0
+
+                            let map = filt2.map(info => {
+                                let dates = info.date.split(`-`)
+                                let day = dates[2], month = dates[1], year = dates[0]
+                                monthSum += info.gexp
+                                return `\`${day}.${month}.${year}\` - \`${info.gexp}\` GEXP`
+                            })
+                            let monthN = await monthName(i);
+                            const embed = new EmbedBuilder()
+                                .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
+                                .setColor(Number(linksInfo.bot_color))
+                                .setAuthor({ name: `Причина: Сохранение GEXP старше 3-х месяцев` })
+                                .setTimestamp(Date.now())
+                                .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
+                                .setDescription(`## Опыт гильдии за ${monthN}, ${m}
+                                
+${map.join(`\n`)}
+
+**Опыта за месяц**: ${monthSum}`)
+                            await thread.send({
+                                embeds: [embed]
+                            })
+                        } else if (filt2.length <= 0) {
+                            i = -1
+                        }
+
+                    } else if (i == 0) {
+                        i = 13
+                        m = m - 1
+                    } else if (i < 0) {
+
+                    }
+
+                }
+                let filt3 = sort.filter(a => {
+                    let spl = a.date.split('-')
+                    let year = spl[0], month = spl[1]
+                    let allMonths = (Number(year) - 1) * 12 + Number(month)
+                    return totalMonths - 3 < allMonths
+                })
+                userData.gexp_info = filt3;
+                userData.save()
+            }
+
+        } catch (e) {
+            const admin = await client.users.fetch(`491343958660874242`)
+            console.log(e)
+            var path = require('path');
+            var scriptName = path.basename(__filename);
+            await admin.send(`Произошла ошибка!`)
+            await admin.send(`=> ${e}.
+**Файл**: ${scriptName}`)
+            await admin.send(`◾`)
+        }
+    }
+}

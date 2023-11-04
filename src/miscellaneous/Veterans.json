@@ -1,0 +1,66 @@
+{
+    "veterans": [
+        {
+            "id": -1,
+            "code": "SkyWars.coins",
+            "name": "НЕТ ЗАДАНИЯ",
+            "req": 999999999,
+            "game": "НЕ АКТИВИРОВАН",
+            "task": "НЕТ ЗАДАНИЯ"
+        },
+        {
+            "id": 1,
+            "code": "SkyWars.wins",
+            "name": "Скайварсер",
+            "req": 20,
+            "game": "SkyWars",
+            "reward": "521248091853291540",
+            "task": "Выиграть 20 раз в SkyWars."
+        },
+        {
+            "id": 2,
+            "code": "MurderMystery.murderer_wins",
+            "name": "Убийца",
+            "req": 1,
+            "game": "Murder Mystery",
+            "reward": "510932601721192458",
+            "task": "Победить в Murder Mystery 1 раз за маньяка."
+        },
+        {
+            "id": 3,
+            "code": "Bedwars.wins_bedwars",
+            "name": "Защитник кровати",
+            "req": 10,
+            "game": "Bed Wars",
+            "reward": "992820494900412456",
+            "task": "Победить в Bed Wars 10 раз."
+        },
+        {
+            "id": 4,
+            "code": "Arcade.pixel_party.wins",
+            "name": "Танцор",
+            "req": 10,
+            "game": "Pixel Party",
+            "reward": "521248091853291540",
+            "task": "Выиграть в Pixel Party 10 раз."
+        },
+        {
+            "id": 5,
+            "code": "Duels.wins",
+            "name": "Это всего лишь разминка",
+            "req": 30,
+            "game": "Duels",
+            "reward": "510932601721192458",
+            "task": "Победить в Duels 30 раз."
+        },
+        {
+            "id": 6,
+            "code": "TNTGames.wins",
+            "name": "Бум!",
+            "req": 10,
+            "game": "TNT Games",
+            "reward": "992820494900412456",
+            "task": "Выиграть в TNT Games 10 раз."
+        }
+    ]
+}

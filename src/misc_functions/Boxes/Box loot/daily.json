@@ -1,0 +1,63 @@
+{
+    "loot": [
+        {
+            "loot_name": "❕ 🎁 МАЛЕНЬКАЯ",
+            "chance": 30,
+            "loot_roleID": "510932601721192458",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить награды."
+        },
+        {
+            "loot_name": "💰 МЕШОЧЕК",
+            "chance": 40,
+            "loot_roleID": "819930814388240385",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить опыт активности."
+        },
+        {
+            "loot_name": "Награды нет.",
+            "chance": 30,
+            "rarity": "Uncommon",
+            "type": "Empty",
+            "loot_description": "Коробка пуста."
+        }
+    ],
+    "rank_exp": [
+        {
+            "rank_amount": 5,
+            "chance": 50
+        },
+        {
+            "rank_amount": 10,
+            "chance": 30
+        },
+        {
+            "rank_amount": 15,
+            "chance": 15
+        },
+        {
+            "rank_amount": 20,
+            "chance": 5
+        }
+    ],
+    "act_exp": [
+        {
+            "act_amount": 20,
+            "chance": 40
+        },
+        {
+            "act_amount": 30,
+            "chance": 40
+        },
+        {
+            "act_amount": 40,
+            "chance": 15
+        },
+        {
+            "act_amount": 50,
+            "chance": 5
+        }
+    ]
+}

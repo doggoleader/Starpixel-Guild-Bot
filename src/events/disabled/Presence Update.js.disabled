@@ -1,0 +1,93 @@
+const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
+const { EmbedBuilder } = require("discord.js");
+
+module.exports = {
+    name: 'presenceUpdate',
+    async execute(oldP, newP) {
+        const member = newP.member
+        const guild = newP.guild
+        if (!oldP) {
+            if (!newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${newP.status}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            } else if (newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${newP.status}\`
+Активность: \`Он находится в ${newP.activities[0].name}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            }
+
+        } else if (oldP) {
+            if (!oldP.activities[0] && !newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${oldP?.status} ➡ ${newP.status}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            } else if (!oldP.activities[0] && newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${oldP?.status} ➡ ${newP.status}\`
+Активность: \`${newP.activities[0].name}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            } else if (oldP.activities[0] && !newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${oldP?.status} ➡ ${newP.status}\`
+Активность: \`Он больше не в ${oldP?.activities[0].name}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            } else if (oldP.activities[0] && newP.activities[0]) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(member.user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setTitle(`Изменён статус`)
+                    .setDescription(`Пользователь ${member} изменил статус
+Статус онлайн: \`${oldP?.status} ➡ ${newP.status}\`
+Активность: \`${oldP?.activities[0].name} ➡ ${newP.activities[0].name}\``)
+
+                await guild.channels.cache.get(ch_list.test).send({
+                    embeds: [embed]
+                })
+            }
+        }
+    }
+}

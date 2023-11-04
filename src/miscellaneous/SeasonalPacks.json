@@ -1,0 +1,296 @@
+{
+    "new_year": {
+        "pack_1": {
+            "price": 150,
+            "name": "Маленький новогодний набор",
+            "emoji": "🎄",
+            "description": "Сезонный набор! **НОВИНКА**",
+            "items": [
+                {
+                    "id": "572124606870192143",
+                    "expire": 0,
+                    "amount": 5,
+                    "stackable": true,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "",
+                    "expire": 0,
+                    "amount": 10,
+                    "stackable": true,
+                    "name": "Снежинки",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.snowflakes",
+                    "multiplier": 1,
+                    "type": "static"
+                }
+            ],
+            "sellable": false
+        },
+        "pack_2": {
+            "price": 250,
+            "name": "Средний новогодний набор",
+            "emoji": "🎄",
+            "description": "Сезонный набор! **НОВИНКА**",
+            "items": [
+                {
+                    "id": "572124606870192143",
+                    "expire": 0,
+                    "amount": 7,
+                    "stackable": true,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "",
+                    "expire": 0,
+                    "amount": 15,
+                    "stackable": true,
+                    "name": "Снежинки",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.snowflakes",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": 1,
+                    "stackable": false,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                }
+            ],
+            "sellable": false
+        },
+        "pack_3": {
+            "price": 400,
+            "name": "Большой новогодний набор",
+            "emoji": "🎄",
+            "description": "Сезонный набор! **НОВИНКА**",
+            "items": [
+                {
+                    "id": "572124606870192143",
+                    "expire": 0,
+                    "amount": 10,
+                    "stackable": true,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "",
+                    "expire": 0,
+                    "amount": 25,
+                    "stackable": true,
+                    "name": "Снежинки",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.snowflakes",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": 1,
+                    "stackable": false,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": true,
+                    "stackable": false,
+                    "name": "Шапка Деда Мороза",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.santa_suit.hat",
+                    "multiplier": 1,
+                    "type": "static"
+                }
+            ],
+            "sellable": false
+        },
+        "pack_4": {
+            "price": 550,
+            "name": "Гигантский новогодний набор",
+            "emoji": "🎄",
+            "description": "Сезонный набор! **НОВИНКА**",
+            "items": [
+                {
+                    "id": "572124606870192143",
+                    "expire": 0,
+                    "amount": 15,
+                    "stackable": true,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "",
+                    "expire": 0,
+                    "amount": 40,
+                    "stackable": true,
+                    "name": "Снежинки",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.snowflakes",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": 1,
+                    "stackable": false,
+                    "name": "",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "",
+                    "multiplier": 1,
+                    "type": "role"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": true,
+                    "stackable": false,
+                    "name": "Шапка Деда Мороза",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.santa_suit.hat",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": true,
+                    "stackable": false,
+                    "name": "Шуба Деда Мороза",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.santa_suit.chest",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": true,
+                    "stackable": false,
+                    "name": "Варежки Деда Мороза",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.santa_suit.gloves",
+                    "multiplier": 1,
+                    "type": "static"
+                },
+                {
+                    "id": "1046475276080648302",
+                    "expire": 0,
+                    "amount": true,
+                    "stackable": false,
+                    "name": "Мешок Деда Мороза",
+                    "value": "",
+                    "values": [
+                        "",
+                        ""
+                    ],
+                    "place": "",
+                    "db_code": "seasonal.new_year.santa_suit.bag",
+                    "multiplier": 1,
+                    "type": "static"
+                }
+            ],
+            "sellable": false
+        }
+    }
+}

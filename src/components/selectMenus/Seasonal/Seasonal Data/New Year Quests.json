@@ -1,0 +1,142 @@
+[
+    {
+        "description": "Победите 3 раза на карте Snowfall в Murder Mystery",
+        "id": 1,
+        "req_wins": 3,
+        "code": "MurderMystery.wins_snowfall",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Победите 3 раза на карте Mountain в Murder Mystery",
+        "id": 2,
+        "req_wins": 3,
+        "code": "MurderMystery.wins_mountain",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Убейте 20 игроков в SkyWars Solo Normal с набором \"Snowman\"",
+        "id": 3,
+        "req_wins": 20,
+        "code": "SkyWars.kills_kit_basic_solo_snowman",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Normal с набором \"Snowman\"",
+        "id": 4,
+        "req_wins": 1,
+        "code": "SkyWars.wins_kit_basic_solo_snowman",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 1 игру в Paintball",
+        "id": 5,
+        "req_wins": 1,
+        "code": "Paintball.wins",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Сделайте 10 убийств в TNT Wizards, играя за Ice Wizard",
+        "id": 6,
+        "req_wins": 10,
+        "code": "TNTGames.new_icewizard_kills",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Выиграйте 5 игр в Grinch Simulator",
+        "id": 7,
+        "req_wins": 5,
+        "code": "Arcade.wins_grinch_simulator_v2",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Украдите 50 подарков в Grinch Simulator",
+        "id": 8,
+        "req_wins": 50,
+        "code": "Arcade.gifts_grinch_simulator_v2",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Выиграйте 1 игру в Bed Wars",
+        "id": 9,
+        "req_wins": 1,
+        "code": "Bedwars.wins_bedwars",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Сыграйте 3 игры в Build Battle",
+        "id": 10,
+        "req_wins": 3,
+        "code": "BuildBattle.games_played",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Сделайте 25 побед в Murder Mystery",
+        "id": 11,
+        "req_wins": 25,
+        "code": "MurderMystery.wins",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Выиграйте за детектива в Murder Mystery",
+        "id": 12,
+        "req_wins": 1,
+        "code": "MurderMystery.detective_wins",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Выполните любое испытание в Bed Wars",
+        "id": 13,
+        "req_wins": 1,
+        "code": "Bedwars.total_challenges_completed",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Проживите 30 раундов в Pixel Party",
+        "id": 14,
+        "req_wins": 30,
+        "code": "Arcade.pixel_party.rounds_completed",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 1 игру в Pixel Party",
+        "id": 15,
+        "req_wins": 1,
+        "code": "Arcade.pixel_party.wins",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Заработайте 15 звёзд в Party Games",
+        "id": 16,
+        "req_wins": 15,
+        "code": "Arcade.total_stars_party",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Выиграйте 5 игр в SkyWars Duels",
+        "id": 17,
+        "req_wins": 5,
+        "code": "Duels.sw_duel_wins",
+        "reward": "925799156679856240"
+    },
+    {
+        "description": "Сделайте 30 убийств в SkyWars",
+        "id": 18,
+        "req_wins": 30,
+        "code": "SkyWars.kills",
+        "reward": "992820494900412456"
+    },
+    {
+        "description": "Выиграйте 3 игры в SkyWars",
+        "id": 19,
+        "req_wins": 3,
+        "code": "SkyWars.wins",
+        "reward": "521248091853291540"
+    },
+    {
+        "description": "Убейте 10 игроков в The Pit",
+        "id": 20,
+        "req_wins": 10,
+        "code": "Pit.pit_stats_ptl.kills",
+        "reward": "925799156679856240"
+    }
+]

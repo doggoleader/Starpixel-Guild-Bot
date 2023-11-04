@@ -1,0 +1,65 @@
+{
+    "loot": [
+        {
+            "loot_name": "❕ 🎁 МАЛЕНЬКАЯ /small",
+            "chance": 30,
+            "loot_roleID": "510932601721192458",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить награды."
+        },
+        {
+            "loot_name": "❕ 🎁 БОЛЬШАЯ /big",
+            "chance": 13,
+            "loot_roleID": "521248091853291540",
+            "rarity": "Rare",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить награды."
+        },
+        {
+            "loot_name": "❕ 🎁 ОГРОМНАЯ /mega",
+            "chance": 1,
+            "loot_roleID": "992820494900412456",
+            "rarity": "Epic",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить награды."
+        },
+        {
+            "loot_name": "❕ 💰 МЕШОЧЕК /bag",
+            "chance": 30,
+            "loot_roleID": "819930814388240385",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Откройте, чтобы получить награды."
+        },
+        {
+            "loot_name": "Награды нет.",
+            "chance": 25,
+            "rarity": "Common",
+            "type": "Empty",
+            "loot_description": "Вы не получаете награду."
+        }
+    ],
+    "act_exp": [
+        {
+        "act_amount": 40,
+        "chance": 40
+        },
+        {
+        "act_amount": 70,
+        "chance": 20
+        },
+        {
+        "act_amount": 100,
+        "chance": 3
+        },
+        {
+        "act_amount": 90,
+        "chance": 7
+        },
+        {
+        "act_amount": 50,
+        "chance": 30
+        }
+    ]
+}

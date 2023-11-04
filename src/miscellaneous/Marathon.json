@@ -1,0 +1,116 @@
+{
+    "ids": [
+        {
+            "id": -1,
+            "code": "SkyClash.coins",
+            "req": 999999999,
+            "stage": 0,
+            "game": "НЕ АКТИВИРОВАН"
+        },
+        {
+            "id": 1,
+            "code": "SkyWars.wins",
+            "req": 10,
+            "stage": 1,
+            "game": "SkyWars"
+        },
+        {
+            "id": 2,
+            "code": "Duels.bridge_duel_wins",
+            "req": 10,
+            "stage": 1,
+            "game": "The Bridge Duels"
+        },
+        {
+            "id": 3,
+            "code": "MurderMystery.wins",
+            "req": 30,
+            "stage": 1,
+            "game": "Murder Mystery"
+        },
+        {
+            "id": 4,
+            "code": "TNTGames.wins_tntrun",
+            "req": 10,
+            "stage": 2,
+            "game": "TNT Run"
+        },
+        {
+            "id": 5,
+            "code": "Bedwars.wins_bedwars",
+            "req": 10,
+            "stage": 2,
+            "game": "Bed Wars"
+        },
+        {
+            "id": 6,
+            "code": "Arcade.pixel_party.wins",
+            "req": 10,
+            "stage": 2,
+            "game": "Pixel Party"
+        },
+        {
+            "id": 7,
+            "code": "VampireZ.human_wins",
+            "req": 10,
+            "stage": 3,
+            "game": "VampireZ"
+        },
+        {
+            "id": 8,
+            "code": "Arcade.wins_simon_says",
+            "req": 10,
+            "stage": 3,
+            "game": "Hypixel Says"
+        },
+        {
+            "id": 9,
+            "code": "BuildBattle.wins",
+            "req": 10,
+            "stage": 3,
+            "game": "Build Battle"
+        },
+        {
+            "id": 10,
+            "code": "WoolGames.wool_wars.stats.wins",
+            "req": 10,
+            "stage": 4,
+            "game": "Wool Wars"
+        },
+        {
+            "id": 11,
+            "code": "Arcade.wins_farm_hunt",
+            "req": 10,
+            "stage": 4,
+            "game": "Farm Hunt"
+        },
+        {
+            "id": 12,
+            "code": "MCGO.game_wins",
+            "req": 10,
+            "stage": 4,
+            "game": "Cops and Crims"
+        },
+        {
+            "id": 13,
+            "code": "Arcade.wins_zombies",
+            "req": 1,
+            "stage": 5,
+            "game": "Zombies"
+        },
+        {
+            "id": 14,
+            "code": "Walls.wins",
+            "req": 1,
+            "stage": 5,
+            "game": "The Walls"
+        },
+        {
+            "id": 15,
+            "code": "Battleground.wins",
+            "req": 1,
+            "stage": 5,
+            "game": "Warlords"
+        }
+    ]
+}

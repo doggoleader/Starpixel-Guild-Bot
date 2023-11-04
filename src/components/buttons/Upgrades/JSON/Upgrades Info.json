@@ -1,0 +1,205 @@
+{
+    "inventory_size": [
+        {
+            "tier": 1,
+            "upgrade": 10,
+            "price": 0
+        },
+        {
+            "tier": 2,
+            "upgrade": 15,
+            "price": 150
+        },
+        {
+            "tier": 3,
+            "upgrade": 20,
+            "price": 250
+        },
+        {
+            "tier": 4,
+            "upgrade": 25,
+            "price": 300
+        },
+        {
+            "tier": 5,
+            "upgrade": 35,
+            "price": 400
+        },
+        {
+            "tier": 6,
+            "upgrade": 50,
+            "price": 500
+        },
+        {
+            "tier": 7,
+            "upgrade": 65,
+            "price": 700
+        },
+        {
+            "tier": 8,
+            "upgrade": 75,
+            "price": 900
+        },
+        {
+            "tier": 9,
+            "upgrade": 90,
+            "price": 1000
+        },
+        {
+            "tier": 10,
+            "upgrade": 100,
+            "price": 1500
+        }
+    ],
+    "max_purchases": [
+        {
+            "tier": 1,
+            "upgrade": 15,
+            "price": 0
+        },
+        {
+            "tier": 2,
+            "upgrade": 20,
+            "price": 100
+        },
+        {
+            "tier": 3,
+            "upgrade": 30,
+            "price": 200
+        },
+        {
+            "tier": 4,
+            "upgrade": 50,
+            "price": 350
+        },
+        {
+            "tier": 5,
+            "upgrade": 75,
+            "price": 500
+        },
+        {
+            "tier": 6,
+            "upgrade": 100,
+            "price": 1000
+        },
+        {
+            "tier": 7,
+            "upgrade": 110,
+            "price": 1200
+        },
+        {
+            "tier": 8,
+            "upgrade": 125,
+            "price": 1350
+        },
+        {
+            "tier": 9,
+            "upgrade": 140,
+            "price": 1500
+        },
+        {
+            "tier": 10,
+            "upgrade": 150,
+            "price": 2000
+        }
+    ],
+    "max_sells": [
+        {
+            "tier": 1,
+            "upgrade": 15,
+            "price": 0
+        },
+        {
+            "tier": 2,
+            "upgrade": 20,
+            "price": 100
+        },
+        {
+            "tier": 3,
+            "upgrade": 30,
+            "price": 200
+        },
+        {
+            "tier": 4,
+            "upgrade": 50,
+            "price": 350
+        },
+        {
+            "tier": 5,
+            "upgrade": 75,
+            "price": 500
+        },
+        {
+            "tier": 6,
+            "upgrade": 100,
+            "price": 1000
+        },
+        {
+            "tier": 7,
+            "upgrade": 110,
+            "price": 1200
+        },
+        {
+            "tier": 8,
+            "upgrade": 125,
+            "price": 1350
+        },
+        {
+            "tier": 9,
+            "upgrade": 140,
+            "price": 1500
+        },
+        {
+            "tier": 10,
+            "upgrade": 150,
+            "price": 2000
+        }
+    ],
+    "bank_account": [
+        {
+            "tier": 1,
+            "upgrades": {
+                "name": "Стартовый",
+                "max_balance": 500,
+                "multiplier": 1.05
+            },
+            "price": 0
+        },
+        {
+            "tier": 2,
+            "upgrades": {
+                "name": "Продвинутый",
+                "max_balance": 1000,
+                "multiplier": 1.1
+            },
+            "price": 1000
+        },
+        {
+            "tier": 3,
+            "upgrades": {
+                "name": "Золотой",
+                "max_balance": 2500,
+                "multiplier": 1.2
+            },
+            "price": 2500
+        },
+        {
+            "tier": 4,
+            "upgrades": {
+                "name": "Алмазный",
+                "max_balance": 5000,
+                "multiplier": 1.4
+            },
+            "price": 5000
+        },
+        {
+            "tier": 5,
+            "upgrades": {
+                "name": "Платиновый",
+                "max_balance": 10000,
+                "multiplier": 1.6
+            },
+            "price": 10000
+        }
+    ]
+}

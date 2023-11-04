@@ -1,0 +1,7 @@
+node_modules/
+Архив/
+.env
+src/files/Database/*
+package-lock.json
+Extra Information
+!src/files/Database/Profile.json

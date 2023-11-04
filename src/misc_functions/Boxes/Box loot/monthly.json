@@ -1,0 +1,110 @@
+{
+    "loot": [
+        {
+            "loot_name": "❕ 🎁 КОРОЛЕВСКАЯ /king",
+            "chance": 10,
+            "loot_roleID": "584673040470769667",
+            "rarity": "Epic",
+            "type": "Box",
+            "loot_description": "Открой, чтобы получить награды."
+        },
+        {
+            "loot_name": "💰 МЕШОЧЕК /bag",
+            "chance": 20,
+            "loot_roleID": "819930814388240385",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Открой, чтобы получить опыт активности."
+        },
+        {
+            "loot_name": "❕ 🎁 БОЛЬШАЯ /big",
+            "chance": 30,
+            "loot_roleID": "521248091853291540",
+            "rarity": "Uncommon",
+            "type": "Box",
+            "loot_description": "Открой, чтобы получить награды."
+        },
+        {
+            "loot_name": "❕ 🎁 СОКРОВИЩА /treasure",
+            "chance": 5,
+            "loot_roleID": "595966177969176579",
+            "rarity": "Legendary",
+            "type": "Box",
+            "loot_description": "Открой, чтобы получить награды."
+        },
+        {
+            "loot_name": "❕ 🎁 МАЛЕНЬКАЯ /small",
+            "chance": 25,
+            "loot_roleID": "510932601721192458",
+            "rarity": "Common",
+            "type": "Box",
+            "loot_description": "Открой, чтобы получить награды."
+        }
+    ],
+    "act_exp": [
+        {
+            "act_amount": 50,
+            "chance": 40
+        },
+        {
+            "act_amount": 70,
+            "chance": 40
+        },
+        {
+            "act_amount": 90,
+            "chance": 15
+        },
+        {
+            "act_amount": 100,
+            "chance": 5
+        }
+    ],
+    "rank_exp": [
+        {
+            "rank_amount": 200,
+            "chance": 30
+        },
+        {
+            "rank_amount": 220,
+            "chance": 26
+        },
+        {
+            "rank_amount": 240,
+            "chance": 20
+        },
+        {
+            "rank_amount": 250,
+            "chance": 16
+        },
+        {
+            "rank_amount": 270,
+            "chance": 13
+        },
+        {
+            "rank_amount": 300,
+            "chance": 10
+        },
+        {
+            "rank_amount": 320,
+            "chance": 8
+        },
+        {
+            "rank_amount": 340,
+            "chance": 5
+        },
+        {
+            "rank_amount": 350,
+            "chance": 1
+        }
+    ],
+    "rumbik": [
+        {
+            "rumb_amount": 30,
+            "chance": 70
+        },
+        {
+            "rumb_amount": 50,
+            "chance": 30
+        }
+    ]
+}

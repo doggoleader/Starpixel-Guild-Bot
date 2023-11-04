@@ -1,0 +1,1926 @@
+[
+    {
+        "price": 25,
+        "name": "oh",
+        "emoji": "🙄",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "566528019208863744",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 25,
+        "name": "army",
+        "emoji": "😌",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571743750049497089",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 25,
+        "name": "getup",
+        "emoji": "😮",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571745411929341962",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 25,
+        "name": "sleep",
+        "emoji": "😴",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571744516894228481",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "hey",
+        "emoji": "🤗",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571757459732168704",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "hmm",
+        "emoji": "🤔",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571757461380399106",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "love",
+        "emoji": "😍",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571757462219128832",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "happy",
+        "emoji": "🙂",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "571757463876141077",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 75,
+        "name": "money",
+        "emoji": "🤑",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "642810527579373588",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 75,
+        "name": "music",
+        "emoji": "😋",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "642393088689700893",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 75,
+        "name": "spider",
+        "emoji": "😠",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "636561006721761301",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 125,
+        "name": "pls",
+        "emoji": "🥺",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "607495941490212885",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 125,
+        "name": "party",
+        "emoji": "🥳",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "694221126494060604",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 125,
+        "name": "cool",
+        "emoji": "😎",
+        "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
+        "items": [
+            {
+                "id": "740241984190545971",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "КАРТИНКА  cake",
+        "emoji": "🍰",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "850079153746346044",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "КАРТИНКА  like",
+        "emoji": "👍",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "850079142413598720",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "КАРТИНКА  banuser",
+        "emoji": "😡",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "850079173149065277",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 50,
+        "name": "КАРТИНКА  heart",
+        "emoji": "🧡",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "642810535737425930",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 100,
+        "name": "КАРТИНКА  miracle",
+        "emoji": "👾",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "642810538518118430",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 100,
+        "name": "КАРТИНКА  snowman",
+        "emoji": "⛄",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "642819600429481997",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 100,
+        "name": "КАРТИНКА  sova",
+        "emoji": "🧡",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "850079134700666890",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КАРТИНКА  dragon",
+        "emoji": "🐉",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "694914077104799764",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА АЛЬФА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660090184499201",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА БЕТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660091677540363",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ГАММА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660093523034112",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ДЕЛЬТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660095259475989",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ЭПСИЛОН",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660095951667217",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ДЗЕТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660097520205824",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ЭТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "572417192755462165",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ТЕТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "595962185641885716",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 10,
+        "name": "ЗВЕЗДА ЙОТА",
+        "emoji": "⭐",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "609082751349686282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 80,
+        "name": "СОЗВЕЗДИЕ ЗАЙЦА",
+        "emoji": "✨",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "531158683883929602",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 80,
+        "name": "СОЗВЕЗДИЕ ОРИОНА",
+        "emoji": "✨",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "531158275400531988",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 80,
+        "name": "СОЗВЕЗДИЕ ЕДИНОРОГА",
+        "emoji": "✨",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660120379293696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 80,
+        "name": "СОЗВЕЗДИЕ МАЛОГО ПСА",
+        "emoji": "✨",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "553660121444515842",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 80,
+        "name": "СОЗВЕЗДИЕ БОЛЬШОГО ПСА",
+        "emoji": "✨",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "931866162508230696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 120,
+        "name": "КОСМИЧЕСКАЯ ПЫЛЬ α",
+        "emoji": "💫",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "609085186738618395",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 120,
+        "name": "КОСМИЧЕСКАЯ ПЫЛЬ β",
+        "emoji": "💫",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "609086542681604142",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 120,
+        "name": "КОСМИЧЕСКАЯ ПЫЛЬ γ",
+        "emoji": "💫",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "781069819838464022",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 120,
+        "name": "КОСМИЧЕСКАЯ ПЫЛЬ δ",
+        "emoji": "💫",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "785252400608182282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 120,
+        "name": "КОСМИЧЕСКАЯ ПЫЛЬ ε",
+        "emoji": "💫",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "781069820053160006",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КОМЕТА БЕННЕТА",
+        "emoji": "☄️",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "784434241613987861",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КОМЕТА ГАЛЛЕЯ",
+        "emoji": "☄️",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "784434242083487826",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КОМЕТА ЛЕКСЕЛЯ",
+        "emoji": "☄️",
+        "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
+        "items": [
+            {
+                "id": "781069818525777940",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 85,
+        "name": "Набор \"Звёзды\"",
+        "emoji": "⭐",
+        "description": "Приобретите все доступные звёзды, чтобы не тратить время на покупку каждой по отдельности.",
+        "items": [
+            {
+                "id": "553660090184499201",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660091677540363",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660093523034112",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660095259475989",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660095951667217",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660097520205824",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "572417192755462165",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "595962185641885716",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "609082751349686282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 380,
+        "name": "Набор \"Созвездия\"",
+        "emoji": "✨",
+        "description": "Приобретите все доступные созвездия, чтобы не тратить время на покупку каждого по отдельности.",
+        "items": [
+            {
+                "id": "531158683883929602",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "531158275400531988",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660120379293696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660121444515842",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "931866162508230696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 575,
+        "name": "Набор \"Космическая пыль\"",
+        "emoji": "💫",
+        "description": "Приобретите всю доступную космическую пыль, чтобы не тратить время на покупку каждой по отдельности.",
+        "items": [
+            {
+                "id": "609085186738618395",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "609086542681604142",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069819838464022",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "785252400608182282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069820053160006",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 420,
+        "name": "Набор \"Кометы\"",
+        "emoji": "☄️",
+        "description": "Приобретите все доступные киметы, чтобы не тратить время на покупку каждой по отдельности.",
+        "items": [
+            {
+                "id": "784434241613987861",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "784434242083487826",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069818525777940",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 1300,
+        "name": "Набор \"Звёздный путь\"",
+        "emoji": "🌌",
+        "description": "Приобретите полный комплект звёзд, созвездий, пыли и комет, чтобы завершить один этап звёздного пути.",
+        "items": [
+            {
+                "id": "553660090184499201",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660091677540363",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660093523034112",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660095259475989",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660095951667217",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660097520205824",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "572417192755462165",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "595962185641885716",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "609082751349686282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "531158683883929602",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "531158275400531988",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660120379293696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "553660121444515842",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "931866162508230696",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "609085186738618395",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "609086542681604142",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069819838464022",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "785252400608182282",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069820053160006",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "784434241613987861",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "784434242083487826",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            },
+            {
+                "id": "781069818525777940",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 2000,
+        "name": "КОЛЬЦО",
+        "emoji": "🦁",
+        "description": "Соберите всю коллекцию, чтобы каждый месяц получать множитель румбиков.",
+        "items": [
+            {
+                "id": "1020400055812886529",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 2000,
+        "name": "БРАСЛЕТ",
+        "emoji": "🦁",
+        "description": "Соберите всю коллекцию, чтобы каждый месяц получать множитель румбиков.",
+        "items": [
+            {
+                "id": "1020400060636344440",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 2300,
+        "name": "ОЖЕРЕЛЬЕ",
+        "emoji": "🦁",
+        "description": "Соберите всю коллекцию, чтобы каждый месяц получать множитель румбиков.",
+        "items": [
+            {
+                "id": "1020400058543374388",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "type": "role"
+            }
+        ],
+        "sellable": false
+    }
+]

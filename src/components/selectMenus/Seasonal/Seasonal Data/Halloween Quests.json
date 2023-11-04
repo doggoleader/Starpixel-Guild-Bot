@@ -1,0 +1,142 @@
+[
+    {
+        "description": "Победите 10 раз на карте Spooky Mansion в Murder Mystery",
+        "id": 1,
+        "req_wins": 10,
+        "code": "MurderMystery.wins_spooky_mansion",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Победите 10 раз на карте Darkfall в Murder Mystery",
+        "id": 2,
+        "req_wins": 10,
+        "code": "MurderMystery.wins_darkfall",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Победите 10 раз на карте Widow's Den в Murder Mystery",
+        "id": 3,
+        "req_wins": 10,
+        "code": "MurderMystery.wins_widow's_den",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Победите 1 раз за человека в VampireZ",
+        "id": 4,
+        "req_wins": 1,
+        "code": "VampireZ.human_wins",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Сделайте 30 убийств за маньяка в Murder Mystery",
+        "id": 5,
+        "req_wins": 30,
+        "code": "MurderMystery.kills_as_murderer",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в Zombies на карте Dead End",
+        "id": 6,
+        "req_wins": 1,
+        "code": "Arcade.wins_zombies_deadend",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в Zombies на карте Bad Blood",
+        "id": 7,
+        "req_wins": 1,
+        "code": "Arcade.wins_zombies_badblood",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 5 игр в Blocking Dead",
+        "id": 8,
+        "req_wins": 5,
+        "code": "Arcade.wins_dayone",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Убейте 200 зомби в Zombies",
+        "id": 9,
+        "req_wins": 200,
+        "code": "Arcade.zombie_kills_zombies",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Убейте 100 зомби в Zombies Dead End",
+        "id": 10,
+        "req_wins": 100,
+        "code": "Arcade.zombie_kills_zombies_deadend",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Убейте 100 зомби в Zombies Bad Blood",
+        "id": 11,
+        "req_wins": 100,
+        "code": "Arcade.zombie_kills_zombies_badblood",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Заразите 30 выживших в Murder Mystery Infection",
+        "id": 12,
+        "req_wins": 30,
+        "code": "MurderMystery.kills_as_infected",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Сделайте 66 убийств в Blocking Dead",
+        "id": 13,
+        "req_wins": 66,
+        "code": "Arcade.kills_dayone",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Normal с набором Batguy",
+        "id": 14,
+        "req_wins": 1,
+        "code": "SkyWars.wins_kit_basic_solo_batguy",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Normal с набором Magician",
+        "id": 15,
+        "req_wins": 1,
+        "code": "SkyWars.wins_kit_advanced_solo_magician",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Insane с набором Batguy",
+        "id": 16,
+        "req_wins": 1,
+        "code": "SkyWars.wins_kit_defending_team_batguy",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Insane с набором Enderman",
+        "id": 17,
+        "req_wins": 1,
+        "code": "SkyWars.wins_kit_attacking_team_enderman",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Соберите 50 конфет в Halloween Simulator",
+        "id": 18,
+        "req_wins": 50,
+        "code": "Arcade.candy_found_halloween_simulator",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Выиграйте 1 игру в Halloween Simulator",
+        "id": 19,
+        "req_wins": 1,
+        "code": "Arcade.wins_halloween_simulator",
+        "reward": "893932177799135253"
+    },
+    {
+        "description": "Заразите 10 игроков в Murder Mystery Infection на карте Hypixel World",
+        "id": 20,
+        "req_wins": 10,
+        "code": "MurderMystery.kills_as_infected_hypixel_world_MURDER_INFECTION",
+        "reward": "893932177799135253"
+    }
+]

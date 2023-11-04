@@ -1,0 +1,543 @@
+[
+    {
+        "type": "normal",
+        "games": [
+            {
+                "name": "Normal SkyWars",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Insane SkyWars",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Speed UHC",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Build Battle Solo",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "SkyWars Lucky Blocks",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Blitz SG Teams",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "PVP Run",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "TNT Run",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Bow Spleef",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Infection",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Hypixel Says",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Mini Walls",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Farm Hunt",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Ender Spleef",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Blitz SG Solo",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Quakecraft",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Guess the Build",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Build Battle Teams",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Paintball",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "VampireZ",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Defusal",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Classic",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Assassins",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Pixel Party Normal",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Pixel Party Hyper",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Throw Out",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Bounty Hunters",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Team Deathmatch",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Gun Game",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Parkour Duels",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Dropper",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            }
+        ]
+    },
+    {
+        "type": "vote",
+        "games": [
+            {
+                "name": "Normal SkyWars",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Insane SkyWars",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Speed UHC",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Build Battle Solo",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "SkyWars Lucky Blocks",
+                "max": 5,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Blitz SG Teams",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "PVP Run",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "TNT Run",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Bow Spleef",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Infection",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Hypixel Says",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Mini Walls",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Farm Hunt",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Ender Spleef",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Blitz SG Solo",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Quakecraft",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Guess the Build",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Build Battle Teams",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Paintball",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "VampireZ",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Defusal",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Classic",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Murder Mystery Assassins",
+                "max": 6,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Pixel Party Normal",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Pixel Party Hyper",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Throw Out",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Bounty Hunters",
+                "max": 3,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Team Deathmatch",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Cops and Crims Gun Game",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Parkour Duels",
+                "max": 1,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Dropper",
+                "max": 2,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            }
+        ]
+    },
+    {
+        "type": "restrictment",
+        "games": [
+            {
+                "name": "Bed Wars",
+                "max": 1,
+                "rest": "Максимум 4 игрока",
+                "rest_num": 4,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Zombies Dead End RIP",
+                "max": 1,
+                "rest": "Максимум 4 игрока",
+                "rest_num": 4,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            },
+            {
+                "name": "Wool Wars",
+                "max": 2,
+                "rest": "Максимум 4 игрока",
+                "rest_num": 4,
+                "specializations": [
+                    
+                ],
+                "chance": 1
+            }            
+        ]
+    }
+]
