@@ -4,4 +4,3 @@ node_modules/
 src/files/Database/*
 package-lock.json
 Extra Information
-!src/files/Database/Profile.json
