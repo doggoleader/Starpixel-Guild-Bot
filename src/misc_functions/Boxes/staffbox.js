@@ -107,12 +107,18 @@ async function StaffBox(interaction, client) {
         }
         let rumb_amount = rumbik[i_rumb].amount * userData.pers_rumb_boost
         //Сообщение - румбики                       
-        interaction.guild.channels.cache.get(ch_list.rumb).send(
+        await interaction.guild.channels.cache.get(ch_list.rumb).send(
             `╔═════════♡════════╗
 ${interaction.member} +${rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из коробки персонала.\`
 ╚═════════♡════════╝`
         );
+        if (userData.rank_number >= 3) {
+            userData.rumbik += rumb_amount
+            userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += rumb_amount
+        } else {
+            userData.rumbik += 0
+        }
         //Список предметов
 
         //рандом предметов

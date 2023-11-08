@@ -24,7 +24,7 @@ module.exports = {
                 ephemeral: true
             })
             const guildData = await Guild.findOne({ id: interaction.guild.id })
-            const shop = require(`./JSON/KG.json`)
+            const shop = require(`../../../jsons/KG.json`)
             let shopForSelMenu = []
             let items = shop.map((item, i) => {
                 pers_price = Math.round(item.price * guildData.global_settings.shop_prices * userData.king_costs)

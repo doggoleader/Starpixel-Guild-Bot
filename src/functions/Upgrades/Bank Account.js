@@ -20,6 +20,7 @@ module.exports = (client) => {
                 const member = await guild.members.fetch(userData.userid)
                 const balance = userData.bank.balance
                 userData.rumbik += Math.floor(userData.bank.balance * userData.bank.multiplier)
+                userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += Math.floor(balance * (userData.bank.multiplier - 1))
                 userData.bank.balance = 0
                 userData.bank.opened = false
                 userData.save()

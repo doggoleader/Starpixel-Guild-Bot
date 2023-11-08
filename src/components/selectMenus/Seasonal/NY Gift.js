@@ -112,7 +112,7 @@ module.exports = {
 
             collector.on('collect', async (i) => {
                 const value = i.values[0]
-                const pack_contents = require(`../../../miscellaneous/SeasonalPacks.json`)
+                const pack_contents = require(`../../../jsons/SeasonalPacks.json`)
                 if (userDataFrom.seasonal.new_year.available_packs[value] <= 0) return i.reply({
                     content: `У вас нет данного набора в наличии!`,
                     ephemeral: true

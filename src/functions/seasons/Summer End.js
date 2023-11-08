@@ -89,17 +89,23 @@ module.exports = (client) => {
                     let member = await g.members.fetch(userData.userid)
                     if (i == 0) {
                         userData.medal_1 += 3
+                        userData.progress.items.find(it => it.name == 'MEDALS_1').total_items += 3
 
                     } else if (i == 1) {
                         userData.medal_2 += 3
+                        userData.progress.items.find(it => it.name == 'MEDALS_2').total_items += 3
                     } else if (i == 2) {
                         userData.medal_2 += 2
+                        userData.progress.items.find(it => it.name == 'MEDALS_2').total_items += 2
                     } else if (i == 3) {
                         userData.medal_3 += 3
+                        userData.progress.items.find(it => it.name == 'MEDALS_3').total_items += 3
                     } else if (i == 4) {
                         userData.medal_3 += 2
+                        userData.progress.items.find(it => it.name == 'MEDALS_3').total_items += 2
                     } else {
                         userData.tickets += 5
+                        userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += 5
                     }
 
                     if (i <= 9) {

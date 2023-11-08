@@ -36,7 +36,7 @@ module.exports = (client) => {
                     let player = await json.guild.members.find(member => member.uuid == userData.uuid)
                     if (!player) console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Произошла ошибка при получении данных пользователя ${userData.uuid} (${userData.nickname})!`))
                     else {
-                        let rewards = require(`./JSON/InGuildRewards.json`)
+                        let rewards = require(`../../jsons/InGuildRewards.json`)
                         for (let reward of rewards) {
                             if (!userData.in_guild_rewards.includes(reward.id)) {
                                 if (Math.round(Date.now() / 1000) >= Math.round((userData.joinedGuild / 1000) + reward.timestamp)) {

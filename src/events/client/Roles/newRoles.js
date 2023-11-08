@@ -6,6 +6,7 @@ const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require("../../../schemas/userdata");
 const { Temp } = require("../../../schemas/temp_items");
 const { checkPlugin } = require("../../../functions");
+const { GuildProgress } = require("../../../misc_functions/Exporter");
 
 module.exports = {
     name: 'guildMemberUpdate',
@@ -77,5 +78,7 @@ module.exports = {
         }
 
         client.StaffPosUpdate(newMember.user.id)
+        let gprog = new GuildProgress(newMember, client)
+        await gprog.getAndUpdateUserPoints();
     }
 }

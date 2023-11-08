@@ -26,6 +26,7 @@ const { API, Upload } = require('vk-io');
 const { SocialVerify } = require('../../schemas/verify');
 let nbt = require('prismarine-nbt');
 let zlib = require('zlib');
+const { GuildProgress, UserProfile } = require('../../misc_functions/Exporter');
 
 module.exports = {
     category: `admin_only`,
@@ -147,7 +148,7 @@ module.exports = {
 
                 console.log(JSON.stringify(data));
             }) */
-
+            
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)

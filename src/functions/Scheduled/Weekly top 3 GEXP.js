@@ -85,14 +85,17 @@ module.exports = (client) => {
                 if (index == 1) {
                     medal = index.toString().replace(1, `🥇`)
                     player.medal_1 += 1
+                    player.progress.items.find(it => it.name == 'MEDALS_1').total_items += 1
                 }
                 if (index == 2) {
                     medal = index.toString().replace(2, `🥈`)
                     player.medal_2 += 1
+                    player.progress.items.find(it => it.name == 'MEDALS_2').total_items += 1
                 }
                 if (index == 3) {
                     medal = index.toString().replace(3, `🥉`)
                     player.medal_3 += 1
+                    player.progress.items.find(it => it.name == 'MEDALS_3').total_items += 1
                 }
                 index++
                 player.save()

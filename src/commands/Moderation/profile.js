@@ -13,6 +13,7 @@ const { calcActLevel, getLevel, rankName, monthName, convertToRoman } = require(
 const linksInfo = require(`../../discord structure/links.json`)
 const fs = require(`fs`)
 const rolesInfo = require(`../../discord structure/roles.json`);
+const { UserProfile, GuildProgress } = require(`../../misc_functions/Exporter`)
 
 module.exports = {
     category: `items`,
@@ -400,17 +401,22 @@ module.exports = {
                             embeds: [embed],
                             components: [buttons]
                         })
+
                         userData.joinedGuild = Date.now()
                         const ch = await interaction.guild.channels.fetch(ch_list.hypixelThread)
                         await ch.send(`/g invite ${playername}`)
                         appData.status = `Принята`
-                        creator.save()
-                        userData.save()
-                        appData.save()
+                        await creator.save()
+                        await userData.save()
+                        await appData.save()
                         client.PersJoinGuild(userData.userid)
                         if (memberDM.user.id !== `491343958660874242`) {
-                            memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
+                            await memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
                         }
+
+                        const progress = new GuildProgress(memberDM, client);
+                        await progress.getAndUpdateUserPoints();
+
 
                         const success = new EmbedBuilder()
                             .setAuthor({
@@ -708,170 +714,354 @@ module.exports = {
                         content: `Вы не можете использовать эту команду в личных сообщениях!`,
                         ephemeral: true
                     })
-                    const user = interaction.member
-                    const no_role = new EmbedBuilder()
-                        .setAuthor({
-                            name: `❗ Отсутствует необходимая роль!`
-                        })
-                        .setDescription(`Вы должны иметь роль \`${interaction.guild.roles.cache.get(`849695880688173087`).name}\` или выше, чтобы использовать это!
-Но вы всё ещё можете использовать команду \`/profile update\``)
-                        .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                        .setColor(`DarkRed`)
-                        .setTimestamp(Date.now())
-                    if (!user.roles.cache.has(`849695880688173087`) && !user.roles.cache.has(`992122876394225814`) && !user.roles.cache.has(`992123014831419472`) && !user.roles.cache.has(`992123019793276961`)) return interaction.reply({
-                        embeds: [no_role],
-                        ephemeral: true
-                    });
-                    const userDataRolesClear = await User.findOneAndUpdate({ userid: user.id }, {
-                        $set: {
-                            roles: []
-                        }
-                    })
-                    userDataRolesClear.save()
-                    const exceptions = [`567689925143822346`, `883617976790700032`, `883617966174896139`, `320880176416161802`, `563793535250464809`, `504887113649750016`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `660236704971489310`, `740241985155366973`, `730891493375475786`, `764198086738051092`, `856866046387683338`, `849533128871641119`, `584811233035681814`, `584811236085071882`, `584811238178029612`, `584811238626689024`, `610131860445724713`, `584811242498293781`, `584811242703552512`, `584811243496275988`, `584811243794202626`, `584811380117471252`, `585175150501036043`, `585175165315579904`, `585175168251592714`, `585175171154051083`, `610133244393816074`, `610133972034387983`, `585175188187119638`, `610131863683465246`, `610131866963673118`, `610131868045672615`, `610132199848804379`, `610132217204572190`, `694914070632988712`, `694914070746234970`, `694914072960958555`, `694914074630422555`, `694914073376194740`, `694914074550468758`, `694914075460894791`, `697796942134116382`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `850336260265476096`, `1017131191771615243`, `1020400007989444678`, `1020400017330163712`, `1020400015300120638`, `1020400022350725122`, `1020400026045915167`, `1020400024397565962`, `1020400030575763587`, `1020400034853957713`, `1020400032651952168`, `1020400043154485278`, `1020400047260696647`, `1020400045251633163`, `1020400055812886529`, `1020400060636344440`, `1020400058543374388`, `1132678509307904210`]
-                    let i = 0
+                    const { member, user, guild } = interaction
 
-                    for (let exception of exceptions) {
+                    const embed = new EmbedBuilder()
+                        .setColor(Number(linksInfo.bot_color))
+                        .setDescription(`# Вы собираетесь сбросить профиль
+Используя данную команду, вы собираетесь начать развитие заново. Существует 2 типа сброса профиля:
+1. **Сбросить и продолжить развитие дальше.** Выбирая данную кнопку, вы продолжите развиваться в дискорде гильдии дальше, получив доступ к новому каналу и возможность получать более крутые награды.
+Нажав на данную кнопку, вы потеряете следующее:
+- Полностью свой опыт участника и ранг
+- Все эмоции
+- Все картинки
+- Все коробки
+- Всех питомцев и стихии
+- Мифические награды
+- Талисманы
+- Звезды, созвездия, кометы
+- Косметические рамки и значки
+- Румбики
+- Билеты
+- Медали
+- Коллекции
+- Собранные звёздные комплекты
+- Перки
+- Временные предметы (кроме подписки VIP)
+- Множители
+- Шансы на редкости
+- Подписки (кроме VIP)
+- Сезонные предметы
 
-                        exception = exceptions[i]
-                        if (user.roles.cache.has(exception)) {
-                            const userDataUpd = await User.findOneAndUpdate({
-                                userid: user.id
-                            }, {
-                                $push: {
-                                    roles: exception
-                                }
-                            })
-                            userDataUpd.save()
+Вы сохраните следующие предметы:
+- Достижения гильдии
+- Опыт активности
+- Подписка VIP (если имеется)
+- Наградные роли
 
-                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.red(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} сохранил роль ${exception}!`))
-                            i++
-                        } else {
-                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.red(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} не имеет роль ${exception}!`))
-                            i++
-                        }
-                    }
+2. **Сбросить и начать развитие с абсолютного нуля.** Выбирая данную кнопку, вы **ПОЛНОСТЬЮ** сотрёте ваше текущее развитие и вам придётся развиваться заного!
+:warning: **Будьте внимательны!** Если вы случайно нажмёте на данную кнопку, вы не сможете вернуть то развитие, которая у вас сейчас! __Подходит для тех игроков, которые уже полностью завершили развитие в гильдии и хотели бы повторить попытку развития!__`)
 
-                    await interaction.guild.members.edit(user, {
-                        roles: [`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
-                    })
-                    const userData = await User.findOne({ userid: user.user.id })
-
-                    userData.rank = 0
-                    userData.rumbik = 0
-
-                    userData.elements.diving = 0
-                    userData.elements.eagle_eye = 0
-                    userData.elements.fast_grow = 0
-                    userData.elements.fire_resistance = 0
-                    userData.elements.flame = 0
-                    userData.elements.flying = 0
-                    userData.elements.lightning = 0
-                    userData.elements.mountains = 0
-                    userData.elements.resistance = 0
-                    userData.elements.respiration = 0
-                    userData.elements.underground = 0
-                    userData.elements.wind = 0
-
-                    userData.displayname.ramka1 = ``
-                    userData.displayname.ramka2 = ``
-                    userData.displayname.suffix = ``
-                    userData.displayname.rank = `🦋`
-                    userData.displayname.symbol = `👤`
-
-                    userData.gexp = 0
-                    userData.tickets = 0
-                    userData.medal_1 = 0
-                    userData.medal_2 = 0
-                    userData.medal_3 = 0
-                    userData.stacked_items = []
-
-                    userData.perks.act_discount = 0
-                    userData.perks.change_items = 0
-                    userData.perks.king_discount = 0
-                    userData.perks.rank_boost = 0
-                    userData.perks.sell_items = 0
-                    userData.perks.store_items = 0
-                    userData.perks.shop_discount = 0
-                    userData.perks.temp_items = 0
-                    userData.perks.ticket_discount = 0
-
-                    userData.bank.account_type = 'Стартовый'
-                    userData.bank.balance = 0
-                    userData.bank.expire = Date.now()
-                    userData.bank.max_balance = 500
-                    userData.bank.multiplier = 1.05
-                    userData.bank.opened = false
-
-                    userData.upgrades.bank_account_tier = 1
-                    userData.upgrades.inventory_size_tier = 1
-                    userData.upgrades.max_purchases_tier = 1
-                    userData.upgrades.max_sells_tier = 1
-                    userData.upgrades.inventory_size = 10
-                    userData.upgrades.max_purchases = 15
-                    userData.upgrades.max_sells = 15
-
-                    userData.rank_number = 0
-                    userData.shop_costs = 1
-                    userData.act_costs = 1
-                    userData.king_costs = 1
-
-                    userData.box_chances.common = 1
-                    userData.box_chances.uncommon = 1
-                    userData.box_chances.rare = 1
-                    userData.box_chances.epic = 1
-                    userData.box_chances.legendary = 1
-                    userData.box_chances.mythical = 1
-                    userData.box_chances.RNG = 1
-
-                    userData.times_reset += 1
-
-                    userData.save()
-
-                    const back_roles = new ActionRowBuilder()
+                    const buttons = new ActionRowBuilder()
                         .addComponents(
                             new ButtonBuilder()
-                                .setCustomId(`back_roles`)
-                                .setEmoji(`⚜`)
-                                .setLabel(`Вернуть сохранённые роли`)
+                                .setCustomId(`reset_some`)
+                                .setLabel(`Сбросить и продолжить развитие дальше`)
                                 .setStyle(ButtonStyle.Primary)
                         )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`reset_everything`)
+                                .setLabel(`Сбросить и начать развитие с абсолютного нуля`)
+                                .setStyle(ButtonStyle.Danger)
+                        )
 
-                    const msg = await interaction.guild.channels.cache.get(ch_list.main).send({
-                        content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
+                    const msg = await interaction.reply({
+                        embeds: [embed],
+                        components: [buttons],
+                        ephemeral: true,
+                        fetchReply: true
+                    })
+
+                    const collector = await msg.createMessageComponentCollector()
+
+                    collector.on(`collect`, async (i) => {
+                        if (i.customId == `reset_some`) {
+                            if (!member.roles.cache.has(`849695880688173087`) && !member.roles.cache.has(`992122876394225814`) && !member.roles.cache.has(`992123014831419472`) && !member.roles.cache.has(`992123019793276961`)) return i.reply({
+                                content: `Вы должны быть владыкой гильдии или выше, чтобы использовать эту кнопку!`,
+                                ephemeral: true
+                            });
+                            await i.deferUpdate()
+                            const userDataRolesClear = await User.findOneAndUpdate({ userid: user.id }, {
+                                $set: {
+                                    roles: []
+                                }
+                            })
+                            userDataRolesClear.save()
+                            const exceptions = [`567689925143822346`, `883617976790700032`, `883617966174896139`, `320880176416161802`, `563793535250464809`, `504887113649750016`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `660236704971489310`, `740241985155366973`, `730891493375475786`, `764198086738051092`, `856866046387683338`, `849533128871641119`, `584811233035681814`, `584811236085071882`, `584811238178029612`, `584811238626689024`, `610131860445724713`, `584811242498293781`, `584811242703552512`, `584811243496275988`, `584811243794202626`, `584811380117471252`, `585175150501036043`, `585175165315579904`, `585175168251592714`, `585175171154051083`, `610133244393816074`, `610133972034387983`, `585175188187119638`, `610131863683465246`, `610131866963673118`, `610131868045672615`, `610132199848804379`, `610132217204572190`, `694914070632988712`, `694914070746234970`, `694914072960958555`, `694914074630422555`, `694914073376194740`, `694914074550468758`, `694914075460894791`, `697796942134116382`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `850336260265476096`, `1017131191771615243`, `1020400007989444678`, `1020400017330163712`, `1020400015300120638`, `1020400022350725122`, `1020400026045915167`, `1020400024397565962`, `1020400030575763587`, `1020400034853957713`, `1020400032651952168`, `1020400043154485278`, `1020400047260696647`, `1020400045251633163`, `1020400055812886529`, `1020400060636344440`, `1020400058543374388`, `1132678509307904210`]
+                            let it = 0
+
+                            for (let exception of exceptions) {
+
+                                exception = exceptions[it]
+                                if (member.roles.cache.has(exception)) {
+                                    const userDataUpd = await User.findOneAndUpdate({
+                                        userid: user.id
+                                    }, {
+                                        $push: {
+                                            roles: exception
+                                        }
+                                    })
+                                    userDataUpd.save()
+                                    it++
+                                } else {
+                                    it++
+                                }
+                            }
+
+                            await member.roles.set([`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`])
+                            const userData = await User.findOne({ userid: user.id })
+
+                            userData.rank = 0
+                            userData.rumbik = 0
+
+                            userData.elements.diving = 0
+                            userData.elements.eagle_eye = 0
+                            userData.elements.fast_grow = 0
+                            userData.elements.fire_resistance = 0
+                            userData.elements.flame = 0
+                            userData.elements.flying = 0
+                            userData.elements.lightning = 0
+                            userData.elements.mountains = 0
+                            userData.elements.resistance = 0
+                            userData.elements.respiration = 0
+                            userData.elements.underground = 0
+                            userData.elements.wind = 0
+
+                            userData.displayname.ramka1 = ``
+                            userData.displayname.ramka2 = ``
+                            userData.displayname.suffix = ``
+                            userData.displayname.rank = `🦋`
+                            userData.displayname.symbol = `👤`
+
+                            userData.gexp = 0
+                            userData.tickets = 0
+                            userData.medal_1 = 0
+                            userData.medal_2 = 0
+                            userData.medal_3 = 0
+                            userData.stacked_items = []
+
+                            userData.perks.act_discount = 0
+                            userData.perks.change_items = 0
+                            userData.perks.king_discount = 0
+                            userData.perks.rank_boost = 0
+                            userData.perks.sell_items = 0
+                            userData.perks.store_items = 0
+                            userData.perks.shop_discount = 0
+                            userData.perks.temp_items = 0
+                            userData.perks.ticket_discount = 0
+
+                            userData.bank.account_type = 'Стартовый'
+                            userData.bank.balance = 0
+                            userData.bank.expire = Date.now()
+                            userData.bank.max_balance = 500
+                            userData.bank.multiplier = 1.05
+                            userData.bank.opened = false
+
+                            userData.upgrades.bank_account_tier = 1
+                            userData.upgrades.inventory_size_tier = 1
+                            userData.upgrades.max_purchases_tier = 1
+                            userData.upgrades.max_sells_tier = 1
+                            userData.upgrades.inventory_size = 10
+                            userData.upgrades.max_purchases = 15
+                            userData.upgrades.max_sells = 15
+
+                            userData.rank_number = 0
+                            userData.shop_costs = 1
+                            userData.act_costs = 1
+                            userData.king_costs = 1
+
+                            userData.box_chances.common = 1
+                            userData.box_chances.uncommon = 1
+                            userData.box_chances.rare = 1
+                            userData.box_chances.epic = 1
+                            userData.box_chances.legendary = 1
+                            userData.box_chances.mythical = 1
+                            userData.box_chances.RNG = 1
+
+                            userData.times_reset += 1
+
+                            userData.save()
+
+                            await i.member.roles.add(userData.roles).catch()
+
+                            const back_roles = new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setCustomId(`back_roles`)
+                                        .setEmoji(`⚜`)
+                                        .setLabel(`Вернуть сохранённые роли`)
+                                        .setStyle(ButtonStyle.Primary)
+                                )
+
+                            const msg2 = await interaction.guild.channels.cache.get(ch_list.main).send({
+                                content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
 
 :tada: ${user} решил сбросить свою статистику и начать развитие в Дискорде гильдии **заново**!           
 Его ждут крутые награды и новые задания. Пожелаем ему удачи!
 
 :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:`,
-                        components: [back_roles]
-                    })
-                    const filter = i => i.customId === 'back_roles';
+                                //components: [back_roles]
+                            })
 
-                    const collector = msg.createMessageComponentCollector({ filter });
-                    collector.on('collect', async (i) => {
-                        if (i.user.id === interaction.member.user.id) {
-                            const roles = userData.roles
-                            await i.member.roles.add(roles).catch()
+                            await interaction.deleteReply();
+                            /* const filter = int => int.customId === 'back_roles';
 
-                            back_roles.components[0].setDisabled(true)
-                            await i.reply({
-                                content: `Вы успешно вернули свои роли!`,
+                            const col = msg2.createMessageComponentCollector({ filter });
+                            col.on('collect', async (int) => {
+                                if (int.user.id === interaction.member.user.id) {
+                                    const roles = userData.roles
+                                    await int.member.roles.add(roles).catch()
+
+                                    back_roles.components[0].setDisabled(true)
+                                    await int.reply({
+                                        content: `Вы успешно вернули свои роли!`,
+                                        ephemeral: true
+                                    })
+                                    console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.username} успешно вернул сохранённые роли!`))
+                                    await msg2.edit({
+                                        components: [back_roles]
+                                    })
+                                    col.stop()
+
+                                } else {
+                                    await int.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                                }
+                            }) */
+                        } else if (i.customId == `reset_everything`) {
+                            if (!member.roles.cache.has(`992123019793276961`)) return i.reply({
+                                content: `Вы должны быть повелителем гильдии или выше, чтобы использовать эту кнопку!`,
                                 ephemeral: true
-                            })
-                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} успешно вернул сохранённые роли!`))
-                            await msg.edit({
-                                components: [back_roles]
-                            })
-                            collector.stop()
+                            });
+                            const but2 = new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setCustomId(`reset_yes`)
+                                        .setLabel(`Да`)
+                                        .setStyle(ButtonStyle.Success)
+                                )
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setCustomId(`reset_no`)
+                                        .setLabel(`Нет`)
+                                        .setStyle(ButtonStyle.Danger)
+                                )
 
-                        } else {
-                            await i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                            const msg2 = await i.reply({
+                                content: `## Вы собираетесь начать развитие в дискорде гильдии с АБСОЛЮТНОГО НУЛЯ!
+Нажимая "Да", вы **ПОЛНОСТЬЮ** сотрёте ваше текущее развитие и вам придётся развиваться заного!
+:warning: **Будьте внимательны!** Если вы случайно нажмёте на данную кнопку, вы не сможете вернуть то развитие, которая у вас сейчас! __Подходит для тех игроков, которые уже полностью завершили развитие в гильдии и хотели бы повторить попытку развития!__
+
+Если вы нажали на эту кнопку по ошибке или передумали полностью сбрасывать профиль, нажмите "Нет"!`,
+                                components: [but2],
+                                ephemeral: true,
+                                fetchReply: true
+                            })
+
+                            const col2 = await msg2.createMessageComponentCollector()
+                            col2.on('collect', async (int) => {
+                                if (int.customId == `reset_yes`) {
+                                    await int.deferReply({ ephemeral: true, fetchReply: true })
+                                    const userData = await User.findOne({ userid: user.id })
+                                    await member.roles.set([`553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`])
+
+                                    let stream = await fs.createWriteStream(`./src/files/Database/Profile.json`)
+                                    let json = JSON.stringify(userData, (_, v) => typeof v === 'bigint' ? v.toString() : v)
+                                    stream.once('open', function (fd) {
+                                        stream.write(json);
+                                        stream.end();
+                                    });
+
+                                    let interactionChannel = await interaction.guild.channels.fetch(`1114239308853936240`)
+                                    let attach = new AttachmentBuilder()
+                                        .setFile(`./src/files/Database/Profile.json`)
+                                        .setName(`Profile.json`)
+
+                                    await interactionChannel.send({
+                                        content: `**Имя пользователя**: \`${userData.displayname.name}\`
+**ID Discord**: \`${userData.userid}\`
+**Никнейм**: \`${userData.nickname}\`
+**UUID**: \`${userData.onlinemode ? userData.uuid : null}\``,
+                                        files: [attach]
+                                    })
+                                    //userData.age = age
+                                    //userData.nickname = json.player.displayname;
+                                    //userData.uuid = json.player.uuid;
+                                    //userData.onlinemode = true;
+                                    //userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
+                                    //userData.name = user.username
+                                    //userData.displayname.name = realname
+                                    //userData.joinedGuild
+                                    const age = userData.age,
+                                        guildid = userData.guildid,
+                                        userid = userData.userid,
+                                        nickname = userData.nickname,
+                                        uuid = userData.uuid,
+                                        onlinemode = userData.onlinemode,
+                                        cd = userData.cooldowns.prof_update,
+                                        name = userData.name,
+                                        displ_name = userData.displayname.name,
+                                        joinedGuild = userData.joinedGuild,
+                                        times_reset = userData.times_reset,
+                                        gexp_info = userData.gexp_info,
+                                        warn_info = userData.warn_info,
+                                        warns_number = userData.warns_number
+
+                                    const newUserData = new User({ userid: userid, guildid: guildid })
+                                    newUserData.age = age
+                                    newUserData.nickname = nickname
+                                    newUserData.uuid = uuid
+                                    newUserData.onlinemode = onlinemode
+                                    newUserData.name = name
+                                    newUserData.displayname.name = displ_name
+                                    newUserData.cooldowns.prof_update = cd
+                                    newUserData.joinedGuild = joinedGuild
+                                    newUserData.gexp_info = gexp_info
+                                    newUserData.warn_info = warn_info
+                                    newUserData.warns_number = warns_number
+                                    newUserData.times_reset = times_reset + 1
+                                    newUserData.save()
+                                    userData.delete()
+
+                                    await int.editReply({
+                                        content: `Вы **полностью** сбросили свой профиль! Ваш никнейм обновится в течение 15 минут!
+                                        
+Ваш старый профиль был сохранён в архиве гильдии. Если вам будет интересно его получить, обратитесь к администратору Дмитрию!`,
+                                        ephemeral: true
+                                    })
+                                    await interaction.guild.channels.cache.get(ch_list.main).send({
+                                        content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
+
+:tada: ${user} решил **ПОЛНОСТЬЮ НАЧАТЬ ЗАНОВО РАЗВИТИЕ В ДИСКОРДЕ!**     @everyone
+Это означает полноценный сброс прогресса и начало развития так, будто игрок только что вступил в гильдию!
+
+:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:`,
+                                        allowedMentions: {
+                                            parse: ["everyone"]
+                                        }
+                                        //components: [back_roles]
+                                    })
+                                    col2.stop()
+                                    collector.stop();
+                                    await i.deleteReply();
+                                    await interaction.deleteReply();
+                                } else if (int.customId == `reset_no`) {
+                                    await int.reply({
+                                        content: `Вы прекратили процесс сброса профиля. Если вы захотите сбросить профиль ещё раз, введите команду \`/profile reset\` ещё раз!`,
+                                        ephemeral: true
+                                    })
+                                    col2.stop()
+                                    collector.stop();
+                                    await i.deleteReply();
+                                    await interaction.deleteReply();
+                                }
+                            })
                         }
                     })
-                    collector.on('end', async (err) => {
 
-                    });
+
+
+
                 }
                     break;
 
@@ -990,12 +1180,12 @@ module.exports = {
                 }
                     break;
                 case `info`: {
-                    await interaction.deferReply({
+                    const msg = await interaction.deferReply({
                         fetchReply: true
                     })
                     let user = interaction.options.getUser(`пользователь`) || interaction.user;
-                    const guild = await client.guilds.fetch(`320193302844669959`)
-                    let intMember = await guild.members.fetch(interaction.user.id)
+                    const guild = interaction.guild
+                    let intMember = interaction.member
                     let member = await guild.members.fetch(user.id)
                     if (user.id !== interaction.user.id) {
                         let targetData = await User.findOne({ userid: user.id })
@@ -1040,20 +1230,9 @@ module.exports = {
                         await interaction.deleteReply()
                         return
                     }
-                    let users = await User.find().then(users => {
-                        return users.filter(async user => await guild.members.fetch(user.userid))
-                    })
-                    let sort1 = users.sort((a, b) => {
-                        return b.exp - a.exp
-                    })
-                    let sorts = sort1.sort((a, b) => {
-                        return b.level - a.level
-                    })
-                    var i = 0
-                    while (sorts[i].userid !== user.id) {
-                        i++
-                    }
-                    let userData = sorts[i]
+
+                    let profile = new UserProfile(member, client)
+                    let userData = await profile.getUserData()
                     if (!userData) {
                         await interaction.editReply({
                             content: `Не удалось найти информацию о данном пользователе!`,
@@ -1063,139 +1242,35 @@ module.exports = {
                         await interaction.deleteReply()
                         return
                     }
-                    let rank = i + 1
-                    let neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
-                    let part1
-                    let part2
-                    if (userData.exp >= 1000) {
-                        part1 = (userData.exp / 1000).toFixed(1) + `k`
-                    } else part1 = userData.exp
-                    if (neededXP >= 1000) {
-                        part2 = (neededXP / 1000).toFixed(1) + `k`
-                    } else part2 = neededXP
-                    let colorRole = await guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : `nn`)
-                    if (!colorRole) colorRole = `Не создана`
 
-
-
-                    const main = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
-                        .setTitle(`Профиль пользователя ${user.username}`)
-                        .setThumbnail(user.displayAvatarURL())
-                        .setTimestamp(Date.now())
-                        .setDescription(
-                            `## Основное
-\`Ранг в гильдии\` - ${rankName(userData.rank_number)}
-\`Румбики\` - ${userData.rumbik}<:Rumbik:883638847056003072>
-\`Опыт рангов\` - ${userData.rank}💠
-\`Посещено совместных игр\` - ${userData.visited_games} игр
-\`Билеты\` - ${userData.tickets}🏷
-\`Опыта гильдии сохранено\` - ${userData.gexp} GEXP
-\`Медаль 🥇\` - ${userData.medal_1} шт.
-\`Медаль 🥈\` - ${userData.medal_2} шт.
-\`Медаль 🥉\` - ${userData.medal_3} шт.
-\`Собрано звёздных комплектов\` - ${userData.starway.current} ✨
-\`Неполученных предметов\` - ${userData.stacked_items.length}
-\`Сброшен профиль\` - ${userData.times_reset} раз`)
+                    let profileData = await profile.getAllProfile();
+                    let options = [];
+                    for (let data of profileData) {
+                        if (data.value == 'main') {
+                            options.push({
+                                label: data.label,
+                                description: data.description,
+                                emoji: data.emoji,
+                                default: true,
+                                value: data.value
+                            })
+                        } else {
+                            options.push({
+                                label: data.label,
+                                description: data.description,
+                                emoji: data.emoji,
+                                default: false,
+                                value: data.value
+                            })
+                        }
+                    }
 
                     const selectMenu = new ActionRowBuilder()
                         .addComponents(
                             new StringSelectMenuBuilder()
                                 .setCustomId(`profilemenu`)
                                 .setPlaceholder(`Выберите меню, которое хотите увидеть`)
-                                .addOptions(
-                                    {
-                                        label: `Основное`,
-                                        description: `Основная информация о вашем профиле`,
-                                        emoji: `📃`,
-                                        default: true,
-                                        value: `main`
-                                    },
-                                    {
-                                        label: `Уровень активности`,
-                                        description: `Информация о вашем уровне активности`,
-                                        emoji: `🌀`,
-                                        default: false,
-                                        value: `act`
-                                    },
-                                    {
-                                        label: `Стихии`,
-                                        description: `Информация о ваших навыках в стихиях`,
-                                        emoji: `🌊`,
-                                        default: false,
-                                        value: `elem`
-                                    },
-                                    {
-                                        label: `Достижения гильдии`,
-                                        description: `Информация о ваших достижениях`,
-                                        emoji: `🏅`,
-                                        default: false,
-                                        value: `achievements`
-                                    },
-                                    {
-                                        label: `Перки`,
-                                        description: `Информация о ваших перках в гильдии`,
-                                        emoji: `📍`,
-                                        default: false,
-                                        value: `perks`
-                                    },
-                                    {
-                                        label: `Улучшения`,
-                                        description: `Информация о ваших улучшениях`,
-                                        emoji: `🔹`,
-                                        default: false,
-                                        value: `upgrades`
-                                    },
-                                    {
-                                        label: `Опыт гильдии`,
-                                        description: `Ваш опыт гильдии за последние 7 дней`,
-                                        emoji: `🔰`,
-                                        default: false,
-                                        value: `gexp`
-                                    },
-                                    {
-                                        label: `Квесты и марафон`,
-                                        description: `Статистика ваших квестов/заданий/этапов марафона`,
-                                        emoji: `💪`,
-                                        default: false,
-                                        value: `quests`
-                                    },
-                                    {
-                                        label: `Магазины гильдии`,
-                                        description: `Статистика покупок/продаж в магазинах`,
-                                        emoji: `💰`,
-                                        default: false,
-                                        value: `shops`
-                                    },
-                                    {
-                                        label: `Множители`,
-                                        description: `Информация о ваших множителях`,
-                                        emoji: `🔺`,
-                                        default: false,
-                                        value: `boosters`
-                                    },
-                                    {
-                                        label: `Пользовательский цвет`,
-                                        description: `Информация о вашем пользовательском цвете`,
-                                        emoji: `🟣`,
-                                        default: false,
-                                        value: `colors`
-                                    },
-                                    {
-                                        label: `Шансы на редкости`,
-                                        description: `Ваши шансы на определённую редкость в коробках`,
-                                        emoji: `🎱`,
-                                        default: false,
-                                        value: `chances`
-                                    },
-                                    {
-                                        label: `Об участнике`,
-                                        description: `Основная информация об участнике гильдии`,
-                                        emoji: `❔`,
-                                        default: false,
-                                        value: `about`
-                                    },
-                                )
+                                .addOptions(options)
                         )
 
                     const userMenu = new ActionRowBuilder()
@@ -1207,8 +1282,8 @@ module.exports = {
                         )
 
 
-
-                    const msg = await interaction.editReply({
+                    let main = await profileData.find(pf => pf.value == `main`).embed
+                    await interaction.editReply({
                         embeds: [main],
                         components: [selectMenu, userMenu],
                         fetchReply: true
@@ -1217,795 +1292,146 @@ module.exports = {
                     const collector = msg.createMessageComponentCollector()
 
                     collector.on(`collect`, async (i) => {
-                        if (i.customId == `profilemenu`) {
+                        if (i.customId == `progress_info`) {
+                            const msg3 = await i.deferReply({ fetchReply: true, ephemeral: true })
+                            let progressData = await profile.getProgressInformation()
+                            const but = new ActionRowBuilder()
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setLabel(`Общая информация`)
+                                        .setStyle(ButtonStyle.Success)
+                                        .setDisabled(true)
+                                        .setCustomId(`progress_general`)
+                                )
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setLabel(`Неполученные роли`)
+                                        .setStyle(ButtonStyle.Primary)
+                                        .setDisabled(false)
+                                        .setCustomId(`progress_roles`)
+                                )
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setLabel(`Незаконченные умения`)
+                                        .setStyle(ButtonStyle.Primary)
+                                        .setDisabled(false)
+                                        .setCustomId(`progress_perks`)
+                                )
+                                .addComponents(
+                                    new ButtonBuilder()
+                                        .setLabel(`Незаконченные улучшения`)
+                                        .setStyle(ButtonStyle.Primary)
+                                        .setDisabled(false)
+                                        .setCustomId(`progress_upgrades`)
+                                )
+                            await i.editReply({
+                                embeds: [progressData[0]],
+                                components: [but],
+                                ephemeral: true
+                            })
+
+                            const col2 = await msg3.createMessageComponentCollector()
+                            col2.on('collect', async (int) => {
+                                await but.components.forEach(comp => {
+                                    if (comp.data.custom_id == int.customId) {
+                                        comp.setDisabled(true)
+                                        comp.setStyle(ButtonStyle.Success)
+                                    } else {
+                                        comp.setDisabled(false)
+                                        comp.setStyle(ButtonStyle.Primary)
+                                    }
+                                })
+
+                                if (int.customId == 'progress_general') {
+                                    await int.update({
+                                        embeds: [progressData[0]],
+                                        components: [but],
+                                        fetchReply: true,
+                                        ephemeral: true
+                                    })
+                                } else if (int.customId == `progress_roles`) {
+                                    await int.update({
+                                        embeds: [progressData[1]],
+                                        components: [but],
+                                        fetchReply: true,
+                                        ephemeral: true
+                                    })
+                                } else if (int.customId == `progress_perks`) {
+                                    await int.update({
+                                        embeds: [progressData[2]],
+                                        components: [but],
+                                        fetchReply: true,
+                                        ephemeral: true
+                                    })
+                                } else if (int.customId == `progress_upgrades`) {
+                                    await int.update({
+                                        embeds: [progressData[3]],
+                                        components: [but],
+                                        fetchReply: true,
+                                        ephemeral: true
+                                    })
+                                }
+                            })
+                        }
+                        else if (i.customId == `profilemenu`) {
                             const value = i.values[0]
                             if (i.user.id == interaction.user.id) {
-
-                                if (value == `main`) {
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
+                                await selectMenu.components[0].options.forEach(option => {
+                                    if (option.data.value == value) {
+                                        option.data.default = true
+                                    } else option.data.default = false
+                                })
+                                const embed = await profileData.find(pf => pf.value == value).embed
+                                if (value == 'progress') {
+                                    const button = new ActionRowBuilder()
+                                        .addComponents(
+                                            new ButtonBuilder()
+                                                .setCustomId(`progress_info`)
+                                                .setLabel(`Получить дополнительную информацию`)
+                                                .setStyle(ButtonStyle.Primary)
+                                                .setEmoji(`📃`)
+                                        )
                                     await i.update({
-                                        embeds: [main],
-                                        components: [selectMenu, userMenu]
+                                        embeds: [embed],
+                                        components: [button, selectMenu, userMenu]
                                     })
-                                } else if (value == `act`) {
-                                    const act = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Уровень активности
-\`Прогресс\` - ${part1}/${part2}🌀
-\`Уровень\` - ${userData.level}
-\`Всего опыта\` - ${calcActLevel(0, userData.level, userData.exp)}🌀
-\`Позиция\` - #${rank}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
+                                } else {
                                     await i.update({
-                                        embeds: [act],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `elem`) {
-                                    const elem = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Навыки питомцев
-                    
-__**Земля**__
-\`Выращивание горных пород\` - ${userData.elements.mountains}/1
-\`Быстрый рост растений\` - ${userData.elements.fast_grow}/1
-\`Перемещение под землёй\` - ${userData.elements.underground}/1
-
-__**Вода**__
-\`Плавание на глубине\` - ${userData.elements.diving}/1
-\`Сопротивление течениям\` - ${userData.elements.resistance}/1
-\`Подводное дыхание\` - ${userData.elements.respiration}/1
-
-__**Огонь**__
-\`Защита от огня\` - ${userData.elements.fire_resistance}/1
-\`Удар молнии\` - ${userData.elements.lightning}/1
-\`Управление пламенем\` - ${userData.elements.flame}/1
-
-__**Воздух**__
-\`Полёт в небесах\` - ${userData.elements.flying}/1
-\`Повеление ветром\` - ${userData.elements.wind}/1
-\`Орлиный глаз\` - ${userData.elements.eagle_eye}/1`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [elem],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `upgrades`) {
-                                    const upgrades = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Улучшения
-
-**Размер инвентаря**: ${userData.upgrades.inventory_size} (уровень ${convertToRoman(userData.upgrades.inventory_size_tier)})
-**Максимальное количество покупок**: ${userData.upgrades.max_purchases} (уровень ${convertToRoman(userData.upgrades.max_purchases_tier)})
-**Максимальное количество продаж**: ${userData.upgrades.max_sells} (уровень ${convertToRoman(userData.upgrades.max_sells_tier)})
-**Банковский аккаунт**: ${userData.bank.account_type}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [upgrades],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `achievements`) {
-
-                                    let n_unclaimed = []
-
-                                    for (let norm of rolesInfo.achievements_normal) {
-                                        if (!member.roles.cache.has(norm)) {
-                                            n_unclaimed.push(norm)
-                                        }
-                                    }
-
-                                    let m_unclaimed = []
-
-                                    for (let myth of rolesInfo.achievements_myth) {
-                                        if (!member.roles.cache.has(myth)) {
-                                            m_unclaimed.push(myth)
-                                        }
-                                    }
-
-                                    let n_map
-
-
-                                    if (n_unclaimed.length <= 0) {
-                                        n_map = `🎉 Вы выполнили все обычные достижения! Поздравляем! ✨`
-                                    } else {
-                                        n_map = n_unclaimed.map((norm, i) => {
-                                            return `**${++i}.** <@&${norm}>`
-                                        }).join(`\n`)
-                                    }
-                                    let m_map
-                                    if (m_unclaimed.length <= 0) {
-                                        m_map = `🎉 Вы выполнили все мифические достижения! Поздравляем! ✨`
-                                    } else {
-                                        m_map = m_unclaimed.map((myth, i) => {
-                                            return `**${++i}.** <@&${myth}>`
-                                        }).join(`\n`)
-                                    }
-                                    const achievements = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Достижения гильдии
-__**Общая информация**__
-\`Обычные достижения\` - ${userData.achievements.normal}/${rolesInfo.achievements_normal.length}
-\`Мифические достижения\` - ${userData.achievements.mythical}/${rolesInfo.achievements_myth.length}
-
-__**Неполученные достижения**__
-__Обычные достижения__
-${n_map}
-
-__Мифические достижения__
-${m_map}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [achievements],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `perks`) {
-                                    const perks = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Умения
-\`🔺 Повышение опыта рангов\` - ${userData.perks.rank_boost}/6
-\`🔻 Скидка в королевском магазине\` - ${userData.perks.king_discount}/4
-\`🔻 Скидка в магазине активности\` - ${userData.perks.act_discount}/3
-\`🔻 Скидка в обычном магазине гильдии\` - ${userData.perks.shop_discount}/4
-\`🕒 Увеличение времени действия временных предметов\` - ${userData.perks.temp_items}/1
-\`💰 Возможность продавать предметы из профиля\` - ${userData.perks.sell_items}/1
-\`🏷️ Уменьшение опыта гильдии для получения билета\` - ${userData.perks.ticket_discount}/5
-\`✨ Изменение предметов\` - ${userData.perks.change_items}/1
-\`📦 Сохранение дубликатов из коробок в инвентаре\` - ${userData.perks.store_items}/1`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [perks],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `shops`) {
-                                    const shops = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Статистика магазинов гильдии
-\`Куплено предметов\` - ${userData.buys.normal + userData.buys.king + userData.buys.activity} шт.
-\`Куплено предметов в обычном магазине\` - ${userData.buys.normal} шт.
-\`Куплено предметов в королевском магазине\` - ${userData.buys.king} шт.
-\`Куплено предметов в магазине активности\` - ${userData.buys.activity} шт.
-\`Потрачено румбиков\` - ${userData.buys.total_sum} <:Rumbik:883638847056003072>
-\`Потрачено билетов\` - ${userData.buys.total_tickets} 🏷
-
-\`Продано предметов\` - ${userData.sell.other} шт.
-\`Продано предметов на сумму\` - ${userData.sell.total_sum} <:Rumbik:883638847056003072>`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [shops],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `gexp`) {
-                                    await i.deferUpdate()
-                                    let gexp
-                                    if (userData.onlinemode) {
-                                        const response = await fetch(`https://api.hypixel.net/guild?id=5c1902fc77ce84cd430f3959`, {
-                                            headers: {
-                                                "API-Key": api,
-                                                "Content-Type": "application/json"
-                                            }
-                                        })
-                                        let json
-                                        if (response.ok) json = await response.json()
-                                        let gexp_nums
-                                        let sum
-                                        let map
-                                        let player = await json.guild.members.find(member => member.uuid == userData.uuid)
-                                        if (!player) {
-                                            map = `Не удалось найти пользователя в гильдии!`
-                                            sum = 0
-                                        } else {
-                                            gexp_nums = Object.entries(player.expHistory)
-                                            sum = 0
-                                            map = gexp_nums.map(([key, value]) => {
-                                                sum += value
-                                                let sp = key.split(`-`)
-                                                let date = `${sp[2]}.${sp[1]}.${sp[0]}`
-                                                return `• \`${date}\` - ${value} GEXP`
-                                            }).join(`\n`)
-                                        }
-
-
-
-                                        gexp = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
-                                            .setTitle(`Профиль пользователя ${user.username}`)
-                                            .setThumbnail(user.displayAvatarURL())
-                                            .setTimestamp(Date.now())
-                                            .setDescription(`## Опыт гильдии участника
-Никнейм: \`${userData.nickname}\`
-__**Опыт гильдии**__:
-${map}
-
-**Опыта гильдии за последние 7 дней**: ${sum} GEXP`)
-                                    } else {
-                                        gexp = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
-                                            .setTitle(`Профиль пользователя ${user.username}`)
-                                            .setThumbnail(user.displayAvatarURL())
-                                            .setTimestamp(Date.now())
-                                            .setDescription(`## Опыт гильдии участника
-Никнейм: \`${userData.nickname}\`
-__**Опыт гильдии**__:
-\`Аккаунт нелицензирован!\``)
-                                    }
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await interaction.editReply({
-                                        embeds: [gexp],
-                                        components: [selectMenu, userMenu],
-                                        fetchReply: true
-                                    })
-                                } else if (value == `quests`) {
-                                    let total = userData.quests.seasonal.stats.hw.total + userData.quests.seasonal.stats.ny.total + userData.quests.seasonal.stats.ea.total + userData.quests.seasonal.stats.su.total
-                                    const quests = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Квесты и марафоны
-__**Марафон**__
-\`Выполнено стадий\` - ${userData.quests.marathon.stats.total_stages}
-\`Пройдено раз\` - ${userData.quests.marathon.stats.total_mar}
-
-__**Задания для ветеранов**__
-\`Выполнено заданий\` - ${userData.quests.veterans.stats.total}
-
-__**Квесты "Новое начало"**__
-\`Выполнено заданий\` - ${userData.quests.kings.stats.total}/4\\*
-\\*Задание с достижениями не учитывается
-
-__**Задания Марса**__
-\`Выполнено заданий\` - ${userData.quests.mars.stats.total}
-
-__**Сезонное**__
-\`Хэллоуинские квесты\` - ${userData.quests.seasonal.stats.hw.total}
-\`Новогодние квесты\` - ${userData.quests.seasonal.stats.ny.total}
-\`Пасхальные квесты\` - ${userData.quests.seasonal.stats.ea.total}
-\`Летние квесты\` - ${userData.quests.seasonal.stats.su.total}
-__**\`Всего\`**__ - ${total}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [quests],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `boosters`) {
-                                    const boosters = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Множители
-\`Множитель опыта активности\` - ${userData.pers_act_boost}x
-\`Множитель опыта рангов\` - ${userData.pers_rank_boost}x
-\`Множитель румбиков\` - ${userData.pers_rumb_boost}x
-\`Множитель цен товаров в стандартном магазине\` - ${userData.shop_costs}x
-\`Множитель цен товаров в магазине активности\` - ${userData.act_costs}x
-\`Множитель цен товаров в королевском магазине\` - ${userData.king_costs}x`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [boosters],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `colors`) {
-                                    const colors = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Пользовательский цвет
-\`Наличие\` - ${userData.custom_color.created ? `Создан` : `Не создан`}
-\`Цветовой код\` - ${userData.custom_color?.hex ? userData.custom_color?.hex : `Цветовой код отсутствует`}
-\`Имя роли\` - ${userData.custom_color?.custom_name ? userData.custom_color?.custom_name : `ЛИЧНЫЙ ЦВЕТ`} 
-\`Роль\` - ${colorRole}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [colors],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `chances`) {
-                                    const chances = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Шансы на редкости
-\`Обычные предметы\` - ${userData.box_chances.common}x
-\`Необычные предметы\` - ${userData.box_chances.uncommon}x
-\`Редкие предметы\` - ${userData.box_chances.rare}x
-\`Эпические предметы\` - ${userData.box_chances.epic}x
-\`Легендарные предметы\` - ${userData.box_chances.legendary}x
-\`Мифические предметы\` - ${userData.box_chances.mythical}x
-\`Ультраредкие предметы\` - ${userData.box_chances.RNG}x`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [chances],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `about`) {
-                                    const bdata = await Birthday.findOne({ userid: user.id, guildid: guild.id })
-                                    let day
-                                    let month
-                                    if (bdata.day < 10) day = `0${bdata.day}`
-                                    else day = `${bdata.day}`
-
-                                    if (bdata.month == 1) month = `января`
-                                    else if (bdata.month == 2) month = `февраля`
-                                    else if (bdata.month == 3) month = `марта`
-                                    else if (bdata.month == 4) month = `апреля`
-                                    else if (bdata.month == 5) month = `мая`
-                                    else if (bdata.month == 6) month = `июня`
-                                    else if (bdata.month == 7) month = `июля`
-                                    else if (bdata.month == 8) month = `августа`
-                                    else if (bdata.month == 9) month = `сентября`
-                                    else if (bdata.month == 10) month = `октября`
-                                    else if (bdata.month == 11) month = `ноября`
-                                    else if (bdata.month == 12) month = `декабря`
-
-                                    let bday = `${day} ${month} ${bdata.year}`
-                                    let timestamp
-                                    if (userData.onlinemode) {
-                                        const response = await fetch(`https://api.hypixel.net/guild?id=5c1902fc77ce84cd430f3959`, {
-                                            headers: {
-                                                "API-Key": api,
-                                                "Content-Type": "application/json"
-                                            }
-                                        })
-                                        let json
-                                        if (response.ok) json = await response.json()
-
-                                        let timestamp
-                                        let player = await json.guild.members.find(member => member.uuid == userData.uuid)
-                                        if (!player) timestamp = `\`Игрок не найден в гильдии\``
-                                        else timestamp = `<t:${Math.round(userData.joinedGuild / 1000)}:f>`
-                                    } else {
-                                        timestamp = `\`Нелицензированный аккаунт!\``
-                                    }
-
-                                    const about = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Информация об участнике
-\`Имя\` - ${userData.displayname.name}
-\`Возраст\` - ${userData.age} лет
-\`Minecraft Nickname\` - \`${userData.nickname}\`
-\`Дата вступления\` - ${timestamp}
-\`День рождения\` - ${bday}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.update({
-                                        embeds: [about],
+                                        embeds: [embed],
                                         components: [selectMenu, userMenu]
                                     })
                                 }
                             }
                             else if (i.user.id !== interaction.user.id) {
-                                await i.deferReply({ ephemeral: true, fetchReply: true })
-
-                                if (value == `main`) {
+                                const msg2 = await i.deferReply({ ephemeral: true, fetchReply: true })
+                                const embed = await profileData.find(pf => pf.value == value).embed
+                                if (value == 'progress') {
+                                    const button = new ActionRowBuilder()
+                                        .addComponents(
+                                            new ButtonBuilder()
+                                                .setCustomId(`progress_info`)
+                                                .setLabel(`Получить дополнительную информацию`)
+                                                .setStyle(ButtonStyle.Primary)
+                                                .setEmoji(`📃`)
+                                        )
                                     await i.editReply({
-                                        embeds: [main]
+                                        embeds: [embed],
+                                        components: [button]
                                     })
-                                } else if (value == `act`) {
-                                    const act = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Уровень активности
-\`Прогресс\` - ${part1}/${part2}🌀
-\`Уровень\` - ${userData.level}
-\`Всего опыта\` - ${calcActLevel(0, userData.level, userData.exp)}🌀
-\`Позиция\` - #${rank}`)
-                                    await i.editReply({
-                                        embeds: [act]
-                                    })
-                                } else if (value == `elem`) {
-                                    const elem = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Навыки питомцев
-                    
-__**Земля**__
-\`Выращивание горных пород\` - ${userData.elements.mountains}/1
-\`Быстрый рост растений\` - ${userData.elements.fast_grow}/1
-\`Перемещение под землёй\` - ${userData.elements.underground}/1
 
-__**Вода**__
-\`Плавание на глубине\` - ${userData.elements.diving}/1
-\`Сопротивление течениям\` - ${userData.elements.resistance}/1
-\`Подводное дыхание\` - ${userData.elements.respiration}/1
+                                    const col2 = await msg2.createMessageComponentCollector()
 
-__**Огонь**__
-\`Защита от огня\` - ${userData.elements.fire_resistance}/1
-\`Удар молнии\` - ${userData.elements.lightning}/1
-\`Управление пламенем\` - ${userData.elements.flame}/1
+                                    col2.on('collect', async (int) => {
+                                        let progressData = await profile.getProgressInformation()
 
-__**Воздух**__
-\`Полёт в небесах\` - ${userData.elements.flying}/1
-\`Повеление ветром\` - ${userData.elements.wind}/1
-\`Орлиный глаз\` - ${userData.elements.eagle_eye}/1`)
-                                    await i.editReply({
-                                        embeds: [elem]
-                                    })
-                                } else if (value == `upgrades`) {
-                                    const upgrades = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Улучшения
-
-**Размер инвентаря**: ${userData.upgrades.inventory_size} (уровень ${convertToRoman(userData.upgrades.inventory_size_tier)})
-**Максимальное количество покупок**: ${userData.upgrades.max_purchases} (уровень ${convertToRoman(userData.upgrades.max_purchases_tier)})
-**Максимальное количество продаж**: ${userData.upgrades.max_sells} (уровень ${convertToRoman(userData.upgrades.max_sells_tier)})
-**Банковский аккаунт**: ${userData.bank.account_type}`)
-                                    await selectMenu.components[0].options.forEach(option => {
-                                        if (option.data.value == value) {
-                                            option.data.default = true
-                                        } else option.data.default = false
-                                    })
-                                    await i.editReply({
-                                        embeds: [upgrades],
-                                        components: [selectMenu, userMenu]
-                                    })
-                                } else if (value == `perks`) {
-                                    const perks = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Умения
-\`🔺 Повышение опыта рангов\` - ${userData.perks.rank_boost}/6
-\`🔻 Скидка в королевском магазине\` - ${userData.perks.king_discount}/4
-\`🔻 Скидка в магазине активности\` - ${userData.perks.act_discount}/3
-\`🔻 Скидка в обычном магазине гильдии\` - ${userData.perks.shop_discount}/4
-\`🕒 Увеличение времени действия временных предметов\` - ${userData.perks.temp_items}/1
-\`💰 Возможность продавать предметы из профиля\` - ${userData.perks.sell_items}/1
-\`🏷️ Уменьшение опыта гильдии для получения билета\` - ${userData.perks.ticket_discount}/5
-\`✨ Изменение предметов\` - ${userData.perks.change_items}/1
-\`📦 Сохранение дубликатов из коробок в инвентаре\` - ${userData.perks.store_items}/1`)
-                                    await i.editReply({
-                                        embeds: [perks]
-                                    })
-                                } else if (value == `shops`) {
-                                    const shops = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Статистика магазинов гильдии
-\`Куплено предметов\` - ${userData.buys.normal + userData.buys.king + userData.buys.activity} шт.
-\`Куплено предметов в обычном магазине\` - ${userData.buys.normal} шт.
-\`Куплено предметов в королевском магазине\` - ${userData.buys.king} шт.
-\`Куплено предметов в магазине активности\` - ${userData.buys.activity} шт.
-\`Потрачено румбиков\` - ${userData.buys.total_sum} <:Rumbik:883638847056003072>
-\`Потрачено билетов\` - ${userData.buys.total_tickets} 🏷
-
-\`Всего продано предметов\` - ${userData.sell.constellation + userData.sell.comet + userData.sell.other} шт.
-\`Продано созвездий\` - ${userData.sell.constellation} шт.
-\`Продано комет\` - ${userData.sell.comet} шт.
-\`Продано других предметов\` - ${userData.sell.other} шт.
-\`Продано предметов на сумму\` - ${userData.sell.total_sum} <:Rumbik:883638847056003072>`)
-                                    await i.editReply({
-                                        embeds: [shops]
-                                    })
-                                } else if (value == `gexp`) {
-                                    let gexp
-
-                                    if (userData.onlinemode) {
-                                        const response = await fetch(`https://api.hypixel.net/guild?id=5c1902fc77ce84cd430f3959`, {
-                                            headers: {
-                                                "API-Key": api,
-                                                "Content-Type": "application/json"
-                                            }
+                                        await int.reply({
+                                            embeds: [progressData],
+                                            ephemeral: true
                                         })
-                                        let json
-                                        if (response.ok) json = await response.json()
-                                        let gexp_nums
-                                        let sum
-                                        let map
-                                        let player = await json.guild.members.find(member => member.uuid == userData.uuid)
-                                        if (!player) {
-                                            map = `Не удалось найти пользователя в гильдии!`
-                                            sum = 0
-                                        } else {
-                                            gexp_nums = Object.entries(player.expHistory)
-                                            sum = 0
-                                            map = gexp_nums.map(([key, value]) => {
-                                                sum += value
-                                                let sp = key.split(`-`)
-                                                let date = `${sp[2]}.${sp[1]}.${sp[0]}`
-                                                return `• \`${date}\` - ${value} GEXP`
-                                            }).join(`\n`)
-                                        }
-
-
-
-                                        gexp = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
-                                            .setTitle(`Профиль пользователя ${user.username}`)
-                                            .setThumbnail(user.displayAvatarURL())
-                                            .setTimestamp(Date.now())
-                                            .setDescription(`## Опыт гильдии участника
-Никнейм: \`${userData.nickname}\`
-__**Опыт гильдии**__:
-${map}
-
-**Опыта гильдии за последние 7 дней**: ${sum} GEXP`)
-                                    } else {
-                                        gexp = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
-                                            .setTitle(`Профиль пользователя ${user.username}`)
-                                            .setThumbnail(user.displayAvatarURL())
-                                            .setTimestamp(Date.now())
-                                            .setDescription(`## Опыт гильдии участника
-Никнейм: \`${userData.nickname}\`
-__**Опыт гильдии**__:
-\`Нелицензированный аккаунт!\``)
-                                    }
-
-                                    await i.editReply({
-                                        embeds: [gexp]
                                     })
-                                } else if (value == `achievements`) {
-
-                                    let n_unclaimed = []
-
-                                    for (let norm of rolesInfo.achievements_normal) {
-                                        if (!member.roles.cache.has(norm)) {
-                                            n_unclaimed.push(norm)
-                                        }
-                                    }
-
-                                    let m_unclaimed = []
-
-                                    for (let myth of rolesInfo.achievements_myth) {
-                                        if (!member.roles.cache.has(myth)) {
-                                            m_unclaimed.push(myth)
-                                        }
-                                    }
-
-                                    let n_map
-
-
-                                    if (n_unclaimed.length <= 0) {
-                                        n_map = `🎉 Вы выполнили все обычные достижения! Поздравляем! ✨`
-                                    } else {
-                                        n_map = n_unclaimed.map((norm, i) => {
-                                            return `**${++i}.** <@&${norm}>`
-                                        }).join(`\n`)
-                                    }
-                                    let m_map
-                                    if (m_unclaimed.length <= 0) {
-                                        m_map = `🎉 Вы выполнили все мифические достижения! Поздравляем! ✨`
-                                    } else {
-                                        m_map = m_unclaimed.map((myth, i) => {
-                                            return `**${++i}.** <@&${myth}>`
-                                        }).join(`\n`)
-                                    }
-                                    const achievements = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Достижения гильдии
-__**Общая информация**__
-\`Обычные достижения\` - ${userData.achievements.normal}/${rolesInfo.achievements_normal.length}
-\`Мифические достижения\` - ${userData.achievements.mythical}/${rolesInfo.achievements_myth.length}
-
-__**Неполученные достижения**__
-__Обычные достижения__
-${n_map}
-
-__Мифические достижения__
-${m_map}`)
+                                } else {
                                     await i.editReply({
-                                        embeds: [achievements]
-                                    })
-                                } else if (value == `quests`) {
-                                    let total = userData.quests.seasonal.stats.hw.total + userData.quests.seasonal.stats.ny.total + userData.quests.seasonal.stats.ea.total + userData.quests.seasonal.stats.su.total
-                                    const quests = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Квесты и марафоны
-__**Марафон**__
-\`Выполнено стадий\` - ${userData.quests.marathon.stats.total_stages}
-\`Пройдено раз\` - ${userData.quests.marathon.stats.total_mar}
-
-__**Задания для ветеранов**__
-\`Выполнено заданий\` - ${userData.quests.veterans.stats.total}
-
-__**Квесты "Новое начало"**__
-\`Выполнено заданий\` - ${userData.quests.kings.stats.total}/4\\*
-\\*Задание с достижениями не учитывается
-
-__**Задания Марса**__
-\`Выполнено заданий\` - ${userData.quests.mars.stats.total}
-
-__**Сезонное**__
-\`Хэллоуинские квесты\` - ${userData.quests.seasonal.stats.hw.total}
-\`Новогодние квесты\` - ${userData.quests.seasonal.stats.ny.total}
-\`Пасхальные квесты\` - ${userData.quests.seasonal.stats.ea.total}
-\`Летние квесты\` - ${userData.quests.seasonal.stats.su.total}
-__**\`Всего\`**__ - ${total}`)
-                                    await i.editReply({
-                                        embeds: [quests]
-                                    })
-                                } else if (value == `boosters`) {
-                                    const boosters = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Множители
-\`Множитель опыта активности\` - ${userData.pers_act_boost}x
-\`Множитель опыта рангов\` - ${userData.pers_rank_boost}x
-\`Множитель румбиков\` - ${userData.pers_rumb_boost}x
-\`Множитель цен товаров в стандартном магазине\` - ${userData.shop_costs}x
-\`Множитель цен товаров в магазине активности\` - ${userData.act_costs}x
-\`Множитель цен товаров в королевском магазине\` - ${userData.king_costs}x`)
-                                    await i.editReply({
-                                        embeds: [boosters]
-                                    })
-                                } else if (value == `colors`) {
-                                    const colors = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Пользовательский цвет
-\`Наличие\` - ${userData.custom_color.created ? `Создан` : `Не создан`}
-\`Цветовой код\` - ${userData.custom_color?.hex ? userData.custom_color?.hex : `Цветовой код отсутствует`}
-\`Имя роли\` - ${userData.custom_color?.custom_name ? userData.custom_color?.custom_name : `ЛИЧНЫЙ ЦВЕТ`} 
-\`Роль\` - ${colorRole}`)
-                                    await i.editReply({
-                                        embeds: [colors]
-                                    })
-                                } else if (value == `chances`) {
-                                    const chances = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Шансы на редкости
-\`Обычные предметы\` - ${userData.box_chances.common}x
-\`Необычные предметы\` - ${userData.box_chances.uncommon}x
-\`Редкие предметы\` - ${userData.box_chances.rare}x
-\`Эпические предметы\` - ${userData.box_chances.epic}x
-\`Легендарные предметы\` - ${userData.box_chances.legendary}x
-\`Мифические предметы\` - ${userData.box_chances.mythical}x
-\`Ультраредкие предметы\` - ${userData.box_chances.RNG}x`)
-
-                                    await i.editReply({
-                                        embeds: [chances],
-                                    })
-                                } else if (value == `about`) {
-                                    const bdata = await Birthday.findOne({ userid: user.id, guildid: guild.id })
-                                    let day
-                                    let month
-                                    if (bdata.day < 10) day = `0${bdata.day}`
-                                    else day = `${bdata.day}`
-
-                                    if (bdata.month == 1) month = `января`
-                                    else if (bdata.month == 2) month = `февраля`
-                                    else if (bdata.month == 3) month = `марта`
-                                    else if (bdata.month == 4) month = `апреля`
-                                    else if (bdata.month == 5) month = `мая`
-                                    else if (bdata.month == 6) month = `июня`
-                                    else if (bdata.month == 7) month = `июля`
-                                    else if (bdata.month == 8) month = `августа`
-                                    else if (bdata.month == 9) month = `сентября`
-                                    else if (bdata.month == 10) month = `октября`
-                                    else if (bdata.month == 11) month = `ноября`
-                                    else if (bdata.month == 12) month = `декабря`
-
-                                    let bday = `${day} ${month} ${bdata.year}`
-                                    let timestamp
-
-                                    if (userData.onlinemode) {
-                                        const response = await fetch(`https://api.hypixel.net/guild?id=5c1902fc77ce84cd430f3959`, {
-                                            headers: {
-                                                "API-Key": api,
-                                                "Content-Type": "application/json"
-                                            }
-                                        })
-                                        let json
-                                        if (response.ok) json = await response.json()
-
-                                        let player = await json.guild.members.find(member => member.uuid == userData.uuid)
-                                        if (!player) timestamp = `\`Игрок не найден в гильдии\``
-                                        else timestamp = `<t:${Math.round(userData.joinedGuild / 1000)}:f>`
-                                    } else {
-                                        timestamp = `\`Нелицензированный аккаунт!\``
-                                    }
-
-                                    const about = new EmbedBuilder()
-                                        .setColor(Number(linksInfo.bot_color))
-                                        .setTitle(`Профиль пользователя ${user.username}`)
-                                        .setThumbnail(user.displayAvatarURL())
-                                        .setTimestamp(Date.now())
-                                        .setDescription(`## Информация об участнике
-\`Имя\` - ${userData.displayname.name}
-\`Возраст\` - ${userData.age} лет
-\`Minecraft Nickname\` - \`${userData.nickname}\`
-\`Дата вступления\` - ${timestamp}
-\`День рождения\` - ${bday}`)
-
-                                    await i.editReply({
-                                        embeds: [about]
+                                        embeds: [embed]
                                     })
                                 }
                             }
@@ -2030,20 +1456,8 @@ __**\`Всего\`**__ - ${total}`)
                                         }
                                     }
                                 }
-                                users = await User.find().then(users => {
-                                    return users.filter(async user => await guild.members.fetch(user.userid))
-                                })
-                                sort1 = users.sort((a, b) => {
-                                    return b.exp - a.exp
-                                })
-                                sorts = sort1.sort((a, b) => {
-                                    return b.level - a.level
-                                })
-                                let iT = 0
-                                while (sorts[iT].userid !== user.id) {
-                                    iT++
-                                }
-                                userData = sorts[iT]
+                                profile = new UserProfile(member, client)
+                                userData = await profile.getUserData()
                                 if (!userData) {
                                     await i.editReply({
                                         content: `Не удалось найти информацию о данном пользователе!`,
@@ -2051,44 +1465,15 @@ __**\`Всего\`**__ - ${total}`)
                                     })
                                     return
                                 }
-                                await i.deleteReply()
-                                rank = iT + 1
-                                neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
-                                part1
-                                part2
-                                if (userData.exp >= 1000) {
-                                    part1 = (userData.exp / 1000).toFixed(1) + `k`
-                                } else part1 = userData.exp
-                                if (neededXP >= 1000) {
-                                    part2 = (neededXP / 1000).toFixed(1) + `k`
-                                } else part2 = neededXP
-                                colorRole = await guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : `nn`)
-                                if (!colorRole) colorRole = `Не создана`
-                                let def = `main`
-                                main.setColor(Number(linksInfo.bot_color))
-                                    .setTitle(`Профиль пользователя ${user.username}`)
-                                    .setThumbnail(user.displayAvatarURL())
-                                    .setTimestamp(Date.now())
-                                    .setDescription(
-                                        `## Основное
-\`Ранг в гильдии\` - ${rankName(userData.rank_number)}
-\`Румбики\` - ${userData.rumbik}<:Rumbik:883638847056003072>
-\`Опыт рангов\` - ${userData.rank}💠
-\`Посещено совместных игр\` - ${userData.visited_games} игр
-\`Билеты\` - ${userData.tickets}🏷
-\`Опыта гильдии сохранено\` - ${userData.gexp} GEXP
-\`Медаль 🥇\` - ${userData.medal_1} шт.
-\`Медаль 🥈\` - ${userData.medal_2} шт.
-\`Медаль 🥉\` - ${userData.medal_3} шт.
-\`Собрано звёздных комплектов\` - ${userData.starway.current} ✨
-\`Неполученных предметов\` - ${userData.stacked_items.length}
-\`Сброшен профиль\` - ${userData.times_reset} раз`)
 
+                                profileData = await profile.getAllProfile();
+                                main = await profileData.find(pf => pf.value == `main`).embed
                                 await selectMenu.components[0].options.forEach(option => {
-                                    if (option.data.value == def) {
+                                    if (option.data.value == `main`) {
                                         option.data.default = true
                                     } else option.data.default = false
                                 })
+                                await i.deleteReply()
                                 await interaction.editReply({
                                     embeds: [main],
                                     components: [selectMenu, userMenu],
@@ -2113,20 +1498,8 @@ __**\`Всего\`**__ - ${total}`)
                                         }
                                     }
                                 }
-                                let usersT = await User.find().then(users => {
-                                    return users.filter(async user => await guild.members.fetch(userT.userid))
-                                })
-                                let sort1T = usersT.sort((a, b) => {
-                                    return b.exp - a.exp
-                                })
-                                let sortsT = sort1T.sort((a, b) => {
-                                    return b.level - a.level
-                                })
-                                let iT = 0
-                                while (sortsT[iT].userid !== userT.id) {
-                                    iT++
-                                }
-                                let userDataT = sortsT[iT]
+                                let profileT = new UserProfile(memberT, client)
+                                let userDataT = await profileT.getUserData()
                                 if (!userDataT) {
                                     await i.editReply({
                                         content: `Не удалось найти информацию о данном пользователе!`,
@@ -2136,38 +1509,8 @@ __**\`Всего\`**__ - ${total}`)
                                     await i.deleteReply()
                                     return
                                 }
-                                let rankT = iT + 1
-                                let neededXPT = 5 * (Math.pow(userDataT.level, 2)) + (50 * userDataT.level) + 100;
-                                let part1T
-                                let part2T
-                                if (userDataT.exp >= 1000) {
-                                    part1T = (userDataT.exp / 1000).toFixed(1) + `k`
-                                } else part1T = userDataT.exp
-                                if (neededXPT >= 1000) {
-                                    part2T = (neededXPT / 1000).toFixed(1) + `k`
-                                } else part2T = neededXPT
-                                let colorRoleT = await guild.roles.fetch(userDataT.custom_color?.role ? userDataT.custom_color.role : `nn`)
-                                if (!colorRoleT) colorRoleT = `Не создана`
-                                const mainT = new EmbedBuilder()
-                                    .setColor(Number(linksInfo.bot_color))
-                                    .setTitle(`Профиль пользователя ${userT.username}`)
-                                    .setThumbnail(userT.displayAvatarURL())
-                                    .setTimestamp(Date.now())
-                                    .setDescription(
-                                        `## Основное
-\`Ранг в гильдии\` - ${rankName(userDataT.rank_number)}
-\`Румбики\` - ${userDataT.rumbik}<:Rumbik:883638847056003072>
-\`Опыт рангов\` - ${userDataT.rank}💠
-\`Посещено совместных игр\` - ${userDataT.visited_games} игр
-\`Билеты\` - ${userDataT.tickets}🏷
-\`Опыта гильдии сохранено\` - ${userDataT.gexp} GEXP
-\`Медаль 🥇\` - ${userDataT.medal_1} шт.
-\`Медаль 🥈\` - ${userDataT.medal_2} шт.
-\`Медаль 🥉\` - ${userDataT.medal_3} шт.
-\`Собрано звёздных комплектов\` - ${userDataT.starway.current} ✨
-\`Неполученных предметов\` - ${userDataT.stacked_items.length}
-\`Сброшен профиль\` - ${userDataT.times_reset} раз`)
-
+                                let profileDataT = await profileT.getAllProfile();
+                                let mainT = await profileDataT.find(pf => pf.value == `main`).embed
 
                                 await i.editReply({
                                     embeds: [mainT],
@@ -2477,7 +1820,7 @@ ${map.join(`\n`)}
                 }
                     break;
                 case 'settings': {
-                    const { selectmenu, embed } = require(`../../misc_functions/Exporter`)
+                    const { selectmenu, embed, UserProfile } = require(`../../misc_functions/Exporter`)
 
                     await interaction.reply({
                         embeds: [embed],
@@ -2550,14 +1893,14 @@ ${map.join(`\n`)}
                     const profile = await User.findOne({
                         userid: member.user.id
                     })
-                    let stream = await fs.createWriteStream(`./src/commands/Moderation/JSON/profile.json`)
+                    let stream = await fs.createWriteStream(`./src/files/Database/Profile.json`)
                     let json = JSON.stringify(profile, (_, v) => typeof v === 'bigint' ? v.toString() : v)
                     stream.once('open', function (fd) {
                         stream.write(json);
                         stream.end();
                     });
                     let attach = new AttachmentBuilder()
-                        .setFile(`./src/commands/Moderation/JSON/profile.json`)
+                        .setFile(`./src/files/Database/Profile.json`)
                         .setName(`${profile.nickname}.json`)
 
                     try {

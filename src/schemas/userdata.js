@@ -37,8 +37,22 @@ const User = new mongoose.Schema({
     medal_3: { type: Number, default: 0 },
     times_reset: { type: Number, default: 0 },
     tickets: { type: Number, default: 0 },
-    progress_points: { type: Number, default: 0 },
+    progress: {
+        points: { type: Number, default: 0 },
+        items: [
+            {
+                name: { type: String }, //Название части прогресса
+                claimed_items: [String], //Для предметов с массивами
+                max_items: { type: Number }, //Для предметов, требующих постепенный заработок
+                total_items: { type: Number } //Для предметов, требующих подсчет предметов за все время
+            }
+        ]
+    },
 
+    user_roles_backup: {
+        last_updated: { type: Date, default: Date.now() },
+        roles: [String]
+    },
     pers_emoji: { type: Boolean, default: false },
     pers_info: {
         channel: { type: String },

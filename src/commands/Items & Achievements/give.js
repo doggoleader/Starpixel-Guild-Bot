@@ -102,6 +102,7 @@ module.exports = {
                     break;
                 case `Румбики`: {
                     userData.rumbik += interaction.options.getNumber(`количество`)
+                    userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += interaction.options.getNumber(`количество`)
                     userData.save();
                     await interaction.reply({
                         content: `Выдано ${interaction.options.getNumber(`количество`)}<:Rumbik:883638847056003072> пользователю ${user}! У него теперь ${userData.rumbik} румбиков!`,
@@ -115,6 +116,7 @@ module.exports = {
 
                 case `Билеты`: {
                     userData.tickets += interaction.options.getNumber(`количество`)
+                    userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += interaction.options.getNumber(`количество`)
                     userData.save();
                     await interaction.reply({
                         content: `Выдано ${interaction.options.getNumber(`количество`)}🏷 пользователю ${user}! У него теперь ${userData.tickets} билетов!`,

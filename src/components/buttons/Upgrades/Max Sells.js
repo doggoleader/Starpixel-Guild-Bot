@@ -19,7 +19,7 @@ module.exports = {
     async execute(interaction, client) {
         try {
             const userData = await User.findOne({ userid: interaction.user.id })
-            let upgradeInfo = require(`./JSON/Upgrades Info.json`).max_sells
+            let upgradeInfo = require(`../../../jsons/Upgrades Info.json`).max_sells
             let nextTier = upgradeInfo.find(up => up.tier == userData.upgrades.max_sells_tier + 1)            
             if (!nextTier) return interaction.reply({
                 content: `Вы уже полностью улучшили максимальное количество продаж в день!`,

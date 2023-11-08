@@ -24,7 +24,7 @@ module.exports = {
     async execute(interaction, client) {
         try {
             const guildData = await Guild.findOne({ id: interaction.guild.id })
-            
+
             await interaction.message.edit({
                 components: [lb_newyear, stats_newyear, gift_newyear, quests_newyear]
             })
@@ -35,7 +35,7 @@ module.exports = {
             })
             const action = interaction.values[0]
 
-            const quests = require(`./Seasonal Data/New Year Quests.json`)
+            const quests = require(`../../../jsons/New Year Quests.json`)
             let userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
             if (!userData.onlinemode) return interaction.reply({
                 content: `Вы не можете выполнить брать квесты, так как у вас нелицензированный аккаунт!`,
@@ -172,7 +172,7 @@ module.exports = {
                     ephemeral: true
                 })
             } else if (action == `bingo`) {
-                const bingo = require(`../../../miscellaneous/NewYearBingo.json`)
+                const bingo = require(`../../../jsons/NewYearBingo.json`)
                 if (userData.seasonal.new_year.bingo.length <= 0) {
                     userData = await createBingoProfile(userData, "new_year", bingo);
                 }
@@ -910,6 +910,11 @@ async function AddReward(guild, userData, rewards) {
             break;
         case 'static': {
             await changeProperty(userData, rewards.id, await getProperty(userData, rewards.id) + rewards.amount)
+            if (rewards.id == `rumbik`) {
+                userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += rewards.amount
+            } else if (rewards.id == 'tickets') {
+                userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += rewards.amount
+            }
         }
             break;
         case 'pack': {
@@ -929,6 +934,11 @@ async function AddReward(guild, userData, rewards) {
                     }
                 } else if (reward.type == 'static') {
                     await changeProperty(userData, reward.id, await getProperty(userData, reward.id) + reward.amount)
+                    if (reward.id == `rumbik`) {
+                        userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += reward.amount
+                    } else if (reward.id == 'tickets') {
+                        userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += reward.amount
+                    }
                 }
             }
         }

@@ -53,6 +53,7 @@ module.exports = (client) => {
                                         while (userData.gexp >= 50000 - (50000 * 0.10 * userData.perks.ticket_discount)) {
                                             userData.gexp -= 50000 - (50000 * 0.10 * userData.perks.ticket_discount)
                                             userData.tickets += 1
+                                            userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += 1
                                             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Получены билеты]`) + chalk.gray(`: ${member.user.username} получил 1 билет. Теперь у него ${userData.tickets} билетов`))
                                         }
                                     }

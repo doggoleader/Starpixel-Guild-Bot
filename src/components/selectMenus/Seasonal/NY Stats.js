@@ -117,6 +117,7 @@ module.exports = {
 
                 userData.seasonal.new_year.snowflakes -= 50;
                 userData.rumbik += 100;
+                userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += 100
                 userData.save()
 
                 button = new ActionRowBuilder()

@@ -1,0 +1,45 @@
+{
+    "tasks": [
+        {
+            "value_name": "задание 1",
+            "name": "Задание 1",
+            "req": 1000000,
+            "code": "",
+            "task": "Набейте 1.000.000 GXP на Hypixel за неделю.",
+            "type": 2,
+            "id": 1,
+            "reward": "595966177969176579"
+        },
+        {
+            "value_name": "задание 2",
+            "name": "Задание 2",
+            "req": 500,
+            "code": "SkyWars.wins",
+            "task": "Выиграйте в SkyWars 500 раз.",
+            "type": 1,
+            "id": 2,
+            "reward": "595966177969176579"
+        },
+        {
+            "value_name": "задание 3",
+            "name": "Задание 3",
+            "req": 20,
+            "code": "Walls.wins",
+            "task": "Выиграйте в The Walls 20 раз.",
+            "type": 1,
+            "id": 3,
+            "reward": "781069821953441832"
+        },
+        {
+            "value_name": "задание 4",
+            "name": "Задание 4",
+            "req": 300,
+            "code": "Bedwars.wins_bedwars",
+            "task": "Выиграйте в Bed Wars 300 раз.",
+            "type": 1,
+            "id": 4,
+            "reward": "781069821953441832"
+        }
+        
+    ]
+}

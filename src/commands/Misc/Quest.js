@@ -15,10 +15,10 @@ const { gameConstructor, calcActLevel, getLevel, isURL, getRes, getProperty } = 
 const linksInfo = require(`../../discord structure/links.json`)
 const toXLS = require(`json2xls`);
 const { Chart } = require(`chart.js`)
-const quests = require(`../../miscellaneous/Quests.json`)
-const marathon = require(`../../miscellaneous/Marathon.json`)
-const kings = require(`../../miscellaneous/New Start.json`)
-const veterans = require(`../../miscellaneous/Veterans.json`)
+const quests = require(`../../jsons/Quests.json`)
+const marathon = require(`../../jsons/Marathon.json`)
+const kings = require(`../../jsons/New Start.json`)
+const veterans = require(`../../jsons/Veterans.json`)
 const { isOneEmoji } = require(`is-emojis`);
 const { Temp } = require('../../schemas/temp_items');
 
@@ -241,6 +241,9 @@ module.exports = {
                                 }
                             } else if (quest.reward_type == `Static`) {
                                 let prop = await getProperty(userData, quest.reward_code)
+                                if (quest.reward_code == `rumbik`) {
+                                    userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += quest.reward_amount
+                                }
                                 prop += quest.reward_amount
                             }
                             userData.quests.mars.stats.total += 1
