@@ -669,21 +669,6 @@ function convertToRoman(num) {
     return str;
 }
 
-class CheckProgress {
-    constructor() { }
-    checkRoles(member, roleList) {
-        let rolesHave = [], rolesDontHave = []
-        for (let role of roleList) {
-            if (member.roles.cache.has(role)) rolesHave.push(role)
-            else rolesDontHave.push(role)
-        }
-        return [rolesHave, rolesDontHave]
-    }
-
-    async checkStaticItems(member, userData) {
-
-    }
-}
 
 
 /**
@@ -1380,6 +1365,32 @@ async function createBingoProfile(userData, season_id, bingo) {
 
 }
 
+
+function getPerkName(key) {
+    let names = {
+        "rank_boost": "🔺 Повышение опыта рангов",
+        "shop_discount": "🔻 Скидка в королевском магазине",
+        "king_discount": "🔻 Скидка в магазине активности",
+        "act_discount": "🔻 Скидка в обычном магазине гильдии",
+        "temp_items": "🕒 Увеличение времени действия временных предметов",
+        "sell_items": "💰 Возможность продавать предметы из профиля",
+        "ticket_discount": "🏷️ Уменьшение опыта гильдии для получения билета",
+        "change_items": "✨ Изменение предметов",
+        "store_items": "📦 Сохранение дубликатов из коробок в инвентаре",
+    }
+    return names[key]
+}
+
+function getUpgradeName(key) {
+    let names = {
+        "inventory_size_tier": "Размер инвентаря",
+        "max_purchases_tier": "Максимальное количество покупок",
+        "max_sells_tier": "Максимальное количество продаж",
+        "bank_account_tier": "Банковский аккаунт"
+    }
+    return names[key]
+}
+
 module.exports = {
     toOrdinalSuffix,
     suffix,
@@ -1403,9 +1414,10 @@ module.exports = {
     monthName,
     divideOnPages,
     convertToRoman,
-    CheckProgress,
     getApplicationTemplates,
     getPluginName,
     checkPlugin,
-    createBingoProfile
+    createBingoProfile,
+    getPerkName,
+    getUpgradeName
 }

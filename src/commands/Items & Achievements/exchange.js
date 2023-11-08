@@ -62,6 +62,7 @@ module.exports = {
                         userData.medal_1 -= value
                         final = value * 30
                         userData.tickets += final
+                        userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += final
                     } else if (interaction.options.getString(`медаль`) == `Медаль🥈`) {
                         if (userData.medal_2 < value) return interaction.reply({
                             content: `Вы не можете обменять больше медалей, чем у вас имеется! (${userData.medal_2})`,
@@ -71,6 +72,7 @@ module.exports = {
                         userData.medal_2 -= value
                         final = value * 20
                         userData.tickets += final
+                        userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += final
 
                     } else if (interaction.options.getString(`медаль`) == `Медаль🥉`) {
                         if (userData.medal_3 < value) return interaction.reply({
@@ -81,6 +83,7 @@ module.exports = {
                         userData.medal_3 -= value
                         final = value * 10
                         userData.tickets += final
+                        userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += final
                     }
                     userData.save()
                     await interaction.reply({

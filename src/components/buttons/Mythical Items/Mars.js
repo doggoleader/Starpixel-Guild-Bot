@@ -56,7 +56,7 @@ module.exports = {
                 ephemeral: true
             })
 
-            const quests = require(`../../../miscellaneous/Quests.json`)
+            const quests = require(`../../../jsons/Quests.json`)
 
             const quest = quests.mars[Math.floor(Math.random() * quests.mars.length)]
 
@@ -103,10 +103,10 @@ module.exports = {
 :crown: В качестве награды он получит ${quest.reward}!
 💒 Чтобы посмотреть информацию о вашем текущем квесте или закончить его, пропишите команду \`/quests mars\`!
 
-Повторно попросить помощь у Марса можно через 3 месяца!`,
+Повторно попросить помощь у Марса можно через 2 недели!`,
                 ephemeral: true
             })
-            userData.cooldowns.mars = Date.now() + (1000 * 60 * 60 * 24 * 90)
+            userData.cooldowns.mars = Date.now() + (1000 * 60 * 60 * 24 * 14)
             userData.save()
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)

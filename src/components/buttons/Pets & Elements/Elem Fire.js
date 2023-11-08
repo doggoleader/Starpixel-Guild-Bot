@@ -88,6 +88,7 @@ module.exports = {
 :black_medium_small_square:`
                 );
                 userData.rumbik += pet[i_act].name
+                userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += pet[i_act].name
                 userData.cooldowns.fire = Date.now() + (1000 * 60 * 60 * 24 * 7)
                 userData.save()
 

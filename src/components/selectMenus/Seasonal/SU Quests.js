@@ -34,7 +34,7 @@ module.exports = {
             })
             const action = interaction.values[0]
 
-            const quests = require(`./Seasonal Data/Summer Quests.json`)
+            const quests = require(`../../../jsons/Summer Quests.json`)
             const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
             if (!userData.onlinemode) return interaction.reply({
                 content: `Вы не можете выполнить брать квесты, так как у вас нелицензированный аккаунт!`,

@@ -1,7 +1,8 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`);
-const linksInfo = require(`../../discord structure/links.json`)
+const linksInfo = require(`../../discord structure/links.json`);
+const { GuildProgress } = require('../../misc_functions/Exporter');
 
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
         .setDMPermission(false),
     async execute(interaction, client) {
         try {
-            
+
             await interaction.deferReply({
                 fetchReply: true
             })
@@ -95,7 +96,13 @@ module.exports = {
                                 emoji: `🏷`,
                                 default: false
                             },
-
+                            {
+                                label: `Прогресс в гильдии`,
+                                description: `Таблица лидеров по уровню прогресса в гильдии`,
+                                value: `progress`,
+                                emoji: `🌠`,
+                                default: false
+                            },
                         )
                         .setMinValues(1)
                         .setMaxValues(1)
@@ -111,6 +118,11 @@ module.exports = {
             collector.on('collect', async (int) => {
                 const value = int.values[0]
                 if (interaction.user.id === int.user.id) {
+                    await selectMenu.components[0].options.forEach(option => {
+                        if (option.data.value == value) {
+                            option.data.default = true
+                        } else option.data.default = false
+                    })
                     if (value == `act`) {
                         await int.deferUpdate()
                         sort1 = users.sort((a, b) => {
@@ -130,7 +142,7 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
                         embed.setTitle(`Лучшие пользователи по опыту активности`)
@@ -138,44 +150,6 @@ module.exports = {
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: true
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await interaction.editReply({
                             embeds: [embed],
@@ -198,53 +172,16 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по опыту рангов`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
 
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: true
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await interaction.editReply({
                             embeds: [embed],
@@ -267,53 +204,15 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по количеству румбиков`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: true
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await interaction.editReply({
                             embeds: [embed],
@@ -336,7 +235,7 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
 
@@ -345,44 +244,6 @@ module.exports = {
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: true
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await interaction.editReply({
                             embeds: [embed],
@@ -405,53 +266,49 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по количеству билетов`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
 
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: true
-                            },
-                        )
+                        await interaction.editReply({
+                            embeds: [embed],
+                            components: [selectMenu],
+                            fetchReply: true
+                        })
+                    } else if (value == `progress`) {
+                        await int.deferUpdate()
+                        sort = users.sort((a, b) => {
+                            return b.progress.points - a.progress.points
+                        })
+                        const progress = new GuildProgress(i.member, client)
+                        let total = await progress.getMaxPoints();
+                        index = 1
+                        i = 0
+                        map = []
+                        for (let user of sort) {
+                            if (map.length < 10) {
+                                if (user.pers_settings.is_in_leaderboard == true) {
+                                    const tag = await interaction.guild.members.fetch(user.userid)
+                                    let sum = Math.round(1000 * (user.progress.points / total)) / 10
+                                    map.push(`**${index++}.** ${tag} >> ${user.progress.points}/${total} (${sum}% завершено)`)
+                                } else {
+                                    i++
+                                }
+
+                            }
+                        }
+
+                        embed.setTitle(`Лучшие пользователи по уровеню развития в гильдии`)
+                            .setTimestamp(Date.now())
+                            .setDescription(`${map.slice(0, 10).join('\n')}
+                
+\* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
 
                         await interaction.editReply({
                             embeds: [embed],
@@ -479,53 +336,15 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по опыту активности`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: true
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await int.editReply({
                             embeds: [embed]
@@ -546,53 +365,15 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по опыту рангов`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: true
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await int.editReply({
                             embeds: [embed]
@@ -613,53 +394,15 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по количеству румбиков`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: true
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await int.editReply({
                             embeds: [embed]
@@ -680,53 +423,9 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
-                        embed.setTitle(`Лучшие пользователи по количеству посещённых совместных игр`)
-                            .setTimestamp(Date.now())
-                            .setDescription(`${map.slice(0, 10).join('\n')}
-                
-\* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
-
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: true
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: false
-                            },
-                        )
 
                         await int.editReply({
                             embeds: [embed]
@@ -747,56 +446,51 @@ module.exports = {
                                 } else {
                                     i++
                                 }
-            
+
                             }
                         }
-                        
+
                         embed.setTitle(`Лучшие пользователи по количеству билетов`)
                             .setTimestamp(Date.now())
                             .setDescription(`${map.slice(0, 10).join('\n')}
                 
 \* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
 
-                        selectMenu.components[0].setOptions(
-                            {
-                                label: `Опыт активности`,
-                                description: `Таблица лидеров по опыту активности`,
-                                value: `act`,
-                                emoji: `🌀`,
-                                default: false
-                            },
-                            {
-                                label: `Опыт рангов`,
-                                description: `Таблица лидеров по опыту рангов`,
-                                value: `rank`,
-                                emoji: `💠`,
-                                default: false
-                            },
-                            {
-                                label: `Румбики`,
-                                description: `Таблица лидеров по количеству румбиков`,
-                                value: `rumbik`,
-                                emoji: `<:Rumbik:883638847056003072>`,
-                                default: false
-                            },
-                            {
-                                label: `Совместные игры`,
-                                description: `Таблица лидеров по кол-ву посещённых совместных`,
-                                value: `guild_games`,
-                                emoji: `🎲`,
-                                default: false
-                            },
-                            {
-                                label: `Билеты`,
-                                description: `Таблица лидеров по количеству билетов`,
-                                value: `tickets`,
-                                emoji: `🏷`,
-                                default: true
-                            },
-                        )
-
                         await int.editReply({
                             embeds: [embed]
+                        })
+                    } else if (value == `progress`) {
+                        await int.deferUpdate()
+                        sort = users.sort((a, b) => {
+                            return b.progress.points - a.progress.points
+                        })
+                        const progress = new GuildProgress(i.member, client)
+                        let total = await progress.getMaxPoints();
+                        index = 1
+                        i = 0
+                        map = []
+                        for (let user of sort) {
+                            if (map.length < 10) {
+                                if (user.pers_settings.is_in_leaderboard == true) {
+                                    const tag = await interaction.guild.members.fetch(user.userid)
+                                    let sum = Math.round(1000 * (user.progress.points / total)) / 10
+                                    map.push(`**${index++}.** ${tag} >> ${user.progress.points}/${total} (${sum}% завершено)`)
+                                } else {
+                                    i++
+                                }
+
+                            }
+                        }
+
+                        embed.setTitle(`Лучшие пользователи по уровеню развития в гильдии`)
+                            .setTimestamp(Date.now())
+                            .setDescription(`${map.slice(0, 10).join('\n')}
+                
+\* *Исключено из списка ${i} человек(а) из-за их настроек приватности.*`)
+
+                        await int.editReply({
+                            embeds: [embed],
+                            fetchReply: true
                         })
                     }
                 }

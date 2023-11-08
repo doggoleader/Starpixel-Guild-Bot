@@ -29,6 +29,7 @@ module.exports = {
                 ephemeral: true
             })
             userData.rumbik += 60
+            userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += 60
             await userData.seasonal.new_year.adventcalendar.push({
                 num: 25
             })

@@ -19,6 +19,8 @@ const { Weekly } = require(`./Boxes/weekly`)
 const { SeasonalWinner } = require(`./Boxes/SeasonalWinner`)
 const { embed } = require(`./Premade Interactions & Embeds/Profile Settings Embed`)
 const { selectmenu } = require(`./Premade Interactions & Embeds/Profile Settings Menu`)
+const { UserProfile } = require(`./Classes/Profile/Profile`)
+const { GuildProgress } = require(`./Classes/Profile/progress_class`)
 const { lb_newyear, stats_newyear, gift_newyear, quests_newyear, lb_halloween, stats_halloween, quests_halloween, lb_easter, stats_easter, quests_easter, lb_summer,
     stats_summer, quests_summer} = require(`./Premade Interactions & Embeds/Seasonal Main Channels Components`)
 
@@ -58,4 +60,7 @@ module.exports = {
     lb_summer,
     stats_summer,
     quests_summer,
+    
+    GuildProgress,
+    UserProfile
 }

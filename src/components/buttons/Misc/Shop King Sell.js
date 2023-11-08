@@ -28,7 +28,7 @@ module.exports = {
                 ephemeral: true
             })
             const guildData = await Guild.findOne({ id: interaction.guild.id })
-            const shop = require(`./JSON/KG.json`).filter(item => item.sellable == true)
+            const shop = require(`../../../jsons/KG.json`).filter(item => item.sellable == true)
             let shopForSelMenu = []
             if (shop.length <= 0) return interaction.reply({
                 content: `В данном магазине нельзя продать ни один товар.`,
@@ -361,6 +361,7 @@ ${itemsInfo.join(`\n`)}
                         }
 
                         userData.rumbik += price
+                        userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += price
                         userData.sell.other += 1
                         userData.sell.total_sum += price
                         userData.daily.sells += itemsSold

@@ -197,6 +197,7 @@ module.exports = {
                     })
                     const memberData = await User.findOne({ userid: memberAddID })
                     memberData.rumbik += 50
+                    memberData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += 50
                     memberData.save()
                     const ch = await interaction.guild.channels.fetch(ch_list.main)
                     const mmm = await ch.send({

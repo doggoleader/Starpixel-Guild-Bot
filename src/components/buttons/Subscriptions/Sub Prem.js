@@ -248,6 +248,7 @@ ${user} +${rumb_amount}<:Rumbik:883638847056003072>
             );
             if (userData.rank_number >= 3) {
                 userData.rumbik += rumb_amount
+                userData.progress.items.find(it => it.name == 'RUMBIKS_TOTAL').total_items += rumb_amount
             } else {
                 userData.rumbik += 0
             }

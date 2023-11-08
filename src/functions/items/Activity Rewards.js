@@ -1,5 +1,5 @@
 const { User } = require(`../../schemas/userdata`)
-const rewards = require(`./act_rewards.json`)
+const rewards = require(`../../jsons/act_rewards.json`)
 const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`)
 const linksInfo = require(`../../discord structure/links.json`)

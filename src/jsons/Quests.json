@@ -1,0 +1,136 @@
+{
+    "mars": [
+        {
+            "id": 0,
+            "quest": "Победить в Bed Wars 20 раз",
+            "quest_code": "Bedwars.wins_bedwars",
+            "require": 20,
+
+            "reward": "200<:Rumbik:883638847056003072>",
+            "reward_type": "Static",
+            "reward_amount": 200,
+            "reward_code": "rumbik"
+        },
+        {
+            "id": 1,
+            "quest": "Победить в SkyWars 40 раз",
+            "quest_code": "SkyWars.wins",
+            "require": 40,
+
+            "reward": "200<:Rumbik:883638847056003072>",
+            "reward_type": "Static",
+            "reward_amount": 200,
+            "reward_code": "rumbik"
+        },
+        {
+            "id": 2,
+            "quest": "Набить за неделю 300 000 GXP",
+            "quest_code": "",
+            "require": 300000,
+
+            "reward": "5000🌀",
+            "reward_type": "Static",
+            "reward_amount": 5000,
+            "reward_code": "exp"
+        },
+        {
+            "id": 3,
+            "quest": "Победить в TNT Games 20 раз",
+            "quest_code": "TNTGames.wins",
+            "require": 20,
+
+            "reward": "700💠",
+            "reward_type": "Static",
+            "reward_amount": 700,
+            "reward_code": "rank"
+        },
+        {
+            "id": 4,
+            "quest": "Победить в Murder Mystery 70 раз",
+            "quest_code": "MurderMystery.wins",
+            "require": 70,
+
+            "reward": "Подарок судьбы",
+            "reward_type": "Role",
+            "reward_code": "781069821953441832",
+            "reward_amount": 0
+        },
+        {
+            "id": 5,
+            "quest": "Победить в Bed Wars 25 раз",
+            "quest_code": "Bedwars.wins_bedwars",
+            "require": 25,
+
+            "reward": "Подписка VIP на 30 дней",
+            "reward_type": "Role",
+            "reward_code": "850336260265476096",
+            "reward_amount": 2592000000
+        },
+        {
+            "id": 6,
+            "quest": "Убить 250 игроков в SkyWars",
+            "quest_code": "SkyWars.kills",
+            "require": 250,
+
+            "reward": "Сокровище",
+            "reward_type": "Role",
+            "reward_code": "595966177969176579",
+            "reward_amount": 0
+        },
+        {
+            "id": 7,
+            "quest": "Сделать 50 побед в Duels",
+            "quest_code": "Duels.wins",
+            "require": 50,
+
+            "reward": "5000🌀",
+            "reward_type": "Static",
+            "reward_code": "exp",
+            "reward_amount": 5000
+        },
+        {
+            "id": 8,
+            "quest": "Победите в Zombies Dead End 3 раза",
+            "quest_code": "Arcade.wins_zombies_deadend",
+            "require": 3,
+
+            "reward": "Подарок судьбы",
+            "reward_type": "Role",
+            "reward_code": "781069821953441832",
+            "reward_amount": 0
+        },
+        {
+            "id": 9,
+            "quest": "Сделайте 15 побед в TNT Games",
+            "quest_code": "TNTGames.wins",
+            "require": 15,
+
+            "reward": "Сокровище",
+            "reward_type": "Role",
+            "reward_code": "595966177969176579",
+            "reward_amount": 0
+        },
+        {
+            "id": 10,
+            "quest": "Победите в The Walls 4 раза",
+            "quest_code": "Walls.wins",
+            "require": 4,
+
+            "reward": "Подарок судьбы",
+            "reward_type": "Role",
+            "reward_code": "781069821953441832",
+            "reward_amount": 0
+        },
+        {
+            "id": 11,
+            "quest": "Выиграйте 15 раз в Build Battle",
+            "quest_code": "BuildBattle.wins",
+            "require": 15,
+
+            "reward": "1500💠",
+            "reward_type": "Static",
+            "reward_code": "rank",
+            "reward_amount": 1500
+        }
+    ]
+}

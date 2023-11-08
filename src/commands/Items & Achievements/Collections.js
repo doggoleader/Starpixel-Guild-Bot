@@ -238,6 +238,7 @@ module.exports = {
                     let value = values[Math.floor(Math.random() * values.length)]
 
                     userData.tickets += value
+                    userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += value
                     userData.cooldowns.fox = Date.now() + (1000 * 60 * 60 * 24 * 30)
                     userData.save()
                     const embed = new EmbedBuilder()

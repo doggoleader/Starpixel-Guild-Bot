@@ -37,7 +37,7 @@ module.exports = (client) => {
             //Items
             client.rank_update(); //Обновление рангов
             client.updatenicks(); //Изменение никнеймов Discord
-
+            client.ProgressUpdate(); //Обновление информации о прогрессе
 
         }, {
             scheduled: true,
