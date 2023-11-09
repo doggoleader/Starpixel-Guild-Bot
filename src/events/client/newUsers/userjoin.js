@@ -45,6 +45,8 @@ module.exports = {
         guildData.save()
         if (bypass == true) {
             appData.onlinemode = 'no';
+        } else {
+            appData.onlinemode = 'yes';
         }
         await appData.save();
         const embedJoin = new EmbedBuilder()
