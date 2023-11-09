@@ -963,7 +963,25 @@ module.exports = {
                                 if (int.customId == `reset_yes`) {
                                     await int.deferReply({ ephemeral: true, fetchReply: true })
                                     const userData = await User.findOne({ userid: user.id })
-                                    await member.roles.set([`553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`])
+                                    let roles = [`553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
+                                    let toCheck = ["567689925143822346", "883617976790700032", "883617966174896139", "320880176416161802", "563793535250464809", "1133850341285298237", "1059732744218882088", "1017131191771615243", "523559726219526184", "1071833294502645841"]
+                                    for (let role of toCheck) {
+                                        if (member.roles.cache.has(role)) {
+                                            roles.push(role)
+                                        }
+                                    }
+                                    if (member.user.id !== int.guild.ownerId) {
+                                        await member.roles.set(roles)
+                                    } else {
+                                        for (let role of member.roles.cache) {
+                                            role = role[0];
+                                            await member.roles.remove(role)
+                                        }
+
+                                        for (let role of roles) {
+                                            await member.roles.add(role)
+                                        }
+                                    }
 
                                     let stream = await fs.createWriteStream(`./src/files/Database/Profile.json`)
                                     let json = JSON.stringify(userData, (_, v) => typeof v === 'bigint' ? v.toString() : v)
