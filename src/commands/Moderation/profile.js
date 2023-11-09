@@ -808,8 +808,19 @@ module.exports = {
                                     it++
                                 }
                             }
+                            let savedRoles = [`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
+                            if (member.user.id !== i.guild.ownerId) {
+                                await member.roles.set(savedRoles)
+                            } else {
+                                for (let role of member.roles.cache) {
+                                    role = role[0];
+                                    await member.roles.remove(role)
+                                }
 
-                            await member.roles.set([`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`])
+                                for (let role of savedRoles) {
+                                    await member.roles.add(role)
+                                }
+                            }
                             const userData = await User.findOne({ userid: user.id })
 
                             userData.rank = 0
