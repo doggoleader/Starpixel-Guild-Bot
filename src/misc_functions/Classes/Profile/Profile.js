@@ -234,9 +234,9 @@ ${map.join(`\n`)}
                 if (!dbInfo) progress = `???/${file_info.total}`
                 else {
                     if (dbInfo.max_items !== undefined) {
-                        progress = `${dbInfo.max_items}/${file_info.total}`
+                        progress = `${dbInfo.max_items >= file_info.total ? `${file_info.total}/${file_info.total} **Задание успешно выполнено!** :tada:` : `${dbInfo.max_items}/${file_info.total}`}`
                     } else if (dbInfo.total_items !== undefined) {
-                        progress = `${dbInfo.total_items}/${file_info.total}`
+                        progress = `${dbInfo.total_items >= file_info.total ? `${file_info.total}/${file_info.total} **Задание успешно выполнено!** :tada:` : `${dbInfo.total_items}/${file_info.total}`}`
                     }
                 }
                 return `**${++i}.** ${name} - ${Number(item.sum)}/${max} очков (${percentage}%)
