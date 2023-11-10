@@ -809,18 +809,10 @@ module.exports = {
                                 }
                             }
                             let savedRoles = [`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
-                            if (member.user.id !== i.guild.ownerId) {
-                                await member.roles.set(savedRoles)
-                            } else {
-                                for (let role of member.roles.cache) {
-                                    role = role[0];
-                                    await member.roles.remove(role)
-                                }
+                            if (member.roles.cache.has(`606442068470005760`)) savedRoles.push(`606442068470005760`)
+                            
+                            await member.roles.set(savedRoles)
 
-                                for (let role of savedRoles) {
-                                    await member.roles.add(role)
-                                }
-                            }
                             const userData = await User.findOne({ userid: user.id })
 
                             userData.rank = 0
@@ -975,24 +967,14 @@ module.exports = {
                                     await int.deferReply({ ephemeral: true, fetchReply: true })
                                     const userData = await User.findOne({ userid: user.id })
                                     let roles = [`553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
-                                    let toCheck = ["567689925143822346", "883617976790700032", "883617966174896139", "320880176416161802", "563793535250464809", "1133850341285298237", "1059732744218882088", "1017131191771615243", "523559726219526184", "1071833294502645841"]
+                                    let toCheck = ["567689925143822346", "883617976790700032", "883617966174896139", "320880176416161802", "563793535250464809", "1133850341285298237", "1059732744218882088", "1017131191771615243", "523559726219526184", "1071833294502645841", '606442068470005760']
                                     for (let role of toCheck) {
                                         if (member.roles.cache.has(role)) {
                                             roles.push(role)
                                         }
                                     }
-                                    if (member.user.id !== int.guild.ownerId) {
-                                        await member.roles.set(roles)
-                                    } else {
-                                        for (let role of member.roles.cache) {
-                                            role = role[0];
-                                            await member.roles.remove(role)
-                                        }
 
-                                        for (let role of roles) {
-                                            await member.roles.add(role)
-                                        }
-                                    }
+                                    await member.roles.set(roles)
 
                                     let stream = await fs.createWriteStream(`./src/files/Database/Profile.json`)
                                     let json = JSON.stringify(userData, (_, v) => typeof v === 'bigint' ? v.toString() : v)
@@ -1034,7 +1016,10 @@ module.exports = {
                                         times_reset = userData.times_reset,
                                         gexp_info = userData.gexp_info,
                                         warn_info = userData.warn_info,
-                                        warns_number = userData.warns_number
+                                        warns_number = userData.warns_number,
+                                        marks = userData.marks,
+                                        pers_info = userData.pers_info,
+                                        pers_settings = userData.pers_settings
 
                                     const newUserData = new User({ userid: userid, guildid: guildid })
                                     newUserData.age = age
@@ -1049,6 +1034,9 @@ module.exports = {
                                     newUserData.warn_info = warn_info
                                     newUserData.warns_number = warns_number
                                     newUserData.times_reset = times_reset + 1
+                                    newUserData.marks = marks
+                                    newUserData.pers_info = pers_info
+                                    newUserData.pers_settings = pers_settings
                                     newUserData.save()
                                     userData.delete()
 
