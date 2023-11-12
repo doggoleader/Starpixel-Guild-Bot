@@ -48,7 +48,7 @@ module.exports = {
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
                 .setTimestamp(Date.now())
 
-            if (userData.sell.comet <= 0) return interaction.reply({
+            if (userData.sell.other <= 0) return interaction.reply({
                 embeds: [no_condition],
                 ephemeral: true
             })

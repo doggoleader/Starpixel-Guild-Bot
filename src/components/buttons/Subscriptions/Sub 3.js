@@ -222,9 +222,9 @@ ${user} +${rumb_amount}<:Rumbik:883638847056003072>
             }
 
 
-
             userData.cooldowns.sub_3 = Date.now() + (1000 * 60 * 60 * 24 * 7)
-            userData.save()
+            userData.save();
+            client.ProgressUpdate(member);
 
 
         } catch (e) {

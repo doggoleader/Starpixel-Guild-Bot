@@ -305,6 +305,7 @@ ${cosmetic[i_cosmetic].cosmetic_description}`,
 
             userData.save();
             client.ActExp(userData.userid)
+            client.ProgressUpdate(interaction.member);
             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл королевскую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot[i_loot].loot_name} и ${cosmetic[i_cosmetic].cosmetic_name}`))
 
         } else {

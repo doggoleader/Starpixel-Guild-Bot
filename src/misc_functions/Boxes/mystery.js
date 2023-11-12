@@ -487,6 +487,7 @@ ${cosmetic[i_cosm].cosmetic_description}
 
             userData.save();
             client.ActExp(userData.userid)
+            client.ProgressUpdate(interaction.member);
 
         } else {
             await interaction.reply({

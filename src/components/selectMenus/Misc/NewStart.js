@@ -66,14 +66,14 @@ module.exports = {
             userData.save()
             if (fullText.length <= 0) {
                 await interaction.editReply({
-                    content: `Вы уже отслеживаете это (эти) задания! Вы можете проверить их с помощью \`/quests kings\`!`,
+                    content: `Вы уже отслеживаете это (эти) задания! Вы можете проверить их с помощью меню в сообщении выше!`,
                 })
             } else {
 
                 await interaction.editReply({
                     content: `Вы начали выполнять следующие задания:
 ${fullText.join(`\n`)}
-Вы можете проверить их с помощью \`/quests kings\`!`,
+Вы можете проверить их с помощью меню в сообщении выше!`,
                 })
             }
         } catch (e) {

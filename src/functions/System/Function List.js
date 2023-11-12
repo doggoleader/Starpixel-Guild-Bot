@@ -37,7 +37,6 @@ module.exports = (client) => {
             //Items
             client.rank_update(); //Обновление рангов
             client.updatenicks(); //Изменение никнеймов Discord
-            client.ProgressUpdate(); //Обновление информации о прогрессе
 
         }, {
             scheduled: true,
@@ -49,6 +48,7 @@ module.exports = (client) => {
             client.AutoElements(); //Автовыдача стихий
             client.AutoStars(); //Автовыдача звезд
             client.checkSubscription(); //Проверка на наличие подписки
+            client.ProgressUpdate(); //Обновление информации о прогрессе
 
             //Seasonal
             client.halloweenRewards(); //Выдача хэллоуинских наград (Если сезон активен)

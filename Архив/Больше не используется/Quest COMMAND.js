@@ -1,26 +1,26 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, WebhookClient, PermissionsBitField, PermissionFlagsBits, ChannelType } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
-const { execute } = require('../../events/client/start_bot/ready');
+const { execute } = require('../../src/events/client/start_bot/ready');
 const fs = require(`fs`)
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
-const { User } = require(`../../schemas/userdata`)
-const { Guild } = require(`../../schemas/guilddata`)
+const { User } = require(`../../src/schemas/userdata`)
+const { Guild } = require(`../../src/schemas/guilddata`)
 const cron = require(`node-cron`)
 const chalk = require(`chalk`);
-const ch_list = require(`../../discord structure/channels.json`)
+const ch_list = require(`../../src/discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
-const { gameConstructor, calcActLevel, getLevel, isURL, getRes, getProperty } = require(`../../functions`)
-const linksInfo = require(`../../discord structure/links.json`)
+const { gameConstructor, calcActLevel, getLevel, isURL, getRes, getProperty } = require(`../../src/functions`)
+const linksInfo = require(`../../src/discord structure/links.json`)
 const toXLS = require(`json2xls`);
 const { Chart } = require(`chart.js`)
-const quests = require(`../../jsons/Quests.json`)
-const marathon = require(`../../jsons/Marathon.json`)
-const kings = require(`../../jsons/New Start.json`)
-const veterans = require(`../../jsons/Veterans.json`)
+const quests = require(`../../src/jsons/Quests.json`)
+const marathon = require(`../../src/jsons/Marathon.json`)
+const kings = require(`../../src/jsons/New Start.json`)
+const veterans = require(`../../src/jsons/Veterans.json`)
 const { isOneEmoji } = require(`is-emojis`);
-const { Temp } = require('../../schemas/temp_items');
+const { Temp } = require('../../src/schemas/temp_items');
 
 module.exports = {
     category: `quest`,

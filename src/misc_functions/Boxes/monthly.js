@@ -237,6 +237,7 @@ ${loot[i_loot].loot_description}
 
             userData.save();
             client.ActExp(userData.userid)
+            client.ProgressUpdate(interaction.member);
             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл ежемесячную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot[i_loot].loot_name}`))
 
         } else if (!roles.cache.has("504887113649750016")) {
