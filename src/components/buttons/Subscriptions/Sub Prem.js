@@ -255,7 +255,8 @@ ${user} +${rumb_amount}<:Rumbik:883638847056003072>
 
 
             userData.cooldowns.premium = Date.now() + (1000 * 60 * 60 * 24 * 7)
-            userData.save()
+            userData.save();
+            client.ProgressUpdate(member);
 
 
         } catch (e) {

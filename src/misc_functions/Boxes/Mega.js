@@ -299,6 +299,7 @@ ${interaction.member} +${actExp}🌀
 
         userData.save();
         client.ActExp(userData.userid)
+        client.ProgressUpdate(interaction.member);
 
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл сокровище]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов, +${rumbik[i_rumb].amount} румбиков,  ${loot[i_loot1].name} и ${loot[i_loot2].name}`))
 

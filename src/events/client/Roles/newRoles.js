@@ -78,7 +78,5 @@ module.exports = {
         }
 
         client.StaffPosUpdate(newMember.user.id)
-        let gprog = new GuildProgress(newMember, client)
-        await gprog.getAndUpdateUserPoints();
     }
 }

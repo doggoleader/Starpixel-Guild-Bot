@@ -61,7 +61,7 @@ module.exports = {
 
             await interaction.editReply({
                 content: `Вы начали выполнять задание "${quest.name}"!
-Вы можете проверить его с помощью \`/quests veterans\`!`,
+Вы можете проверить его с помощью меню в сообщении выше!`,
             })
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)

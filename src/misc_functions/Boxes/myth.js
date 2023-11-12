@@ -326,6 +326,7 @@ ${loot[i_loot4].loot_description}.
 
             userData.save();
             client.ActExp(userData.userid)
+            client.ProgressUpdate(interaction.member);
             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} румбиков, ${mythical[i_mythical].mythical_name}, ${loot[i_loot1].loot_name}, ${loot[i_loot3].loot_name} и ${loot[i_loot4].loot_name}`))
 
         } else {

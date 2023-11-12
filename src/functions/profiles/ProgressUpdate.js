@@ -12,17 +12,25 @@ const plugin = {
 }
 
 module.exports = (client) => {
-    client.ProgressUpdate = async () => {
+    client.ProgressUpdate = async (oldMember) => {
         try {
-            const userDatas = await User.find()
-            for (const userData of userDatas) {
-                const guild = await client.guilds.cache.get(userData.guildid)
-                const member = await guild.members.fetch(userData.userid)
+            if (!oldMember) {
+                const userDatas = await User.find()
+                for (const userData of userDatas) {
+                    const guild = await client.guilds.cache.get(userData.guildid)
+                    const member = await guild.members.fetch(userData.userid)
+                    const progress = new GuildProgress(member, client)
+                    await progress.getAndUpdateUserPoints()
+                }
+                console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[ОБНОВЛЕНИЕ ПРОГРЕССА]`) + chalk.gray(`: Прогресс развития участников в гильдии был обновлён!`))
+
+            } else {
+                const guild = oldMember.guild
+                const member = await guild.members.fetch(oldMember.user.id)
                 const progress = new GuildProgress(member, client)
                 await progress.getAndUpdateUserPoints()
             }
 
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[ОБНОВЛЕНИЕ ПРОГРЕССА]`) + chalk.gray(`: Прогресс развития участников в гильдии был обновлён!`))
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)

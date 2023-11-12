@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ComponentType, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ComponentType, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const fetch = require(`node-fetch`)
 const { joinVoiceChannel } = require('@discordjs/voice');
 const { execute } = require('../../../events/client/start_bot/ready');
@@ -43,71 +43,38 @@ module.exports = {
                 embeds: [no_role],
                 ephemeral: true
             })
+            const menuCheck = new ActionRowBuilder()
+                .addComponents(
+                    new StringSelectMenuBuilder()
+                        .setCustomId(`mars_check_menu`)
+                        .setPlaceholder(`Получить информацию или завершить задание`)
+                        .setOptions([
+                            {
+                                label: `Получить задание`,
+                                value: `get`,
+                                description: `Получить задание от Марса`,
+                                emoji: `🏆`
+                            },
+                            {
+                                label: `Получить информацию`,
+                                value: `info`,
+                                description: `Получить информацию о текущем задании Марса`,
+                                emoji: `📃`
+                            },
+                            {
+                                label: `Завершить задание`,
+                                value: `end`,
+                                description: `Завершить текущее задание`,
+                                emoji: `✅`
+                            }
 
-            const cd = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
-                .setAuthor({
-                    name: `Вы не можете использовать эту команду`
-                })
-                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.mars - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
-
-            if (userData.cooldowns.mars > Date.now()) return interaction.reply({
-                embeds: [cd],
-                ephemeral: true
-            })
-
-            const quests = require(`../../../jsons/Quests.json`)
-
-            const quest = quests.mars[Math.floor(Math.random() * quests.mars.length)]
-
-            const ids = quest.quest_code.split(`.`)
-            if (quest.id !== 2) {
-                const response = await fetch(`https://api.hypixel.net/player?uuid=${userData.uuid}`, {
-                    headers: {
-                        "API-Key": api,
-                        "Content-Type": "application/json"
-                    }
-                })
-                if (response.ok) {
-                    let json = await response.json()
-                    let gameInfo = json.player.stats[ids[0]][ids[1]]
-                    if (!gameInfo) gameInfo = 0
-                    userData.quests.mars.activated.status = false
-                    userData.quests.mars.activated.id = quest.id
-                    userData.quests.mars.activated.required = quest.require + gameInfo
-                }
-            } else if (quest.id == 2) {
-                const response = await fetch(`https://api.hypixel.net/guild?player=${userData.uuid}`, {
-                    headers: {
-                        "API-Key": api,
-                        "Content-Type": "application/json"
-                    }
-                })
-                if (response.ok) {
-                    let json = await response.json()
-                    let gMember = json.guild.members.find(member => member.uuid == userData.uuid)
-                    if (!gMember) return interaction.reply({
-                        content: `По какой-то причине вас не удалось найти в гильдии на Hypixel! Пожалуйста, попробуйте ещё раз и, если ошибка повторится, свяжитесь с администрацией гильдии, указав ваш никнейм!`,
-                        ephemeral: true
-                    })
-                    userData.quests.mars.activated.status = false
-                    userData.quests.mars.activated.id = quest.id
-                    userData.quests.mars.activated.required = quest.require
-                }
-            }
+                        ])
+                )
             await interaction.reply({
-                content: `:older_woman: ${user} просит помощи у Марса!
-
-:scroll: Для это ему необходимо пройти испытание:
-\`${quest.quest}\`
-:crown: В качестве награды он получит ${quest.reward}!
-💒 Чтобы посмотреть информацию о вашем текущем квесте или закончить его, пропишите команду \`/quests mars\`!
-
-Повторно попросить помощь у Марса можно через 2 недели!`,
+                content: `Используйте данное меню для управления действиями с квестом Марса!`,
+                components: [menuCheck],
                 ephemeral: true
             })
-            userData.cooldowns.mars = Date.now() + (1000 * 60 * 60 * 24 * 14)
-            userData.save()
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
