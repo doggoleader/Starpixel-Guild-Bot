@@ -1,10 +1,11 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ComponentType } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
+
 async function Big(interaction, client) {
     try {
         const { Guild } = require(`../../schemas/guilddata`)

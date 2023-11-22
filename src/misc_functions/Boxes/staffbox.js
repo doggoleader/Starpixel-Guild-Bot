@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
@@ -7,6 +7,7 @@ const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
+;
 
 async function StaffBox(interaction, client) {
     try {
@@ -192,7 +193,7 @@ ${loot[i_loot].loot_description}.
         }
         userData.cooldowns.staffbox = Date.now() + (1000 * 60 * 60 * 24 * 4)
         userData.save();
-        client.ActExp(userData.userid)
+        ActExp.ActExp(userData.userid)
         client.ProgressUpdate(interaction.member);
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку персонала]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot[i_loot].loot_name}`))
 

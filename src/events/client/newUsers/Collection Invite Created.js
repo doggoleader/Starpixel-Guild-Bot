@@ -5,19 +5,21 @@ const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`)
 const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
+let plugin = {
+    id: "new_users",
+    name: "Новые пользователи"
+}
+async function execute(invite, client) {
+    if (!await checkPlugin(invite.guild.id, plugin.id)) return
+    const { invites } = client
+    await invites.get(invite.guild.id).set(invite.code, invite.uses);
+    await askForBypass(invite, client)
+}
 
 module.exports = {
     name: 'inviteCreate',
-    plugin: {
-        id: "new_users",
-        name: "Новые пользователи"
-    },
-    async execute(invite, client) {
-        if (!await checkPlugin(invite.guild.id, this.plugin.id)) return
-        const { invites } = client
-        await invites.get(invite.guild.id).set(invite.code, invite.uses);
-        await askForBypass(invite, client)
-    }
+    plugin: plugin,
+    execute
 }
 
 

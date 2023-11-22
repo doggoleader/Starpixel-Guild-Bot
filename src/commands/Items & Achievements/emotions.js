@@ -1,506 +1,380 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder, GuildMember, UserSelectMenuBuilder } = require('discord.js');
+
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
-const linksInfo = require(`../../discord structure/links.json`)
+const linksInfo = require(`../../discord structure/links.json`);
+const { Emotions } = require('../../misc_functions/Exporter');
 
-module.exports = {
-    category: `em`,
-    plugin: {
-        id: "items",
-        name: "Предметы"
-    },
-    data: new SlashCommandBuilder()
-        .setName(`emotion`)
-        .setDescription(`Отправить эмоцию в чат`)
-        .setDMPermission(false)
-        .addStringOption(option => option
-            .setName(`эмоция`)
-            .setDescription(`Выберите эмоцию, которую хотите отправить в чат`)
-            .setAutocomplete(true)
-            .setRequired(true)
-        )
-        .addUserOption(option => option
-            .setName(`пользователь`)
-            .setDescription(`Выберите пользователя, к кому хотите применить эмоцию`)
-            .setRequired(false)
-        ),
-    async autoComplete(interaction, client) {
-        const focusedValue = interaction.options.getFocused();
-        const choices = [
-            'oh',
-            'army',
-            'get up',
-            'sleep',
-            'hey',
-            'hmm',
-            'love',
-            'happy',
-            'money',
-            'music',
-            'spider',
-            'pls',
-            'party',
-            'cool'
-        ];
-        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
-        await interaction.respond(
-            filtered.map(choice => ({ name: choice, value: choice })),
-        );
-    },
+/**
+ * 
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction Interaction
+ * @param {import("../../misc_functions/Exporter").StarpixelClient} client Client
+ * 
+ * Interaction main function
+ */
+async function execute(interaction, client) {
+    try {
+        const { member: m, user, guild } = interaction;
 
-    async execute(interaction, client) {
-        try {
-            
-            switch (interaction.options.getString(`эмоция`)) {
-                case `oh`: {
-                    const role = `566528019208863744`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
+        //Emotions
+        let emotions = checkEmotions(m);
+        let pictures = checkPictures(m)
+        let mode = 'emotions';
+        let chosen_value = '';
+        const option = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`emotions`)
+                    .setLabel(`Эмоции`)
+                    .setStyle(ButtonStyle.Success)
+                    .setEmoji(`😉`)
+                    .setDisabled(true)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`pictures`)
+                    .setLabel(`Картинки`)
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji(`🖼`)
+                    .setDisabled(false)
+            )
+        const emotions_row = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId(`choose_emotion`)
+                    .setPlaceholder(`Выберите эмоцию`)
+                    .setOptions(emotions)
+            )
+        const pictures_row = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId(`choose_picture`)
+                    .setPlaceholder(`Выберите картинку`)
+                    .setOptions(pictures)
+            )
 
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
+        const msg = await interaction.reply({
+            content: `Выберите эмоцию, которую хотите отправить`,
+            ephemeral: true,
+            fetchReply: true,
+            components: [option, emotions_row]
+        })
 
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (⊙_⊙)`)
-                        } else {
-                            interaction.reply(`${interaction.member} (⊙_⊙) ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-                case `army`: {
-                    const role = `571743750049497089`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
+        const collector = await msg.createMessageComponentCollector()
 
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
+        collector.on('collect', async (i) => {
+            if (i.customId == `emotions`) {
+                await i.deferUpdate()
 
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (￣^￣)ゞ`)
-                        } else {
-                            interaction.reply(`${interaction.member} (￣^￣)ゞ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
+                option.components[0].setDisabled(true)
+                option.components[0].setStyle(ButtonStyle.Success)
+                option.components[1].setDisabled(false)
+                option.components[1].setStyle(ButtonStyle.Primary)
+                mode = 'emotions'
 
-                case `get up`: {
-                    const role = `571745411929341962`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
+                await interaction.editReply({
+                    content: `Выберите эмоцию, которую хотите отправить`,
+                    ephemeral: true,
+                    fetchReply: true,
+                    components: [option, emotions_row]
+                })
+            } else if (i.customId == 'pictures') {
+                await i.deferUpdate()
 
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
+                option.components[0].setDisabled(false)
+                option.components[0].setStyle(ButtonStyle.Primary)
+                option.components[1].setDisabled(true)
+                option.components[1].setStyle(ButtonStyle.Success)
+                mode = 'pictures'
 
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} ٩(ˊ〇ˋ*)و`)
-                        } else {
-                            interaction.reply(`${interaction.member} ٩(ˊ〇ˋ*)و ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `sleep`: {
-                    const role = `571744516894228481`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (￣ρ￣)..zzZZ`)
-                        } else {
-                            interaction.reply(`${interaction.member} (￣ρ￣)..zzZZ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `hey`: {
-                    const role = `571757459732168704`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (´• ω •)ﾉ`)
-                        } else {
-                            interaction.reply(`${interaction.member} (´• ω •)ﾉ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `hmm`: {
-                    const role = `571757461380399106`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (・・ ) ?`)
-                        } else {
-                            interaction.reply(`${interaction.member} (・・ ) ? ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `love`: {
-                    const role = `571757462219128832`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (ღ˘⌣˘ღ)`)
-                        } else {
-                            interaction.reply(`${interaction.member} (ღ˘⌣˘ღ) ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `happy`: {
-                    const role = `571757463876141077`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧`)
-                        } else {
-                            interaction.reply(`${interaction.member} (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `money`: {
-                    const role = `642810527579373588`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member}  [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅]`)
-                        } else {
-                            interaction.reply(`${interaction.member}  [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `music`: {
-                    const role = `642393088689700893`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} (￣▽￣)/♫•*¨*•.¸¸♪`)
-                        } else {
-                            interaction.reply(`${interaction.member} (￣▽￣)/♫•*¨*•.¸¸♪ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `spider`: {
-                    const role = `636561006721761301`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            interaction.reply(`${interaction.member} /╲/\╭[☉﹏☉]╮/\╱\ `)
-                        } else {
-                            interaction.reply(`${interaction.member} /╲/\╭[☉﹏☉]╮/\╱\ ${interaction.options.getUser(`пользователь`)}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `pls`: {
-                    const role = `607495941490212885`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            const choice = [
-                                `(ʘ‿ʘ)
-${interaction.member} вызывает дурку.`,
-                                `˙ ͜ʟ˙
-
-help ${interaction.member} pls`,
-                                `ಥ_ಥ
-Депрессия началась у ${interaction.member} из-за чата.`,
-                                `◉_◉
-${interaction.member} не понимает, что происходит...`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        } else {
-                            const choice = [
-                                `(ʘ‿ʘ)
-${interaction.member} вызывает дурку ${interaction.options.getUser(`пользователь`)}.`,
-                                `˙ ͜ʟ˙
-
-help ${interaction.member} and ${interaction.options.getUser(`пользователь`)} pls`,
-                                `ಥ_ಥ
-Депрессия началась у ${interaction.member} из-за ${interaction.options.getUser(`пользователь`)}.`,
-                                `◉_◉
-${interaction.member} не понимает, что происходит с ${interaction.options.getUser(`пользователь`)}...`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `party`: {
-                    const role = `694221126494060604`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            const choice = [
-                                `༼ つ ◕_◕ ༽つ 
-Иди тусоваться с ${interaction.member} или бан.`,
-                                `༼ つ ಥ_ಥ ༽つ 
-Неужели есть такие, кто не хочет тусить с ${interaction.member}?`,
-                                `＼(￣▽￣)／
-Время тусить с ${interaction.member}!`,
-                                `＼(＾▽＾)／
-Зажигаем с ${interaction.member}!`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        } else {
-                            const choice = [
-                                `༼ つ ◕_◕ ༽つ 
-${interaction.options.getUser(`пользователь`)}, иди тусоваться с ${interaction.member} или бан.`,
-                                `༼ つ ಥ_ಥ ༽つ 
-Неужели есть такие, кто не хочет тусить с ${interaction.member} и ${interaction.options.getUser(`пользователь`)}?`,
-                                `＼(￣▽￣)／
-Время тусить с ${interaction.member} и ${interaction.options.getUser(`пользователь`)}!`,
-                                `＼(＾▽＾)／
-Зажигаем с ${interaction.member} и ${interaction.options.getUser(`пользователь`)}!`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        }
-                    }
-                };
-                    break;
-
-                case `cool`: {
-                    const role = `740241984190545971`;
-                    if (!interaction.member.roles.cache.has(role)) {
-                        const embed = new EmbedBuilder()
-                            .setAuthor({
-                                name: `❗ Отсутствует необходимая роль!`
-                            })
-                            .setDescription(`У вас нет эмоции \`${interaction.guild.roles.cache.get(role).name}\`!`)
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-
-                        interaction.reply({
-                            embeds: [embed],
-                            ephemeral: true
-                        })
-
-                    } else {
-                        if (!interaction.options.getUser(`пользователь`)) {
-                            const choice = [
-                                `̿̿ ̿̿ ̿̿ ̿'̿'\̵͇̿̿\з= ( ▀ ͜͞ʖ▀) =ε/̵͇̿̿/’̿’̿ ̿ ̿̿ ̿̿ ̿̿ Не стоит шутить с ${interaction.member}...`,
-                                `(▀̿Ĺ̯▀̿ ̿) ${interaction.member} из Starpixel. Он крут.`,
-                                `ᕦ(ò_óˇ)ᕤ Страшно? Бойся ${interaction.member}!`,
-                                `ヾ(⌐■_■)ノ♪ Едем, едем в соседнее село вместе с ${interaction.member}!`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        } else {
-                            const choice = [
-                                `̿̿ ̿̿ ̿̿ ̿'̿'\̵͇̿̿\з= ( ▀ ͜͞ʖ▀) =ε/̵͇̿̿/’̿’̿ ̿ ̿̿ ̿̿ ̿̿ Не стоит шутить с ${interaction.member} и с ${interaction.options.getUser(`пользователь`)}...`,
-                                `(▀̿Ĺ̯▀̿ ̿) ${interaction.member} и ${interaction.options.getUser(`пользователь`)} из Starpixel. Они круты.`,
-                                `ᕦ(ò_óˇ)ᕤ Страшно? Бойся ${interaction.member} и ${interaction.options.getUser(`пользователь`)}!`,
-                                `ヾ(⌐■_■)ノ♪ Едем, едем в соседнее село вместе с ${interaction.member} и ${interaction.options.getUser(`пользователь`)}!`]
-                            const rand = choice[Math.floor(Math.random() * choice.length)]
-                            interaction.reply(`${rand}`)
-                        }
-                    }
-                };
-                    break;
-
-
-
-
-
-                default: {
-                    await interaction.reply({
-                        content: `Данной опции не существует! Выберите одну из предложенных!`,
-                        ephemeral: true
-                    })
+                await interaction.editReply({
+                    content: `Выберите картинку, которую хотите отправить`,
+                    ephemeral: true,
+                    fetchReply: true,
+                    components: [option, pictures_row]
+                })
+            } else if (i.customId == 'emotions_back') {
+                await i.deferUpdate()
+                let row2, type
+                if (mode == 'pictures') {
+                    row2 = pictures_row;
+                    type = `картинку`
+                } else if (mode == 'emotions') {
+                    row2 = emotions_row
+                    type = `эмоцию`
                 }
-                    break;
+
+                await interaction.editReply({
+                    content: `Выберите ${type}, которую хотите отправить`,
+                    ephemeral: true,
+                    fetchReply: true,
+                    components: [option, row2]
+                })
+            } else if (i.customId == 'choose_emotion') {
+                await i.deferUpdate()
+                const choose_user = new ActionRowBuilder()
+                    .addComponents(
+                        new UserSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser`)
+                            .setPlaceholder(`Выберите пользователя`)
+                    )
+
+                const no_user = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_nouser`)
+                            .setLabel(`Без пользователя`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`❌`)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_back`)
+                            .setLabel(`Назад`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`⬅`)
+                    )
+
+                chosen_value = i.values[0]
+                await interaction.editReply({
+                    content: `Выберите пользователя, которого хотите упомянуть при отправке эмоции`,
+                    components: [choose_user, no_user],
+                    fetchReply: true
+                })
+            } else if (i.customId == 'choose_picture') {
+                await i.deferUpdate()
+                const choose_user = new ActionRowBuilder()
+                    .addComponents(
+                        new UserSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser`)
+                            .setPlaceholder(`Выберите пользователя`)
+                    )
+
+                const no_user = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_nouser`)
+                            .setLabel(`Без пользователя`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`❌`)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_back`)
+                            .setLabel(`Назад`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`⬅`)
+                    )
+                chosen_value = i.values[0]
+                await interaction.editReply({
+                    content: `Выберите пользователя, которого хотите упомянуть при отправке картинки`,
+                    components: [choose_user, no_user],
+                    fetchReply: true
+                })
+            } else if (i.customId == 'emotions_nouser') {
+                const choose_user = new ActionRowBuilder()
+                    .addComponents(
+                        new UserSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser`)
+                            .setPlaceholder(`Выберите пользователя`)
+                    )
+
+                const choose_user_dev = new ActionRowBuilder()
+                    .addComponents(
+                        new StringSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser_dev`)
+                            .setPlaceholder(`Выберите пользователя`)
+                            .setOptions(
+                                {
+                                    label: `Выберите пользователя`,
+                                    value: `CHOOSE_USER_DEV_ONLY`
+                                }
+                            )
+                    )
+
+                const no_user = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_nouser`)
+                            .setLabel(`Без пользователя`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`❌`)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_back`)
+                            .setLabel(`Назад`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`⬅`)
+                    )
+
+                if (mode == 'emotions') {
+                    let chosen = Emotions.getEmotions(chosen_value);
+                    let string = '';
+                    if (chosen_value == 'pls' || chosen_value == 'party' || chosen_value == 'cool') {
+                        const ch2 = chosen.messagenotag[Math.floor(Math.random() * chosen.messagenotag.length)];
+                        string = ch2.replace("%%u1%%", i.user).replace('%%u2%%', "")
+                    } else {
+                        const ch2 = chosen[0];
+                        string = ch2.replace("%%u1%%", i.user).replace('%%u2%%', "")
+                    }
+
+                    await i.reply({
+                        content: `${string}`
+                    })
+                } else if (mode == 'pictures') {
+                    if (chosen_value == `banuser`) {
+                        const n1 = [`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`, `N`, `O`, `P`, `Q`, `R`, `S`, `T`, `U`, `V`, `W`, `X`, `Y`, `Z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`]
+                        let r1 = n1[Math.floor(Math.random() * n1.length)]
+                        let r2 = n1[Math.floor(Math.random() * n1.length)]
+                        let r3 = n1[Math.floor(Math.random() * n1.length)]
+                        let r4 = n1[Math.floor(Math.random() * n1.length)]
+                        let r5 = n1[Math.floor(Math.random() * n1.length)]
+                        let r6 = n1[Math.floor(Math.random() * n1.length)]
+                        let r7 = n1[Math.floor(Math.random() * n1.length)]
+                        let r8 = n1[Math.floor(Math.random() * n1.length)]
+                        let r9 = n1[Math.floor(Math.random() * n1.length)]
+                        let r10 = n1[Math.floor(Math.random() * n1.length)]
+                        let r11 = n1[Math.floor(Math.random() * n1.length)]
+                        let r12 = n1[Math.floor(Math.random() * n1.length)]
+                        let r13 = n1[Math.floor(Math.random() * n1.length)]
+                        let r14 = n1[Math.floor(Math.random() * n1.length)]
+
+                        let code1 = `${r1}${r2}${r3}${r4}${r5}${r6}`;
+                        let code2 = `${r7}${r8}${r9}${r10}${r11}${r12}${r13}${r14}`
+
+                        let chosen = Emotions.getPictures(chosen_value);
+                        let string = `${chosen.picture.replace('%%u%%', i.member).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+
+                        await i.reply({
+                            content: `${string}`
+                        })
+                    } else {
+                        let chosen = Emotions.getPictures(chosen_value);
+                        let string = `${chosen.picture}
+${chosen.messagenotag.replace(`%%u1%%`, i.member).replace('%%u2%%', ``).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+
+                        await i.reply({
+                            content: `${string}`
+                        })
+                    }
+                }
+                await interaction.editReply({
+                    components: [choose_user_dev, no_user],
+                    fetchReply: true
+                })
+
+
+                await interaction.editReply({
+                    components: [choose_user, no_user],
+                    fetchReply: true
+                })
+            } else if (i.customId == 'emotions_chooseuser') {
+                const choose_user_dev = new ActionRowBuilder()
+                    .addComponents(
+                        new StringSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser_dev`)
+                            .setPlaceholder(`Выберите пользователя`)
+                            .setOptions(
+                                {
+                                    label: `Выберите пользователя`,
+                                    value: `CHOOSE_USER_DEV_ONLY`
+                                }
+                            )
+                    )
+                const choose_user = new ActionRowBuilder()
+                    .addComponents(
+                        new UserSelectMenuBuilder()
+                            .setCustomId(`emotions_chooseuser`)
+                            .setPlaceholder(`Выберите пользователя`)
+                    )
+
+                const no_user = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_nouser`)
+                            .setLabel(`Без пользователя`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`❌`)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`emotions_back`)
+                            .setLabel(`Назад`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`⬅`)
+                    )
+
+                if (mode == 'emotions') {
+                    let chosen = Emotions.getEmotions(chosen_value);
+                    let string = '';
+                    if (chosen_value == 'pls' || chosen_value == 'party' || chosen_value == 'cool') {
+                        const ch2 = chosen.messagetag[Math.floor(Math.random() * chosen.messagetag.length)];
+                        string = ch2.replace("%%u1%%", i.user).replace('%%u2%%', `<@${i.values[0]}>`)
+                    } else {
+                        const ch2 = chosen[0];
+                        string = ch2.replace("%%u1%%", i.user).replace('%%u2%%', `<@${i.values[0]}>`)
+                    }
+
+                    await i.reply({
+                        content: `${string}`
+                    })
+                } else if (mode == 'pictures') {
+                    if (chosen_value == `banuser`) {
+                        const n1 = [`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`, `N`, `O`, `P`, `Q`, `R`, `S`, `T`, `U`, `V`, `W`, `X`, `Y`, `Z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`]
+                        let r1 = n1[Math.floor(Math.random() * n1.length)]
+                        let r2 = n1[Math.floor(Math.random() * n1.length)]
+                        let r3 = n1[Math.floor(Math.random() * n1.length)]
+                        let r4 = n1[Math.floor(Math.random() * n1.length)]
+                        let r5 = n1[Math.floor(Math.random() * n1.length)]
+                        let r6 = n1[Math.floor(Math.random() * n1.length)]
+                        let r7 = n1[Math.floor(Math.random() * n1.length)]
+                        let r8 = n1[Math.floor(Math.random() * n1.length)]
+                        let r9 = n1[Math.floor(Math.random() * n1.length)]
+                        let r10 = n1[Math.floor(Math.random() * n1.length)]
+                        let r11 = n1[Math.floor(Math.random() * n1.length)]
+                        let r12 = n1[Math.floor(Math.random() * n1.length)]
+                        let r13 = n1[Math.floor(Math.random() * n1.length)]
+                        let r14 = n1[Math.floor(Math.random() * n1.length)]
+
+                        let code1 = `${r1}${r2}${r3}${r4}${r5}${r6}`;
+                        let code2 = `${r7}${r8}${r9}${r10}${r11}${r12}${r13}${r14}`
+
+                        let chosen = Emotions.getPictures(chosen_value);
+                        let string = `${chosen.picture.replace('%%u%%', `<@${i.values[0]}>`).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+
+                        await i.reply({
+                            content: `${string}`
+                        })
+                    } else {
+                        let chosen = Emotions.getPictures(chosen_value);
+                        let string = `${chosen.picture}
+${chosen.messagetag.replace(`%%u1%%`, i.member).replace('%%u2%%', `<@${i.values[0]}>`).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+
+                        await i.reply({
+                            content: `${string}`
+                        })
+                    }
+                }
+                await interaction.editReply({
+                    components: [choose_user_dev, no_user],
+                    fetchReply: true
+                })
+
+                await interaction.editReply({
+                    components: [choose_user, no_user],
+                    fetchReply: true
+                })
+
+
             }
-        } catch (e) {
-            const admin = await client.users.fetch(`491343958660874242`)
-            console.log(e)
-            let options = interaction?.options.data.map(a => {
-                return `{
+        })
+
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        let options = interaction?.options.data.map(a => {
+            return `{
 "status": true,
 "name": "${a.name}",
 "type": ${a.type},
@@ -511,18 +385,301 @@ ${interaction.options.getUser(`пользователь`)}, иди тусова�
 "role": "${a?.role?.id ? a.role.id : "No Role"}",
 "attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
 }`
-            })
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
+        })
+        await admin.send(`Произошла ошибка!`)
+        await admin.send(`=> ${e}.
 **Команда**: \`${interaction.commandName}\`
 **Пользователь**: ${interaction.member}
 **Канал**: ${interaction.channel}
 **Опции**: \`\`\`json
 ${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
 \`\`\``)
-            await admin.send(`◾`)
-        }
-
+        await admin.send(`◾`)
     }
 
+}
+
+/**
+ * 
+ * @param {GuildMember} m Discord Member of Starpixel Guild
+ * @returns Array of options for Select Menu
+ * @description Check emotions that member has
+ */
+function checkEmotions(m) {
+    const emotions_options = []
+    if (m.roles.cache.has("566528019208863744")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"oh\"",
+                emoji: "🙄",
+                value: "oh"
+            }
+        )
+    }
+    if (m.roles.cache.has("571743750049497089")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"army\"",
+                emoji: "😌",
+                value: "army"
+            }
+        )
+    }
+    if (m.roles.cache.has("571745411929341962")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"getup\"",
+                emoji: "😮",
+                value: "getup"
+            }
+        )
+    }
+    if (m.roles.cache.has("571744516894228481")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"sleep\"",
+                emoji: "😴",
+                value: "sleep"
+            }
+        )
+    }
+    if (m.roles.cache.has("571757459732168704")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"hey\"",
+                emoji: "🤗",
+                value: "hey"
+            }
+        )
+    }
+    if (m.roles.cache.has("571757461380399106")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"hmm\"",
+                emoji: "🤔",
+                value: "hmm"
+            }
+        )
+    }
+    if (m.roles.cache.has("571757462219128832")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"love\"",
+                emoji: "😍",
+                value: "love"
+            }
+        )
+    }
+    if (m.roles.cache.has("571757463876141077")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"happy\"",
+                emoji: "🙂",
+                value: "happy"
+            }
+        )
+    }
+    if (m.roles.cache.has("642810527579373588")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"money\"",
+                emoji: "🤑",
+                value: "money"
+            }
+        )
+    }
+    if (m.roles.cache.has("642393088689700893")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"music\"",
+                emoji: "😋",
+                value: "music"
+            }
+        )
+    }
+    if (m.roles.cache.has("636561006721761301")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"spider\"",
+                emoji: "😠",
+                value: "spider"
+            }
+        )
+    }
+    if (m.roles.cache.has("607495941490212885")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"pls\"",
+                emoji: "🥺",
+                value: "pls"
+            }
+        )
+    }
+    if (m.roles.cache.has("694221126494060604")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"party\"",
+                emoji: "🥳",
+                value: "party"
+            }
+        )
+    }
+    if (m.roles.cache.has("740241984190545971")) {
+        emotions_options.push(
+            {
+                label: "Эмоция \"cool\"",
+                emoji: "😎",
+                value: "cool"
+            }
+        )
+    }
+
+    if (emotions_options.length <= 0) emotions_options.push({
+        label: "У вас нет эмоций в профиле",
+        emoji: "❌",
+        value: "no_emotions"
+    })
+
+
+    return emotions_options
+}
+/**
+ * 
+ * @param {GuildMember} m Discord Member of Starpixel Guild
+ * @returns Array of options for Select Menu 
+ * @description Check pictures that member has.
+ */
+function checkPictures(m) {
+    const emotions_options = []
+    if (m.roles.cache.has("850079153746346044")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"cake\"",
+                emoji: "🍰",
+                value: "cake"
+            }
+        )
+    }
+    if (m.roles.cache.has("850079142413598720")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"like\"",
+                emoji: "👍",
+                value: "like"
+            }
+        )
+    }
+    if (m.roles.cache.has("850079173149065277")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"banuser\"",
+                emoji: "😡",
+                value: "banuser"
+            }
+        )
+    }
+    if (m.roles.cache.has("642810535737425930")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"heart\"",
+                emoji: "🧡",
+                value: "heart"
+            }
+        )
+    }
+    if (m.roles.cache.has("642810538518118430")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"miracle\"",
+                emoji: "👾",
+                value: "miracle"
+            }
+        )
+    }
+    if (m.roles.cache.has("642819600429481997")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"snowman\"",
+                emoji: "⛄",
+                value: "snowman"
+            }
+        )
+    }
+    if (m.roles.cache.has("850079134700666890")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"sova\"",
+                emoji: "🧡",
+                value: "sova"
+            }
+        )
+    }
+    if (m.roles.cache.has("694914077104799764")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"dragon\"",
+                emoji: "🐉",
+                value: "dragon"
+            }
+        )
+    }
+    if (m.roles.cache.has("893927886766096384")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"ghost\"",
+                emoji: "👻",
+                value: "ghost"
+            }
+        )
+    }
+    if (m.roles.cache.has("1046475276080648302")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"santa\"",
+                emoji: "🎅",
+                value: "santa"
+            }
+        )
+    }
+    if (m.roles.cache.has("1088824017517031544")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"egg\"",
+                emoji: "🥚",
+                value: "egg"
+            }
+        )
+    }
+    if (m.roles.cache.has("1088824078342832240")) {
+        emotions_options.push(
+            {
+                label: "Картинка \"palm\"",
+                emoji: "🌴",
+                value: "palm"
+            }
+        )
+    }
+
+    if (emotions_options.length <= 0) emotions_options.push({
+        label: "У вас нет картинок в профиле",
+        emoji: "❌",
+        value: "no_pictures"
+    })
+
+
+    return emotions_options
+}
+
+
+module.exports = {
+    category: `em`,
+    plugin: {
+        id: "items",
+        name: "Предметы"
+    },
+    data: new SlashCommandBuilder()
+        .setName(`emotions`)
+        .setDescription(`Отправить эмоцию или картинку в чат`)
+        .setDMPermission(false),
+    execute
 }

@@ -1,0 +1,44 @@
+const { Temp } = require(`../../../src/schemas/temp_items`)
+const chalk = require(`chalk`)
+const { Guild } = require(`../../../src/schemas/guilddata`)
+const { User } = require(`../../../src/schemas/userdata`)
+const linksInfo = require(`../../../src/discord structure/links.json`)
+const { changeProperty } = require(`../../../src/functions`)
+const { checkPlugin } = require("../../../src/functions");
+const plugin = {
+    id: "items",
+    name: "Предметы"
+}
+const Functions = require(`../exporter`)
+/**
+ * @param {String} userid Discord User ID
+ * @param {String} guildid Discord Guild ID
+ * @param {String} extraInfo MongoDB Database Object Path
+ * @param {import("../../../src/misc_functions/Exporter").StarpixelClient} client Discord Client
+ */
+async function TempItemsHelper(userid, guildid, extraInfo, client) {
+    try {
+        if (!await checkPlugin("320193302844669959", plugin.id)) return;
+        const result = await Temp.findOne({ userid: userid, guildid: guildid, extraInfo: extraInfo, expire: { $lte: new Date() } })
+        const userData = await User.findOne({ userid: userid, guildid: guildid })
+        if (userData.black_hole.enabled == true) return
+        const newValue = await Functions.getInfo(userid, guildid, extraInfo, client)
+        if (String(newValue).startsWith(`Не удалось найти опцию`)) return
+        await changeProperty(userData, extraInfo, newValue)
+        userData.save()
+        result.delete()
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        var path = require('path');
+        var scriptName = path.basename(__filename);
+        await admin.send(`Произошла ошибка!`)
+        await admin.send(`=> ${e}.
+**Файл**: ${scriptName}`)
+        await admin.send(`◾`)
+    }
+
+}
+module.exports = {
+    TempItemsHelper
+}

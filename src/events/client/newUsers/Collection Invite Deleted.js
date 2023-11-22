@@ -6,19 +6,21 @@ const prettyMilliseconds = require(`pretty-ms`)
 const linksInfo = require(`../../../discord structure/links.json`)
 const wait = require('node:timers/promises').setTimeout
 const { checkPlugin } = require("../../../functions");
+let plugin = {
+    id: "new_users",
+    name: "Новые пользователи"
+}
+async function execute(invite, client) {
+    if (!await checkPlugin(invite.guild.id, plugin.id)) return
+    const { invites } = client
+    await invites.get(invite.guild.id).delete(invite.code);
+    await checkIfExist(invite, client)
+}
 
 module.exports = {
     name: 'inviteDelete',
-    plugin: {
-        id: "new_users",
-        name: "Новые пользователи"
-    },
-    async execute(invite, client) {
-        if (!await checkPlugin(invite.guild.id, this.plugin.id)) return
-        const { invites } = client
-        await invites.get(invite.guild.id).delete(invite.code);
-        await checkIfExist(invite, client)
-    }
+    plugin: plugin,
+    execute
 }
 
 async function checkIfExist(invite, client) {
