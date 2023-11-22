@@ -1,9 +1,10 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
+;
 
 async function Mystery(interaction, client) {
     try {

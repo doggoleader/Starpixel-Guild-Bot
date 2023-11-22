@@ -5,15 +5,14 @@ const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const { Guild } = require('../../../schemas/guilddata');
 const roles_info = require(`../../../discord structure/roles.json`)
-module.exports = {
-    plugin: {
-        id: "items",
-        name: "Предметы"
-    },
-    data: {
-        name: "ach_myth_3"
-    },
-    async execute(interaction, client) {
+    /**
+ * 
+ * @param {import("discord.js").ButtonInteraction} interaction Interaction
+ * @param {import("../../../misc_functions/Exporter").StarpixelClient} client Client
+ * 
+ * Interaction main function
+ */
+async function execute(interaction, client) {
         try {
             const { guild, member, user } = interaction
             const guildData = await Guild.findOne({ id: guild.id })
@@ -131,4 +130,13 @@ ${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n
         }
 
     }
+module.exports = {
+    plugin: {
+        id: "items",
+        name: "Предметы"
+    },
+    data: {
+        name: "ach_myth_3"
+    },
+    execute
 }

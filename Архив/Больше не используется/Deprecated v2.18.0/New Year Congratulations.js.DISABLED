@@ -1,0 +1,116 @@
+const { Temp } = require(`../../../src/schemas/temp_items`)
+const { User } = require(`../../../src/schemas/userdata`)
+const { Guild } = require(`../../../src/schemas/guilddata`)
+const ch_list = require(`../../../src/discord structure/channels.json`)
+const chalk = require(`chalk`)
+const cron = require(`node-cron`)
+const wait = require(`node:timers/promises`).setTimeout
+const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const linksInfo = require(`../../../src/discord structure/links.json`)
+const { checkPlugin } = require("../../../src/functions");
+const plugin = {
+    id: "seasonal",
+    name: "Сезонное"
+}
+/**
+ * 
+ * @param {import("../../../src/misc_functions/Exporter").StarpixelClient} client Discord Client
+ */
+async function HappyNewYear(client) {
+
+    cron.schedule(`0 15-23 31 12 *`, async () => {
+        try {
+            const guild = await client.guilds.fetch(`320193302844669959`)
+            if (!await checkPlugin("320193302844669959", plugin.id)) return;
+            const channel = await guild.channels.fetch(`1058339159359631391`)
+            const date = new Date()
+            const tz = (new Date().getTimezoneOffset() / 60)
+            let hour = date.getHours() + (3 + tz)
+            if (hour >= 24) hour -= 24
+
+            let regions = require(`../../../src/functions/seasons/JSON/NewYearTimezones.json`)
+            let timezone = await regions.timezones.find(i => i.MoscowTime == hour)
+            let list = timezone.regions.map((reg, i) => {
+                return `**${++i}.** ${reg}`
+            }).join(`\n`)
+            const embed = new EmbedBuilder()
+                .setTitle(`С НОВЫМ ГОДОМ! 🎄`)
+                .setColor(Number(linksInfo.bot_color))
+                .setDescription(`От лица администрации поздравляю с **НОВЫМ 2024 ГОДОМ** всех участников гильдии в следующих регионах:
+
+${list}`)
+                .setTimestamp(Date.now())
+
+
+            await channel.send({
+                content: `@everyone`,
+                embeds: [embed],
+                allowedMentions: {
+                    parse: ["everyone"]
+                }
+            })
+        } catch (e) {
+            const admin = await client.users.fetch(`491343958660874242`)
+            console.log(e)
+            var path = require('path');
+            var scriptName = path.basename(__filename);
+            await admin.send(`Произошла ошибка!`)
+            await admin.send(`=> ${e}.
+    **Файл**: ${scriptName}`)
+            await admin.send(`◾`)
+        }
+
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+
+    cron.schedule(`0 0,1 1 1 *`, async () => {
+        try {
+            const guild = await client.guilds.fetch(`320193302844669959`)
+            const channel = await guild.channels.fetch(`1058339159359631391`)
+            const date = new Date()
+            const tz = (new Date().getTimezoneOffset() / 60)
+            let hour = date.getHours() + (3 + tz)
+            if (hour >= 24) hour -= 24
+
+            let regions = require(`../../../src/functions/seasons/JSON/NewYearTimezones.json`)
+            let timezone = await regions.timezones.find(i => i.MoscowTime == hour)
+            let list = timezone.regions.map((reg, i) => {
+                return `**${++i}.** ${reg}`
+            }).join(`\n`)
+            const embed = new EmbedBuilder()
+                .setTitle(`С НОВЫМ ГОДОМ! 🎄`)
+                .setColor(Number(linksInfo.bot_color))
+                .setDescription(`От лица администрации поздравляю с **НОВЫМ 2024 ГОДОМ** всех участников гильдии в следующих часовых поясах:
+
+${list}`)
+                .setTimestamp(Date.now())
+
+
+            await channel.send({
+                content: `@everyone`,
+                embeds: [embed],
+                allowedMentions: {
+                    parse: ["everyone"]
+                }
+            })
+        } catch (e) {
+            const admin = await client.users.fetch(`491343958660874242`)
+            console.log(e)
+            var path = require('path');
+            var scriptName = path.basename(__filename);
+            await admin.send(`Произошла ошибка!`)
+            await admin.send(`=> ${e}.
+    **Файл**: ${scriptName}`)
+            await admin.send(`◾`)
+        }
+
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+}
+module.exports = {
+    HappyNewYear
+}

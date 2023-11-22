@@ -1,10 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const linksInfo = require(`../../discord structure/links.json`)
+
 
 async function Prestige(interaction, client) {
     try {

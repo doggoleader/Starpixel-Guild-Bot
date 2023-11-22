@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
+
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
@@ -7,6 +7,7 @@ const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
+
 
 async function SeasonalWinner(interaction, client) {
     try {

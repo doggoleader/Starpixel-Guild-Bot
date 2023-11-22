@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: 'presenceUpdate',
-    async execute(oldP, newP) {
+    async function execute(oldP, newP) {
         const member = newP.member
         const guild = newP.guild
         if (!oldP) {

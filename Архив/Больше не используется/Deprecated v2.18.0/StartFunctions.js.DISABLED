@@ -1,0 +1,156 @@
+
+const chalk = require(`chalk`)
+const cron = require(`node-cron`)
+const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../../src/discord structure/links.json`)
+const { MCUpdates } = require("../../../src/functions/Updates/MCUpdates")
+const { NewYear } = require("../../../src/functions/seasons/NewYearClass")
+const { UserUpdates } = require("../../../src/functions/Updates/UpdatesClass")
+const { UpdatesNicknames } = require("../../../src/functions/Updates/NicknamesClass")
+const { Easter } = require("../../../src/functions/seasons/EasterClass")
+const { Summer } = require("../../../src/functions/seasons/SummerClass")
+const { ChannelUpdates } = require("../../../src/functions/Updates/ChannelsUpdatesClass")
+const { TempItems } = require("../../../src/functions/Updates/TempItemsClass")
+const { Birthdays } = require("../../../src/functions/Updates/BirthdaysClass")
+const { PersInfo } = require("../../../src/functions/Updates/PersonalInfoClass")
+const { BlackHole } = require("../../../src/functions/Black Hole System/BlackHoleClass")
+const { PollsUpdates } = require("../../../src/functions/Polls/PollsClass")
+const { Halloween } = require("../../../src/functions/seasons/HalloweenClass")
+const { GuildGames } = require("../../../src/functions/GuildGames/GuildGamesClass")
+const plugin = {
+    id: "admin",
+    name: "Административное"
+}
+
+/**
+ * 
+ * @param {import("../../../src/misc_functions/Exporter").StarpixelClient} client Discord Client
+ */
+async function startFunctions(client) {
+
+
+    cron.schedule(`0 10 */1 * *`, async () => {
+        MCUpdates.GEXP_PROFILES(client); //Ежедневное обновление профилей участников гильдии (GEXP)
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    cron.schedule(`0 5 * 12 *`, async () => {
+        NewYear.AdventCalendar(client); //Адвент календарь
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+
+
+    cron.schedule(`0 5 1 1 *`, async () => {
+        NewYear.AdventCalendar(client); //Адвент календарь
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+
+    cron.schedule(`*/10 * * * *`, async () => {
+        //Items
+        UserUpdates.rank_update(client); //Обновление рангов
+        UpdatesNicknames.updatenicks(client); //Изменение никнеймов Discord
+
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    });
+
+    cron.schedule(`0 * * * *`, async () => {
+        //Profiles
+        UserUpdates.AutoElements(client); //Автовыдача стихий
+        UserUpdates.AutoStars(client); //Автовыдача звезд
+        UserUpdates.checkSubscription(client); //Проверка на наличие подписки
+        UserUpdates.ProgressUpdate(null, client); //Обновление информации о прогрессе
+
+        //Seasonal
+        Halloween.halloweenRewards(client); //Выдача хэллоуинских наград (Если сезон активен)
+        NewYear.NewYearRewards(client); //Выдача новогодних наград (Если сезон активен)
+        Easter.EasterRewards(client); //Выдача пасхальных наград (Если сезон активен)
+        Summer.SummerRewards(client); //Выдача летних наград (Если сезон активен)
+
+        //Storages
+        ChannelUpdates.statsChannel(client); //Обновление каналов со статистикой
+        TempItems.temp_roles(client); //Уборка временных ролей
+        UserUpdates.AutoMythical(client);
+        UserUpdates.Discounts(client);
+        UserUpdates.Boosters(client);
+        UserUpdates.BankAccountCheck(client);
+
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    });
+
+
+    cron.schedule(`0 5 * * *`, async () => {
+
+        MCUpdates.UpdateNicknames(client); //Обновление никнеймов в базе данных
+        ChannelUpdates.birthdayChannel(client); //Обновление канала с днями рождения
+        ChannelUpdates.update_members(client); //Обновление каналов с участниками
+        UserUpdates.removeNonPremiumColors(client); //Уборка цветов у участников без VIP
+        UserUpdates.emojiUpdate(client); //Запланированное обновление эмоджи
+        Birthdays.wish_birthday(client); //Запланированное поздравление с днем рождения
+        MCUpdates.InGuildRewards(client); //Выдача наград за время в гильдии
+        PersInfo.InfoUpdate(null, null, client); //Обновление информациия из личных дел
+        UserUpdates.StaffPosUpdate(null, client); //Обновление Staff позиции участника в гильдии
+        UserUpdates.ResetDailyLimits(client); //Улучшения - сброс ежедневного лимита
+        UserUpdates.DailyEvents(client);
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    });
+    // Misc
+    cron.schedule(`0 16 * * 0`, async () => {
+        MCUpdates.top_3_gexp(client); //Запланированный подсчёт топ-3 по GEXP
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    cron.schedule(`1 0 * * 0`, async () => {
+        MCUpdates.resetVeterans(client); //Сброс статистики ветеранов
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    cron.schedule(`1 0 1 * *`, async () => {
+        MCUpdates.resetMarathon(client); //Сброс статистики марафона
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    cron.schedule(`0 12 1 * *`, async () => {
+        BlackHole.activate(client); //Чёрная дыра
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    cron.schedule(`* * * * *`, async () => {
+        PollsUpdates.StopPolls(client); //Сброс статистики марафона
+    }, {
+        scheduled: true,
+        timezone: `Europe/Moscow`
+    })
+    Halloween.halloweenStart(client); //Запланированное начало Хэллоуина
+    Halloween.halloweenEnd(client); //Запланированный конец Хэллоуина
+    NewYear.newYearStart(client); //Запланированное начало Нового года
+    NewYear.newYearEnd(client); //Запланированный конец Нового года
+    NewYear.NewYearSnowfall(client); //Новогодний снегопад
+    Easter.EasterStart(client); //Запланированное начало Пасхи
+    Easter.EasterEnd(client); //Запланированный конец Пасхи
+    Summer.SummerStart(client); //Запланированное начало Лета
+    Summer.SummerEnd(client); //Запланированный конец Лета
+    NewYear.HappyNewYear(client);
+    GuildGames.SchedulerGuildGamesOffs(client);
+    GuildGames.SchedulerGuildGamesRem(client);
+    GuildGames.SchedulerGuildGamesStart(client);
+    GuildGames.GGResetStatus(client);
+    console.log(chalk.blackBright(`[${new Date()}]`) + chalk.blue(`[Бот Starpixel] Функции запущены!`))
+};
+module.exports = {
+    startFunctions
+};

@@ -14,6 +14,11 @@ const User = new mongoose.Schema({
         custom_rank: { type: Boolean, default: false }
 
     },
+    birthday: {
+        day: { type: Number },
+        month: { type: Number },
+        year: { type: Number },
+    },
 
     name: { type: String },
     nickname: { type: String, },
@@ -48,6 +53,17 @@ const User = new mongoose.Schema({
             }
         ]
     },
+
+    cosmetics_storage: {
+        symbols: [String],
+        ramkas: [{
+            ramka1: { type: String },
+            ramka2: { type: String }
+        }],
+        rank: [String],
+        suffixes: [String]
+    },
+
 
     user_roles_backup: {
         last_updated: { type: Date, default: Date.now() },

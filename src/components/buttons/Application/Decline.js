@@ -2,48 +2,47 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, T
 
 const { Apply } = require(`../../../schemas/applications`)
 const linksInfo = require(`../../../discord structure/links.json`)
-module.exports = {
-    plugin: {
-        id: "new_users",
-        name: "Новые пользователи"
-    },
-    data: {
-        name: "app_decline"
-    },
-    async execute(interaction, client) {
-        try {
-            await interaction.deferReply({ fetchReply: true, ephemeral: true })
-            let appData = await Apply.findOne({ applicationid: interaction.message.id })
-            appData.status = `Отклонена`
-            appData.officer = interaction.user.id
-            const buttons = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`app_decline`)
-                        .setEmoji(`❌`)
-                        .setLabel(`Отклонить заявку`)
-                        .setStyle(ButtonStyle.Danger)
-                        .setDisabled(true)
-                )
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`app_waiting`)
-                        .setEmoji(`🕑`)
-                        .setLabel(`На рассмотрение`)
-                        .setStyle(ButtonStyle.Secondary)
-                )
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`app_accept`)
-                        .setEmoji(`✅`)
-                        .setLabel(`Принять заявку`)
-                        .setStyle(ButtonStyle.Success)
-                        .setDisabled(true)
-                )
-            const embed = new EmbedBuilder()
-                .setTitle(`Заявка на вступление пользователя ${interaction.user.username}`)
-                .setColor(Number(linksInfo.bot_color))
-                .setDescription(`**ЗАЯВКА**
+/**
+ * 
+ * @param {import("discord.js").ButtonInteraction} interaction Interaction
+ * @param {import("../../../misc_functions/Exporter").StarpixelClient} client Client
+ * 
+ * Interaction main function
+ */
+async function execute(interaction, client) {
+    try {
+        await interaction.deferReply({ fetchReply: true, ephemeral: true })
+        let appData = await Apply.findOne({ applicationid: interaction.message.id })
+        appData.status = `Отклонена`
+        appData.officer = interaction.user.id
+        const buttons = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`app_decline`)
+                    .setEmoji(`❌`)
+                    .setLabel(`Отклонить заявку`)
+                    .setStyle(ButtonStyle.Danger)
+                    .setDisabled(true)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`app_waiting`)
+                    .setEmoji(`🕑`)
+                    .setLabel(`На рассмотрение`)
+                    .setStyle(ButtonStyle.Secondary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`app_accept`)
+                    .setEmoji(`✅`)
+                    .setLabel(`Принять заявку`)
+                    .setStyle(ButtonStyle.Success)
+                    .setDisabled(true)
+            )
+        const embed = new EmbedBuilder()
+            .setTitle(`Заявка на вступление пользователя ${interaction.user.username}`)
+            .setColor(Number(linksInfo.bot_color))
+            .setDescription(`**ЗАЯВКА**
 1. Имя - \`${appData.que1}\`.
 2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.
 3. Возраст - \`${appData.que3}\`.
@@ -58,21 +57,21 @@ module.exports = {
 
 **Заявка обработана офицером ${interaction.member}**
 **Статус заявки**: ${appData.status}`)
-                .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })
-            await interaction.message.edit({
-                embeds: [embed],
-                components: [buttons]
-            })
-            appData.save()
+            .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })
+        await interaction.message.edit({
+            embeds: [embed],
+            components: [buttons]
+        })
+        appData.save()
 
-            await interaction.editReply({
-                content: `Заявка <@${appData.userid}> была отклонена!`
-            })
-        } catch (e) {
-            const admin = await client.users.fetch(`491343958660874242`)
-            console.log(e)
-            let options = interaction?.options.data.map(a => {
-                return `{
+        await interaction.editReply({
+            content: `Заявка <@${appData.userid}> была отклонена!`
+        })
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        let options = interaction?.options.data.map(a => {
+            return `{
 "status": true,
 "name": "${a.name}",
 "type": ${a.type},
@@ -83,17 +82,26 @@ module.exports = {
 "role": "${a?.role?.id ? a.role.id : "No Role"}",
 "attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
 }`
-            })
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
+        })
+        await admin.send(`Произошла ошибка!`)
+        await admin.send(`=> ${e}.
 **ID модели**: \`${interaction.customId}\`
 **Пользователь**: ${interaction.member}
 **Канал**: ${interaction.channel}
 **Опции**: \`\`\`json
 ${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
 \`\`\``)
-            await admin.send(`◾`)
-        }
-
+        await admin.send(`◾`)
     }
+
+}
+module.exports = {
+    plugin: {
+        id: "new_users",
+        name: "Новые пользователи"
+    },
+    data: {
+        name: "app_decline"
+    },
+    execute
 }

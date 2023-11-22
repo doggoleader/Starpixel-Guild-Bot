@@ -1,4 +1,3 @@
-const { Birthday } = require(`../../../schemas/birthday`)
 const { Temp } = require(`../../../schemas/temp_items`)
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
@@ -8,57 +7,56 @@ const cron = require(`node-cron`)
 const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const { execute } = require('../../../events/client/start_bot/ready');
+
 const { achievementStats, found, getProperty } = require(`../../../functions`)
 const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_summer, stats_summer, quests_summer } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
-module.exports = {
-    plugin: {
-        id: "seasonal",
-        name: "Сезонное"
-    },
-    data: {
-        name: `season_summer_stats`
-    },
-    async execute(interaction, client) {
-        try {
-            const msg = await interaction.deferReply({ fetchReply: true, ephemeral: true })
-            const guildData = await Guild.findOne({ id: interaction.guild.id })
-            await interaction.message.edit({
-                components: [lb_summer, quests_summer, stats_summer]
-            })
-            if (guildData.plugins.seasonal === false) return interaction.editReply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
-            if (guildData.seasonal.summer.enabled === false) return interaction.editReply({
-                content: `Сейчас не время для Лета! Попробуйте сделать это в период **1 июня по 31 августа**!`,
-                ephemeral: true
-            })
+/**
+ * 
+ * @param {import("discord.js").UserSelectMenuInteraction} interaction Interaction
+ * @param {import("../../../misc_functions/Exporter").StarpixelClient} client Client
+ * 
+ * Interaction main function
+ */
+async function execute(interaction, client) {
+    try {
+        const msg = await interaction.deferReply({ fetchReply: true, ephemeral: true })
+        const guildData = await Guild.findOne({ id: interaction.guild.id })
+        await interaction.message.edit({
+            components: [lb_summer, quests_summer, stats_summer]
+        })
+        if (guildData.plugins.seasonal === false) return interaction.editReply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+        if (guildData.seasonal.summer.enabled === false) return interaction.editReply({
+            content: `Сейчас не время для Лета! Попробуйте сделать это в период **1 июня по 31 августа**!`,
+            ephemeral: true
+        })
 
-            const member = await interaction.guild.members.fetch(interaction.values[0])
-            const { user } = member
-            if (user.bot) return interaction.editReply({
-                content: `${user} является ботом, а значит он не может получать летнюю статистику :'(`,
-                ephemeral: true
-            })
-            if (!member.roles.cache.has(`504887113649750016`)) return interaction.editReply({
-                content: `${member} является гостем гильдии, а значит у него нет летней статистики!`,
-                ephemeral: true
-            })
-            const users = await User.find().then(users => {
-                return users.filter(async user => await interaction.guild.members.fetch(user.userid))
-            })
-            const sorts = users.sort((a, b) => {
-                return b.seasonal.summer.points - a.seasonal.summer.points
-            })
-            var i = 0
-            while (sorts[i].userid !== user.id) {
-                i++
-            }
-            const userData = await User.findOne({ userid: user.id, guildid: interaction.guild.id })
-            let rank = i + 1
-            const embed = new EmbedBuilder()
-                .setTitle(`Пасхальная статистика пользователя ${user.username}`)
-                .setDescription(`**Позиция в топе**: ${rank}
+        const member = await interaction.guild.members.fetch(interaction.values[0])
+        const { user } = member
+        if (user.bot) return interaction.editReply({
+            content: `${user} является ботом, а значит он не может получать летнюю статистику :'(`,
+            ephemeral: true
+        })
+        if (!member.roles.cache.has(`504887113649750016`)) return interaction.editReply({
+            content: `${member} является гостем гильдии, а значит у него нет летней статистики!`,
+            ephemeral: true
+        })
+        const users = await User.find().then(users => {
+            return users.filter(async user => await interaction.guild.members.fetch(user.userid))
+        })
+        const sorts = users.sort((a, b) => {
+            return b.seasonal.summer.points - a.seasonal.summer.points
+        })
+        var i = 0
+        while (sorts[i].userid !== user.id) {
+            i++
+        }
+        const userData = await User.findOne({ userid: user.id, guildid: interaction.guild.id })
+        let rank = i + 1
+        const embed = new EmbedBuilder()
+            .setTitle(`Пасхальная статистика пользователя ${user.username}`)
+            .setDescription(`**Позиция в топе**: ${rank}
 **Очков**: ${userData.seasonal.summer.points}
 **Открыто летних коробок**: ${userData.seasonal.summer.opened_boxes}
 **Билет на море**: ${found(userData.seasonal.summer.sea_ticket)}
@@ -83,19 +81,19 @@ module.exports = {
 **Количество на начало квеста**: ${userData.seasonal.summer.quest.before}
 **Количество на конец квеста**: ${userData.seasonal.summer.quest.requirement}
 **Статус**: \`${userData.seasonal.summer.quest.finished ? `Завершено ✅` : `Не завершено ❌`}\``)
-                .setThumbnail(user.displayAvatarURL())
-                .setColor(Number(linksInfo.bot_color))
-                .setTimestamp(Date.now())
+            .setThumbnail(user.displayAvatarURL())
+            .setColor(Number(linksInfo.bot_color))
+            .setTimestamp(Date.now())
 
-            await interaction.editReply({
-                embeds: [embed]
-            })
+        await interaction.editReply({
+            embeds: [embed]
+        })
 
-        } catch (e) {
-            const admin = await client.users.fetch(`491343958660874242`)
-            console.log(e)
-            let options = interaction?.options.data.map(a => {
-                return `{
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        let options = interaction?.options.data.map(a => {
+            return `{
 "status": true,
 "name": "${a.name}",
 "type": ${a.type},
@@ -106,18 +104,27 @@ module.exports = {
 "role": "${a?.role?.id ? a.role.id : "No Role"}",
 "attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
 }`
-            })
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
+        })
+        await admin.send(`Произошла ошибка!`)
+        await admin.send(`=> ${e}.
 **ID кнопки**: \`${interaction.customId}\`
 **Пользователь**: ${interaction.member}
 **Канал**: ${interaction.channel}
 **Опции**: \`\`\`json
 ${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
 \`\`\``)
-            await admin.send(`◾`)
-        }
-
-
+        await admin.send(`◾`)
     }
+
+
+}
+module.exports = {
+    plugin: {
+        id: "seasonal",
+        name: "Сезонное"
+    },
+    data: {
+        name: `season_summer_stats`
+    },
+    execute
 }

@@ -1,10 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`); //ДОБАВИТЬ В ДРУГИЕ
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const { execute } = require('../../events/client/start_bot/ready');
+
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
+
 
 
 async function Daily(interaction, client) {
