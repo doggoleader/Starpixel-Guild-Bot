@@ -5,6 +5,7 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const linksInfo = require(`../../../discord structure/links.json`)
 const chalk = require(`chalk`)
 const roles = require(`../../../discord structure/roles.json`)
+const { mentionCommand } = require('../../../functions');
 const { secondPage, divideOnPages } = require(`../../../functions`);
 const { Temp } = require('../../../schemas/temp_items');
 /**
@@ -250,7 +251,7 @@ ${itemsInfo.join(`\n`)}
                                     }
                                 } else {
                                     let amount = item.amount
-                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь </rewards unclaimed:1055546254240784492>!`)
+                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь ${mentionCommand(client, 'rewards unclaimed')}!`)
                                     for (let c = 0; c < amount; c++) {
                                         if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                                             userData.stacked_items.push(item.id)

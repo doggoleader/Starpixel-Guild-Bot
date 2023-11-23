@@ -7,6 +7,7 @@ const chalk = require(`chalk`)
 const roles = require(`../../../discord structure/roles.json`)
 const { secondPage, divideOnPages } = require(`../../../functions`);
 const { Temp } = require('../../../schemas/temp_items');
+const { mentionCommand } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -247,7 +248,7 @@ ${itemsInfo.join(`\n`)}
                                     }
                                 } else {
                                     let amount = item.amount
-                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь </rewards unclaimed:1055546254240784492>!`)
+                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь ${mentionCommand(client, 'rewards unclaimed')}!`)
                                     for (let c = 0; c < amount; c++) {
                                         if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                                             userData.stacked_items.push(item.id)

@@ -8,6 +8,7 @@ const api = process.env.hypixel_apikey;
 const info = require(`../../../jsons/Marathon.json`);
 const fetch = require(`node-fetch`)
 const { getProperty } = require("../../../functions");
+const { mentionCommand } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -25,7 +26,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
         if (userData.starway.unclaimed.length <= 0) return interaction.reply({
-            content: `У вас нет неполученных коллекций! Если вы считаете, что есть другие неполученные награды, пропишите \`/rewards unclaimed\`!`,
+            content: `У вас нет неполученных коллекций! Если вы считаете, что есть другие неполученные награды, пропишите ${mentionCommand(client, 'rewards unclaimed')}!`,
             ephemeral: true
         })
         for (let toClaim of userData.starway.unclaimed) {

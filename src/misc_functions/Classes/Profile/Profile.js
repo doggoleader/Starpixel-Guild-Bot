@@ -11,9 +11,10 @@ const { Temp } = require("../../../schemas/temp_items")
 const { UserProfile } = require(`./UserProfile`);
 const { embed: settingsEmbed } = require(`../../Premade Interactions & Embeds/Profile Settings Embed`)
 const { selectmenu } = require(`../../Premade Interactions & Embeds/Profile Settings Menu`)
-const { calcActLevel, monthName } = require("../../../functions")
+const { calcActLevel, monthName, mentionCommand } = require("../../../functions")
 const prettyMilliseconds = require(`pretty-ms`)
 const { GuildProgress } = require(`./progress_class`)
+const wait = require(`timers/promises`).setTimeout
 const fs = require(`fs`)
 
 class Profile {
@@ -275,13 +276,13 @@ class Profile {
                     .setThumbnail(user.displayAvatarURL())
                     .setDescription(`${memberDM}, добро пожаловать в гильдию!
 
-Чтобы получить краткую информацию о нашем Discord сервере, используйте \`/start\`!
+Чтобы получить краткую информацию о нашем Discord сервере, используйте ${mentionCommand(client, 'start')}!
 
 Пожалуйста, отправьте сообщением ниже дату вашего рождения в формате DD.MM.YYYY (DD - день, MM - месяц, YYYY - год).
 
 Помимо этого, ознакомьтесь с последними новостями гильдии в канале <#${ch_list.news}>! Вы также можете ещё раз ознакомиться с правилами в <#${ch_list.rules}>!
 
-Пропишите команду </help:1047205512971817040>, чтобы получить полный список команд!
+Пропишите команд ${mentionCommand(client, 'help')}, чтобы получить полный список команд!
 
 Если модерация гильдии до сих пор не добавила вас, пожалуйста, подождите некоторое время. Вас скоро добавят!`)
                 await interaction.guild.channels.cache.get(ch_list.main).send({
@@ -371,7 +372,7 @@ class Profile {
                 .setDescription(`Профиль участника ${user} был успешно обновлен!
 
 **Предметов на данный момент:**
-Опыт активности - ${userData.exp} (подробнее: \`/profile\`)
+Опыт активности - ${userData.exp} (подробнее: ${mentionCommand(client, 'profile')})
 Уровень активности - ${userData.level}
 Всего опыта - ${totalexp}
 
@@ -390,7 +391,7 @@ class Profile {
                 .setDescription(`Профиль участника ${user} был успешно обновлен!
 
 **Предметов на данный момент:**
-Опыт активности - ${userData.exp} (подробнее: \`/profile\`)
+Опыт активности - ${userData.exp} (подробнее: ${mentionCommand(client, 'profile')})
 Уровень активности - ${userData.level}
 Всего опыта - ${totalexp}
 
@@ -760,7 +761,7 @@ class Profile {
                         await interaction.deleteReply();
                     } else if (int.customId == `reset_no`) {
                         await int.reply({
-                            content: `Вы прекратили процесс сброса профиля. Если вы захотите сбросить профиль ещё раз, введите команду \`/profile reset\` ещё раз!`,
+                            content: `Вы прекратили процесс сброса профиля. Если вы захотите сбросить профиль ещё раз, введите команду ${mentionCommand(client, 'profile')} ещё раз!`,
                             ephemeral: true
                         })
                         col2.stop()
@@ -1781,7 +1782,7 @@ ${map.join(`\n`)}
                                             value: `\u200b`
                                         })
                                         .setDescription(`Удаление профиля отменено из-за истечения времени!`)
-                                        .setFooter({ text: `Пропишите команду /profile ещё раз, чтобы повторить попытку!` })
+                                        .setFooter({ text: `Пропишите команду ${mentionCommand(client, 'profile')} ещё раз, чтобы повторить попытку!` })
                                     await int.editReply({
                                         embeds: [delete_embed],
                                         components: [delete_button]

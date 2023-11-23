@@ -1,3 +1,11 @@
+const { User } = require(`../../schemas/userdata`)
+const chalk = require(`chalk`);
+const { EmbedBuilder } = require(`discord.js`)
+const ch_list = require(`../../discord structure/channels.json`)
+const role_list = require(`../../discord structure/roles.json`)
+const linksInfo = require(`../../discord structure/links.json`)
+const { Guild } = require(`../../schemas/guilddata`)
+const { checkPlugin } = require("../../functions");
 
 class Birthdays {
 

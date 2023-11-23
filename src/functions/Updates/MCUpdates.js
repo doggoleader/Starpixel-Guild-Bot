@@ -5,7 +5,7 @@ const fetch = require(`node-fetch`)
 const upd_nick_api = process.env.hypixel_apikey, api = process.env.hypixel_apikey
 const linksInfo = require(`../../discord structure/links.json`)
 const { Guild } = require(`../../schemas/guilddata`)
-const { checkPlugin } = require("../../functions");
+const { checkPlugin, mentionCommand } = require("../../functions");
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require('discord.js');
 
 
@@ -186,7 +186,7 @@ class MCUpdates {
 Период: \`${reward.name}\`
 Награда: ${role}
 
-Ваша награда была сохранена! Используйте \`/rewards claim\`, чтобы получить её!`)
+Ваша награда была сохранена! Используйте ${mentionCommand(client, 'rewards claim')}, чтобы получить её!`)
                                         await ch.send({
                                             embeds: [embed]
                                         })

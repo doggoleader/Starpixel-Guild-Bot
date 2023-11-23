@@ -28,8 +28,7 @@ async function execute(interaction, client) {
             .setAuthor({
                 name: `❗ Отсутствует необходимая роль!`
             })
-            .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
-Но вы всё ещё можете использовать команду \`/profile update\``)
+            .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!`)
             .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
             .setColor(`DarkRed`)
             .setTimestamp(Date.now())

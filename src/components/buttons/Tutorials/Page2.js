@@ -4,7 +4,8 @@ const { ClientSettings } = require(`../../../schemas/client`)
 const linksInfo = require(`../../../discord structure/links.json`);
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
-const fs = require(`fs`)
+const fs = require(`fs`);
+const { mentionCommand } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -45,7 +46,7 @@ async function execute(interaction, client) {
 <#${ch_list.g_leave}> - если вам не понравилась наша гильдия, вы имеете право покинуть её. Помните, что как только вы уйдёте из неё, вы больше не сможете вернуться.
 
 
-Для просмотра основной информации о вашем профиле пропишите команду \`/profile info\` в любом канале на сервере гильдии.`)
+Для просмотра основной информации о вашем профиле пропишите команду ${mentionCommand(client, 'profile')} в любом канале на сервере гильдии.`)
             .setColor(Number(linksInfo.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 2/${list.length}` })
             .setTimestamp(Date.now())

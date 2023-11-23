@@ -3,7 +3,7 @@ const chalk = require(`chalk`);
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, GuildMember, AttachmentBuilder } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
-const { suffix } = require(`../../functions`)
+const { suffix, mentionCommand } = require(`../../functions`)
 const linksInfo = require(`../../discord structure/links.json`)
 const wait = require(`node:timers/promises`).setTimeout
 const cron = require(`node-cron`);
@@ -1049,7 +1049,7 @@ class GuildGames {
                             .setTitle(`В склад предметов добавлена награда!`)
                             .setDescription(`${member} теперь имеет ${userData.stacked_items.length} неполученных наград! За посещение ${reward.required} игр на склад была отправлена <@&${reward.box}>!
 
-Чтобы получить награду, откройте коробки и пропишите команду </rewards claim:1055546254240784492>! Для просмотра списка неполученных наград пропишите </rewards unclaimed:1055546254240784492>!
+Чтобы получить награду, откройте коробки и пропишите команду ${mentionCommand(client, 'rewards claim')}! Для просмотра списка неполученных наград пропишите ${mentionCommand(client, 'rewards unclaimed')}!
 Спасибо, что посещаете совместные игры! Ждём вас ещё!`)
                             .setColor(Number(linksInfo.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())

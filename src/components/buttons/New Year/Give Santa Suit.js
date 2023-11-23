@@ -3,6 +3,7 @@ const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { User } = require(`../../../schemas/userdata`)
+const { mentionCommand } = require('../../../functions');
 const linksInfo = require(`../../../discord structure/links.json`);
 const { Temp } = require("../../../schemas/temp_items");
 /**
@@ -26,7 +27,7 @@ async function execute(interaction, client) {
             if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                 await userData.stacked_items.push(rew)
                 await interaction.reply({
-                    content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду </rewards claim:1055546254240784492>! Для просмотра списка неполученных наград пропишите </rewards unclaimed:1055546254240784492>!`,
+                    content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду ${mentionCommand(client, 'rewards claim')}! Для просмотра списка неполученных наград пропишите ${mentionCommand(client, 'rewards unclaimed')}!`,
                     ephemeral: true
                 })
             } else return interaction.reply({
