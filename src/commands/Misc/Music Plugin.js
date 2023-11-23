@@ -8,7 +8,7 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const { gameConstructor, calcActLevel, getLevel, isURL, secondPage } = require(`../../functions`);
+const { gameConstructor, calcActLevel, getLevel, isURL, secondPage, mentionCommand } = require(`../../functions`);
 const { SearchResultType, DisTubeVoice, Song, Playlist } = require('distube');
 const linksInfo = require(`../../discord structure/links.json`)
 
@@ -209,7 +209,7 @@ async function execute(interaction, client) {
             case `queue`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -628,7 +628,7 @@ async function execute(interaction, client) {
             case `nowplaying`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -745,7 +745,7 @@ async function execute(interaction, client) {
             case `volume`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -775,7 +775,7 @@ async function execute(interaction, client) {
             case `skip`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -808,7 +808,7 @@ async function execute(interaction, client) {
 
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -847,7 +847,7 @@ async function execute(interaction, client) {
                     .setTitle(`Я присоединился 👋`)
                     .setColor(Number(linksInfo.bot_color))
                     .setTimestamp(Date.now())
-                    .setDescription(`Я присоединился к вашему голосовому каналу! Чтобы включить музыку, используйте команду \`/music play\`!`)
+                    .setDescription(`Я присоединился к вашему голосовому каналу! Чтобы включить музыку, используйте команду ${mentionCommand(client, 'music play')}!`)
 
                 await interaction.reply({
                     embeds: [result]
@@ -864,7 +864,7 @@ async function execute(interaction, client) {
             case `pause`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -888,7 +888,7 @@ async function execute(interaction, client) {
                     .setTitle(`Воспроизведение приостановлено ▶`)
                     .setColor(Number(linksInfo.bot_color))
                     .setTimestamp(Date.now())
-                    .setDescription(`Воспроизведение музыки было приостановлено! Чтобы восстановить воспроизведение, пропишите \`/music resume\`!`)
+                    .setDescription(`Воспроизведение музыки было приостановлено! Чтобы восстановить воспроизведение, пропишите ${mentionCommand(client, 'music resume')}!`)
                 queue.pause()
                 await interaction.reply({
                     embeds: [result]
@@ -899,7 +899,7 @@ async function execute(interaction, client) {
             case `resume`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -914,7 +914,7 @@ async function execute(interaction, client) {
                         .setTitle(`Воспроизведение восстановлено ⏸`)
                         .setColor(Number(linksInfo.bot_color))
                         .setTimestamp(Date.now())
-                        .setDescription(`Воспроизведение музыки было восстановлено! Чтобы приостановить воспроизведение, пропишите \`/music pause\`!`)
+                        .setDescription(`Воспроизведение музыки было восстановлено! Чтобы приостановить воспроизведение, пропишите ${mentionCommand(client, 'music pause')}!`)
                     return interaction.reply({
                         embeds: [result]
                     })
@@ -935,7 +935,7 @@ async function execute(interaction, client) {
             case `stop`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -948,7 +948,7 @@ async function execute(interaction, client) {
                     .setTitle(`Воспроизведение остановлено ▶`)
                     .setColor(Number(linksInfo.bot_color))
                     .setTimestamp(Date.now())
-                    .setDescription(`Воспроизведение песен было полностью остановлено! Очередь была очищена! Если вы хотите включить музыку, используйте \`/music play\`.`)
+                    .setDescription(`Воспроизведение песен было полностью остановлено! Очередь была очищена! Если вы хотите включить музыку, используйте ${mentionCommand(client, 'music play')}.`)
 
                 await interaction.reply({
                     embeds: [result]
@@ -958,7 +958,7 @@ async function execute(interaction, client) {
             case `shuffle`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -982,7 +982,7 @@ async function execute(interaction, client) {
             case `loop`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -1023,7 +1023,7 @@ async function execute(interaction, client) {
             case `autoplay`: {
                 const no_queue = new EmbedBuilder()
                     .setTitle(`❗ Нет песен в очереди!`)
-                    .setDescription(`В очереди нет песен! Используйте \`/music play\`, чтобы добавить песню в очередь!`)
+                    .setDescription(`В очереди нет песен! Используйте ${mentionCommand(client, 'music play')}, чтобы добавить песню в очередь!`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)

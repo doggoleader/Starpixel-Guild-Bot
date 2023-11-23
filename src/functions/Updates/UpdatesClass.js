@@ -4,7 +4,7 @@ const chalk = require(`chalk`)
 const { EmbedBuilder, GuildMember } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)
 const linksInfo = require(`../../discord structure/links.json`)
-const { checkPlugin } = require("../../functions");
+const { checkPlugin, mentionCommand } = require("../../functions");
 const { Temp } = require(`../../schemas/temp_items`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { GuildProgress } = require("../../misc_functions/Classes/Profile/progress_class")
@@ -50,7 +50,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -82,7 +82,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -113,7 +113,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -143,7 +143,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -175,7 +175,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -207,7 +207,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -239,7 +239,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -272,7 +272,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -304,7 +304,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -336,7 +336,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -368,7 +368,7 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
-Проверить количество своего опыта ранга можно, прописав \`/profile info\`!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()

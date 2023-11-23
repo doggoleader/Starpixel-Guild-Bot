@@ -10,7 +10,8 @@ const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
 const fs = require(`fs`)
-const linksInfo = require(`../../discord structure/links.json`)
+const linksInfo = require(`../../discord structure/links.json`);
+const { mentionCommand } = require('../../functions');
 
 /**
  * 
@@ -129,7 +130,7 @@ async function execute(interaction, client) {
                     g_leave_embed
                         .setTitle(`Пользователь решил остаться в гильдии!`)
                         .setDescription(`${user} решил остаться в гильдии. Благодарим, что вы являетесь участником гильдии Starpixel! Мы будем радовать вас различным контентом и сделаем всё возможное, чтобы вы остались с нами!`)
-                        .setFooter({ text: `Если вы всё-таки решите нас покинуть, пропишите /guild-leave ещё раз!` })
+                        .setFooter({ text: `Если вы всё-таки решите нас покинуть, пропишите ${mentionCommand(client, 'guild-leave')} ещё раз!` })
 
                     await interaction.editReply({
                         content: `${user} остался в гильдии!`,

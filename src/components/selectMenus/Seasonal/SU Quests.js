@@ -9,6 +9,7 @@ const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
+const { mentionCommand } = require('../../../functions');
 const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_summer, stats_summer, quests_summer } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
@@ -167,7 +168,7 @@ ${map.join(`\n`)}`,
                 .setColor(`Green`)
                 .setTitle(`Летний квест выполнен`)
                 .setDescription(`${interaction.member} выполнил летнее задание \`${quest.description}\`! Он получил <@&${quest.reward.roleID}> x${quest.reward.amount}!
-Используйте команду </rewards claim:1055546254240784492>, чтобы получить вашу награду!
+Используйте команду ${mentionCommand(client, 'rewards claim')}, чтобы получить вашу награду!
 
 **Количество выполненных заданий**: ${userData.seasonal.summer.quests_completed}
 **Количество выполненных уникальных заданий**: ${userData.seasonal.summer.unique_quests}`)

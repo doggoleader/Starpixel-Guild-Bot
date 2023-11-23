@@ -5,7 +5,7 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const { calcActLevel, getLevel, rankName, monthName, convertToRoman } = require(`../../functions`);
+const { calcActLevel, getLevel, rankName, monthName, convertToRoman, mentionCommand } = require(`../../functions`);
 const linksInfo = require(`../../discord structure/links.json`)
 const fs = require(`fs`)
 const rolesInfo = require(`../../discord structure/roles.json`);
@@ -106,7 +106,7 @@ UUID: \`${UUID}\` ➡ \`${userData.uuid}\``
                     });
 
                 if (!userData.onlinemode) return interaction.reply({
-                    content: `У вас нет привязанного аккаунта Minecraft, поэтому вы не можете использовать эту команду! Привяжите аккаунт при помощи команды \`/mc link\`!`,
+                    content: `У вас нет привязанного аккаунта Minecraft, поэтому вы не можете использовать эту команду! Привяжите аккаунт при помощи команды ${mentionCommand(client, 'mc link')}!`,
                     ephemeral: true
                 })
 

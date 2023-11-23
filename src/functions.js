@@ -1391,6 +1391,18 @@ function getUpgradeName(key) {
     return names[key]
 }
 
+/**
+ * 
+ * @param {import("./misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
+ * @param {String} command String name of command (including necessary subcommands and subcommand groups, but without `/` symbol)
+ */
+function mentionCommand(client, command) {
+    const main_part = command.split(' ')[0]
+    const command_found = client.application.commands.cache.find(command => command.name == main_part)
+    if (!command_found) throw new Error(`Could not find command with the name ${command}! Please, check if you are not using / symbol or check if you did not misspelled the name of command`)
+    return `</${command}:${command_found.id}>`
+}
+
 module.exports = {
     toOrdinalSuffix,
     suffix,
@@ -1419,5 +1431,6 @@ module.exports = {
     checkPlugin,
     createBingoProfile,
     getPerkName,
-    getUpgradeName
+    getUpgradeName,
+    mentionCommand
 }

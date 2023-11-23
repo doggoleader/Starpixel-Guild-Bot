@@ -11,7 +11,7 @@ const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
-const { gameConstructor, calcActLevel, getLevel, isURL, getRes, secondPage } = require(`../../functions`)
+const { gameConstructor, calcActLevel, getLevel, isURL, getRes, secondPage, mentionCommand } = require(`../../functions`)
 const linksInfo = require(`../../discord structure/links.json`)
 const toXLS = require(`json2xls`);
 const { Chart } = require(`chart.js`)
@@ -71,7 +71,7 @@ async function execute(interaction, client) {
                     .setTitle("Выдан значок")
                     .setColor(Number(linksInfo.bot_color))
                     .setTimestamp(Date.now())
-                    .setDescription(`Пользователю ${member} был выдан значок \`${mark}\`. Подробную информацию о значке можно найти в </marks check:1125342894316863539>!`)
+                    .setDescription(`Пользователю ${member} был выдан значок \`${mark}\`. Подробную информацию о значке можно найти в ${mentionCommand(client, 'marks check')}!`)
                 await interaction.guild.channels.cache.get(ch_list.main).send({
                     embeds: [embed]
                 })
@@ -107,7 +107,7 @@ async function execute(interaction, client) {
                     .setTitle("Удалён значок")
                     .setColor(Number(linksInfo.bot_color))
                     .setTimestamp(Date.now())
-                    .setDescription(`У пользователя ${member} был убран значок \`${mark.name}\`. Подробную информацию о своих значках можно найти в </marks check:1125342894316863539>!`)
+                    .setDescription(`У пользователя ${member} был убран значок \`${mark.name}\`. Подробную информацию о своих значках можно найти в ${mentionCommand(client, 'marks check')}!`)
                 await interaction.guild.channels.cache.get(ch_list.main).send({
                     embeds: [embed]
                 })

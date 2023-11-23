@@ -3,7 +3,8 @@ const { SlashCommandBuilder } = require('discord.js');
 const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`);
 const { User } = require('../../schemas/userdata');
-const linksInfo = require(`../../discord structure/links.json`)
+const linksInfo = require(`../../discord structure/links.json`);
+const { mentionCommand } = require('../../functions');
 
 async function autoComplete(interaction, client) {
 
@@ -52,7 +53,7 @@ async function execute(interaction, client) {
                 switch (interaction.options.getSubcommand()) {
                     case `create`: {
                         if (userData.custom_color.created === true) return interaction.reply({
-                            content: `У вас уже имеется собственный цвет! Используйте команду </colors custom change:1055546254609879099>, чтобы изменить код вашего цвета!`,
+                            content: `У вас уже имеется собственный цвет! Используйте команду ${mentionCommand(client, 'colors custom change')}, чтобы изменить код вашего цвета!`,
                             ephemeral: true
                         })
                         if (userData.rumbik < 200) return interaction.reply({
@@ -87,7 +88,7 @@ async function execute(interaction, client) {
                         break;
                     case `change`: {
                         if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду </colors custom create:1055546254609879099>, чтобы приобрести его!`,
+                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
                             ephemeral: true
                         })
 
@@ -111,7 +112,7 @@ async function execute(interaction, client) {
                         break;
                     case `rename`: {
                         if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду </colors custom create:1055546254609879099>, чтобы приобрести его!`,
+                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
                             ephemeral: true
                         })
                         const role = await guild.roles.fetch(userData.custom_color.role)
@@ -128,7 +129,7 @@ async function execute(interaction, client) {
                         break;
                     case `set`: {
                         if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду </colors custom create:1055546254609879099>, чтобы приобрести его!`,
+                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
                             ephemeral: true
                         })
                         if (member.roles.cache.has(userData.custom_color.role)) return interaction.reply({
@@ -145,7 +146,7 @@ async function execute(interaction, client) {
                         break;
                     case `reset`: {
                         if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду </colors custom create:1055546254609879099>, чтобы приобрести его!`,
+                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
                             ephemeral: true
                         })
                         if (!member.roles.cache.has(userData.custom_color.role)) return interaction.reply({

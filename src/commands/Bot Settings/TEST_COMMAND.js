@@ -20,7 +20,6 @@ const moment = require(`moment`);
 const { Apply } = require('../../schemas/applications');
 const { Polls } = require('../../schemas/polls');
 const QiwiPayments = require(`@qiwi/bill-payments-node-js-sdk`);
-const { Birthday } = require('../../schemas/birthday');
 const https = require('https');
 const { API, Upload } = require('vk-io');
 const { SocialVerify } = require('../../schemas/verify');
@@ -135,19 +134,6 @@ async function execute(interaction, client) {
 
             console.log(JSON.stringify(data));
         }) */
-        await interaction.deferReply({ fetchReply: true })
-        const bday_datas = await Birthday.find()
-        for (let bday of bday_datas) { 
-            const userData = await User.findOne({ userid: bday.userid })
-            userData.birthday.day = bday.day
-            userData.birthday.month = bday.month
-            userData.birthday.year = bday.year
-            userData.save()
-        }
-
-        await interaction.editReply({
-            content: `ДР ОБНОВЛЕНЫ`
-        })
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

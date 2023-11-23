@@ -2,7 +2,8 @@ const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
 const linksInfo = require(`../../../discord structure/links.json`)
-const { Guild } = require(`../../../schemas/guilddata`)
+const { Guild } = require(`../../../schemas/guilddata`);
+const { mentionCommand } = require("../../../functions");
 async function execute(queue) {
 
     try {
@@ -13,7 +14,7 @@ async function execute(queue) {
             .setColor(Number(linksInfo.bot_color))
             .setTitle(`Я отключился 👋`)
             .setTimestamp(Date.now())
-            .setDescription(`Я покинул голосовой канал. Чтобы включить музыку, используйте команду \`/music play\``)
+            .setDescription(`Я покинул голосовой канал. Чтобы включить музыку, используйте команду ${mentionCommand(client, 'music play')}`)
         await queue.textChannel.send({
             embeds: [playing]
         })

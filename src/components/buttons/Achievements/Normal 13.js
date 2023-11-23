@@ -5,6 +5,7 @@ const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const { Guild } = require('../../../schemas/guilddata');
 const roles_info = require(`../../../discord structure/roles.json`)
+const { mentionCommand } = require('../../../functions');
 
 /**
  * 
@@ -56,7 +57,7 @@ async function execute(interaction, client) {
         if (member.roles.cache.has(reward)) {
             userData.stacked_items.push(reward)
             await interaction.reply({
-                content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду </rewards claim:1055546254240784492>! Для просмотра списка неполученных наград пропишите </rewards unclaimed:1055546254240784492>!`,
+                content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду ${mentionCommand(client, 'rewards claim')}! Для просмотра списка неполученных наград пропишите ${mentionCommand(client, 'rewards unclaimed')}!`,
                 ephemeral: true
             })
         } else {

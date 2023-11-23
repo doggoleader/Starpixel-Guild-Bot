@@ -12,6 +12,7 @@ let plugin = {
  */
 async function execute(client) {
     await wait(1000)
+    await client.application.commands.fetch();
     console.log(chalk.blackBright(`[${new Date()}]`) + chalk.blue(`[Бот Starpixel] Бот был успешно запущен!`))
     const { invites } = client
     client.guilds.cache.forEach(async (guild) => {
