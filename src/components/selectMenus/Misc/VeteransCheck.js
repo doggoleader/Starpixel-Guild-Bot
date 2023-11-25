@@ -138,15 +138,17 @@ async function execute(interaction, client) {
                 content: `Вы ещё не выполнили текущее задание! Если вы не можете его выполнить, вы можете пропустить задание, однако оно не будет зачтено вам в статистику и вы не получите награду!`,
                 ephemeral: true
             })
-             
+
             if (userData.upgrades.veterans_quests <= 0) return interaction.editReply({
                 content: `Вы уже выполнили максимально возможное количество заданий для ветеранов на этой неделе! Если вы хотите выполнять больше заданий, перейдите в канал <#1141026403765211136>!`,
                 ephemeral: true
             })
             const loot = veterans.rewards
+            let chances = []
             let sum = 0;
             for (let i = 0; i < loot.length; i++) {
                 sum += loot[i].chance
+                chances.push(loot[i].chance)
             }
             let r_loot = Math.floor(Math.random() * sum);
             let i = 0;
@@ -159,54 +161,112 @@ async function execute(interaction, client) {
             }
             let finalChance1 = ((loot[i].chance / allChances) * 100).toFixed(1)
 
-            const quest = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
-            let wins = await getProperty(json.player.stats, quest.code)
-            if (!wins) wins = 0
+            let quest1 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
 
-            let vetQuest = userData.quests.veterans.activated
-            vetQuest.id = quest.id
-            vetQuest.required = wins + quest.req
-            vetQuest.status = false
-            vetQuest.reward = loot[i].reward
-            userData.upgrades.veterans_quests -= 1
+            let quest2 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+            while (quest2.id == quest1.id) {
+                quest2 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+            }
+
+            let quest3 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+            while (quest3.id == quest1.id || quest3.id == quest2.id) {
+                quest3 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+            }
 
 
-            userData.save()
-            const embed = new EmbedBuilder()
-                .setTitle(`Пользователь ${user.username} начал задание для ветеранов!`)
+            const buttons = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`veterans_choose_1`)
+                        .setLabel(`${quest1.game}`)
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji(`1️⃣`)
+                )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`veterans_choose_2`)
+                        .setLabel(`${quest2.game}`)
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji(`2️⃣`)
+                )
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`veterans_choose_3`)
+                        .setLabel(`${quest3.game}`)
+                        .setStyle(ButtonStyle.Primary)
+                        .setEmoji(`3️⃣`)
+                )
+
+            const embed2 = new EmbedBuilder()
                 .setColor(Number(linksInfo.bot_color))
-                .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
-                .setDescription(`Вы начали выполнять задание для ветеранов!
-Ваше задание: ${quest.task}                
-Игра: ${quest.game}
-Количество побед на начало: ${wins}
-Количество побед на конец: ${vetQuest.required}
-Награда: <@&${loot[i].reward}> (Шанс: ${finalChance1}%)
+                .setDescription(`## Задание для ветеранов
+            
+Выберите одно из следующих заданий для ветеранов:
+1. ${quest1.task}
+2. ${quest2.task}
+3. ${quest3.task}
+
+Чтобы выбрать задание, нажмите на кнопку ниже`)
+
+            const msg = await interaction.editReply({
+                embeds: [embed2],
+                components: [buttons],
+                fetchReply: true
+            })
+
+            const collector = await msg.createMessageComponentCollector()
+            collector.on('collect', async int => {
+                await int.deferUpdate();
+
+                let quest
+
+                if (int.customId == 'veterans_choose_1') {
+                    quest = quest1
+                } else if (int.customId == `veterans_choose_2`) {
+                    quest = quest2
+                } else if (int.customId == `veterans_choose_3`) {
+                    quest = quest3
+                }
+
+                let wins = await getProperty(json_pl.player.stats, quest.code)
+                if (!wins) wins = 0
+
+                let vetQuest = userData.quests.veterans.activated
+                vetQuest.id = quest.id
+                vetQuest.required = wins + quest.req
+                vetQuest.status = false
+                vetQuest.reward = loot[i].reward
+                userData.upgrades.veterans_quests -= 1
+
+
+                userData.save()
+                const embed = new EmbedBuilder()
+                    .setTitle(`Пользователь ${user.username} начал задание для ветеранов!`)
+                    .setColor(Number(linksInfo.bot_color))
+                    .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
+                    .setTimestamp(Date.now())
+                    .setDescription(`Вы начали выполнять задание для ветеранов!
+**Ваше задание:** ${quest.task}                
+**Игра:** ${quest.game}
+**Количество побед на начало:** ${wins}
+**Количество побед на конец:** ${vetQuest.required}
+**Награда:** <@&${loot[i].reward}> (Шанс: **${finalChance1}%**)
 Вы можете проверить его с помощью меню в сообщении выше!
 
-**Осталось выполнить заданий на этой неделе: ${userData.upgrades.veterans_quests}`)
-            await interaction.editReply({
-                embeds: [embed]
+**Осталось выполнить заданий на этой неделе: ${userData.upgrades.veterans_quests}**`)
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: []
+                })
             })
         } else if (action == `skip`) {
-            if (userData.cooldowns.veterans_quest_skip > Date.now()) return interaction.editReply({
-                embeds: [
-                    new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
-                        .setAuthor({
-                            name: `Вы не можете использовать эту команду`
-                        })
-                        .setDescription(`Данная функция сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.veterans_quest_skip - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
-                ],
-            })
 
             if (userData.quests.veterans.activated.status == true) return interaction.editReply({
                 content: `Вы уже выполнили задание или пропустили его! Теперь вы можете выбрать следующее задание!`,
                 ephemeral: true
             })
 
-            userData.cooldowns.veterans_quest_skip = Date.now() + 1000 * 60 * 60 * 8 
             userData.quests.veterans.activated.status = true
             userData.save()
 

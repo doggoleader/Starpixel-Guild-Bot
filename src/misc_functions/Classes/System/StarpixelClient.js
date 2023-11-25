@@ -308,7 +308,7 @@ class StarpixelClient extends Client {
         });
 
 
-        cron.schedule(`0 5 * * *`, async () => {
+        cron.schedule(`0 19 * * *`, async () => {
 
             this.UpdateNicknames(); //Обновление никнеймов в базе данных
             this.birthdayChannel(); //Обновление канала с днями рождения
