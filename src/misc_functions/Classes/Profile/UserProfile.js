@@ -465,7 +465,8 @@ ${m_map}`)
 \`Размер инвентаря\`: ${userData.upgrades.inventory_size} (уровень ${convertToRoman(userData.upgrades.inventory_size_tier)})
 \`Максимальное количество покупок\`: ${userData.upgrades.max_purchases} (уровень ${convertToRoman(userData.upgrades.max_purchases_tier)})
 \`Максимальное количество продаж\`: ${userData.upgrades.max_sells} (уровень ${convertToRoman(userData.upgrades.max_sells_tier)})
-\`Банковский аккаунт\`: ${userData.bank.account_type}`)
+\`Банковский аккаунт\`: ${userData.bank.account_type}
+\`Количество заданий для ветеранов\`: ${userData.upgrades.veterans_quests} (уровень ${convertToRoman(userData.upgrades.veterans_quests_tier)})`)
 
         return {
             label: "Умения и улучшения",

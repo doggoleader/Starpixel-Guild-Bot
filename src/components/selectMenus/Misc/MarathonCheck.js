@@ -7,7 +7,9 @@ const api = process.env.hypixel_apikey
 const { tasks } = require(`../../../jsons/New Start.json`);
 const fetch = require(`node-fetch`);
 const { getProperty } = require('../../../functions');
-const marathon = require(`../../../jsons/Marathon.json`)
+const marathon = require(`../../../jsons/Marathon.json`);
+const { Guild } = require('../../../schemas/guilddata');
+const { menuCheckMarathon } = require('../../../misc_functions/Exporter');
 /**
  * 
  * @param {import("discord.js").StringSelectMenuInteraction} interaction Interaction
@@ -20,10 +22,15 @@ async function execute(interaction, client) {
         await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const { member, user, guild } = interaction;
         const userData = await User.findOne({ userid: user.id, guildid: guild.id })
+        await interaction.message.edit({
+            components: [menuCheckMarathon]
+        })
         if (!userData.onlinemode) return interaction.editReply({
             content: `Вы не можете использовать данное меню, так как у вас нелицензированный аккаунт!`,
             ephemeral: true
         })
+        const guildData = await Guild.findOne({ id: interaction.guild.id });
+        const marType = guildData.marathon.marathon_type;
         const response = await fetch(`https://api.hypixel.net/player?uuid=${userData.uuid}`, {
             headers: {
                 "API-Key": api,
@@ -36,7 +43,7 @@ async function execute(interaction, client) {
         }
 
         const action = interaction.values[0];
-        const quest = marathon.ids.find(q => q.id == userData.quests.marathon.activated.id)
+        const quest = marathon[marType].ids.find(q => q.id == userData.quests.marathon.activated.id)
         if (!quest) return interaction.editReply({
             content: `Не удалось найти ваш квест!`,
             ephemeral: true
@@ -82,20 +89,6 @@ async function execute(interaction, client) {
             let stage = userData.quests.marathon.activated.stage
             let str
             if (stage == 1) {
-                let reward = `510932601721192458`
-                str = `<@&${reward}>`
-
-                if (member.roles.cache.has(reward)) {
-                    if (userData.stacked_items.length < userData.upgrades.inventory_size) {
-                        await userData.stacked_items.push(reward)
-                    } else return interaction.editReply({
-                        content: `Мы не можем добавить предмет в ваш инвентарь, так как он переполнен. Чтобы увеличить вместительность своего инвентаря, перейдите в канал <#1141026403765211136>!`,
-                        ephemeral: true
-                    })
-                } else {
-                    await member.roles.add(reward)
-                }
-            } else if (stage == 2) {
                 let reward = `521248091853291540`
                 str = `<@&${reward}>`
 
@@ -109,13 +102,27 @@ async function execute(interaction, client) {
                 } else {
                     await member.roles.add(reward)
                 }
+            } else if (stage == 2) {
+                let reward = `992820494900412456`
+                str = `<@&${reward}>`
+
+                if (member.roles.cache.has(reward)) {
+                    if (userData.stacked_items.length < userData.upgrades.inventory_size) {
+                        await userData.stacked_items.push(reward)
+                    } else return interaction.editReply({
+                        content: `Мы не можем добавить предмет в ваш инвентарь, так как он переполнен. Чтобы увеличить вместительность своего инвентаря, перейдите в канал <#1141026403765211136>!`,
+                        ephemeral: true
+                    })
+                } else {
+                    await member.roles.add(reward)
+                }
             } else if (stage == 3) {
-                let reward = 50
+                let reward = Math.round(250 * userData.pers_rank_boost)
                 str = `${reward}💠`
 
                 userData.rank += reward
             } else if (stage == 4) {
-                let reward = `992820494900412456`
+                let reward = `584673040470769667`
                 str = `<@&${reward}>`
 
                 if (member.roles.cache.has(reward)) {
@@ -130,7 +137,7 @@ async function execute(interaction, client) {
                 }
             } else if (stage == 5) {
                 let reward = `730891493375475786`
-                if (member.roles.cache.has(reward)) reward = `584673040470769667`
+                if (member.roles.cache.has(reward)) reward = `595966177969176579`
                 str = `<@&${reward}>`
                 userData.quests.marathon.stats.total_mar += 1
                 if (member.roles.cache.has(reward)) {

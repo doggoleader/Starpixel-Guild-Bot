@@ -193,7 +193,7 @@ ${loot[i_loot].loot_description}.
         }
         userData.cooldowns.staffbox = Date.now() + (1000 * 60 * 60 * 24 * 4)
         userData.save();
-        ActExp.ActExp(userData.userid)
+        client.ActExp(userData.userid)
         client.ProgressUpdate(interaction.member);
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку персонала]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot[i_loot].loot_name}`))
 

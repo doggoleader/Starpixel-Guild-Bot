@@ -414,6 +414,14 @@ class GuildProgress {
                                 }
                             }
                                 break;
+                            case 'veterans_quests_tier': {
+                                if (userData.upgrades[upgrade] >= 10) {
+                                    if (!taskData.claimed_items.includes(upgrade)) {
+                                        taskData.claimed_items.push(upgrade)
+                                    }
+                                }
+                            }
+                                break;
 
                             default:
                                 break;

@@ -1,9 +1,12 @@
 
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
-const fetch = require(`node-fetch`)
+const fetch = require(`node-fetch`);
+const ch_list = require(`../../discord structure/channels.json`)
+const marathon = require(`../../jsons/Marathon.json`)
 const upd_nick_api = process.env.hypixel_apikey, api = process.env.hypixel_apikey
 const linksInfo = require(`../../discord structure/links.json`)
+const upgrades = require(`../../jsons/Upgrades Info.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin, mentionCommand } = require("../../functions");
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require('discord.js');
@@ -269,10 +272,7 @@ class MCUpdates {
             if (!await checkPlugin("320193302844669959", this.id)) return;
             let userDatas = await User.find({ guildid: guild.id })
             for (const userData of userDatas) {
-                userData.quests.veterans.completed = []
-                userData.quests.veterans.activated.id = -1
-                userData.quests.veterans.activated.required = Infinity
-                userData.quests.veterans.activated.status = true
+                userData.upgrades.veterans_quests = upgrades.veterans_quests.find(q => q.tier == userData.upgrades.veterans_quests_tier).upgrade
                 userData.save()
             }
         } catch (e) {
@@ -403,7 +403,209 @@ class MCUpdates {
 
 
     }
-}   
+
+
+    /**
+     * 
+     * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
+     */
+    static async newMarathon(client) {
+        const guild = await client.guilds.fetch('320193302844669959');
+        const channel = await guild.channels.fetch(ch_list.marathon);
+        const guildData = await Guild.findOne({ id: guild.id })
+        const stage1msg = await channel.messages.fetch('1173198390855733348');
+        const stage2msg = await channel.messages.fetch('1173198391967219745');
+        const stage3msg = await channel.messages.fetch('1173198393380720671');
+        const stage4msg = await channel.messages.fetch('1173198394798387280');
+        const stage5msg = await channel.messages.fetch('1173198415556001824');
+
+        let curType = guildData.marathon.marathon_type;
+        let types = marathon.types
+        let curTypeID = types.findIndex(type => type == curType);
+        types.splice(curTypeID, 1);
+        let newType = types[Math.floor(Math.random() * types.length)];
+        const marathonNew = marathon[newType];
+        guildData.marathon.marathon_type = newType;
+        guildData.save();
+        const stage1 = marathonNew.filter(mar => mar.stage == 1);
+        const stage2 = marathonNew.filter(mar => mar.stage == 2);
+        const stage3 = marathonNew.filter(mar => mar.stage == 3);
+        const stage4 = marathonNew.filter(mar => mar.stage == 4);
+        const stage5 = marathonNew.filter(mar => mar.stage == 5);
+
+
+        const buttons1 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_1_1`)
+                    .setEmoji(`1️⃣`)
+                    .setLabel(`${stage1[0].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_1_2`)
+                    .setEmoji(`2️⃣`)
+                    .setLabel(`${stage1[1].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_1_3`)
+                    .setEmoji(`3️⃣`)
+                    .setLabel(`${stage1[2].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+        const buttons2 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_2_1`)
+                    .setEmoji(`1️⃣`)
+                    .setLabel(`${stage2[0].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_2_2`)
+                    .setEmoji(`2️⃣`)
+                    .setLabel(`${stage2[1].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_2_3`)
+                    .setEmoji(`3️⃣`)
+                    .setLabel(`${stage2[2].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+        const buttons3 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_3_1`)
+                    .setEmoji(`1️⃣`)
+                    .setLabel(`${stage3[0].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_3_2`)
+                    .setEmoji(`2️⃣`)
+                    .setLabel(`${stage3[1].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_3_3`)
+                    .setEmoji(`3️⃣`)
+                    .setLabel(`${stage3[2].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+        const buttons4 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_4_1`)
+                    .setEmoji(`1️⃣`)
+                    .setLabel(`${stage4[0].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_4_2`)
+                    .setEmoji(`2️⃣`)
+                    .setLabel(`${stage4[1].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_4_3`)
+                    .setEmoji(`3️⃣`)
+                    .setLabel(`${stage4[2].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+        const buttons5 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_5_1`)
+                    .setEmoji(`1️⃣`)
+                    .setLabel(`${stage5[0].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_5_2`)
+                    .setEmoji(`2️⃣`)
+                    .setLabel(`${stage5[1].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`marathon_5_3`)
+                    .setEmoji(`3️⃣`)
+                    .setLabel(`${stage5[2].game}`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+
+        await stage1msg.edit({
+            content: `**ПЕРВЫЙ ЭТАП**
+${stage1[0].description}
+         **ИЛИ**
+${stage1[1].description}
+         **ИЛИ**
+${stage1[2].description}
+:gift: Награда: \`Большая коробка\``,
+            components: [buttons1]
+        })
+        await stage2msg.edit({
+            content: `:black_medium_small_square:
+**ВТОРОЙ ЭТАП**
+${stage2[0].description}
+         **ИЛИ**
+${stage2[1].description}
+         **ИЛИ**
+${stage2[2].description}
+:gift: Награда: \`Огромная коробка\``,
+            components: [buttons2]
+        })
+        await stage3msg.edit({
+            content: `:black_medium_small_square:
+**ТРЕТИЙ ЭТАП**
+${stage3[0].description}
+         **ИЛИ**
+${stage3[1].description}
+         **ИЛИ**
+${stage3[2].description}
+:gift: Награда: \`250\` :diamond_shape_with_a_dot_inside:`,
+            components: [buttons3]
+        })
+        await stage4msg.edit({
+            content: `:black_medium_small_square:
+**ЧЕТВЁРТЫЙ ЭТАП**
+${stage4[0].description}
+         **ИЛИ**
+${stage4[1].description}
+         **ИЛИ**
+${stage4[2].description}
+:gift: Награда: \`Королевская коробка\``,
+            components: [buttons4]
+        })
+        await stage5msg.edit({
+            content: `:black_medium_small_square:
+**ПЯТЫЙ ЭТАП**
+${stage5[0].description}
+         **ИЛИ**
+${stage5[1].description}
+         **ИЛИ**
+${stage5[2].description}
+:gift: Награда: \`🔥 АКТИВИСТ ГИЛЬДИИ\` **или** \`Сокровище\``,
+            components: [buttons5]
+        })
+    }
+}
 
 
 module.exports = {

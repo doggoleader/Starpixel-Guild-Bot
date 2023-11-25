@@ -1386,7 +1386,8 @@ function getUpgradeName(key) {
         "inventory_size_tier": "Размер инвентаря",
         "max_purchases_tier": "Максимальное количество покупок",
         "max_sells_tier": "Максимальное количество продаж",
-        "bank_account_tier": "Банковский аккаунт"
+        "bank_account_tier": "Банковский аккаунт",
+        "veterans_quests_tier": "Количество заданий для ветеранов"
     }
     return names[key]
 }

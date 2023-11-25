@@ -214,7 +214,8 @@
                 "inventory_size_tier",
                 "max_purchases_tier",
                 "max_sells_tier",
-                "bank_account_tier"
+                "bank_account_tier",
+                "veterans_quests_tier"
             ]
         },
         {
@@ -231,9 +232,9 @@
         },
         {
             "name": "VETERANS",
-            "points_per": 2,
+            "points_per": 1,
             "point_every": 1,
-            "total": 20
+            "total": 100
         },
         {
             "name": "MARATHON",

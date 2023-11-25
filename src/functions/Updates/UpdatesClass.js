@@ -22,21 +22,21 @@ class UserUpdates {
             const guild = await client.guilds.fetch(`320193302844669959`)
             const guildData = await Guild.findOne({ id: guild.id })
             const results = await User.find({ rank: { $gte: 0 } })
+            let nov = await guild.roles.fetch(`553593731953983498`) //Новичок 0
+            let sp = await guild.roles.fetch(`553593734479216661`) //Специалист 1
+            let pro = await guild.roles.fetch(`553593136895623208`) //Профессионал 2
+            let mas = await guild.roles.fetch(`553593133884112900`) //Мастер 3
+            let champ = await guild.roles.fetch(`553593136027533313`) //Чемпион 4
+            let star = await guild.roles.fetch(`553593976037310489`) //Звездочка 5
+            let leg = await guild.roles.fetch(`780487593485008946`) //Легенда 6
+            let vlad = await guild.roles.fetch(`849695880688173087`) //Владыка 7
+            let lord = await guild.roles.fetch(`992122876394225814`) //Лорд 8 
+            let imp = await guild.roles.fetch(`992123014831419472`) //Император 9
+            let pov = await guild.roles.fetch(`992123019793276961`) //Повелитель 10
 
             for (let result of results) {
                 if (result.black_hole.enabled !== true) {
                     const { userid } = result;
-                    let nov = await guild.roles.fetch(`553593731953983498`) //Новичок 0
-                    let sp = await guild.roles.fetch(`553593734479216661`) //Специалист 1
-                    let pro = await guild.roles.fetch(`553593136895623208`) //Профессионал 2
-                    let mas = await guild.roles.fetch(`553593133884112900`) //Мастер 3
-                    let champ = await guild.roles.fetch(`553593136027533313`) //Чемпион 4
-                    let star = await guild.roles.fetch(`553593976037310489`) //Звездочка 5
-                    let leg = await guild.roles.fetch(`780487593485008946`) //Легенда 6
-                    let vlad = await guild.roles.fetch(`849695880688173087`) //Владыка 7
-                    let lord = await guild.roles.fetch(`992122876394225814`) //Лорд 8 
-                    let imp = await guild.roles.fetch(`992123014831419472`) //Император 9
-                    let pov = await guild.roles.fetch(`992123019793276961`) //Повелитель 10
                     const member = await guild.members.fetch(userid)
                     if (member.roles.cache.has(`504887113649750016`)) {
                         if (result.rank >= 0 && result.rank < 50) { //Новичок
@@ -271,7 +271,7 @@ class UserUpdates {
                                     .setColor(Number(linksInfo.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
-                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
+                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1]}!
 Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()
@@ -335,7 +335,7 @@ class UserUpdates {
                                     .setColor(Number(linksInfo.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
-                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
+                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1]}!
 Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
 
                                 await member.roles.remove(oldrank).catch()

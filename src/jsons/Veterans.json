@@ -3,64 +3,502 @@
         {
             "id": -1,
             "code": "SkyWars.coins",
-            "name": "НЕТ ЗАДАНИЯ",
-            "req": 999999999,
+            "req": 999999E999,
             "game": "НЕ АКТИВИРОВАН",
             "task": "НЕТ ЗАДАНИЯ"
         },
         {
             "id": 1,
             "code": "SkyWars.wins",
-            "name": "Скайварсер",
-            "req": 20,
+            "req": 10,
             "game": "SkyWars",
-            "reward": "521248091853291540",
-            "task": "Выиграть 20 раз в SkyWars."
+            "task": "Выиграть 10 раз в SkyWars."
         },
         {
             "id": 2,
-            "code": "MurderMystery.murderer_wins",
-            "name": "Убийца",
-            "req": 1,
-            "game": "Murder Mystery",
-            "reward": "510932601721192458",
-            "task": "Победить в Murder Mystery 1 раз за маньяка."
+            "code": "SkyWars.kills",
+            "req": 30,
+            "game": "SkyWars",
+            "task": "Убить 30 игроков в SkyWars."
         },
         {
             "id": 3,
-            "code": "Bedwars.wins_bedwars",
-            "name": "Защитник кровати",
-            "req": 10,
-            "game": "Bed Wars",
-            "reward": "992820494900412456",
-            "task": "Победить в Bed Wars 10 раз."
+            "code": "SkyWars.kills_solo_insane",
+            "req": 20,
+            "game": "SkyWars",
+            "task": "Убить 20 игроков в SkyWars Solo Insane."
         },
         {
             "id": 4,
-            "code": "Arcade.pixel_party.wins",
-            "name": "Танцор",
-            "req": 10,
-            "game": "Pixel Party",
-            "reward": "521248091853291540",
-            "task": "Выиграть в Pixel Party 10 раз."
+            "code": "SkyWars.egg_thrown",
+            "req": 500,
+            "game": "SkyWars",
+            "task": "Бросить 500 яиц в SkyWars."
         },
         {
             "id": 5,
-            "code": "Duels.wins",
-            "name": "Это всего лишь разминка",
-            "req": 30,
-            "game": "Duels",
-            "reward": "510932601721192458",
-            "task": "Победить в Duels 30 раз."
+            "code": "SkyWars.wins_lab",
+            "req": 2,
+            "game": "SkyWars",
+            "task": "Выиграть 2 игры в SkyWars Laboratory."
         },
         {
             "id": 6,
+            "code": "MurderMystery.murderer_wins",
+            "req": 1,
+            "game": "Murder Mystery",
+            "task": "Победить в Murder Mystery 1 раз за маньяка."
+        },
+        {
+            "id": 7,
+            "code": "MurderMystery.wins",
+            "req": 20,
+            "game": "Murder Mystery",
+            "task": "Выиграть 20 раз в Murder Mystery."
+        },
+        {
+            "id": 8,
+            "code": "MurderMystery.kills",
+            "req": 40,
+            "game": "Murder Mystery",
+            "task": "Убить 40 игроков в Murder Mystery."
+        },
+        {
+            "id": 9,
+            "code": "MurderMystery.kills_MURDER_ASSASSINS",
+            "req": 10,
+            "game": "Murder Mystery",
+            "task": "Убить 10 игроков в Murder Mystery Assassins."
+        },
+        {
+            "id": 10,
+            "code": "MurderMystery.wins_MURDER_INFECTION",
+            "req": 5,
+            "game": "Murder Mystery",
+            "task": "Выиграть 5 раз в Murder Mystery Infection."
+        },
+        {
+            "id": 11,
+            "code": "Bedwars.wins_bedwars",
+            "req": 10,
+            "game": "Bed Wars",
+            "task": "Победить в Bed Wars 10 раз."
+        },
+        {
+            "id": 12,
+            "code": "Bedwars.kills_bedwars",
+            "req": 50,
+            "game": "Bed Wars",
+            "task": "Убить 50 игроков в Bed Wars."
+        },
+        {
+            "id": 13,
+            "code": "Bedwars.final_kills_bedwars",
+            "req": 20,
+            "game": "Bed Wars",
+            "task": "Сделать 20 финальных убийств в Bed Wars."
+        },
+        {
+            "id": 14,
+            "code": "Bedwars.emerald_resources_collected_bedwars",
+            "req": 40,
+            "game": "Bed Wars",
+            "task": "Собрать 40 изумрудов в Bed Wars."
+        },
+        {
+            "id": 15,
+            "code": "Bedwars.void_kills_bedwars",
+            "req": 25,
+            "game": "Bed Wars",
+            "task": "Скинуть 25 игроков в бездну."
+        },
+        {
+            "id": 16,
+            "code": "Arcade.pixel_party.wins",
+            "req": 5,
+            "game": "Arcade: Pixel Party",
+            "task": "Выиграть в Pixel Party 5 раз."
+        },
+        {
+            "id": 17,
+            "code": "Arcade.pixel_party.rounds_completed",
+            "req": 30,
+            "game": "Arcade: Pixel Party",
+            "task": "Прожить в Pixel Party 30 раундов."
+        },
+        {
+            "id": 18,
+            "code": "Arcade.zombie_kills_zombies",
+            "req": 300,
+            "game": "Arcade: Zombies",
+            "task": "Убить 300 зомби в Zombies."
+        },
+        {
+            "id": 19,
+            "code": "Arcade.dropper.wins",
+            "req": 2,
+            "game": "Arcade: Dropper",
+            "task": "Выиграть в Dropper 2 раза."
+        },
+        {
+            "id": 20,
+            "code": "Arcade.dropper.games_finished",
+            "req": 15,
+            "game": "Arcade: Dropper",
+            "task": "Завершить 15 игр в Dropper."
+        },
+        {
+            "id": 21,
+            "code": "Arcade.wins_party",
+            "req": 1,
+            "game": "Arcade: Party Games",
+            "task": "Выиграть в Party Games 1 раз."
+        },
+        {
+            "id": 22,
+            "code": "Arcade.woolhunt_kills",
+            "req": 20,
+            "game": "Arcade: Capture the Wool",
+            "task": "Убить 20 игроков в Capture the Wool."
+        },
+        {
+            "id": 23,
+            "code": "Arcade.woolhunt_participated_wins",
+            "req": 1,
+            "game": "Arcade: Capture the Wool",
+            "task": "Выиграть в Capture the Wool 1 раз."
+        },
+        {
+            "id": 24,
+            "code": "Arcade.kills_dayone",
+            "req": 100,
+            "game": "Arcade: Blocking Dead",
+            "task": "Убить 100 зомби в Blocking Dead."
+        },
+        {
+            "id": 25,
+            "code": "Arcade.wins_dayone",
+            "req": 3,
+            "game": "Arcade: Blocking Dead",
+            "task": "Выиграть в Blocking Dead 3 раза."
+        },
+        {
+            "id": 26,
+            "code": "Arcade.kills_oneinthequiver",
+            "req": 10,
+            "game": "Arcade: Bounty Hunters",
+            "task": "Убить 10 игроков в Bounty Hunters."
+        },
+        {
+            "id": 27,
+            "code": "Arcade.kills_dragonwars2",
+            "req": 10,
+            "game": "Arcade: Dragon Wars",
+            "task": "Убить 10 игроков в Dragon Wars."
+        },
+        {
+            "id": 28,
+            "code": "Arcade.blocks_destroyed_ender",
+            "req": 150,
+            "game": "Arcade: Ender Spleef",
+            "task": "Разрушить 150 блоков в Ender Spleef."
+        },
+        {
+            "id": 29,
+            "code": "Arcade.animal_wins_farm_hunt",
+            "req": 2,
+            "game": "Arcade: Farm Hunt",
+            "task": "Выиграть 2 раза за животных в Farm Hunt."
+        },
+        {
+            "id": 30,
+            "code": "Arcade.kills_farm_hunt",
+            "req": 5,
+            "game": "Arcade: Farm Hunt",
+            "task": "Сделать 5 убийств в Farm Hunt."
+        },
+        {
+            "id": 31,
+            "code": "Arcade.prop_hunt_seeker_wins_hide_and_seek",
+            "req": 2,
+            "game": "Arcade: Hide and Seek",
+            "task": "Выиграть за искателя 2 раза в Hide and Seek: Prop Hunt."
+        },
+        {
+            "id": 32,
+            "code": "Arcade.party_pooper_hider_wins_hide_and_seek",
+            "req": 2,
+            "game": "Arcade: Hide and Seek",
+            "task": "Выиграть за прячещугося 2 раза в Hide and Seek: Party Pooper."
+        },
+        {
+            "id": 33,
+            "code": "Arcade.wins_hole_in_the_wall",
+            "req": 2,
+            "game": "Arcade: Hole in the Wall",
+            "task": "Выиграть в Hole in the Wall 2 раза."
+        },
+        {
+            "id": 34,
+            "code": "Arcade.rounds_hole_in_the_wall",
+            "req": 30,
+            "game": "Arcade: Hole in the Wall",
+            "task": "Завершите 30 раундов в Hole in the Wall."
+        },
+        {
+            "id": 35,
+            "code": "Arcade.kills_mini_walls",
+            "req": 20,
+            "game": "Arcade: Mini Walls",
+            "task": "Убить 20 игроков в Mini Walls."
+        },
+        {
+            "id": 36,
+            "code": "Arcade.wins_mini_walls",
+            "req": 1,
+            "game": "Arcade: Mini Walls",
+            "task": "Выиграть в Mini Walls 1 раз."
+        },
+        {
+            "id": 37,
+            "code": "Arcade.wins_simon_says",
+            "req": 2,
+            "game": "Arcade: Hypixel Says",
+            "task": "Выиграть в Hypixel Says 2 раза."
+        },
+        {
+            "id": 38,
+            "code": "Arcade.round_wins_simon_says",
+            "req": 20,
+            "game": "Arcade: Hypixel Says",
+            "task": "Занять первое место в 20 раундах в Hypixel Says."
+        },
+        {
+            "id": 39,
+            "code": "Duels.wins",
+            "req": 30,
+            "game": "Duels",
+            "task": "Победить в Duels 30 раз."
+        },
+        {
+            "id": 40,
+            "code": "Duels.kills",
+            "req": 30,
+            "game": "Duels",
+            "task": "Убить 30 игроков в Duels."
+        },
+        {
+            "id": 41,
+            "code": "Duels.sw_duel_wins",
+            "req": 20,
+            "game": "Duels",
+            "task": "Выиграть в SkyWars Duels 20 раз."
+        },
+        {
+            "id": 42,
+            "code": "Duels.parkour_eight_wins",
+            "req": 2,
+            "game": "Duels",
+            "task": "Выиграть в Parkour Duels 2 раза."
+        },
+        {
+            "id": 43,
+            "code": "Duels.goals",
+            "req": 20,
+            "game": "Duels",
+            "task": "Забить 20 голов в The Bridge."
+        },
+        {
+            "id": 44,
             "code": "TNTGames.wins",
-            "name": "Бум!",
+            "req": 5,
+            "game": "TNT Games",
+            "task": "Выиграть в TNT Games 5 раз."
+        },
+        {
+            "id": 45,
+            "code": "TNTGames.wins_tntrun",
+            "req": 1,
+            "game": "TNT Games",
+            "task": "Выиграть в TNT Run 1 раз."
+        },
+        {
+            "id": 46,
+            "code": "TNTGames.points_capture",
             "req": 10,
             "game": "TNT Games",
+            "task": "Помочь захватить 10 точек в TNT Wizards."
+        },
+        {
+            "id": 47,
+            "code": "TNTGames.kills_capture",
+            "req": 20,
+            "game": "TNT Games",
+            "task": "Убить 20 игроков в TNT Wizards."
+        },
+        {
+            "id": 48,
+            "code": "Pit.pit_stats_ptl.kills",
+            "req": 20,
+            "game": "The Pit",
+            "task": "Убить 20 игроков в The Pit."
+        },
+        {
+            "id": 49,
+            "code": "Pit.pit_stats_ptl.contracts_completed",
+            "req": 3,
+            "game": "The Pit",
+            "task": "Выполнить 3 контракта в The Pit."
+        },
+        {
+            "id": 50,
+            "code": "Pit.pit_stats_ptl.cash_earned",
+            "req": 10000,
+            "game": "The Pit",
+            "task": "Заработать 10.000 золота в The Pit."
+        },
+        {
+            "id": 51,
+            "code": "BuildBattle.wins",
+            "req": 1,
+            "game": "Build Battle",
+            "task": "Выиграть 1 игру в Build Battle."
+        },
+        {
+            "id": 52,
+            "code": "BuildBattle.correct_guesses",
+            "req": 20,
+            "game": "Build Battle",
+            "task": "Отгадать 20 построек в Guess the Build."
+        },
+        {
+            "id": 53,
+            "code": "MCGO.game_wins",
+            "req": 1,
+            "game": "Cops and Crims",
+            "task": "Выиграть 1 игру в Cops and Crims Defusal."
+        },
+        {
+            "id": 54,
+            "code": "MCGO.game_wins_deathmatch",
+            "req": 2,
+            "game": "Cops and Crims",
+            "task": "Выиграть 2 игры в Cops and Crims Team Deathmatch."
+        },
+        {
+            "id": 55,
+            "code": "MCGO.headshot_kills",
+            "req": 20,
+            "game": "Cops and Crims",
+            "task": "Сделать 20 убийств в голову в Cops and Crims."
+        },
+        {
+            "id": 56,
+            "code": "MCGO.kills_deathmatch",
+            "req": 30,
+            "game": "Cops and Crims",
+            "task": "Сделать 30 убийств в Cops and Crims Team Deathmatch."
+        },
+        {
+            "id": 57,
+            "code": "HungerGames.chests_opened",
+            "req": 30,
+            "game": "Blitz SG",
+            "task": "Открыть 30 сундуков в Blitz SG."
+        },
+        {
+            "id": 58,
+            "code": "Quake.kills",
+            "req": 15,
+            "game": "Quakecraft",
+            "task": "Сделать 15 убийств в Quakecraft."
+        },
+        {
+            "id": 59,
+            "code": "Paintball.kills",
+            "req": 30,
+            "game": "Paintball",
+            "task": "Сделать 30 убийств в Paintball."
+        },
+        {
+            "id": 60,
+            "code": "Walls.kills",
+            "req": 5,
+            "game": "The Walls",
+            "task": "Сделать 5 убийств в The Walls."
+        },
+        {
+            "id": 61,
+            "code": "WoolGames.wool_wars.stats.classes.tank.kills",
+            "req": 10,
+            "game": "Wool Wars",
+            "task": "Сделать 10 убийств в Wool Wars, играя за класс \"Танк\"."
+        },
+        {
+            "id": 62,
+            "code": "WoolGames.wool_wars.stats.wins",
+            "req": 5,
+            "game": "Wool Wars",
+            "task": "Выиграть 5 игр в Wool Wars."
+        },
+        {
+            "id": 63,
+            "code": "WoolGames.wool_wars.stats.kills",
+            "req": 30,
+            "game": "Wool Wars",
+            "task": "Сделать 30 убийств в Wool Wars."
+        },
+        {
+            "id": 64,
+            "code": "WoolGames.wool_wars.stats.blocks_broken",
+            "req": 30,
+            "game": "Wool Wars",
+            "task": "Разрушить 30 блоков в Wool Wars."
+        },
+        {
+            "id": 65,
+            "code": "WoolGames.wool_wars.stats.powerups_gotten",
+            "req": 20,
+            "game": "Wool Wars",
+            "task": "Собрать 20 усилений в Wool Wars."
+        }
+    ],
+    "rewards": [
+        {
+            "reward": "819930814388240385",
+            "chance": 50
+        },
+        {
+            "reward": "510932601721192458",
+            "chance": 120
+        },
+        {
+            "reward": "521248091853291540",
+            "chance": 180
+        },
+        {
             "reward": "992820494900412456",
-            "task": "Выиграть в TNT Games 10 раз."
+            "chance": 200
+        },
+        {
+            "reward": "584673040470769667",
+            "chance": 200
+        },
+        {
+            "reward": "983435186920366100",
+            "chance": 150
+        },
+        {
+            "reward": "595966177969176579",
+            "chance": 69
+        },
+        {
+            "reward": "781069821953441832",
+            "chance": 30
+        },
+        {
+            "reward": "992820488298578041",
+            "chance": 1
         }
     ]
 }
