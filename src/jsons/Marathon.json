@@ -1,116 +1,669 @@
 {
-    "ids": [
-        {
-            "id": -1,
-            "code": "SkyClash.coins",
-            "req": 999999999,
-            "stage": 0,
-            "game": "НЕ АКТИВИРОВАН"
-        },
-        {
-            "id": 1,
-            "code": "SkyWars.wins",
-            "req": 10,
-            "stage": 1,
-            "game": "SkyWars"
-        },
-        {
-            "id": 2,
-            "code": "Duels.bridge_duel_wins",
-            "req": 10,
-            "stage": 1,
-            "game": "The Bridge Duels"
-        },
-        {
-            "id": 3,
-            "code": "MurderMystery.wins",
-            "req": 30,
-            "stage": 1,
-            "game": "Murder Mystery"
-        },
-        {
-            "id": 4,
-            "code": "TNTGames.wins_tntrun",
-            "req": 10,
-            "stage": 2,
-            "game": "TNT Run"
-        },
-        {
-            "id": 5,
-            "code": "Bedwars.wins_bedwars",
-            "req": 10,
-            "stage": 2,
-            "game": "Bed Wars"
-        },
-        {
-            "id": 6,
-            "code": "Arcade.pixel_party.wins",
-            "req": 10,
-            "stage": 2,
-            "game": "Pixel Party"
-        },
-        {
-            "id": 7,
-            "code": "VampireZ.human_wins",
-            "req": 10,
-            "stage": 3,
-            "game": "VampireZ"
-        },
-        {
-            "id": 8,
-            "code": "Arcade.wins_simon_says",
-            "req": 10,
-            "stage": 3,
-            "game": "Hypixel Says"
-        },
-        {
-            "id": 9,
-            "code": "BuildBattle.wins",
-            "req": 10,
-            "stage": 3,
-            "game": "Build Battle"
-        },
-        {
-            "id": 10,
-            "code": "WoolGames.wool_wars.stats.wins",
-            "req": 10,
-            "stage": 4,
-            "game": "Wool Wars"
-        },
-        {
-            "id": 11,
-            "code": "Arcade.wins_farm_hunt",
-            "req": 10,
-            "stage": 4,
-            "game": "Farm Hunt"
-        },
-        {
-            "id": 12,
-            "code": "MCGO.game_wins",
-            "req": 10,
-            "stage": 4,
-            "game": "Cops and Crims"
-        },
-        {
-            "id": 13,
-            "code": "Arcade.wins_zombies",
-            "req": 1,
-            "stage": 5,
-            "game": "Zombies"
-        },
-        {
-            "id": 14,
-            "code": "Walls.wins",
-            "req": 1,
-            "stage": 5,
-            "game": "The Walls"
-        },
-        {
-            "id": 15,
-            "code": "Battleground.wins",
-            "req": 1,
-            "stage": 5,
-            "game": "Warlords"
-        }
+    "type1": {
+        "ids": [
+            {
+                "id": -1,
+                "code": "SkyClash.coins",
+                "req": 999999999,
+                "stage": 0,
+                "game": "НЕ АКТИВИРОВАН",
+                "description": ""
+            },
+            {
+                "id": 1,
+                "code": "SkyWars.wins",
+                "req": 10,
+                "stage": 1,
+                "game": "SkyWars",
+                "description": "Сделать 10 побед в SkyWars"
+            },
+            {
+                "id": 2,
+                "code": "BuildBattle.wins",
+                "req": 5,
+                "stage": 1,
+                "game": "Build Battle",
+                "description": "Сделать 5 побед в Build Battle"
+            },
+            {
+                "id": 3,
+                "code": "MurderMystery.wins",
+                "req": 30,
+                "stage": 1,
+                "game": "Murder Mystery",
+                "description": "Сделать 30 побед в Murder Mystery"
+            },
+            {
+                "id": 4,
+                "code": "TNTGames.wins_tntrun",
+                "req": 5,
+                "stage": 2,
+                "game": "TNT Run",
+                "description": "Сделать 5 побед в TNT Run"
+            },
+            {
+                "id": 5,
+                "code": "Battleground.wins",
+                "req": 1,
+                "stage": 2,
+                "game": "Warlords",
+                "description": "Сделать 1 победу в Warlords"
+            },
+            {
+                "id": 6,
+                "code": "Arcade.pixel_party.wins",
+                "req": 10,
+                "stage": 2,
+                "game": "Pixel Party",
+                "description": "Сделать 10 побед в Pixel Party"
+            },
+            {
+                "id": 7,
+                "code": "VampireZ.human_wins",
+                "req": 5,
+                "stage": 3,
+                "game": "VampireZ",
+                "description": "Сделать 5 побед в VampireZ за выжившего"
+            },
+            {
+                "id": 8,
+                "code": "Arcade.wins_simon_says",
+                "req": 5,
+                "stage": 3,
+                "game": "Hypixel Says",
+                "description": "Сделать 5 побед в Hypixel Says"
+            },
+            {
+                "id": 9,
+                "code": "Duels.bridge_duel_wins",
+                "req": 10,
+                "stage": 3,
+                "game": "The Bridge Duels",
+                "description": "Сделать 10 побед в The Bridge Duels Solo"
+            },
+            {
+                "id": 10,
+                "code": "Walls.wins",
+                "req": 1,
+                "stage": 4,
+                "game": "The Walls",
+                "description": "Сделать 1 победу в The Walls"
+            },
+            {
+                "id": 11,
+                "code": "Arcade.wins_farm_hunt",
+                "req": 5,
+                "stage": 4,
+                "game": "Farm Hunt",
+                "description": "Сделать 5 побед в Farm Hunt"
+            },
+            {
+                "id": 12,
+                "code": "MCGO.game_wins",
+                "req": 5,
+                "stage": 4,
+                "game": "Cops and Crims",
+                "description": "Сделать 5 побед в Cops and Crims"
+            },
+            {
+                "id": 13,
+                "code": "Arcade.wins_zombies",
+                "req": 1,
+                "stage": 5,
+                "game": "Zombies",
+                "description": "Сделать 1 победу в Zombies"
+            },
+            {
+                "id": 14,
+                "code": "WoolGames.wool_wars.stats.wins",
+                "req": 10,
+                "stage": 5,
+                "game": "Wool Wars",
+                "description": "Сделать 10 побед в Wool Wars"
+            },
+            {
+                "id": 15,
+                "code": "Bedwars.wins_bedwars",
+                "req": 10,
+                "stage": 5,
+                "game": "Bed Wars",
+                "description": "Сделать 10 побед в Bed Wars"
+            }
+        ]
+    },
+    "type2": {
+        "ids": [
+            {
+                "id": -1,
+                "code": "SkyClash.coins",
+                "req": 999999999,
+                "stage": 0,
+                "game": "НЕ АКТИВИРОВАН",
+                "description": ""
+            },
+            {
+                "id": 1,
+                "code": "Arcade.dropper.wins",
+                "req": 5,
+                "stage": 1,
+                "game": "Dropper",
+                "description": "Сделать 5 побед в Dropper"
+            },
+            {
+                "id": 2,
+                "code": "WoolGames.wool_wars.stats.wins",
+                "req": 10,
+                "stage": 1,
+                "game": "Wool Wars",
+                "description": "Сделать 10 побед в Wool Wars"
+            },
+            {
+                "id": 3,
+                "code": "Pit.pit_stats_ptl.kills",
+                "req": 30,
+                "stage": 1,
+                "game": "The Pit",
+                "description": "Сделать 30 убийств в The Pit"
+            },
+            {
+                "id": 4,
+                "code": "Arcade.woolhunt_participated_wins",
+                "req": 3,
+                "stage": 2,
+                "game": "Capture The Wool",
+                "description": "Сделать 3 победы в Capture The Wool"
+            },
+            {
+                "id": 5,
+                "code": "HungerGames.kills",
+                "req": 10,
+                "stage": 2,
+                "game": "Blitz SG",
+                "description": "Сделать 10 убийств в Blitz SG"
+            },
+            {
+                "id": 6,
+                "code": "Quake.kills",
+                "req": 15,
+                "stage": 2,
+                "game": "Quakecraft",
+                "description": "Сделать 15 убийств в Quakecraft"
+            },
+            {
+                "id": 7,
+                "code": "Bedwars.wins_bedwars",
+                "req": 20,
+                "stage": 3,
+                "game": "Bed Wars",
+                "description": "Сделать 20 побед в Bed Wars"
+            },
+            {
+                "id": 8,
+                "code": "SkyWars.wins",
+                "req": 20,
+                "stage": 3,
+                "game": "SkyWars",
+                "description": "Сделать 20 побед в SkyWars"
+            },
+            {
+                "id": 9,
+                "code": "Duels.wins",
+                "req": 40,
+                "stage": 3,
+                "game": "Duels",
+                "description": "Сделать 40 побед в Duels"
+            },
+            {
+                "id": 10,
+                "code": "Walls.wins",
+                "req": 50,
+                "stage": 4,
+                "game": "Murder Mystery",
+                "description": "Сделать 50 убийств в Murder Mystery"
+            },
+            {
+                "id": 11,
+                "code": "Arcade.pixel_party.rounds_completed",
+                "req": 30,
+                "stage": 4,
+                "game": "Pixel Party",
+                "description": "Прожить в Pixel Party 30 раундов"
+            },
+            {
+                "id": 12,
+                "code": "TNTGames.wins",
+                "req": 10,
+                "stage": 4,
+                "game": "TNT Games",
+                "description": "Сделать 10 побед в TNT Games"
+            },
+            {
+                "id": 13,
+                "code": "Paintball.wins",
+                "req": 1,
+                "stage": 5,
+                "game": "Paintball",
+                "description": "Сделать 1 победу в Paintball"
+            },
+            {
+                "id": 14,
+                "code": "VampireZ.human_wins",
+                "req": 1,
+                "stage": 5,
+                "game": "VampireZ",
+                "description": "Сделать 1 победу в VampireZ за выжившего"
+            },
+            {
+                "id": 15,
+                "code": "BuildBattle.wins",
+                "req": 3,
+                "stage": 5,
+                "game": "Build Battle",
+                "description": "Сделать 3 победы в Build Battle"
+            }
+        ]
+    },
+    "type3": {
+        "ids": [
+            {
+                "id": -1,
+                "code": "SkyClash.coins",
+                "req": 999999999,
+                "stage": 0,
+                "game": "НЕ АКТИВИРОВАН",
+                "description": ""
+            },
+            {
+                "id": 1,
+                "code": "Duels.wins",
+                "req": 50,
+                "stage": 1,
+                "game": "Duels",
+                "description": "Сделать 50 побед в Duels"
+            },
+            {
+                "id": 2,
+                "code": "SkyWars.kills",
+                "req": 50,
+                "stage": 1,
+                "game": "SkyWars",
+                "description": "Сделать 50 убийств в SkyWars"
+            },
+            {
+                "id": 3,
+                "code": "Bedwars.final_kills_bedwars",
+                "req": 30,
+                "stage": 1,
+                "game": "Bed Wars",
+                "description": "Сделать 30 финальных убийств в Bed Wars"
+            },
+            {
+                "id": 4,
+                "code": "MCGO.bombs_defused",
+                "req": 1,
+                "stage": 2,
+                "game": "Cops and Crims",
+                "description": "Обезвредить 1 бомбу в Cops and Crims"
+            },
+            {
+                "id": 5,
+                "code": "Arcade.wins_farm_hunt",
+                "req": 1,
+                "stage": 2,
+                "game": "Farm Hunt",
+                "description": "Сделать 1 победу в Farm Hunt"
+            },
+            {
+                "id": 6,
+                "code": "Arcade.wins_mini_walls",
+                "req": 1,
+                "stage": 2,
+                "game": "Mini Walls",
+                "description": "Сделать 1 победу в Mini Walls"
+            },
+            {
+                "id": 7,
+                "code": "VampireZ.human_wins",
+                "req": 2,
+                "stage": 3,
+                "game": "VampireZ",
+                "description": "Сделать 2 победы в VampireZ за выжившего"
+            },
+            {
+                "id": 8,
+                "code": "Quake.wins",
+                "req": 2,
+                "stage": 3,
+                "game": "Quakecraft",
+                "description": "Сделать 2 победы в Quakecraft"
+            },
+            {
+                "id": 9,
+                "code": "Paintball.wins",
+                "req": 2,
+                "stage": 3,
+                "game": "Paintball",
+                "description": "Сделать 2 победы в Paintball"
+            },
+            {
+                "id": 10,
+                "code": "BuildBattle.wins",
+                "req": 1,
+                "stage": 4,
+                "game": "Build Battle",
+                "description": "Сделать 1 победу в Build Battle"
+            },
+            {
+                "id": 11,
+                "code": "WoolGames.wool_wars.stats.kills",
+                "req": 40,
+                "stage": 4,
+                "game": "Wool Wars",
+                "description": "Сделать 40 убийств в Wool Wars"
+            },
+            {
+                "id": 12,
+                "code": "Pit.pit_stats_ptl.cash_earned",
+                "req": 10000,
+                "stage": 4,
+                "game": "The Pit",
+                "description": "Заработать 10.000 золота в The Pit"
+            },
+            {
+                "id": 13,
+                "code": "Arcade.wins_zombies",
+                "req": 1,
+                "stage": 5,
+                "game": "Zombies",
+                "description": "Сделать 1 победу в Zombies"
+            },
+            {
+                "id": 14,
+                "code": "TNTGames.wins_tntag",
+                "req": 1,
+                "stage": 5,
+                "game": "TNT Tag",
+                "description": "Сделать 1 победу в TNT Tag"
+            },
+            {
+                "id": 15,
+                "code": "Walls.wins",
+                "req": 1,
+                "stage": 5,
+                "game": "The Walls",
+                "description": "Сделать 1 победу в The Walls"
+            }
+        ]
+    },
+    "type4": {
+        "ids": [
+            {
+                "id": -1,
+                "code": "SkyClash.coins",
+                "req": 999999999,
+                "stage": 0,
+                "game": "НЕ АКТИВИРОВАН",
+                "description": ""
+            },
+            {
+                "id": 1,
+                "code": "Arcade.wins_hole_in_the_wall",
+                "req": 5,
+                "stage": 1,
+                "game": "Hole in the Wall",
+                "description": "Сделать 5 побед в Hole in the Wall"
+            },
+            {
+                "id": 2,
+                "code": "Bedwars.wins_bedwars",
+                "req": 10,
+                "stage": 1,
+                "game": "Bed Wars",
+                "description": "Сделать 10 побед в Bed Wars"
+            },
+            {
+                "id": 3,
+                "code": "SkyWars.wins",
+                "req": 20,
+                "stage": 1,
+                "game": "SkyWars",
+                "description": "Сделать 20 побед в SkyWars"
+            },
+            {
+                "id": 4,
+                "code": "Pit.pit_stats_ptl.contracts_completed",
+                "req": 3,
+                "stage": 2,
+                "game": "The Pit",
+                "description": "Выполнить 3 контракта в The Pit"
+            },
+            {
+                "id": 5,
+                "code": "Arcade.wins_dayone",
+                "req": 3,
+                "stage": 2,
+                "game": "Blocking Dead",
+                "description": "Сделать 3 победы в Blocking Dead"
+            },
+            {
+                "id": 6,
+                "code": "MCGO.game_wins_deathmatch",
+                "req": 3,
+                "stage": 2,
+                "game": "Cops and Crims: TDM",
+                "description": "Сделать 3 победы в Cops and Crims: Team Deathmatch"
+            },
+            {
+                "id": 7,
+                "code": "TNTGames.wins_tntrun",
+                "req": 5,
+                "stage": 3,
+                "game": "TNT Run",
+                "description": "Сделать 5 побед в TNT Run"
+            },
+            {
+                "id": 8,
+                "code": "Arcade.hider_wins_hide_and_seek",
+                "req": 5,
+                "stage": 3,
+                "game": "Hide and Seek",
+                "description": "Сделать 5 побед за прячещугося в Hide and Seek"
+            },
+            {
+                "id": 9,
+                "code": "WoolGames.wool_wars.stats.wool_placed",
+                "req": 50,
+                "stage": 3,
+                "game": "Wool Wars",
+                "description": "Поставить 50 шерсти в Wool Wars"
+            },
+            {
+                "id": 10,
+                "code": "TNTGames.wins_bowspleef",
+                "req": 5,
+                "stage": 4,
+                "game": "Bow Spleef",
+                "description": "Сделать 5 побед в Bow Spleef"
+            },
+            {
+                "id": 11,
+                "code": "Arcade.kills_dragonwars2",
+                "req": 10,
+                "stage": 4,
+                "game": "Dragon Wars",
+                "description": "Сделать 10 убийств в Dragon Wars"
+            },
+            {
+                "id": 12,
+                "code": "HungerGames.wins",
+                "req": 1,
+                "stage": 4,
+                "game": "Blitz SG",
+                "description": "Сделать 1 победу в Blitz SG"
+            },
+            {
+                "id": 13,
+                "code": "TNTGames.wins_capture",
+                "req": 1,
+                "stage": 5,
+                "game": "TNT Wizards",
+                "description": "Сделать 5 побед в TNT Wizards"
+            },
+            {
+                "id": 14,
+                "code": "Arena.wins",
+                "req": 1,
+                "stage": 5,
+                "game": "Arena Brawl",
+                "description": "Сделать 1 победу в Arena Brawl"
+            },
+            {
+                "id": 15,
+                "code": "Quake.wins",
+                "req": 2,
+                "stage": 5,
+                "game": "Quakecraft",
+                "description": "Сделать 2 победы в Quakecraft"
+            }
+        ]
+    },
+    "type5": {
+        "ids": [
+            {
+                "id": -1,
+                "code": "SkyClash.coins",
+                "req": 999999999,
+                "stage": 0,
+                "game": "НЕ АКТИВИРОВАН",
+                "description": ""
+            },
+            {
+                "id": 1,
+                "code": "Bedwars.wins_bedwars",
+                "req": 10,
+                "stage": 1,
+                "game": "Bed Wars",
+                "description": "Сделать 10 побед в Bed Wars"
+            },
+            {
+                "id": 2,
+                "code": "SkyWars.wins",
+                "req": 10,
+                "stage": 1,
+                "game": "SkyWars",
+                "description": "Сделать 10 побед в SkyWars"
+            },
+            {
+                "id": 3,
+                "code": "MurderMystery.wins_MURDER_ASSASSINS",
+                "req": 10,
+                "stage": 1,
+                "game": "Murder Mystery",
+                "description": "Сделать 10 побед в Murder Mystery Assassins"
+            },
+            {
+                "id": 4,
+                "code": "Duels.parkour_eight_wins",
+                "req": 5,
+                "stage": 2,
+                "game": "Parkour Duels",
+                "description": "Сделать 5 побед в Parkour Duels"
+            },
+            {
+                "id": 5,
+                "code": "Arcade.woolhunt_participated_wins",
+                "req": 5,
+                "stage": 2,
+                "game": "Capture The Wool",
+                "description": "Сделать 5 побед в Capture the Wool"
+            },
+            {
+                "id": 6,
+                "code": "TNTGames.wins_tntrun",
+                "req": 5,
+                "stage": 2,
+                "game": "TNT Run",
+                "description": "Сделать 5 побед в TNT Run"
+            },
+            {
+                "id": 7,
+                "code": "Pit.pit_stats_ptl.kills",
+                "req": 50,
+                "stage": 3,
+                "game": "The Pit",
+                "description": "Сделать 50 убийств в The Pit"
+            },
+            {
+                "id": 8,
+                "code": "WoolGames.wool_wars.stats.kills",
+                "req": 50,
+                "stage": 3,
+                "game": "Wool Wars",
+                "description": "Сделать 50 убийств в Wool Wars"
+            },
+            {
+                "id": 9,
+                "code": "HungerGames.kills",
+                "req": 25,
+                "stage": 3,
+                "game": "Blitz SG",
+                "description": "Сделать 25 убийств в Blitz SG"
+            },
+            {
+                "id": 10,
+                "code": "Quake.wins",
+                "req": 1,
+                "stage": 4,
+                "game": "Quakecraft",
+                "description": "Сделать 1 победу в Quakecraft"
+            },
+            {
+                "id": 11,
+                "code": "Paintball.wins",
+                "req": 1,
+                "stage": 4,
+                "game": "Paintball",
+                "description": "Сделать 1 победу в Paintball"
+            },
+            {
+                "id": 12,
+                "code": "VampireZ.human_wins",
+                "req": 1,
+                "stage": 4,
+                "game": "VampireZ",
+                "description": "Сделать 1 победу в VampireZ за выжившего"
+            },
+            {
+                "id": 13,
+                "code": "Arcade.dropper.wins",
+                "req": 5,
+                "stage": 5,
+                "game": "Dropper",
+                "description": "Сделать 5 побед в Dropper"
+            },
+            {
+                "id": 14,
+                "code": "Arcade.wins_dayone",
+                "req": 5,
+                "stage": 5,
+                "game": "Blocking Dead",
+                "description": "Сделать 5 побед в Blocking Dead"
+            },
+            {
+                "id": 15,
+                "code": "Arcade.wins_throw_out",
+                "req": 5,
+                "stage": 5,
+                "game": "Throw Out",
+                "description": "Сделать 5 побед в Throw Out"
+            }
+        ]
+    },
+    "types": [
+        "type1",
+        "type2",
+        "type3",
+        "type4",
+        "type5"
     ]
 }

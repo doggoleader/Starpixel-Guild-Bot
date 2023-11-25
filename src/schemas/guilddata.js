@@ -9,6 +9,9 @@ const Guild = new mongoose.Schema({
         guessed: { type: Boolean, default: false }
     },
     act_exp_boost: { type: Number, default: 1 },
+    marathon: {
+        marathon_type: { type: String, default: 'type1' }
+    },
     global_settings: {
         shop_prices: { type: Number, default: 1 },
         no_license_applications: { type: String, default: "disabled" }

@@ -5,9 +5,11 @@ const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
 const { tasks } = require(`../../../jsons/New Start.json`);
+const prettyMilliseconds = require(`pretty-ms`)
 const fetch = require(`node-fetch`);
 const { getProperty } = require('../../../functions');
-const veterans = require(`../../../jsons/Veterans.json`)
+const veterans = require(`../../../jsons/Veterans.json`);
+const { menuCheckVeterans } = require('../../../misc_functions/Exporter');
 /**
  * 
  * @param {import("discord.js").StringSelectMenuInteraction} interaction Interaction
@@ -20,6 +22,9 @@ async function execute(interaction, client) {
         await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const { member, user, guild } = interaction;
         const userData = await User.findOne({ userid: user.id, guildid: guild.id })
+        await interaction.message.edit({
+            components: [menuCheckVeterans]
+        })
         if (!userData.onlinemode) return interaction.editReply({
             content: `Вы не можете использовать данное меню, так как у вас нелицензированный аккаунт!`,
             ephemeral: true
@@ -36,12 +41,12 @@ async function execute(interaction, client) {
         }
 
         const action = interaction.values[0];
-        const quest = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.id)
-        if (!quest) return interaction.editReply({
-            content: `Не удалось найти ваш квест!`,
-            ephemeral: true
-        })
         if (action == `info`) {
+            const quest = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.id)
+            if (!quest) return interaction.editReply({
+                content: `Не удалось найти ваш квест!`,
+                ephemeral: true
+            })
             let wins = await getProperty(json_pl.player.stats, quest.code)
             if (!wins) wins = 0
             let fin_res
@@ -54,13 +59,14 @@ async function execute(interaction, client) {
                 .setTimestamp(Date.now())
                 .setDescription(`**Основная информация о вашем задании для ветеранов**
 
-**Задание**: ${quest.name}
+**Игры**: ${quest.game}
 **Требование**: ${quest.task}
 **Необходимое количество побед**: ${quest.req}
 
 **Побед в режиме сейчас**: ${wins}
 **Побед на конец задания**: ${userData.quests.veterans.activated.required}
 **Осталось побед**: ${fin_res}
+**Награда**: <@&${userData.quests.veterans.activated.reward}>
 
 **Статус**: \`${userData.quests.veterans.activated.status ? `✅ Завершено` : `❌ Не завершено`}\``)
 
@@ -68,6 +74,11 @@ async function execute(interaction, client) {
                 embeds: [embed]
             })
         } else if (action == `end`) {
+            const quest = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.id)
+            if (!quest) return interaction.editReply({
+                content: `Не удалось найти ваш квест!`,
+                ephemeral: true
+            })
             let wins = await getProperty(json_pl.player.stats, quest.code)
             if (!wins) wins = 0
             if (userData.quests.veterans.activated.status == true) return interaction.editReply({
@@ -79,15 +90,15 @@ async function execute(interaction, client) {
                 ephemeral: true
             })
             let id = userData.quests.veterans.activated.id
-            if (member.roles.cache.has(quest.reward)) {
+            if (member.roles.cache.has(userData.quests.veterans.activated.reward)) {
                 if (userData.stacked_items.length < userData.upgrades.inventory_size) {
-                    await userData.stacked_items.push(quest.reward)
+                    await userData.stacked_items.push(userData.quests.veterans.activated.reward)
                 } else return interaction.editReply({
                     content: `Мы не можем добавить предмет в ваш инвентарь, так как он переполнен. Чтобы увеличить вместительность своего инвентаря, перейдите в канал <#1141026403765211136>!`,
                     ephemeral: true
                 })
             } else {
-                await member.roles.add(quest.reward)
+                await member.roles.add(userData.quests.veterans.activated.reward)
             }
 
 
@@ -101,10 +112,11 @@ async function execute(interaction, client) {
                 .setColor(Number(linksInfo.bot_color))
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
-                .setDescription(`**Вы выполнили задание "${quest.name}"!**
+                .setDescription(`**Вы выполнили задание для ветеранов!**
 
+**Задание**: ${quest.task}
 **Игра**: ${quest.game}
-**Награда**: <@&${quest.reward}>
+**Награда**: <@&${userData.quests.veterans.activated.reward}>
 **Текущее количество побед**: ${wins}`)
             await interaction.editReply({
                 embeds: [embed]
@@ -113,12 +125,95 @@ async function execute(interaction, client) {
 
             await interaction.guild.channels.cache.get(ch_list.main)
                 .send({
-                    embeds: [embed.setDescription(`**${member} выполнил задание "${quest.name}"!**
+                    embeds: [embed.setDescription(`**${member} выполнил задание для ветеранов!**
 
+**Задание**: ${quest.task}
 **Игра**: ${quest.game}
-**Награда**: <@&${quest.reward}>
+**Награда**: <@&${userData.quests.veterans.activated.reward}>
 **Текущее количество побед**: ${wins}`)]
                 })
+        } else if (action == `start`) {
+
+            if (userData.quests.veterans.activated.status == false) return interaction.editReply({
+                content: `Вы ещё не выполнили текущее задание! Если вы не можете его выполнить, вы можете пропустить задание, однако оно не будет зачтено вам в статистику и вы не получите награду!`,
+                ephemeral: true
+            })
+             
+            if (userData.upgrades.veterans_quests <= 0) return interaction.editReply({
+                content: `Вы уже выполнили максимально возможное количество заданий для ветеранов на этой неделе! Если вы хотите выполнять больше заданий, перейдите в канал <#1141026403765211136>!`,
+                ephemeral: true
+            })
+            const loot = veterans.rewards
+            let sum = 0;
+            for (let i = 0; i < loot.length; i++) {
+                sum += loot[i].chance
+            }
+            let r_loot = Math.floor(Math.random() * sum);
+            let i = 0;
+            for (let s = chances[0]; s <= r_loot; s += chances[i]) {
+                i++;
+            }
+            let allChances = 0;
+            for (let loo of loot) {
+                allChances += loo.chance
+            }
+            let finalChance1 = ((loot[i].chance / allChances) * 100).toFixed(1)
+
+            const quest = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+            let wins = await getProperty(json.player.stats, quest.code)
+            if (!wins) wins = 0
+
+            let vetQuest = userData.quests.veterans.activated
+            vetQuest.id = quest.id
+            vetQuest.required = wins + quest.req
+            vetQuest.status = false
+            vetQuest.reward = loot[i].reward
+            userData.upgrades.veterans_quests -= 1
+
+
+            userData.save()
+            const embed = new EmbedBuilder()
+                .setTitle(`Пользователь ${user.username} начал задание для ветеранов!`)
+                .setColor(Number(linksInfo.bot_color))
+                .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
+                .setTimestamp(Date.now())
+                .setDescription(`Вы начали выполнять задание для ветеранов!
+Ваше задание: ${quest.task}                
+Игра: ${quest.game}
+Количество побед на начало: ${wins}
+Количество побед на конец: ${vetQuest.required}
+Награда: <@&${loot[i].reward}> (Шанс: ${finalChance1}%)
+Вы можете проверить его с помощью меню в сообщении выше!
+
+**Осталось выполнить заданий на этой неделе: ${userData.upgrades.veterans_quests}`)
+            await interaction.editReply({
+                embeds: [embed]
+            })
+        } else if (action == `skip`) {
+            if (userData.cooldowns.veterans_quest_skip > Date.now()) return interaction.editReply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(Number(linksInfo.bot_color))
+                        .setAuthor({
+                            name: `Вы не можете использовать эту команду`
+                        })
+                        .setDescription(`Данная функция сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.veterans_quest_skip - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                ],
+            })
+
+            if (userData.quests.veterans.activated.status == true) return interaction.editReply({
+                content: `Вы уже выполнили задание или пропустили его! Теперь вы можете выбрать следующее задание!`,
+                ephemeral: true
+            })
+
+            userData.cooldowns.veterans_quest_skip = Date.now() + 1000 * 60 * 60 * 8 
+            userData.quests.veterans.activated.status = true
+            userData.save()
+
+            await interaction.editReply({
+                content: `Вы успешно пропустили текущее задание! Теперь вы можете выбрать следующее. Помните, что повторно пропустить задание вы сможете только через 8 часов!`,
+                ephemeral: true
+            })
         }
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)

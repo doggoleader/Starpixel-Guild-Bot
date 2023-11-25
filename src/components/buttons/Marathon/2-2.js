@@ -45,7 +45,9 @@ async function execute(interaction, client) {
             json = await response.json()
         }
         let id = 5
-        const quest = info.ids.find(i => i.id == id)
+        const guildData = await Guild.findOne({ id: interaction.guild.id })
+        const type = guildData.marathon.marathon_type;
+        const quest = info[type].ids.find(i => i.id == id)
         let cur_wins = await getProperty(json.player.stats, quest.code)
         if (!cur_wins) cur_wins = 0
 
@@ -55,7 +57,7 @@ async function execute(interaction, client) {
         userData.quests.marathon.activated.required = cur_wins + quest.req
         userData.save()
         await interaction.reply({
-            content: `Во втором этапе марафона вы выбрали \`Bed Wars\`. Сделайте ${quest.req} побед!`,
+            content: `Во втором этапе марафона вы выбрали \`${quest.game}\`. Сделайте ${quest.req} побед!`,
             ephemeral: true
         })
     } catch (e) {

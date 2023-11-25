@@ -10,7 +10,7 @@ const { getProperty } = require('../../../functions');
  * 
  * @param {import("discord.js").StringSelectMenuInteraction} interaction Interaction
  * @param {import("../../../misc_functions/Exporter").StarpixelClient} client Client
- * 
+ * @deprecated Since v2.18.0. Everything now is in Veterans Check Menu.
  * Interaction main function
  */
 async function execute(interaction, client) {

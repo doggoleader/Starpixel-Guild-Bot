@@ -6,6 +6,7 @@ const api = process.env.hypixel_apikey
 const { tasks } = require(`../../../jsons/New Start.json`);
 const fetch = require(`node-fetch`);
 const { getProperty } = require('../../../functions');
+const { selectTaskNewStart, menuCheckNewStart } = require('../../../misc_functions/Exporter');
 /**
  * 
  * @param {import("discord.js").StringSelectMenuInteraction} interaction Interaction
@@ -19,6 +20,12 @@ async function execute(interaction, client) {
             userid: interaction.user.id,
             guildid: interaction.guild.id
         })
+
+        await interaction.message.edit({
+            components: [selectTaskNewStart, menuCheckNewStart]
+        })
+
+
         if (!userData.onlinemode) return interaction.reply({
             content: `Вы не можете выполнить брать квесты, так как у вас нелицензированный аккаунт!`,
             ephemeral: true

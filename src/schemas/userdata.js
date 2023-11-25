@@ -133,6 +133,8 @@ const User = new mongoose.Schema({
         su_quest: { type: Date, default: Date.now() },
         ny_santa_rew: { type: Date, default: Date.now() },
 
+        veterans_quest_skip: { type: Date, default: Date.now() },
+
         mc_link: { type: Date, default: Date.now() },
         mc_unlink: { type: Date, default: Date.now() },
     },
@@ -182,11 +184,13 @@ const User = new mongoose.Schema({
         inventory_size: { type: Number, default: 10 },
         max_purchases: { type: Number, default: 15 },
         max_sells: { type: Number, default: 15 },
+        veterans_quests: { type: Number, default: 10 },
 
         inventory_size_tier: { type: Number, default: 1 },
         max_purchases_tier: { type: Number, default: 1 },
         max_sells_tier: { type: Number, default: 1 },
         bank_account_tier: { type: Number, default: 1 },
+        veterans_quests_tier: { type: Number, default: 1}
     },
     daily: {
         purchases: { type: Number, default: 0 },
@@ -316,12 +320,12 @@ const User = new mongoose.Schema({
                 description: { type: String, default: `` }
             },
             available_packs: {
-                pack_1: { type: Number, default: 0},
-                pack_2: { type: Number, default: 0},
-                pack_3: { type: Number, default: 0},
-                pack_4: { type: Number, default: 0},
+                pack_1: { type: Number, default: 0 },
+                pack_2: { type: Number, default: 0 },
+                pack_3: { type: Number, default: 0 },
+                pack_4: { type: Number, default: 0 },
             },
-            gifted_packs: { type: Number, default: 0 }, 
+            gifted_packs: { type: Number, default: 0 },
             snowflakes: { type: Number, default: 0 },
             bingo_rewards: [String],
             bingo: [
@@ -416,7 +420,8 @@ const User = new mongoose.Schema({
             activated: {
                 id: { type: Number, default: -1 },
                 required: { type: Number, default: Infinity },
-                status: { type: Boolean, default: true }
+                status: { type: Boolean, default: true },
+                reward: { type: String, default: `` }
             }
         },
         mars: {

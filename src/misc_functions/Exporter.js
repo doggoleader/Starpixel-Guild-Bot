@@ -24,8 +24,9 @@ const { GuildProgress } = require(`./Classes/Profile/progress_class`)
 const { StarpixelClient } = require(`./Classes/System/StarpixelClient`)
 const { Profile } = require(`./Classes/Profile/Profile`)
 const { Emotions } = require(`./Classes/Items/Emotions`)
+const { menuCheckMarathon, menuCheckNewStart, menuCheckVeterans, selectTaskNewStart } = require(`./Premade Interactions & Embeds/Quests Menus`)
 const { lb_newyear, stats_newyear, gift_newyear, quests_newyear, lb_halloween, stats_halloween, quests_halloween, lb_easter, stats_easter, quests_easter, lb_summer,
-    stats_summer, quests_summer} = require(`./Premade Interactions & Embeds/Seasonal Main Channels Components`)
+    stats_summer, quests_summer } = require(`./Premade Interactions & Embeds/Seasonal Main Channels Components`)
 
 module.exports = {
     Activity,
@@ -49,6 +50,10 @@ module.exports = {
     SeasonalWinner,
     embed,
     selectmenu,
+    menuCheckMarathon, 
+    menuCheckNewStart, 
+    menuCheckVeterans, 
+    selectTaskNewStart,
 
     lb_newyear,
     stats_newyear,
@@ -63,7 +68,7 @@ module.exports = {
     lb_summer,
     stats_summer,
     quests_summer,
-    
+
     GuildProgress,
     UserProfile,
     Profile,

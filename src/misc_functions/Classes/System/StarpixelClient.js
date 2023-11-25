@@ -340,6 +340,7 @@ class StarpixelClient extends Client {
         })
         cron.schedule(`1 0 1 * *`, async () => {
             this.resetMarathon(); //Сброс статистики марафона
+            this.newMarathon(); //Выбор нового марафона
         }, {
             scheduled: true,
             timezone: `Europe/Moscow`
@@ -397,6 +398,9 @@ class StarpixelClient extends Client {
 
     async top_3_gexp() {
         await MCUpdates.top_3_gexp(this.client);
+    }
+    async newMarathon() {
+        await MCUpdates.newMarathon(this.client);
     }
 
 
