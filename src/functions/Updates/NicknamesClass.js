@@ -3,14 +3,15 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const { EmbedBuilder, GuildMember } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { checkPlugin } = require("../../functions");
 const { Temp } = require(`../../schemas/temp_items`)
 const { Guild } = require(`../../schemas/guilddata`)
 
 class UpdatesNicknames {
-    id = 'nicknames';
-    name = `Никнеймы`;
+    /** @private */
+    static id = 'nicknames';
+    /** @private */
+    static name = `Никнеймы`;
 
     /**
      * 

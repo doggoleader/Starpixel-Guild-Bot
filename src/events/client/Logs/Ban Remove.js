@@ -4,13 +4,12 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(ban) {
+async function execute(ban, client) {
     if (ban.partial) {
         try {
             await ban.fetch();
@@ -20,7 +19,6 @@ async function execute(ban) {
             return;
         }
     }
-    const client = ban.client
     const guild = ban.guild
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
@@ -55,7 +53,7 @@ async function execute(ban) {
 Причина: ${ban.reason}
 
 Модератор: ${auditLog.executor}`)
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setTimestamp(Date.now())
         .setThumbnail(ban.user.displayAvatarURL())
 

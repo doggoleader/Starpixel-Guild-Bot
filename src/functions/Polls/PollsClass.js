@@ -3,14 +3,15 @@ const chalk = require(`chalk`)
 const fs = require(`fs`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { changeProperty } = require(`../../functions`)
 const { checkPlugin } = require("../../functions");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder } = require(`discord.js`)
 
 class PollsUpdates {
-    id = 'misc';
-    name = `Разное`
+    /** @private */
+    static id = 'misc';
+    /** @private */
+    static name = `Разное`
     /**
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
      */
@@ -37,7 +38,7 @@ class PollsUpdates {
                 })
                 const embed = new EmbedBuilder()
                     .setTitle(`Результаты голосования`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`**Вопрос**: \`${result.question}\`
 **Сообщение**: [Нажмите здесь](${pollMsg.url})
 

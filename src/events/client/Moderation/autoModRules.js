@@ -3,7 +3,6 @@ const { User } = require(`../../../schemas/userdata`)
 const { ReactionCollector, ChannelType, CategoryChannelChildManager, Collection, PermissionsBitField, AutoModerationRuleTriggerType, AutoModerationActionType } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
 const ch_list = require(`../../../discord structure/channels.json`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "admin",

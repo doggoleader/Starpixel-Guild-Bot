@@ -6,7 +6,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../discord structure/links.json`)
 const ch_list = require(`../../discord structure/channels.json`);
 const { getApplicationTemplates, getPluginName } = require('../../functions');
 const Nodeactyl = require(`nodeactyl`);
@@ -81,7 +80,7 @@ async function execute(interaction, client) {
             )
         let k = 1
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`## Панель управления системами Starpixel
             
 Данная панель управления создана с целью облегчить администрации гильдии управлять различными системами гильдии.
@@ -143,7 +142,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                             )
 
 
-                        const noLicenseEmbed = new EmbedBuilder().setColor(Number(linksInfo.bot_color))
+                        const noLicenseEmbed = new EmbedBuilder().setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление заявками без лицензии
 Позволяет отредактировать возможность вступления участников без лицензии и условия их вступления.
@@ -170,7 +169,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                         let p = guildData.plugins
                         let j = 1;
                         const botPluginsEmbed = new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление плагинами
 Позволяет включать/отключать плагины, обеспечивающие жизнедеятельность бота гильдии.
@@ -261,7 +260,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                         })
                     } else if (value == `seasonal_events`) {
                         const embed = new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление сезонными мероприятиями
 Позволяет включать/отключать сезонные мероприятия в гильдии (без открытия каналов)
@@ -313,7 +312,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                         })
                     } else if (value == 'bot_management') {
                         const embed = new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление ботом
 Позволяет управлять текущим состоянием бота
@@ -358,7 +357,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                         })
                     } else if (value == `user_management`) {
                         const embed = new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление пользователями
 Позволяет управлять пользователями и их ролями
@@ -402,7 +401,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                             )
 
                         const embed = new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление пользователями
 **Функция "Выдать всем роль"**
@@ -455,7 +454,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                         )
 
                     const embed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление пользователями
 **Функция "Выдать всем роль"**
@@ -536,7 +535,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                     guildData.save()
 
                     const embed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление сезонными мероприятиями
 Позволяет включать/отключать сезонные мероприятия в гильдии (без открытия каналов)
@@ -684,7 +683,7 @@ ${k++}. **Управление сезонными мероприятиями.** 
                     let p = guildData.plugins
                     let j = 1;
                     const botPluginsEmbed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setDescription(`## Панель управления системами Starpixel
 ### Раздел: Управление плагинами
 Позволяет включать/отключать плагины, обеспечивающие жизнедеятельность бота гильдии.
@@ -790,28 +789,9 @@ ${k++}. **Управление сезонными мероприятиями.** 
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 

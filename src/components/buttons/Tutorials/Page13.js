@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`)
@@ -33,7 +33,7 @@ async function execute(interaction, client) {
 Вот и подошел к концу краткий гайд по Discord серверу гильдии. Многие возможности не были показаны, так как вам нужен более высокий ранг. Но как только вы достигните его, вы сможете открыть другие каналы, в которых сможете прочитать информацию о тех или иных возможностях гильдии. Со временем туториал будет обновлять и пополняться, но об этом вы узнаете из новостей гильдии.
 
 Спасибо ещё раз, что вступили к нам. Надеемся, этот туториал был полезен вам и вы с нами останетесь надолго! :heart:`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 13/${list.length}` })
             .setTimestamp(Date.now())
 

@@ -1,6 +1,6 @@
 const { GuildMember, Client, EmbedBuilder } = require("discord.js");
 const { User } = require("../../../schemas/userdata");
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { GuildProgress } = require("./progress_class");
 const { rankName, calcActLevel, convertToRoman, getPerkName, getUpgradeName } = require("../../../functions");
 const api = process.env.hypixel_apikey
@@ -18,7 +18,7 @@ class UserProfile {
     /**
     * 
     * @param {GuildMember} member Member, who's profile you are going to check.
-    * @param {Client} client Client class.
+    * @param {import("../System/StarpixelClient").StarpixelClient} client Client class.
     */
     constructor(member, client) {
         /** @private */
@@ -60,7 +60,7 @@ class UserProfile {
 
 
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -118,7 +118,7 @@ class UserProfile {
             part2 = (neededXP / 1000).toFixed(1) + `k`
         } else part2 = neededXP
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -170,7 +170,7 @@ class UserProfile {
 
         let totalPercentage = Math.round(1000 * (sum / max_points)) / 10
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -274,7 +274,7 @@ ${map.join(`\n`)}
 
         let totalPercentage = Math.round(1000 * (sum / max_points)) / 10
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -287,7 +287,7 @@ ${mapProm.join(`\n`)}
 **Для получения дополнительной информации используйте кнопки ниже!**`)
 
         const unclaimedRoles = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -300,7 +300,7 @@ ${leftRoles.length <= 0 ? `Вы успешно получили все роли!
 **Для получения дополнительной информации используйте кнопки ниже!**`)
 
         const unclaimedPerks = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -313,7 +313,7 @@ ${leftPerks.length <= 0 ? `Вы успешно улучшили все умен�
 **Для получения дополнительной информации используйте кнопки ниже!**`)
 
         const unclaimedUpgrades = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -335,7 +335,7 @@ ${leftUpgrades.length <= 0 ? `Вы успешно прокачали все ул
     async getElements() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -412,7 +412,7 @@ __**Воздух**__
             }).join(`\n`)
         }
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -445,7 +445,7 @@ ${m_map}`)
     async getPerks() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -460,6 +460,7 @@ ${m_map}`)
 \`🏷️ Уменьшение опыта гильдии для получения билета\` - ${userData.perks.ticket_discount}/5
 \`✨ Изменение предметов\` - ${userData.perks.change_items}/1
 \`📦 Сохранение дубликатов из коробок в инвентаре\` - ${userData.perks.store_items}/1
+\`🕒 Уменьшение перезарядки\` - ${userData.perks.decrease_cooldowns}/5
 
 ## Улучшения
 \`Размер инвентаря\`: ${userData.upgrades.inventory_size} (уровень ${convertToRoman(userData.upgrades.inventory_size_tier)})
@@ -484,7 +485,7 @@ ${m_map}`)
     async getUpgrades() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -543,7 +544,7 @@ ${m_map}`)
 
 
             embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTitle(`Профиль пользователя ${this.member.user.username}`)
                 .setThumbnail(this.member.user.displayAvatarURL())
                 .setTimestamp(Date.now())
@@ -556,7 +557,7 @@ ${map}
 **Опыта гильдии за последние 7 дней**: ${sum} GEXP`)
         } else {
             embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTitle(`Профиль пользователя ${this.member.user.username}`)
                 .setThumbnail(this.member.user.displayAvatarURL())
                 .setTimestamp(Date.now())
@@ -584,7 +585,7 @@ __**Опыт гильдии**__:
         const userData = await this.getUserData()
         let total = userData.quests.seasonal.stats.hw.total + userData.quests.seasonal.stats.ny.total + userData.quests.seasonal.stats.ea.total + userData.quests.seasonal.stats.su.total
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -627,7 +628,7 @@ __**\`Всего\`**__ - ${total}`)
     async getShops() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -662,7 +663,7 @@ __**\`Всего\`**__ - ${total}`)
     async getMultipliers() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -700,10 +701,10 @@ __**\`Всего\`**__ - ${total}`)
     async getCustomColor() {
         const userData = await this.getUserData()
         const guild = await this.client.guilds.fetch(userData.guildid);
-        let colorRole = await guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : null)
+        let colorRole = await guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : `1`)
         if (!colorRole) colorRole = `Не создана`
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -730,7 +731,7 @@ __**\`Всего\`**__ - ${total}`)
     async getChances() {
         const userData = await this.getUserData()
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())
@@ -780,7 +781,7 @@ __**\`Всего\`**__ - ${total}`)
         let bday = `${day} ${month} ${userData.birthday.year}`
         let timestamp = `<t:${Math.round(userData.joinedGuild / 1000)}:f>`
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Профиль пользователя ${this.member.user.username}`)
             .setThumbnail(this.member.user.displayAvatarURL())
             .setTimestamp(Date.now())

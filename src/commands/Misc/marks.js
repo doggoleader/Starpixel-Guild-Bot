@@ -12,7 +12,6 @@ const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
 const { gameConstructor, calcActLevel, getLevel, isURL, getRes, secondPage, mentionCommand } = require(`../../functions`)
-const linksInfo = require(`../../discord structure/links.json`)
 const toXLS = require(`json2xls`);
 const { Chart } = require(`chart.js`)
 const { isOneEmoji } = require(`is-emojis`)
@@ -69,7 +68,7 @@ async function execute(interaction, client) {
                 userData.save()
                 const embed = new EmbedBuilder()
                     .setTitle("Выдан значок")
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Пользователю ${member} был выдан значок \`${mark}\`. Подробную информацию о значке можно найти в ${mentionCommand(client, 'marks check')}!`)
                 await interaction.guild.channels.cache.get(ch_list.main).send({
@@ -105,7 +104,7 @@ async function execute(interaction, client) {
                 userData.save()
                 const embed = new EmbedBuilder()
                     .setTitle("Удалён значок")
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`У пользователя ${member} был убран значок \`${mark.name}\`. Подробную информацию о своих значках можно найти в ${mentionCommand(client, 'marks check')}!`)
                 await interaction.guild.channels.cache.get(ch_list.main).send({
@@ -174,7 +173,7 @@ async function execute(interaction, client) {
 
                 const list = new EmbedBuilder()
                     .setTitle(`Список значков`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`## Значки пользователя ${member}
 ${markInfo.length >= 1 ? markInfo.join(`\n`) : "У пользователя нет никаких значков!"}`)
@@ -267,28 +266,9 @@ ${markInfo.length >= 1 ? markInfo.join(`\n`) : "У пользователя не
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 

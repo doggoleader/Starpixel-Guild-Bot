@@ -3,7 +3,7 @@ const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { User } = require(`../../../schemas/userdata`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { Temp } = require("../../../schemas/temp_items");
 /**
  * 

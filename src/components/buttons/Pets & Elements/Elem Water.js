@@ -5,7 +5,6 @@ const { User } = require(`../../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../../discord structure/channels.json`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -32,7 +31,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
         const cd = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
@@ -85,7 +84,11 @@ async function execute(interaction, client) {
 :black_medium_small_square:`
             );
             userData.rank += pet[i_act].name
-            userData.cooldowns.water = Date.now() + (1000 * 60 * 60 * 24 * 7)
+            userData.cooldowns.water = Date.now() + (1000 * 60 * 60 * 24 * 7) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('water')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'water')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
             userData.save()
 
 

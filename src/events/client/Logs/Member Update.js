@@ -4,14 +4,12 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(oldM, newM) {
-    const client = oldM.client || newM.client
+async function execute(oldM, newM, client) {
     const guild = oldM.guild || newM.guild
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
@@ -47,7 +45,7 @@ async function execute(oldM, newM) {
 Убранная роль: ❌ \`${auditLog.changes[0].new[0].name}\`
 
 Убрал роль: ${auditLog.executor}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.user.displayAvatarURL())
 
@@ -61,7 +59,7 @@ async function execute(oldM, newM) {
 Добавленная роль: ✅ \`${auditLog.changes[0].new[0].name}\`
 
 Добавил роль: ${auditLog.executor}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.user.displayAvatarURL())
 
@@ -81,7 +79,7 @@ async function execute(oldM, newM) {
 Новый никнейм: \`${auditLog.changes[0].new}\`
 
 Изменил никнейм: ${auditLog.executor}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.user.displayAvatarURL())
 

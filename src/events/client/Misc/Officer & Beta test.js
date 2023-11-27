@@ -1,14 +1,14 @@
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require("../../../schemas/userdata");
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "admin",
     name: "Административное"
 }
-async function execute(oldMember, newMember) {
+async function execute(oldMember, newMember, client) {
     if (!await checkPlugin(newMember.guild.id, plugin.id)) return
     const guild = await oldMember.client.guilds.fetch(`320193302844669959`)
     const modRoles = ["1059732744218882088", "563793535250464809", "320880176416161802", "567689925143822346"]
@@ -24,7 +24,7 @@ async function execute(oldMember, newMember) {
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Повышение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -50,7 +50,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Повышение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -76,7 +76,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Повышение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -101,7 +101,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Повышение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -126,7 +126,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Понижение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -152,7 +152,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Понижение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -177,7 +177,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Понижение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -202,7 +202,7 @@ ${check.join('\n')}`)
         if (check.length <= 0) check = ["Нет административных ролей"]
         const embed = new EmbedBuilder()
             .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${newMember.user.username})`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({ name: `Причина: Понижение в гильдии` })
             .setTimestamp(Date.now())
             .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })

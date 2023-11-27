@@ -9,7 +9,6 @@ const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { isOneEmoji } = require(`is-emojis`)
 /**
@@ -40,7 +39,7 @@ async function execute(interaction, client) {
         })
 
         const cd = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
@@ -86,33 +85,18 @@ async function execute(interaction, client) {
         disc.save()
         if (1 - r_disc.disc > userData.shop_costs) userData.shop_costs -= 0
         else if (1 - r_disc.disc < userData.shop_costs) userData.shop_costs = 1 - r_disc.disc;
-        userData.cooldowns.mercury = Date.now() + (1000 * 60 * 60 * 24 * 30)
+        userData.cooldowns.mercury = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+        if (userData.cd_remind.includes('mercury')) {
+            let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'mercury')
+            userData.cd_remind.splice(ITEM_ID, 1)
+        }
         userData.save()
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**ID модели**: \`${interaction.customId}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

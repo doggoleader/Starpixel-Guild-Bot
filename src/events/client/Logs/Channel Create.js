@@ -4,13 +4,12 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(channel) {
+async function execute(channel, client) {
     if (channel.partial) {
         try {
             await channel.fetch();
@@ -20,7 +19,6 @@ async function execute(channel) {
             return;
         }
     }
-    const client = channel.client
     const guild = channel.guild
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
@@ -82,7 +80,7 @@ async function execute(channel) {
 Тема канала: ${channel.topic || `Не указана`}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
     } else if (channel.type == ChannelType.GuildCategory) {
@@ -92,7 +90,7 @@ async function execute(channel) {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
     } else if (channel.type == ChannelType.GuildForum) {
@@ -103,7 +101,7 @@ async function execute(channel) {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
     } else if (channel.type == ChannelType.GuildVoice || channel.type == ChannelType.GuildStageVoice) {
@@ -114,7 +112,7 @@ async function execute(channel) {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
     }

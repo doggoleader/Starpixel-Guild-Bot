@@ -8,7 +8,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../discord structure/links.json`)
 const { isOneEmoji } = require(`is-emojis`);
 const { rankName } = require('../../functions');
 const { Temp } = require('../../schemas/temp_items');
@@ -39,7 +38,7 @@ async function execute(interaction, client) {
                 if (userData.cooldowns.dog > Date.now()) return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -62,10 +61,14 @@ async function execute(interaction, client) {
                 temp.save()
 
                 userData.pers_act_boost += value
-                userData.cooldowns.dog = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.dog = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('dog')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'dog')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Использована коллекция Собаки`)
                     .setTimestamp(Date.now())
                     .setDescription(`${member} использовал **КОЛЛЕКЦИЮ СОБАКИ**! 
@@ -87,7 +90,7 @@ async function execute(interaction, client) {
                 if (userData.cooldowns.cat > Date.now()) return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -128,10 +131,14 @@ async function execute(interaction, client) {
                 userData.box_chances.mythical += value
                 userData.box_chances.RNG += value
 
-                userData.cooldowns.cat = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.cat = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('cat')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'cat')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Использована коллекция Кота`)
                     .setTimestamp(Date.now())
                     .setDescription(`${member} использовал **КОЛЛЕКЦИЮ КОТА**! 
@@ -155,7 +162,7 @@ async function execute(interaction, client) {
                 if (userData.cooldowns.rabbit > Date.now()) return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -177,10 +184,14 @@ async function execute(interaction, client) {
                 temp.save()
 
                 userData.pers_rank_boost += value
-                userData.cooldowns.rabbit = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.rabbit = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('rabbit')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'rabbit')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Использована коллекция Кролика`)
                     .setTimestamp(Date.now())
                     .setDescription(`${member} использовал **КОЛЛЕКЦИЮ КРОЛИКА**! 
@@ -202,7 +213,7 @@ async function execute(interaction, client) {
                 if (userData.cooldowns.fox > Date.now()) return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -215,10 +226,14 @@ async function execute(interaction, client) {
 
                 userData.tickets += value
                 userData.progress.items.find(it => it.name == 'TICKETS_TOTAL').total_items += value
-                userData.cooldowns.fox = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.fox = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('fox')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'fox')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Использована коллекция Лисы`)
                     .setTimestamp(Date.now())
                     .setDescription(`${member} использовал **КОЛЛЕКЦИЮ ЛИСЫ**! 
@@ -240,7 +255,7 @@ async function execute(interaction, client) {
                 if (userData.cooldowns.lion > Date.now()) return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -262,10 +277,14 @@ async function execute(interaction, client) {
                 temp.save()
 
                 userData.pers_rumb_boost += value
-                userData.cooldowns.lion = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.lion = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('lion')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'lion')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Использована коллекция Льва`)
                     .setTimestamp(Date.now())
                     .setDescription(`${member} использовал **КОЛЛЕКЦИЮ ЛЬВА**! 
@@ -284,28 +303,9 @@ async function execute(interaction, client) {
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

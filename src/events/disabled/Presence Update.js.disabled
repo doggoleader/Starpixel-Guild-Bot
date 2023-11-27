@@ -10,7 +10,7 @@ module.exports = {
         if (!oldP) {
             if (!newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)
@@ -22,7 +22,7 @@ module.exports = {
                 })
             } else if (newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)
@@ -38,7 +38,7 @@ module.exports = {
         } else if (oldP) {
             if (!oldP.activities[0] && !newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)
@@ -50,7 +50,7 @@ module.exports = {
                 })
             } else if (!oldP.activities[0] && newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)
@@ -63,7 +63,7 @@ module.exports = {
                 })
             } else if (oldP.activities[0] && !newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)
@@ -76,7 +76,7 @@ module.exports = {
                 })
             } else if (oldP.activities[0] && newP.activities[0]) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(member.user.displayAvatarURL())
                     .setTimestamp(Date.now())
                     .setTitle(`Изменён статус`)

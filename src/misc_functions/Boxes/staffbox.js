@@ -6,7 +6,6 @@ const { User } = require(`../../schemas/userdata`);
 const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 ;
 
 async function StaffBox(interaction, client) {
@@ -33,7 +32,7 @@ async function StaffBox(interaction, client) {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({
                             name: `Вы не можете использовать эту команду`
                         })
@@ -191,7 +190,11 @@ ${loot[i_loot].loot_description}.
                 await r_loot_msg.react("🚫")
             }
         }
-        userData.cooldowns.staffbox = Date.now() + (1000 * 60 * 60 * 24 * 4)
+        userData.cooldowns.staffbox = Date.now() + (1000 * 60 * 60 * 24 * 4) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+        if (userData.cd_remind.includes('staffbox')) {
+            let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'staffbox')
+            userData.cd_remind.splice(ITEM_ID, 1)
+        }
         userData.save();
         client.ActExp(userData.userid)
         client.ProgressUpdate(interaction.member);
@@ -200,28 +203,9 @@ ${loot[i_loot].loot_description}.
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

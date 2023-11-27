@@ -11,7 +11,6 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
 const { mentionCommand } = require('../../../functions');
-const linksInfo = require(`../../../discord structure/links.json`)
 const api = process.env.hypixel_apikey
 /**
  * 
@@ -115,7 +114,7 @@ async function execute(interaction, client) {
         userData.save()
         client.ActExp(userData.userid)
         const condition_meet = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
             .setTitle(`✅ Достижение выполнено!`)
             .setTimestamp(Date.now())

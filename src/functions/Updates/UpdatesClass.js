@@ -3,15 +3,16 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const { EmbedBuilder, GuildMember } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { checkPlugin, mentionCommand } = require("../../functions");
 const { Temp } = require(`../../schemas/temp_items`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { GuildProgress } = require("../../misc_functions/Classes/Profile/progress_class")
 
 class UserUpdates {
-    id = "items";
-    name = "Предметы"
+    /** @private */
+    static id = "items";
+    /** @private */
+    static name = "Предметы"
     /**
      * 
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
@@ -46,7 +47,7 @@ class UserUpdates {
 
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -78,7 +79,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -109,7 +110,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -139,7 +140,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -171,7 +172,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -203,7 +204,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -235,7 +236,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -268,7 +269,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1]}!
@@ -300,7 +301,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -332,7 +333,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1]}!
@@ -364,7 +365,7 @@ class UserUpdates {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank}!
@@ -424,7 +425,7 @@ class UserUpdates {
                     if (elements.diving == 1 && elements.resistance == 1 && elements.respiration == 1 && !member.roles.cache.has(`930169139866259496`)) {
                         const done = new EmbedBuilder()
                             .setTitle(`Выдана стихия`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} получил \`${guild.roles.cache.get(`930169139866259496`).name}\`!`)
@@ -437,7 +438,7 @@ class UserUpdates {
                     if (elements.eagle_eye == 1 && elements.wind == 1 && elements.flying == 1 && !member.roles.cache.has(`930169145314652170`)) {
                         const done = new EmbedBuilder()
                             .setTitle(`Выдана стихия`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} получил \`${guild.roles.cache.get(`930169145314652170`).name}\`!`)
@@ -450,7 +451,7 @@ class UserUpdates {
                     if (elements.fast_grow == 1 && elements.mountains == 1 && elements.underground == 1 && !member.roles.cache.has(`930169143347523604`)) {
                         const done = new EmbedBuilder()
                             .setTitle(`Выдана стихия`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} получил \`${guild.roles.cache.get(`930169143347523604`).name}\`!`)
@@ -463,7 +464,7 @@ class UserUpdates {
                     if (elements.fire_resistance == 1 && elements.flame == 1 && elements.lightning == 1 && !member.roles.cache.has(`930169133671280641`)) {
                         const done = new EmbedBuilder()
                             .setTitle(`Выдана стихия`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} получил \`${guild.roles.cache.get(`930169133671280641`).name}\`!`)
@@ -927,7 +928,7 @@ class UserUpdates {
 
                         const embed = new EmbedBuilder()
                             .setTitle(`Собраны все мифические роли`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`Поздравляем, ${member}! Вы собрали все мифические награды, и вам была выдана особая мифическая награда - **СОЛНЦЕ**!`)
@@ -1232,7 +1233,7 @@ class UserUpdates {
                     guildData.global_settings.shop_prices = 1.25
                     guildData.save()
                     const embed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`## Событие на сегодня
 Все цены в магазинах гильдии повысились на 25%!`)
@@ -1254,7 +1255,7 @@ class UserUpdates {
                     guildData.global_settings.shop_prices = 0.95
                     guildData.save()
                     const embed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`## Событие на сегодня
 Все цены в магазинах гильдии понизились на 5%!`)

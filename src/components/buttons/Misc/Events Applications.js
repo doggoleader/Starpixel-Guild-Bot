@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, EmbedBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
 const { User } = require(`../../../schemas/userdata`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const chalk = require(`chalk`)
 /**
  * 
@@ -54,7 +53,7 @@ async function execute(interaction, client) {
             userid: interaction.user.id
         })
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`# Заявка на участие в событии
 Пользователь: ${interaction.member}
 

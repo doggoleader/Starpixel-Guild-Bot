@@ -203,7 +203,8 @@
                 "sell_items",
                 "ticket_discount",
                 "change_items",
-                "store_items"
+                "store_items",
+                "decrease_cooldowns"
             ]
         },
         {

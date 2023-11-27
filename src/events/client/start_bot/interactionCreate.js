@@ -1,6 +1,5 @@
 const { InteractionType, AttachmentBuilder } = require(`discord.js`)
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const chalk = require(`chalk`)
 const { connection } = require("mongoose")
 const fs = require(`fs`)

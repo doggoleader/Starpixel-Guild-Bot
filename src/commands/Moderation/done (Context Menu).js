@@ -2,7 +2,6 @@ const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilde
 
 const wait = require('node:timers/promises').setTimeout;
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 const chalk = require(`chalk`)
 
 /**
@@ -60,7 +59,7 @@ async function execute(interaction, client) {
                     .setEmoji(`👌`);
 
                 const done2 = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setAuthor({
                         name: `Просьба обработана`
                     })
@@ -74,7 +73,7 @@ async function execute(interaction, client) {
                         .setAuthor({
                             name: `Спасибо за обращение в вопрос-модерам!`
                         })
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`:envelope: Спасибо за обращение в вопрос-модерам. Ваша просьба была обработана!
                             
@@ -138,7 +137,7 @@ async function execute(interaction, client) {
                             
 **Вопрос** ${message.content}
 **Комментарий** ${comment}`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .addFields([{
                             name: `С уважением, офицер`, value: `${member}`
@@ -192,28 +191,9 @@ async function execute(interaction, client) {
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 

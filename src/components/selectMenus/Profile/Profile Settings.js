@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -52,7 +52,7 @@ async function execute(interaction, client) {
                     )
                 const embed = new EmbedBuilder()
                     .setTitle(`🎂 Поздравления с днём рождения`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Устанавливает настройку поздравления бота вас с днём рождения и будет ли бот поздравлять вас в день вашего рождения.
 ### Примечания
 - При отключении вы будете получать подарок на день рождения, однако вы не будете получать роль <@&983441364903665714> и сообщение в чате для поздравлений!`)
@@ -82,10 +82,6 @@ async function execute(interaction, client) {
                         collector.stop()
                     }
                 })
-
-                collector.on('end', async err => {
-
-                })
             }
                 break;
             case `profile_view`: {
@@ -109,7 +105,7 @@ async function execute(interaction, client) {
                     )
                 const embed = new EmbedBuilder()
                     .setTitle(`👤 Просмотр профиля другими участниками`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Позволяет или запрещает другим пользователям просматривать ваш ${mentionCommand(client, 'profile')}.
 ### Примечания
 - Офицеры и выше по-прежнему смогут просматривать ваш профиль.`)
@@ -139,10 +135,6 @@ async function execute(interaction, client) {
                         collector.stop()
                     }
                 })
-
-                collector.on('end', async err => {
-
-                })
             }
                 break;
             case `marks_view`: {
@@ -166,7 +158,7 @@ async function execute(interaction, client) {
                     )
                 const embed = new EmbedBuilder()
                     .setTitle(`🧧 Просмотр значков другими участниками`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Позволяет или запрещает другим пользователям просматривать ваш ${mentionCommand(client, 'marks check')}.
 ### Примечания
 - Офицеры и выше по-прежнему смогут просматривать ваши значки.`)
@@ -196,10 +188,6 @@ async function execute(interaction, client) {
                         collector.stop()
                     }
                 })
-
-                collector.on('end', async err => {
-
-                })
             }
                 break;
             case `is_in_leaderboard`: {
@@ -223,7 +211,7 @@ async function execute(interaction, client) {
                     )
                 const embed = new EmbedBuilder()
                     .setTitle(`🏅 Отображение в списках лидеров`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Изменяет отображение вас в списках лидеров в ${mentionCommand(client, 'leaderboard')}.
 ### Примечания
 - Вы больше не будете отображаться в списках лидеров, а чтобы узнать свою истинную позицию в топах, вы должны отключить данную настройку.
@@ -254,9 +242,58 @@ async function execute(interaction, client) {
                         collector.stop()
                     }
                 })
+            }
+                break;
+            case `cd_notifications`: {
+                const newValue = new ActionRowBuilder()
+                    .addComponents(
+                        new StringSelectMenuBuilder()
+                            .setCustomId(`new_value`)
+                            .setPlaceholder(`Выберите новое значение настройки`)
+                            .setOptions(
+                                {
+                                    label: `Включить`,
+                                    value: `1`,
+                                    emoji: `✅`
+                                },
+                                {
+                                    label: `Отключить`,
+                                    value: `0`,
+                                    emoji: `❌`
+                                }
+                            )
+                    )
+                const embed = new EmbedBuilder()
+                    .setTitle(`🕒 Уведомления об окончании перезарядки предметов`)
+                    .setColor(Number(client.information.bot_color))
+                    .setDescription(`Изменяет возможность уведомлять вас в личных сообщениях, когда перезарядка команды или кнопки заканчивается.
+### Примечания
+- Данные уведомления приходят в личные сообщения, поэтому вам необходимо открыть их, в противном случае настройка не будет работать.`)
 
-                collector.on('end', async err => {
+                const msg = await interaction.update({
+                    embeds: [embed],
+                    components: [newValue, backButtons],
+                    ephemeral: true
+                })
 
+                const collector = msg.createMessageComponentCollector()
+                collector.on('collect', async i => {
+                    if (i.customId == `new_value`) {
+                        const val = Boolean(Number(i.values[0]))
+                        userData.pers_settings.cd_notifications = val
+                        userData.save()
+                        await i.reply({
+                            content: `Установлено значение: \`${val ? `Включено ✅` : `Выключено ❌`}\``,
+                            ephemeral: true
+                        })
+                    } else if (i.customId == `profile_sets_back_1`) {
+                        const { embed: emb, selectmenu } = require(`../../../misc_functions/Exporter`)
+                        await i.update({
+                            embeds: [emb],
+                            components: [selectmenu]
+                        })
+                        collector.stop()
+                    }
                 })
             }
                 break;
@@ -264,12 +301,13 @@ async function execute(interaction, client) {
                 let i = 1
                 const embed = new EmbedBuilder()
                     .setTitle(`Ваши текущие персональные настройки`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`**Настройки**:
-**${i++}.** 🎂 Поздравления с днём рождения: \`${userData.pers_settings.birthday_wishes ? `Включено` : `Выключено`}\`
-**${i++}.** 👤 Просмотр профиля другими участниками: \`${userData.pers_settings.profile_view ? `Включено` : `Выключено`}\`
-**${i++}.** 🧧 Просмотр значков другими участниками: \`${userData.pers_settings.marks_view ? `Включено` : `Выключено`}\`
-**${i++}.** 🏅 Отображение в списках лидеров: \`${userData.pers_settings.is_in_leaderboard ? `Включено` : `Выключено`}\``)
+**${i++}.** 🎂 Поздравления с днём рождения: \`${userData.pers_settings.birthday_wishes ? `Включено ✅` : `Выключено ❌`}\`
+**${i++}.** 👤 Просмотр профиля другими участниками: \`${userData.pers_settings.profile_view ? `Включено ✅` : `Выключено ❌`}\`
+**${i++}.** 🧧 Просмотр значков другими участниками: \`${userData.pers_settings.marks_view ? `Включено ✅` : `Выключено ❌`}\`
+**${i++}.** 🏅 Отображение в списках лидеров: \`${userData.pers_settings.is_in_leaderboard ? `Включено ✅` : `Выключено ❌`}\`
+**${i++}.** 🕒 Уведомления об окончании перезарядки предметов: \`${userData.pers_settings.cd_notifications ? `Включено ✅` : `Выключено ❌`}\``)
 
                 await interaction.reply({
                     embeds: [embed],

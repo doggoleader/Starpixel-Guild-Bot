@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`)
@@ -31,7 +31,7 @@ async function execute(interaction, client) {
             .setDescription(`${user}, добро пожаловать в гильдию! В этом кратком туториале вы узнаете об основных возможностях нашего сервера Discord. Если у вас будут какие-либо вопросы, вы в любой момент можете вернуть на предыдущую страницу.
             
 Давайте начнем! Чтобы продолжить, нажмите на кнопочку "Следующая"!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 1/${list.length}` })
             .setTimestamp(Date.now())
 

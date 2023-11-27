@@ -4,15 +4,16 @@ const { EmbedBuilder, hyperlink, ChannelType } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { suffix } = require(`../../functions`)
-const linksInfo = require(`../../discord structure/links.json`)
 const wait = require(`node:timers/promises`).setTimeout
 const specialUsers = require(`./JSON/SpecialUsers.json`)
 const { monthName } = require(`../../functions`)
 const { checkPlugin } = require("../../functions");
 
 class BlackHole {
-    id= "admin";
-    name= "Административное";
+    /** @private */
+    static id = "admin";
+    /** @private */
+    static name = "Административное";
 
     /**
      * 
@@ -158,7 +159,7 @@ ${map.join(`\n`)}`)
                 let inVoice = await timeToString(inf.VoiceMins)
                 let talking = await timeToString(inf.VoiceTalk)
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Информация о пользователе`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Пользователь**: <@${inf.id}>
@@ -181,7 +182,7 @@ ${map.join(`\n`)}`)
                         return `**${++i}.** [Новость](${n})`
                     })
                     const newsEmbed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTitle(`Список непрочитанных новостей`)
                         .setDescription(`**Пользователь**: <@${inf.id}>
 **СПИСОК**:
@@ -196,7 +197,7 @@ ${news.join(`\n`)}`)
                         return `**${++i}.** Дата: ${n.date} = Причина: ${n.reason}`
                     })
                     const warnsEmbed = new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTitle(`Список предупреждений`)
                         .setDescription(`**Пользователь**: <@${inf.id}>
 **СПИСОК**:

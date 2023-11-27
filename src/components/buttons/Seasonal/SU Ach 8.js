@@ -9,7 +9,6 @@ const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const api = process.env.hypixel_apikey
 /**
  * 

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { Polls } = require(`../../../schemas/polls`)
 const { User } = require('../../../schemas/userdata');
 /**
@@ -33,7 +33,7 @@ async function execute(interaction, client) {
             map = `\`Нет опций.\``
         }
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Настройка опроса`)
             .setDescription(`**ОСНОВНАЯ ИНФОРМАЦИЯ**
 **Вопрос**: \`${pollData.question}\`

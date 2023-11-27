@@ -5,13 +5,14 @@ const ch_list = require(`../../discord structure/channels.json`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const wait = require(`node:timers/promises`).setTimeout
-const linksInfo = require(`../../discord structure/links.json`)
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 const { checkPlugin } = require("../../functions");
 
 class Easter {
-    id = 'seasonal';
-    name = 'Сезонное'
+    /** @private */
+    static id = 'seasonal';
+    /** @private */
+    static name = 'Сезонное'
 
     /**
      * 
@@ -127,7 +128,7 @@ class Easter {
                 }
 
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setAuthor({
                         name: `Лучшие пользователи по пасхальным очкам`
                     })
@@ -161,7 +162,7 @@ class Easter {
                 await wait(3000)
                 const finalEmbed = new EmbedBuilder()
                     .setTitle(`Награды за призовые места`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Помимо главной награды, награду за призовое место получают все участники с 1 по 5 место в независимости от того, получил ли он главную награду или нет:
 1 место - <@${sort[0].userid}>. Награда: \`3x 🥇\`
 2 место - <@${sort[1].userid}>. Награда: \`3x 🥈\`
@@ -213,7 +214,7 @@ class Easter {
                 if (seasonal.easter.achievements.num1 == true && seasonal.easter.achievements.num2 == true && seasonal.easter.achievements.num3 == true && seasonal.easter.achievements.num4 == true && seasonal.easter.achievements.num5 == true && !member.roles.cache.has(`1030757633231167538`)) {
                     const done = new EmbedBuilder()
                         .setTitle(`Выдана сезонная роль`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
                         .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757633231167538`).name}\`! Теперь он может использовать сезонный цвет!`)

@@ -3,7 +3,6 @@ const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { User } = require(`../../../schemas/userdata`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const api = process.env.hypixel_apikey;
 const info = require(`../../../jsons/Marathon.json`);
 const fetch = require(`node-fetch`)

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
 const prettyMilliseconds = require(`pretty-ms`)
 const { Temp } = require(`../../../schemas/temp_items`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -77,7 +77,7 @@ async function execute(interaction, client) {
                 else fin_res = userData.quests.mars.activated.required - wins
                 const embed = new EmbedBuilder()
                     .setTitle(`Информация о квесте Марса пользователя ${user.username}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Основная информация о вашем квесте Марса**
@@ -111,7 +111,7 @@ async function execute(interaction, client) {
                 else fin_res = userData.quests.mars.activated.required - exp
                 const embed = new EmbedBuilder()
                     .setTitle(`Информация о квесте Марса пользователя ${user.username}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Основная информация о вашем квесте Марса**
@@ -179,7 +179,7 @@ async function execute(interaction, client) {
                 userData.quests.mars.stats.total += 1
                 const embed = new EmbedBuilder()
                     .setTitle(`Квест Марса пользователя ${user.username} выполнен!`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Вы выполнили квест Марса!**
@@ -245,7 +245,7 @@ async function execute(interaction, client) {
                 userData.quests.mars.stats.total += 1
                 const embed = new EmbedBuilder()
                     .setTitle(`Квест Марса пользователя ${user.username} выполнен!`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Вы выполнили квест Марса!**
@@ -270,7 +270,7 @@ async function execute(interaction, client) {
         } else if (action == `get`) {
 
             const cd = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setAuthor({
                     name: `Вы не можете использовать эту команду`
                 })
@@ -315,7 +315,11 @@ async function execute(interaction, client) {
 Повторно попросить помощь у Марса можно через 2 недели!`,
                 ephemeral: true
             })
-            userData.cooldowns.mars = Date.now() + (1000 * 60 * 60 * 24 * 14)
+            userData.cooldowns.mars = Date.now() + (1000 * 60 * 60 * 24 * 14) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('mars')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'mars')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
             userData.save()
         }
     } catch (e) {

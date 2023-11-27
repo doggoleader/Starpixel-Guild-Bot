@@ -2,7 +2,6 @@ const chalk = require(`chalk`);
 const { ReactionCollector } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
 const { isURL } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "music",

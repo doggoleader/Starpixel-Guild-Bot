@@ -4,7 +4,6 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
@@ -71,7 +70,7 @@ async function execute(oldM, newM, client) {
         .setDescription(`Пользователь: ${newM}
 **Изменения**
 ${changes.join(`\n`)}`)
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setTimestamp(Date.now())
         .setThumbnail(newM.displayAvatarURL())
 

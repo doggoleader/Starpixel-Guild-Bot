@@ -10,7 +10,6 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const { mentionCommand } = require('../../../functions');
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_easter, stats_easter, quests_easter } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
 /**
@@ -55,7 +54,7 @@ async function execute(interaction, client) {
                 return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -72,7 +71,11 @@ async function execute(interaction, client) {
             userData.seasonal.easter.quest.finished = false
             userData.seasonal.easter.quest.id = quest.id
             userData.seasonal.easter.quest.requirement = wins + quest.req_wins
-            userData.cooldowns.ea_quest = Date.now() + (1000 * 60 * 60 * 16)
+            userData.cooldowns.ea_quest = Date.now() + (1000 * 60 * 60 * 16) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('ea_quest')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'ea_quest')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
             userData.save()
             const questEmbed = new EmbedBuilder()
                 .setColor(`Green`)

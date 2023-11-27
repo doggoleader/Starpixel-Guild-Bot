@@ -9,7 +9,6 @@ const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_easter, stats_easter, quests_easter } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
 /**
@@ -75,7 +74,7 @@ async function execute(interaction, client) {
 **Количество на конец квеста**: ${userData.seasonal.easter.quest.requirement}
 **Статус**: \`${userData.seasonal.easter.quest.finished ? `Завершено ✅` : `Не завершено ❌`}\``)
             .setThumbnail(user.displayAvatarURL())
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
 
         await interaction.editReply({

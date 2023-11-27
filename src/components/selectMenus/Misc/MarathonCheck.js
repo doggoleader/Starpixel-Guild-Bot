@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -57,7 +57,7 @@ async function execute(interaction, client) {
             else fin_res = userData.quests.marathon.activated.required - wins
             const embed = new EmbedBuilder()
                 .setTitle(`Информация о марафоне пользователя ${user.username}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
                 .setDescription(`**Основная информация о вашем марафоне**
@@ -160,7 +160,7 @@ async function execute(interaction, client) {
 
             const embed = new EmbedBuilder()
                 .setTitle(`Стадия ${stage} марафона пользователя ${user.username} была выполнена!`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
                 .setDescription(`**Вы выполнили ${stage} стадию марафона!**

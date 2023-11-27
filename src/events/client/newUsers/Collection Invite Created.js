@@ -3,7 +3,6 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "new_users",
@@ -59,7 +58,7 @@ async function askForBypass(invite, client) {
                 .setDisabled(true)
         )
     const embed = new EmbedBuilder()
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setDescription(`## Сделать ссылку доступной для пользователей без лицензии?
 Выбирая "Да", созданная вами ссылка будет иметь ограничения:
 - Срок действия равен сроку действия с момента её создания (без изменений)

@@ -3,7 +3,6 @@ const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { Polls } = require(`../../../schemas/polls`)
 const { User } = require(`../../../schemas/userdata`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -52,7 +51,7 @@ async function execute(interaction, client) {
 
         const embed = new EmbedBuilder()
             .setTitle(`Результаты голосования`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`**Вопрос**: ${pollData.question}
 **Сортировка**: \`По результатам\`
 ${results.join(`\n`)}

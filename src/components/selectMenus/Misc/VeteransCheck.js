@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -54,7 +54,7 @@ async function execute(interaction, client) {
             else fin_res = userData.quests.veterans.activated.required - wins
             const embed = new EmbedBuilder()
                 .setTitle(`Информация о задании пользователя ${user.username}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
                 .setDescription(`**Основная информация о вашем задании для ветеранов**
@@ -103,13 +103,14 @@ async function execute(interaction, client) {
 
 
             userData.quests.veterans.stats.total += 1
+            userData.quests.veterans.activated.activation = []
             userData.quests.veterans.completed.push(id)
             userData.quests.veterans.activated.status = true
             userData.save()
 
             const embed = new EmbedBuilder()
                 .setTitle(`Пользователь ${user.username} выполнил задание для ветеранов!`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setTimestamp(Date.now())
                 .setDescription(`**Вы выполнили задание для ветеранов!**
@@ -160,19 +161,33 @@ async function execute(interaction, client) {
                 allChances += loo.chance
             }
             let finalChance1 = ((loot[i].chance / allChances) * 100).toFixed(1)
+            let quest1
+            let quest3
+            let quest2
+            if (userData.quests.veterans.activated.activation.length < 3) {
+                const list = veterans.veterans.filter(v => v.id !== -1)
+                quest1 = list[Math.floor(Math.random() * list.length)]
 
-            let quest1 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+                quest2 = list[Math.floor(Math.random() * list.length)]
+                while (quest2.id == quest1.id) {
+                    quest2 = list[Math.floor(Math.random() * list.length)]
+                }
 
-            let quest2 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
-            while (quest2.id == quest1.id) {
-                quest2 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
+                quest3 = list[Math.floor(Math.random() * list.length)]
+                while (quest3.id == quest1.id || quest3.id == quest2.id) {
+                    quest3 = list[Math.floor(Math.random() * list.length)]
+                }
+
+                userData.quests.veterans.activated.activation.push(quest1.id)
+                userData.quests.veterans.activated.activation.push(quest2.id)
+                userData.quests.veterans.activated.activation.push(quest3.id)
+            } else {
+                quest1 = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.activation[0])
+                quest2 = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.activation[1])
+                quest3 = veterans.veterans.find(q => q.id == userData.quests.veterans.activated.activation[2])
             }
 
-            let quest3 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
-            while (quest3.id == quest1.id || quest3.id == quest2.id) {
-                quest3 = veterans.veterans[Math.floor(Math.random() * veterans.veterans.length)]
-            }
-
+            userData.save()
 
             const buttons = new ActionRowBuilder()
                 .addComponents(
@@ -198,7 +213,7 @@ async function execute(interaction, client) {
                 )
 
             const embed2 = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setDescription(`## Задание для ветеранов
             
@@ -208,7 +223,7 @@ async function execute(interaction, client) {
 3. ${quest3.task}
 
 Чтобы выбрать задание, нажмите на кнопку ниже`)
-
+                
             const msg = await interaction.editReply({
                 embeds: [embed2],
                 components: [buttons],
@@ -235,6 +250,7 @@ async function execute(interaction, client) {
                 let vetQuest = userData.quests.veterans.activated
                 vetQuest.id = quest.id
                 vetQuest.required = wins + quest.req
+                vetQuest.activation = []
                 vetQuest.status = false
                 vetQuest.reward = loot[i].reward
                 userData.upgrades.veterans_quests -= 1
@@ -243,7 +259,7 @@ async function execute(interaction, client) {
                 userData.save()
                 const embed = new EmbedBuilder()
                     .setTitle(`Пользователь ${user.username} начал задание для ветеранов!`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                     .setTimestamp(Date.now())
                     .setDescription(`Вы начали выполнять задание для ветеранов!
@@ -266,7 +282,7 @@ async function execute(interaction, client) {
                 content: `Вы уже выполнили задание или пропустили его! Теперь вы можете выбрать следующее задание!`,
                 ephemeral: true
             })
-
+            userData.quests.veterans.activated.activation = []
             userData.quests.veterans.activated.status = true
             userData.save()
 

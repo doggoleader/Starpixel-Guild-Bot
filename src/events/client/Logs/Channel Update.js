@@ -5,13 +5,12 @@ const ch_list = require(`../../../../src/discord structure/channels.json`)
 const { permToName } = require(`../../../functions`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(oldCh, newCh) {
+async function execute(oldCh, newCh, client) {
     if (oldCh.partial) {
         try {
             await oldCh.fetch();
@@ -21,8 +20,7 @@ async function execute(oldCh, newCh) {
             return;
         }
     }
-    const client = oldCh.client || newCh.client
-    const guild = oldCh.guild || newCh.client
+    const guild = oldCh.guild || newCh.guild
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
     const log_channel = await guild.channels.cache.get(ch_list.log)
@@ -212,7 +210,7 @@ async function execute(oldCh, newCh) {
 ${chanProm.join(`\n`)}
 
 Модератор: ${mod}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(newCh.guild.iconURL())
         webhook.send({

@@ -3,14 +3,15 @@ const chalk = require(`chalk`);
 const { EmbedBuilder } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const role_list = require(`../../discord structure/roles.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin } = require("../../functions");
 
 class Birthdays {
 
-    id = "birthdays";
-    name = 'Дни рождения';
+    /** @private */
+    static id = "birthdays";
+    /** @private */
+    static name = 'Дни рождения';
     /**
      * 
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord CLient
@@ -44,7 +45,7 @@ class Birthdays {
                             .setThumbnail(member.user.displayAvatarURL())
                             .setDescription(`🎂 Поздравляем ${member} с ${age}-ым днём рождения! Желаем тебе всего самого наилучшего в этот прекрасный день! 
 В качестве подарка от гильдии ты получаешь **КОРОЛЕВСКУЮ** коробку и эксклюзивную роль именинника на весь день!`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
 
                         if (Month === currentMonth && Day === currentDate) {
                             if (userData.pers_settings.birthday_wishes == true) {

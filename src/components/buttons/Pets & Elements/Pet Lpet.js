@@ -5,7 +5,6 @@ const { User } = require(`../../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../../discord structure/channels.json`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -32,7 +31,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
         const cd = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
@@ -86,27 +85,25 @@ ${pet[i_act].name}
             );
             if (pet[i_act].name == `Он получает урок навыка \`Плавание на глубине\`. 🌊` && userData.elements.diving < 1) {
                 userData.elements.diving += 1
-                userData.cooldowns.lpet = Date.now() + (1000 * 60 * 60 * 24 * 4)
-                userData.save()
                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Получен навык]`) + chalk.white(`: ${member.user.username} получил навык ${pet[i_act].name}`))
 
             } else if (pet[i_act].name == `Он получает урок навыка \`Сопротивление течениям\`. 🌊` && userData.elements.resistance < 1) {
                 userData.elements.resistance += 1
-                userData.cooldowns.lpet = Date.now() + (1000 * 60 * 60 * 24 * 4)
-                userData.save()
                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Получен навык]`) + chalk.white(`: ${member.user.username} получил навык ${pet[i_act].name}`))
 
             } else if (pet[i_act].name == `Он получает урок навыка \`Подводное дыхание\`. 🌊` && userData.elements.respiration < 1) {
                 userData.elements.respiration += 1
-                userData.cooldowns.lpet = Date.now() + (1000 * 60 * 60 * 24 * 4)
-                userData.save()
                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Получен навык]`) + chalk.white(`: ${member.user.username} получил навык ${pet[i_act].name}`))
 
             } else {
-                userData.cooldowns.lpet = Date.now() + (1000 * 60 * 60 * 24 * 4)
-                userData.save()
                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Получен навык]`) + chalk.white(`: ${member.user.username} получил навык ${pet[i_act].name}`))
             }
+            userData.cooldowns.lpet = Date.now() + (1000 * 60 * 60 * 24 * 4) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('lpet')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'lpet')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
+            userData.save()
 
         } catch (error) {
             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.red(`[Превышен лимит навыков]`) + chalk.white(`: ${member.user.username} превысил количество навыка ${pet[i_act].name}`))
@@ -116,28 +113,9 @@ ${pet[i_act].name}
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 

@@ -3,7 +3,7 @@ const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { User } = require(`../../../schemas/userdata`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { Temp } = require("../../../schemas/temp_items");
 const prettyMilliseconds = require(`pretty-ms`)
 const { mentionCommand } = require('../../../functions');
@@ -22,7 +22,7 @@ async function execute(interaction, client) {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({
                             name: `Вы не можете использовать эту команду`
                         })
@@ -51,7 +51,11 @@ async function execute(interaction, client) {
         } else {
             await interaction.member.roles.add(rb)
         }
-        userData.cooldowns.ny_santa_rew = Date.now() + (1000 * 60 * 60 * 24 * 4)
+        userData.cooldowns.ny_santa_rew = Date.now() + (1000 * 60 * 60 * 24 * 4) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+        if (userData.cd_remind.includes('ny_santa_rew')) {
+            let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'ny_santa_rew')
+            userData.cd_remind.splice(ITEM_ID, 1)
+        }
         userData.save()
         await interaction.reply({
             content: `Вы получили <@&${rb}> от Деда Мороза!`,
