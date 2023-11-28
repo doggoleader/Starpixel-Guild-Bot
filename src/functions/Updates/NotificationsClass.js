@@ -20,32 +20,33 @@ class Notifications {
             const member = await guild.members.fetch(userData.userid)
             let finished_cd = []
 
-            if (userData.userid == `491343958660874242`) {
-                for (const item of Object.keys(userData.cooldowns)) {
-                    if (!blacklistedCDs.includes(item)) {
-                        if (userData.cooldowns[item].getTime() <= Date.now()) {
-                            if (!userData.cd_remind.includes(item)) {
-                                finished_cd.push(`- ${getCooldownUsage(item)}`)
-                                userData.cd_remind.push(item)
-                            }
+            for (const item of Object.keys(userData.cooldowns)) {
+                if (!blacklistedCDs.includes(item)) {
+                    if (userData.cooldowns[item].getTime() <= Date.now()) {
+                        if (!userData.cd_remind.includes(item)) {
+                            finished_cd.push(`- ${getCooldownUsage(item)}`)
+                            userData.cd_remind.push(item)
                         }
                     }
                 }
-                if (finished_cd.length >= 1) {
-                    const embed = new EmbedBuilder()
-                        .setColor(Number(client.information.bot_color))
-                        .setDescription(`## Уведомление об окончании перезарядки
+            }
+            if (finished_cd.length >= 1) {
+                const embed = new EmbedBuilder()
+                    .setColor(Number(client.information.bot_color))
+                    .setDescription(`## Уведомление об окончании перезарядки
 Перезарядка успешно закончилась у следующих предметов:
 ${finished_cd.join(`\n`)}
 
 **Обратите внимание, что некоторые команды или кнопки могут быть вам недоступны, но уведомление об окончании перезарядки вам отправилось. Связано это с тем, что бот обновляет информацию о перезарядке всех предметов в вашем профиле!**`)
-                        .setTimestamp(Date.now())
+                    .setTimestamp(Date.now())
 
+                try {
                     await member.send({
                         embeds: [embed]
-                    }).catch()
+                    })
+                } catch (err) {
+                    
                 }
-
                 userData.save()
             }
 
