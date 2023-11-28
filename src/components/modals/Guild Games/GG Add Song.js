@@ -7,7 +7,6 @@ const { Song, SearchResultType } = require('distube');
 const wait = require(`node:timers/promises`).setTimeout
 const moment = require(`moment`)
 const cron = require(`node-cron`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ModalSubmitInteraction} interaction Interaction

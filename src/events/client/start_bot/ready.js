@@ -1,7 +1,7 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 let plugin = {
     id: "admin",
     name: "Административное"
@@ -27,7 +27,7 @@ async function execute(client) {
         const embed = new EmbedBuilder()
             .setTitle(`Бот запущен!`)
             .setDescription(`Бот ${client.user} был успешно запущен на сервере \`${guild.name}\`! Команды можно использовать! <t:${timestamp}:R>`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
 
         await channel.send({

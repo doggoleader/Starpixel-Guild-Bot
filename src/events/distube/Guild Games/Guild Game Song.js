@@ -3,7 +3,6 @@ const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`);
 const { SearchResultType } = require("distube");
-const linksInfo = require(`../../../discord structure/links.json`)
 async function execute(queue, client) {
     const guild = queue.textChannel.guild
     const guildData = await Guild.findOne({ id: guild.id })
@@ -31,7 +30,7 @@ async function execute(queue, client) {
         type: SearchResultType.VIDEO
     })
     const playing = new EmbedBuilder()
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setTitle(`Добавлена песня... 🎶`)
         .setTimestamp(Date.now())
         .setDescription(`**Название**: \`${song[0].name}\`

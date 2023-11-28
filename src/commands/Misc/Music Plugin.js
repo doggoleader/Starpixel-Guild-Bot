@@ -10,7 +10,6 @@ const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { gameConstructor, calcActLevel, getLevel, isURL, secondPage, mentionCommand } = require(`../../functions`);
 const { SearchResultType, DisTubeVoice, Song, Playlist } = require('distube');
-const linksInfo = require(`../../discord structure/links.json`)
 
 /**
  * 
@@ -49,7 +48,7 @@ async function execute(interaction, client) {
                         let received
                         received = new EmbedBuilder()
                             .setTitle(`Запрос получен...`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`🔍 Загружаем ваш запрос: \`${message}\`...`)
                             .setTimestamp(Date.now())
 
@@ -84,7 +83,7 @@ async function execute(interaction, client) {
 
                         const results = new EmbedBuilder()
                             .setTitle(`🔍 Результаты поиска...`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setDescription(`${search.join(`\n`)}`)
                             .setTimestamp(Date.now())
 
@@ -162,7 +161,7 @@ async function execute(interaction, client) {
 
                                 const received = new EmbedBuilder()
                                     .setTitle(`Запрос получен...`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setDescription(`🔍 Загружаем песню \`${playSong}\`...`)
                                     .setTimestamp(Date.now())
 
@@ -175,7 +174,7 @@ async function execute(interaction, client) {
                                 console.log(e)
                                 const error = new EmbedBuilder()
                                     .setTitle(`🔍 Результаты поиска...`)
-                                    .setColor(Number(linksInfo.bot_color))
+                                    .setColor(Number(client.information.bot_color))
                                     .setDescription(`Во время установки песни произошла непредвиденная ошибка! Повторите попытку позже!`)
                                     .setTimestamp(Date.now())
                                 await interaction.editReply({
@@ -233,7 +232,7 @@ async function execute(interaction, client) {
                     .setTitle(`Очередь песен`)
                     .setDescription(`${list.join(`\n`)}`)
                     .setTimestamp(Date.now())
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(guild.iconURL())
                     .setFooter({
                         text: `Страница ${n + 1}/${totalPages} - ${queue.songs.length} треков в очереди`
@@ -374,7 +373,7 @@ async function execute(interaction, client) {
                             .setTitle(`Очередь песен`)
                             .setDescription(`${ephList.join(`\n`)}`)
                             .setTimestamp(Date.now())
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(guild.iconURL())
                             .setFooter({
                                 text: `Страница ${b + 1}/${totalPages} - ${queue.songs.length} треков в очереди`
@@ -639,7 +638,7 @@ async function execute(interaction, client) {
 
                 let song = queue.songs[0]
                 const playing = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Сейчас играет... 🎶`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Название**: \`${song.name}\`
@@ -687,7 +686,7 @@ async function execute(interaction, client) {
                             songR = await queue.previous()
                             const result = new EmbedBuilder()
                                 .setTitle(`Переключено на предыдущую песню... ✅`)
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setTimestamp(Date.now())
                                 .setDescription(`Вы снова включили \`${songR.name}\`!`)
 
@@ -706,7 +705,7 @@ async function execute(interaction, client) {
                         try {
                             const result = new EmbedBuilder()
                                 .setTitle(`Песня пропущена... ✅`)
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setTimestamp(Date.now())
                                 .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
                             songR = await queue.skip()
@@ -763,7 +762,7 @@ async function execute(interaction, client) {
                 queue.setVolume(volume)
                 const result = new EmbedBuilder()
                     .setTitle(`Громкость звука установлена... 🔊`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Громкость проигрывателя была установлена на \`${volume}\`!`)
 
@@ -786,7 +785,7 @@ async function execute(interaction, client) {
                 try {
                     const result = new EmbedBuilder()
                         .setTitle(`Песня пропущена... ✅`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
                     queue.skip()
@@ -820,7 +819,7 @@ async function execute(interaction, client) {
                     const song = await queue.previous()
                     const result = new EmbedBuilder()
                         .setTitle(`Переключено на предыдущую песню... ✅`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Вы снова включили \`${song.name}\`!`)
 
@@ -845,7 +844,7 @@ async function execute(interaction, client) {
                 })
                 const result = new EmbedBuilder()
                     .setTitle(`Я присоединился 👋`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Я присоединился к вашему голосовому каналу! Чтобы включить музыку, используйте команду ${mentionCommand(client, 'music play')}!`)
 
@@ -877,7 +876,7 @@ async function execute(interaction, client) {
                     queue.resume()
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение восстановлено ⏸`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Так как воспроизведение уже было приостановлено, мы возобновили его! Если хотите поставить воспроизведение на паузу, пропишите эту команду ещё раз.`)
                     return interaction.reply({
@@ -886,7 +885,7 @@ async function execute(interaction, client) {
                 }
                 const result = new EmbedBuilder()
                     .setTitle(`Воспроизведение приостановлено ▶`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Воспроизведение музыки было приостановлено! Чтобы восстановить воспроизведение, пропишите ${mentionCommand(client, 'music resume')}!`)
                 queue.pause()
@@ -912,7 +911,7 @@ async function execute(interaction, client) {
                     queue.resume()
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение восстановлено ⏸`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Воспроизведение музыки было восстановлено! Чтобы приостановить воспроизведение, пропишите ${mentionCommand(client, 'music pause')}!`)
                     return interaction.reply({
@@ -921,7 +920,7 @@ async function execute(interaction, client) {
                 } else if (queue.playing) {
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение приостановлено ▶`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Так как воспроизведение уже было восстановлено, мы приостановили его! Если хотите восстановить воспроизведение, пропишите эту команду ещё раз.`)
                     queue.pause()
@@ -946,7 +945,7 @@ async function execute(interaction, client) {
                 await queue.stop()
                 const result = new EmbedBuilder()
                     .setTitle(`Воспроизведение остановлено ▶`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Воспроизведение песен было полностью остановлено! Очередь была очищена! Если вы хотите включить музыку, используйте ${mentionCommand(client, 'music play')}.`)
 
@@ -970,7 +969,7 @@ async function execute(interaction, client) {
                 await queue.shuffle()
                 const result = new EmbedBuilder()
                     .setTitle(`Очередь перемешана 🔀`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`Очередь была успешно перемешана!`)
 
@@ -1012,7 +1011,7 @@ async function execute(interaction, client) {
                 const setQueue = new EmbedBuilder()
                     .setTitle(`Установлен режим повтора`)
                     .setDescription(`Режим повтора установлен на \`${mode}\``)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                 await client.distube.setRepeatMode(guild, value)
                 await interaction.reply({
@@ -1035,7 +1034,7 @@ async function execute(interaction, client) {
                 const setAutoplay = new EmbedBuilder()
                     .setTitle(`Установлен режим автопроирывателя`)
                     .setDescription(`Режим автопроирывателя установлен на \`${ap ? "Включено" : "Выключено"}\``)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
 
                 await interaction.reply({
@@ -1050,28 +1049,9 @@ async function execute(interaction, client) {
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

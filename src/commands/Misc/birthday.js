@@ -7,7 +7,6 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { toOrdinalSuffix } = require(`../../functions`)
-const linksInfo = require(`../../discord structure/links.json`)
 
 /**
  * 
@@ -139,7 +138,7 @@ async function execute(interaction, client) {
 
                 const b_embed = new EmbedBuilder()
                     .setTitle(`Установлен день рождения`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(user.displayAvatarURL())
                     .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн., **${Day} ${list[Month]}, ${wishYear}**!`)
 
@@ -162,7 +161,7 @@ async function execute(interaction, client) {
 
                     const b_embed = new EmbedBuilder()
                         .setTitle(`Удалён день рождения`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setThumbnail(user.displayAvatarURL())
                         .setDescription(`✅ - Удалён день рождения пользователя ${user}!`)
                     await interaction.reply({
@@ -173,7 +172,7 @@ async function execute(interaction, client) {
                 } else {
                     const b_embed = new EmbedBuilder()
                         .setTitle(`День рождения не установлен`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setThumbnail(user.displayAvatarURL())
                         .setDescription(`❌ - День рождения ${user} не был установлен, поэтому я не смог его удалить!`)
 
@@ -191,7 +190,7 @@ async function execute(interaction, client) {
 
                 const no_bd = new EmbedBuilder()
                     .setTitle(`Нет дней рождений`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(interaction.guild.iconURL())
                     .setDescription(`❌ - На данном сервере нет дней рождений, очень жаль :'(`)
                 if (!listData) return interaction.reply({
@@ -258,7 +257,7 @@ async function execute(interaction, client) {
                 const list = new EmbedBuilder()
                     .setTitle(`Список дней рождений`)
                     .setThumbnail(interaction.guild.iconURL())
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`${birthdayData.join(`\n`)}`)
                     .setFooter({
@@ -346,7 +345,7 @@ async function execute(interaction, client) {
                 const listData = await User.findOne({ guildid: interaction.guild.id, userid: user.id })
                 const no_bd = new EmbedBuilder()
                     .setTitle(`Нет дня рождения`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(interaction.guild.iconURL())
                     .setDescription(`❌ - У данного пользователя нет дня рождения, очень жаль :'(`)
                 if (!listData.birthday.day && !listData.birthday.month && !listData.birthday.year) return interaction.reply({
@@ -357,7 +356,7 @@ async function execute(interaction, client) {
                 const list = new EmbedBuilder()
                     .setTitle(`День рождения ${user.username}`)
                     .setThumbnail(user.displayAvatarURL())
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`🎂 - Пользователь ${user} отмечает свой день рождения \`${listData.birthday.day}.${listData.birthday.month}.${listData.birthday.year}\`!`)
 
@@ -380,28 +379,9 @@ async function execute(interaction, client) {
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

@@ -7,7 +7,6 @@ const { ChannelType } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const { isURL } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const fs = require(`fs`)
 const fetch = require(`node-fetch`)
 const { checkPlugin } = require("../../../functions");

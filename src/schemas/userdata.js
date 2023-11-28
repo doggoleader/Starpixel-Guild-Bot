@@ -80,6 +80,7 @@ const User = new mongoose.Schema({
         profile_view: { type: Boolean, default: true },
         marks_view: { type: Boolean, default: true },
         is_in_leaderboard: { type: Boolean, default: true },
+        cd_notifications: { type: Boolean, default: true },
         language: { type: String, default: 'ru' },
     },
     cooldowns: {
@@ -88,6 +89,13 @@ const User = new mongoose.Schema({
         monthly: { type: Date, default: Date.now() },
         staffbox: { type: Date, default: Date.now() },
         seasonalWinner: { type: Date, default: Date.now() },
+        prestige: { type: Date, default: Date.now() },
+
+        sub_1: { type: Date, default: Date.now() },
+        sub_2: { type: Date, default: Date.now() },
+        sub_3: { type: Date, default: Date.now() },
+        premium: { type: Date, default: Date.now() },
+        boost: { type: Date, default: Date.now() },
 
         msgCreateExp: { type: Date, default: Date.now() },
         hw_msgCreate: { type: Date, default: Date.now() },
@@ -114,13 +122,6 @@ const User = new mongoose.Schema({
         uran: { type: Date, default: Date.now() },
         neptune: { type: Date, default: Date.now() },
 
-        sub_1: { type: Date, default: Date.now() },
-        sub_2: { type: Date, default: Date.now() },
-        sub_3: { type: Date, default: Date.now() },
-        premium: { type: Date, default: Date.now() },
-        boost: { type: Date, default: Date.now() },
-        prestige: { type: Date, default: Date.now() },
-
         dog: { type: Date, default: Date.now() },
         cat: { type: Date, default: Date.now() },
         rabbit: { type: Date, default: Date.now() },
@@ -133,11 +134,10 @@ const User = new mongoose.Schema({
         su_quest: { type: Date, default: Date.now() },
         ny_santa_rew: { type: Date, default: Date.now() },
 
-        veterans_quest_skip: { type: Date, default: Date.now() },
-
         mc_link: { type: Date, default: Date.now() },
         mc_unlink: { type: Date, default: Date.now() },
     },
+    cd_remind: [String],
 
     perks: {
         rank_boost: { type: Number, default: 0 },
@@ -148,7 +148,8 @@ const User = new mongoose.Schema({
         sell_items: { type: Number, default: 0 },
         ticket_discount: { type: Number, default: 0 },
         change_items: { type: Number, default: 0 },
-        store_items: { type: Number, default: 0 }
+        store_items: { type: Number, default: 0 },
+        decrease_cooldowns: { type: Number, default: 0 },
     },
     bank: {
         balance: { type: Number, default: 0 },
@@ -421,7 +422,8 @@ const User = new mongoose.Schema({
                 id: { type: Number, default: -1 },
                 required: { type: Number, default: Infinity },
                 status: { type: Boolean, default: true },
-                reward: { type: String, default: `` }
+                reward: { type: String, default: `` },
+                activation:  [Number]
             }
         },
         mars: {

@@ -2,7 +2,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const { EmbedBuilder, ChannelType } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`);
+
 const { Guild } = require('../../schemas/guilddata');
 const { Apply } = require('../../schemas/applications');
 const { monthName } = require('../../functions');
@@ -10,8 +10,10 @@ const { checkPlugin } = require("../../functions");
 
 
 class PersInfo {
-    id = 'admin';
-    name = `Административное`;
+    /** @private */
+    static id = 'admin';
+    /** @private */
+    static name = `Административное`;
     /**
      * @param {String} userid Discord User ID
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
@@ -40,7 +42,7 @@ class PersInfo {
                 userData.pers_info.numb = i
                 const embed = new EmbedBuilder()
                     .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setAuthor({ name: `Причина: Создание профиля` })
                     .setTimestamp(Date.now())
                     .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -68,7 +70,7 @@ ID пользователя - \`${userData.userid}\`
                         if (appMsg) {
                             const embed2 = new EmbedBuilder()
                                 .setTitle("Данные о пользователе на время вступления в гильдию")
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setAuthor({ name: `Причина: Создание профиля` })
                                 .setTimestamp(Date.now())
                                 .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -95,7 +97,7 @@ ID пользователя - \`${userData.userid}\`
                 }
                 const embed3 = new EmbedBuilder()
                     .setTitle(`Создано личное дело №${i}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`### Зарегистрировано личное дело пользователя ${member} под номером №${i}.
                     
@@ -121,7 +123,7 @@ ID пользователя - \`${userData.userid}\`
             await admin.send(`◾`)
         }
     }
-    
+
     /**
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
      */
@@ -184,7 +186,7 @@ ID пользователя - \`${userData.userid}\`
                             let monthN = await monthName(i);
                             const embed = new EmbedBuilder()
                                 .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setAuthor({ name: `Причина: Сохранение GEXP старше 3-х месяцев` })
                                 .setTimestamp(Date.now())
                                 .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })
@@ -245,22 +247,34 @@ ${map.join(`\n`)}
                 for (const userData of userDatas) {
                     const member = await guild.members.fetch(userData.userid)
                     const thread = await channel.threads.fetch(userData.pers_info.channel)
+                    if (!thread) throw new Error(`Не найдено личное дело пользователя ${userData.userid}!`)
                     if (thread.archived) await thread.setArchived(false)
                     if (thread.locked) await thread.setLocked(false)
+
+                    if (userData.onlinemode == true) {
+                        if (thread.name !== `Личное дело ${userData.nickname}`) {
+                            thread.setName(`Личное дело ${userData.nickname}`)
+                        }
+                    } else {
+                        if (thread.name !== `Личное дело ${userData.name} (${userData.userid})`) {
+                            thread.setName(`Личное дело ${userData.name} (${userData.userid})`)
+                        }
+                    }
+
                     let bday
                     if (userData.birthday.day && userData.birthday.month && userData.birthday.year) bday = `${userData.birthday.day}.${userData.birthday.month}.${userData.birthday.year}`
                     else bday = `Нет данных.`
                     const msg = await thread.messages.fetch(userData.pers_info.main_msg)
                     const embed = new EmbedBuilder()
-                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.onlinemode ? userData.nickname : userData.name} (${member.user.username})`)
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({ name: `Причина: Создание профиля` })
                         .setTimestamp(Date.now())
-                        .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения. Последнее изменение:` })
-                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.nickname})
+                        .setFooter({ text: `Личное дело пользователя ${userData.onlinemode ? userData.nickname : userData.name}. Доступно для чтения. Последнее изменение:` })
+                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.onlinemode ? userData.nickname : userData.name})
                 
 Реальное имя - \`${userData.displayname.name}\`
-Игровой никнейм - \`${userData.nickname}\`
+Игровой никнейм - \`${userData.onlinemode ? userData.nickname : null}\`
 UUID Minecraft - \`${userData.onlinemode ? userData.uuid : null}\`
 Дата рождения - \`${bday}\`
 Дата вступления - \`${userData.joinedGuild}\`
@@ -275,22 +289,33 @@ ID пользователя - \`${userData.userid}\`
                 if (reason == 'guild_leave') {
                     const userData = await User.findOne({ userid: userid });
                     const thread = await channel.threads.fetch(userData.pers_info.channel)
+                    if (!thread) throw new Error(`Не найдено личное дело пользователя ${userData.userid}!`)
                     if (thread.archived) await thread.setArchived(false)
                     if (thread.locked) await thread.setLocked(false)
+
+                    if (userData.onlinemode == true) {
+                        if (thread.name !== `Личное дело ${userData.nickname}`) {
+                            thread.setName(`Личное дело ${userData.nickname}`)
+                        }
+                    } else {
+                        if (thread.name !== `Личное дело ${userData.name} (${userData.userid})`) {
+                            thread.setName(`Личное дело ${userData.name} (${userData.userid})`)
+                        }
+                    }
                     let bday
                     if (userData.birthday.day && userData.birthday.month && userData.birthday.year) bday = `${userData.birthday.day}.${userData.birthday.month}.${userData.birthday.year}`
                     else bday = `Нет данных.`
                     const msg = await thread.messages.fetch(userData.pers_info.main_msg)
                     const embed = new EmbedBuilder()
-                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${userData.name})`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.onlinemode ? userData.nickname : userData.name} (${userData.name})`)
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({ name: `Причина: Создание профиля` })
                         .setTimestamp(Date.now())
-                        .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения. Последнее изменение:` })
-                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.nickname})
+                        .setFooter({ text: `Личное дело пользователя ${userData.onlinemode ? userData.nickname : userData.name}. Доступно для чтения. Последнее изменение:` })
+                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.onlinemode ? userData.nickname : userData.name})
                 
 Реальное имя - \`${userData.displayname.name}\`
-Игровой никнейм - \`${userData.nickname}\`
+Игровой никнейм - \`${userData.onlinemode ? userData.nickname : null}\`
 UUID Minecraft - \`${userData.onlinemode ? userData.uuid : null}\`
 Дата рождения - \`${bday}\`
 Дата вступления - \`${userData.joinedGuild}\`
@@ -312,23 +337,34 @@ ID пользователя - \`${userData.userid}\`
                     const userData = await User.findOne({ userid: userid });
                     const member = await guild.members.fetch(userData.userid)
                     const thread = await channel.threads.fetch(userData.pers_info.channel)
+                    if (!thread) throw new Error(`Не найдено личное дело пользователя ${userData.userid}!`)
                     if (thread.archived) await thread.setArchived(false)
                     if (thread.locked) await thread.setLocked(false)
+
+                    if (userData.onlinemode == true) {
+                        if (thread.name !== `Личное дело ${userData.nickname}`) {
+                            thread.setName(`Личное дело ${userData.nickname}`)
+                        }
+                    } else {
+                        if (thread.name !== `Личное дело ${userData.name} (${userData.userid})`) {
+                            thread.setName(`Личное дело ${userData.name} (${userData.userid})`)
+                        }
+                    }
                     let bday
                     if (userData.birthday.day && userData.birthday.month && userData.birthday.year) bday = `${userData.birthday.day}.${userData.birthday.month}.${userData.birthday.year}`
                     else bday = `Нет данных.`
                     const msg = await thread.messages.fetch(userData.pers_info.main_msg)
                     const embed = new EmbedBuilder()
-                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.onlinemode ? userData.nickname : userData.name} (${member.user.username})`)
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({ name: `Причина: Создание профиля` })
                         .setTimestamp(Date.now())
-                        .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения. Последнее изменение:` })
-                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.nickname})
+                        .setFooter({ text: `Личное дело пользователя ${userData.onlinemode ? userData.nickname : userData.name}. Доступно для чтения. Последнее изменение:` })
+                        .setDescription(`## ЛИЧНОЕ ДЕЛО №${userData.pers_info.numb} (${userData.onlinemode ? userData.nickname : userData.name})
                 
 Реальное имя - \`${userData.displayname.name}\`
-Игровой никнейм - \`${userData.nickname}\`
-UUID Minecraft - \`${userData.uuid}\`
+Игровой никнейм - \`${userData.onlinemode ? userData.nickname : null}\`
+UUID Minecraft - \`${userData.onlinemode ? userData.uuid : null}\`
 Дата рождения - \`${bday}\`
 Дата вступления - \`${userData.joinedGuild}\`
 ID пользователя - \`${userData.userid}\`
@@ -353,7 +389,7 @@ ID пользователя - \`${userData.userid}\`
 **Файл**: ${scriptName}`)
             await admin.send(`◾`)
         }
-    }   
+    }
 
     /**
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
@@ -396,7 +432,7 @@ ID пользователя - \`${userData.userid}\`
 
                     const embed = new EmbedBuilder()
                         .setTitle(`ЛИЧНОЕ ДЕЛО УЧАСТНИКА ${userData.nickname} (${member.user.username})`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setAuthor({ name: `Причина: Получение предупреждения` })
                         .setTimestamp(Date.now())
                         .setFooter({ text: `Личное дело пользователя ${userData.nickname}. Доступно для чтения.` })

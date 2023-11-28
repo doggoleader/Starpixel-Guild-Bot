@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`)
@@ -42,7 +42,7 @@ async function execute(interaction, client) {
 Для открытия **ежемесячной** коробки используйте команду \`/monthly\` (можно использовать 1 раз в 30 дней).
 
 Для открытия любых других коробок используйте ту команду, которая написана в роли (например, для \`❕ 🎁 МАЛЕНЬКАЯ /small\` командой будет \`/small\`).`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 4/${list.length}` })
             .setTimestamp(Date.now())
             .setImage(`attachment://${attach.name}`)

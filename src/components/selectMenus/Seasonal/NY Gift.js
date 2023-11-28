@@ -9,7 +9,6 @@ const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty, changeProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_newyear, gift_newyear, stats_newyear, quests_newyear } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
 /**
@@ -85,7 +84,7 @@ async function execute(interaction, client) {
             )
 
         let embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`## Отправить подарочный набор
             
 Вы собираетесь отправить подарочный набор. Выберите, какой набор вы хотите отправить:
@@ -136,7 +135,7 @@ async function execute(interaction, client) {
             userDataTo.save()
 
             embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(`## Отправить подарочный набор
             
 Вы собираетесь отправить подарочный набор. Выберите, какой набор вы хотите отправить:

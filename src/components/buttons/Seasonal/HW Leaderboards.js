@@ -9,7 +9,6 @@ const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
 const { achievementStats, found, getProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const api = process.env.hypixel_apikey
 /**
  * 
@@ -49,7 +48,7 @@ async function execute(interaction, client) {
         } else {
 
             const embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setAuthor({
                     name: `Лучшие пользователи по хэллоуинским очкам`
                 })

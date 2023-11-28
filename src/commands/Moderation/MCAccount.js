@@ -6,7 +6,6 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { calcActLevel, getLevel, rankName, monthName, convertToRoman, mentionCommand } = require(`../../functions`);
-const linksInfo = require(`../../discord structure/links.json`)
 const fs = require(`fs`)
 const rolesInfo = require(`../../discord structure/roles.json`);
 
@@ -35,7 +34,7 @@ async function execute(interaction, client) {
                     return interaction.reply({
                         embeds: [
                             new EmbedBuilder()
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setAuthor({
                                     name: `Вы не можете использовать эту команду`
                                 })
@@ -77,6 +76,10 @@ async function execute(interaction, client) {
                     userData.uuid = json.player.uuid;
                     userData.onlinemode = true;
                     userData.cooldowns.mc_link = Date.now() + 1000 * 60 * 60 * 24
+                    if (userData.cd_remind.includes('mc_link')) {
+                        let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'mc_link')
+                        userData.cd_remind.splice(ITEM_ID, 1)
+                    }
                     userData.save()
                     await interaction.reply({
                         content: `Данные вашего аккаунта были успешно изменены!
@@ -96,7 +99,7 @@ UUID: \`${UUID}\` ➡ \`${userData.uuid}\``
                     return interaction.reply({
                         embeds: [
                             new EmbedBuilder()
-                                .setColor(Number(linksInfo.bot_color))
+                                .setColor(Number(client.information.bot_color))
                                 .setAuthor({
                                     name: `Вы не можете использовать эту команду`
                                 })
@@ -114,6 +117,10 @@ UUID: \`${UUID}\` ➡ \`${userData.uuid}\``
                 userData.uuid = null;
                 userData.onlinemode = false;
                 userData.cooldowns.mc_unlink = Date.now() + 1000 * 60 * 60 * 24
+                if (userData.cd_remind.includes('mc_unlink')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'mc_unlink')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
                 await interaction.reply({
                     content: `Данные вашего аккаунта были успешно изменены!
@@ -129,28 +136,9 @@ UUID: \`${UUID}\` ➡ \`${userData.uuid}\``
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

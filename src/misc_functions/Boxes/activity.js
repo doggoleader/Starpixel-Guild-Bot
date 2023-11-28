@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 
 async function Activity(interaction, client) {
     try {
@@ -140,6 +139,12 @@ ${opener} открывает коробку активности.
                     await r_loot_msg.react(`✅`)
                 } else await r_loot_msg.react(`🚫`)
 
+            } else if (loot[i_loot].id == 10) {
+                if (userData.perks.decrease_cooldowns < 5) {
+                    userData.perks.decrease_cooldowns += 1
+                    await r_loot_msg.react(`✅`)
+                } else await r_loot_msg.react(`🚫`)
+
             } else {
                 await r_loot_msg.react(`❔`)
                 await r_loot_msg.reply(`Произошла неизвестная ошибка!`)
@@ -157,28 +162,9 @@ ${opener} открывает коробку активности.
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

@@ -14,6 +14,7 @@ const { UpdatesNicknames } = require("../../../functions/Updates/NicknamesClass"
 const { Easter } = require("../../../functions/seasons/EasterClass")
 const { Summer } = require("../../../functions/seasons/SummerClass")
 const { ChannelUpdates } = require("../../../functions/Updates/ChannelsUpdatesClass")
+const { Notifications } = require("../../../functions/Updates/NotificationsClass")
 const { TempItems } = require("../../../functions/Updates/TempItemsClass")
 const { Birthdays } = require("../../../functions/Updates/BirthdaysClass")
 const { PersInfo } = require("../../../functions/Updates/PersonalInfoClass")
@@ -34,7 +35,21 @@ class StarpixelClient extends Client {
     modals = new Collection();
     selectMenus = new Collection();
     voiceManager = new Collection();
-    invites = new Collection()
+    invites = new Collection();
+
+    information = {
+        "bot_color": "0x5700FC",
+        "bot_id": "883421063369859122",
+        "bot_dev": "491343958660874242",
+        "bot_descr": "➡️ Официальный бот гильдии Starpixel",
+        "guild_discord": "https://discord.gg/CjNwZfSvej",
+        "guild_youtube": "https://www.youtube.com/channel/UCadHvRQQgqdU0WwqT_XnzGg",
+        "guild_tiktok": "https://tiktok.com/@starpixel_guild",
+        "guild_telegram": "https://t.me/starpixel",
+        "guild_vk": "https://vk.com/starpixel_guild",
+        "guild_email": "starpixel.guild@gmail.com",
+        "guild_forumpost": "https://hypixel.net/threads/Русская-Гильдия-hypixel-•starpixel-•-level-172-•-Топ-107-•-Все-мини-игры-•-discord.4761422/"
+    }
 
     commandArray = [];
     /**
@@ -308,7 +323,7 @@ class StarpixelClient extends Client {
         });
 
 
-        cron.schedule(`0 5 * * *`, async () => {
+        cron.schedule(`0 12 * * *`, async () => {
 
             this.UpdateNicknames(); //Обновление никнеймов в базе данных
             this.birthdayChannel(); //Обновление канала с днями рождения
@@ -352,7 +367,8 @@ class StarpixelClient extends Client {
             timezone: `Europe/Moscow`
         })
         cron.schedule(`* * * * *`, async () => {
-            this.StopPolls(); //Сброс статистики марафона
+            this.StopPolls(); //Проверка результатов опроса
+            this.cd_notifications(); //Уведомления о перезарядках
         }, {
             scheduled: true,
             timezone: `Europe/Moscow`
@@ -612,6 +628,11 @@ class StarpixelClient extends Client {
     }
     async act_rewards() {
         await ActExp.act_rewards(this.client);
+    }
+
+    //Notifications
+    async cd_notifications() {
+        await Notifications.cd_notifications(this.client);
     }
 }
 module.exports = {

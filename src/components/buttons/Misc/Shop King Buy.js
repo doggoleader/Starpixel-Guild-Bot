@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, T
 const { Apply } = require(`../../../schemas/applications`)
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const chalk = require(`chalk`)
 const roles = require(`../../../discord structure/roles.json`)
 const { mentionCommand } = require('../../../functions');
@@ -132,7 +131,7 @@ ${list.join(`\n`)}`
 
         const list = new EmbedBuilder()
             .setTitle(`Список товаров королевского магазина`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setDescription(`## Доступные товары
 ${itemsInfo.join(`\n`)}

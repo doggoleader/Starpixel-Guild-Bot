@@ -4,13 +4,12 @@ const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(message) {
+async function execute(message, client) {
     if (message.channel.type == ChannelType.DM) return
     const guild = message.guild;
     if (!await checkPlugin(guild.id, plugin.id)) return
@@ -60,7 +59,7 @@ async function execute(message) {
 Содержимое: \`${message.content}\`
 
 Удалено пользователем: ${executor}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setThumbnail(message.author.displayAvatarURL())
 
@@ -77,7 +76,7 @@ async function execute(message) {
 Содержимое: \`Неизвестно\`
 
 Удалено пользователем: ${executor}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
 
             webhook.send({
@@ -96,7 +95,7 @@ async function execute(message) {
 Содержимое: \`${message.content}\`
 
 Удалено пользователем: \`Неизвестно\``)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setThumbnail(message.author.displayAvatarURL())
 
@@ -113,7 +112,7 @@ async function execute(message) {
 Содержимое: \`Неизвестно\`
 
 Удалено пользователем: \`Неизвестно\``)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
 
             webhook.send({

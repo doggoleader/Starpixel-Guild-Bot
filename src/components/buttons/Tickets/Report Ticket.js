@@ -1,7 +1,6 @@
 const { ButtonBuilder, ChannelType, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -48,7 +47,7 @@ async function execute(interaction, client) {
 
         const delete_embed = new EmbedBuilder()
             .setTitle(`Вы открыли обращение к администрации!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`Вы открыли обращение по теме "Жалоба на пользователя". Пожалуйста, отправьте ID пользователя или упомяните его ниже, отправьте доказательства его вины и причину, почему вы отправили на него жалобу.
         
 Если вы хотите закрыть данное обращение, вы можете нажать на кнопочку ниже. Неактивные обращения удаляются модератором спустя 2 дня.`)

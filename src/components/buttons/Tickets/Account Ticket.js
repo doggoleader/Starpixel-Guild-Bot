@@ -1,7 +1,6 @@
 const { ButtonBuilder, ChannelType, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
-const linksInfo = require(`../../../discord structure/links.json`)
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -47,7 +46,7 @@ async function execute(interaction, client) {
 
         const delete_embed = new EmbedBuilder()
             .setTitle(`Вы открыли обращение к администрации!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`Вы открыли обращение по теме "Изменение аккаунта". Пожалуйста, отправьте никнейм вашего старого и нового аккаунтов на Hypixel или в Discord.
         
 Если вы хотите закрыть данное обращение, вы можете нажать на кнопочку ниже. Неактивные обращения удаляются модератором спустя 2 дня.`)

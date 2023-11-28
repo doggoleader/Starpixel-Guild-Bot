@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder, AttachmentBuilder, } = require('discord.js');
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const chalk = require(`chalk`);
 /**
  * 
@@ -27,7 +26,7 @@ async function execute(interaction, client) {
                 .setDescription(`Открыть чат в голосовом канале "Совместная"`)
             const embed = new EmbedBuilder()
                 .setDescription(`Отправка сообщений с выбором игры будут отправляться в чат голосового канала <#717019066069418115>! Перейдите туда, чтобы выбирать и голосовать за мини-игры на совместной игре!`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setImage(`attachment://${file.name}`)
             await interaction.reply({
                 embeds: [embed]

@@ -6,7 +6,6 @@ const fetch = require(`node-fetch`)
 const api = process.env.hypixel_apikey
 const chalk = require(`chalk`)
 const ch_list = require(`../../../discord structure/channels.json`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { Temp } = require("../../../schemas/temp_items")
 const { UserProfile } = require(`./UserProfile`);
 const { embed: settingsEmbed } = require(`../../Premade Interactions & Embeds/Profile Settings Embed`)
@@ -112,7 +111,16 @@ class Profile {
                         userData.onlinemode = true;
                         userData.markModified(`uuid`)
                         userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
+                        if (userData.cd_remind.includes('prof_update')) {
+                            let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'prof_update')
+                            userData.cd_remind.splice(ITEM_ID, 1)
+                        }
+
                         creator.cooldowns.prof_create = Date.now() + (1000 * 60)
+                        if (creator.cd_remind.includes('prof_create')) {
+                            let ITEM_ID = creator.cd_remind.findIndex(item_id => item_id == 'prof_create')
+                            creator.cd_remind.splice(ITEM_ID, 1)
+                        }
                         creator.markModified(`prof_create`)
                     } catch (error) {
                         userData.onlinemode = false;
@@ -202,7 +210,7 @@ class Profile {
                     )
                 const embed = new EmbedBuilder()
                     .setTitle(`Заявка на вступление пользователя ${user.username}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`**ЗАЯВКА**
 1. Имя - \`${appData.que1}\`.
 2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.
@@ -244,7 +252,7 @@ class Profile {
                     .setAuthor({
                         name: `Профиль успешно создан!`
                     })
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. В течение определенного времени он будет добавлен в канал с участниками!`)
                     .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
                     .setTimestamp(Date.now())
@@ -254,7 +262,7 @@ class Profile {
                 })
                 let d = 1, dd = 1, ddd = 1
                 const embed1 = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Профиль игрока успешно создан!`)
                     .setTimestamp(Date.now())
                     .setThumbnail(interaction.guild.iconURL())
@@ -270,7 +278,7 @@ class Profile {
 **${dd++}.** Ожидаем данные о дне рождении игрока. 🕑`)
 
                 const embed2 = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Добро пожаловать в гильдию Starpixel!`)
                     .setTimestamp(Date.now())
                     .setThumbnail(user.displayAvatarURL())
@@ -304,13 +312,15 @@ class Profile {
      * @param {StarpixelClient} client Discord Bot Client
      */
     static async updateProfile(interaction, client) {
+        await interaction.deferReply({ fetchReply: true, ephemeral: true })
+
         const { user, guild, member } = interaction;
-        if (!member || !member.roles.cache.has(`504887113649750016`)) return interaction.reply({
+        if (!member || !member.roles.cache.has(`504887113649750016`)) return interaction.editReply({
             content: `Вы не можете использовать эту команду, так как вы не являетесь участником гильдии!`,
             ephemeral: true
         })
         const userData = await User.findOne({ userid: user.id });
-        if (userData.cooldowns.prof_update > Date.now()) return interaction.reply({
+        if (userData.cooldowns.prof_update > Date.now()) return interaction.editReply({
             embeds: [new EmbedBuilder()
                 .setAuthor({
                     name: `Команда на перезарядке!`
@@ -322,6 +332,11 @@ class Profile {
             ],
             ephemeral: true
         })
+
+        await interaction.editReply({
+            content: `Началось обновление профиля... Подождите немного!`
+        })
+
         userData.name = user.username
         if (userData.onlinemode) {
             let response = await fetch(`https://api.hypixel.net/player?uuid=${userData.uuid}`, {
@@ -337,9 +352,13 @@ class Profile {
                     console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Ник игрока - ${json.player.displayname}, UUID - ${json.player.uuid}. Профиль обновлён!`))
                     userData.nickname = json.player.displayname;
                     userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60)
+                    if (userData.cd_remind.includes('prof_update')) {
+                        let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'prof_update')
+                        userData.cd_remind.splice(ITEM_ID, 1)
+                    }
 
                 } catch (error) {
-                    await interaction.reply({
+                    await interaction.editReply({
                         embeds: [new EmbedBuilder().setAuthor({ name: `Ошибка!` }).setDescription(`Игрок ${userData.uuid} не найден! Обратитесь в поддержку гильдии Starpixel!`).setThumbnail(`https://i.imgur.com/6IE3lz7.png`).setColor(`DarkRed`).setTimestamp(Date.now())],
                         ephemeral: true
                     });
@@ -349,24 +368,34 @@ class Profile {
             }
         }
 
-        client.rank_update();
-        client.AutoElements();
-        client.AutoStars();
-        client.Boosters();
-        client.checkSubscription();
-        client.Discounts();
-        client.AutoMythical();
-        client.removeNonPremiumColors();
-        client.updatenicks();
-        client.GuildGamesCheckRewards(member);
-        client.ActExp(userData.userid);
-
         userData.save()
+
+        await wait(1000)
+        await client.rank_update();
+        await client.AutoElements();
+        await client.AutoStars();
+        await client.Boosters();
+        await interaction.editReply({
+            content: `Осталось совсем чуть-чуть... 😉`
+        })
+        await client.checkSubscription();
+        await client.Discounts();
+        await client.AutoMythical();
+        await interaction.editReply({
+            content: `Почти 😛`
+        })
+        await client.removeNonPremiumColors();
+        await client.updatenicks();
+        await client.GuildGamesCheckRewards(member);
+        await interaction.editReply({
+            content: `Последний штрих :)`
+        })
+        await client.ActExp(userData.userid);
         const totalexp = calcActLevel(0, userData.level, userData.exp)
         if (userData.onlinemode) {
             const success = new EmbedBuilder()
                 .setTitle(`Профиль успешно обновлен!`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
                 .setDescription(`Профиль участника ${user} был успешно обновлен!
@@ -380,13 +409,14 @@ class Profile {
 Румбиков - ${userData.rumbik}
 Билетов - ${userData.tickets}
 Опыта гильдии в наличии - ${userData.gexp}`)
-            await interaction.reply({
+            await interaction.editReply({
+                content: `Обновление профиля завершено!`,
                 embeds: [success]
             })
         } else {
             const success = new EmbedBuilder()
                 .setTitle(`Профиль успешно обновлен!`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setDescription(`Профиль участника ${user} был успешно обновлен!
 
@@ -399,7 +429,8 @@ class Profile {
 Румбиков - ${userData.rumbik}
 Билетов - ${userData.tickets}
 Опыта гильдии в наличии - ${userData.gexp}`)
-            await interaction.reply({
+            await interaction.editReply({
+                content: `Обновление профиля завершено!`,
                 embeds: [success]
             })
         }
@@ -414,7 +445,7 @@ class Profile {
         const { member, user, guild } = interaction
 
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`# Вы собираетесь сбросить профиль
 Используя данную команду, вы собираетесь начать развитие заново. Существует 2 типа сброса профиля:
 1. **Сбросить и продолжить развитие дальше.** Выбирая данную кнопку, вы продолжите развиваться в дискорде гильдии дальше, получив доступ к новому каналу и возможность получать более крутые награды.
@@ -1285,7 +1316,7 @@ class Profile {
             let embed = new EmbedBuilder()
                 .setTitle(`GEXP пользователя ${userData.nickname}`)
                 .setThumbnail(user.displayAvatarURL())
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
                 .setDescription(`**${monthN}, ${m}**
 ${map.join(`\n`)}
@@ -1495,7 +1526,7 @@ ${map.join(`\n`)}
                     monthN = await monthName(n)
                     embed.setTitle(`GEXP пользователя ${userData.nickname}`)
                         .setThumbnail(member.user.displayAvatarURL())
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`**${monthN}, ${m}**
 ${map.join(`\n`)}
@@ -1577,7 +1608,7 @@ ${map.join(`\n`)}
             if (userData.onlinemode) {
                 update = new EmbedBuilder()
                     .setTitle(`Идёт обработка всех участников . . .`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Идёт обработка и обновление профилей участников гильдии Starpixel!
 
 В данный момент идёт обработка пользователя <@${userData.userid}> - \`${userData.nickname}\` (UUID: \`${userData.onlinemode ? userData.uuid : null}\`) 
@@ -1587,7 +1618,7 @@ ${map.join(`\n`)}
             } else {
                 update = new EmbedBuilder()
                     .setTitle(`Идёт обработка всех участников . . .`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Идёт обработка и обновление профилей участников гильдии Starpixel!
 
 В данный момент идёт обработка пользователя <@${userData.userid}> - \`${userData.nickname}\` (UUID: \`${userData.onlinemode ? userData.uuid : null}\`) 
@@ -1617,7 +1648,7 @@ ${map.join(`\n`)}
 
         update = new EmbedBuilder()
             .setTitle(`Обработка завершена!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`Обработка и обновление профилей участников завершена!
 
 Теперь никнеймы, идентификаторы и прочее актуальны! В скором времени канал <#932203255335899177> будет содержать данную информацию
@@ -2004,21 +2035,21 @@ ${map.join(`\n`)}
 
 
         const embed = new EmbedBuilder()
-        .setColor(Number(linksInfo.bot_color))
-        .setDescription(`## Временные предметы пользователя ${interaction.user}
+            .setColor(Number(client.information.bot_color))
+            .setDescription(`## Временные предметы пользователя ${interaction.user}
         
 Список предметов:
 ${map.join(`\n`)}`)
 
 
         const button = new ActionRowBuilder()
-        .addComponents(
-            new ButtonBuilder()
-            .setCustomId(`profile_tempitems_getback`)
-            .setLabel(`Вернуть в профиль недостающие временные роли`)
-            .setStyle(ButtonStyle.Primary)
-            .setEmoji(`⚜`)
-        )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`profile_tempitems_getback`)
+                    .setLabel(`Вернуть в профиль недостающие временные роли`)
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji(`⚜`)
+            )
 
         const msg = await interaction.reply({
             embeds: [embed],

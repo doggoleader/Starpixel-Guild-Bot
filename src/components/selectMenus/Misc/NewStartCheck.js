@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -95,7 +95,7 @@ async function execute(interaction, client) {
 
             let mapProm = await Promise.all(map)
             const embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTitle(`Информация о заданиях из "Новое начало"`)
                 .setDescription(`${mapProm.join(`\n`)}`)
                 .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)
@@ -185,7 +185,7 @@ async function execute(interaction, client) {
             userData.save()
             if (texts.length > 0) {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Информация о заданиях из "Новое начало"`)
                     .setDescription(`${member}, информация по вашим заданиям была проверена! Держите:
 ${texts.join(`\n`)}`)
@@ -197,7 +197,7 @@ ${texts.join(`\n`)}`)
                 })
             } else {
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Информация о заданиях из "Новое начало"`)
                     .setDescription(`${member}, вы уже выполнили все задания!`)
                     .setThumbnail(`https://minotar.net/helm/${userData.uuid}.png`)

@@ -10,7 +10,6 @@ const { EmbedBuilder, SlashCommandBuilder, AttachmentBuilder, ActionRowBuilder, 
 const { mentionCommand } = require('../../../functions');
 
 const { achievementStats, found, getProperty, createBingoProfile, changeProperty } = require(`../../../functions`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const { lb_newyear, gift_newyear, stats_newyear, quests_newyear } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
 /**
@@ -56,7 +55,7 @@ async function execute(interaction, client) {
                 return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
@@ -73,7 +72,11 @@ async function execute(interaction, client) {
             userData.seasonal.new_year.quest.finished = false
             userData.seasonal.new_year.quest.id = quest.id
             userData.seasonal.new_year.quest.requirement = wins + quest.req_wins
-            userData.cooldowns.ny_quest = Date.now() + (1000 * 60 * 60 * 16)
+            userData.cooldowns.ny_quest = Date.now() + (1000 * 60 * 60 * 16) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('ny_quest')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'ny_quest')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
             userData.save()
             const questEmbed = new EmbedBuilder()
                 .setColor(`Green`)
@@ -326,7 +329,7 @@ async function execute(interaction, client) {
                 .setFile(`./src/assets/Seasonal/NewYearBingo.png`)
                 .setName(`NewYearBingo.png`)
             let embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setImage(`attachment://${file.name}`)
                 .setDescription(`## НОВОГОДНИЙ БИНГО-МАРАФОН
  \`Д1\` ◾ \`С1\` \`С2\` \`С3\` \`С4\` \`С5\` ◾ \`Д2\`    
@@ -806,7 +809,7 @@ async function execute(interaction, client) {
                     )
 
                 embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setImage(`attachment://${file.name}`)
                     .setDescription(`## НОВОГОДНИЙ БИНГО-МАРАФОН
 \`Д1\` ◾ \`С1\` \`С2\` \`С3\` \`С4\` \`С5\` ◾ \`Д2\`    

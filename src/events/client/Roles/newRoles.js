@@ -1,7 +1,7 @@
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require("../../../schemas/userdata");
 const { Temp } = require("../../../schemas/temp_items");
@@ -24,7 +24,7 @@ async function execute(oldMember, newMember, client) {
     if (!oldMember.roles.cache.has(boostRole) && newMember.roles.cache.has(boostRole)) {
         await newMember.roles.add(premRole)
         const embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Награда за буст сервера`)
             .setDescription(`Спасибо вам, ${newMember}, за то, что забустили наш сервер! В качестве благодарности вы получаете \`${boostRole.name}\` и \`${premRole.name}\` до тех пор, пока не закончится ваш буст сервера!`)
         await newMember.send({
@@ -41,7 +41,7 @@ async function execute(oldMember, newMember, client) {
         const tempData = await Temp.findOne({ userid: userData.userid, roleid: premRole })
         if (tempData) {
             const embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTitle(`Награда за буст сервера`)
                 .setDescription(`${newMember}, похоже, что ваш буст сервера закончился! Спасибо вам за него, но, к сожалению, мы вынуждены убрать у вас \`${boostRole.name}\` :'(`)
             await newMember.send({
@@ -57,7 +57,7 @@ async function execute(oldMember, newMember, client) {
         } else if (!tempData) {
             await newMember.roles.remove(premRole)
             const embed = new EmbedBuilder()
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTitle(`Награда за буст сервера`)
                 .setDescription(`${newMember}, похоже, что ваш буст сервера закончился! Спасибо вам за него, но, к сожалению, мы вынуждены убрать у вас \`${boostRole.name}\` и \`${premRole.name}\` :'(`)
             await newMember.send({

@@ -4,13 +4,12 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent, AuditLogOptions
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(channel, time) {
+async function execute(channel, time, client) {
     if (channel.partial) {
         try {
             await channel.fetch();
@@ -20,7 +19,6 @@ async function execute(channel, time) {
             return;
         }
     }
-    const client = channel.client
     const guild = channel.guild
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
@@ -59,7 +57,7 @@ async function execute(channel, time) {
 Автор: ${message.content}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
 
@@ -72,7 +70,7 @@ async function execute(channel, time) {
 Автор: ${message.content}
 
 Модератор: ${auditLog.executor}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTimestamp(Date.now())
             .setThumbnail(channel.guild.iconURL())
     }

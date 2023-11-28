@@ -9,7 +9,6 @@ const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { isOneEmoji } = require(`is-emojis`)
 /**
@@ -40,7 +39,7 @@ async function execute(interaction, client) {
         })
 
         const cd = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
@@ -76,7 +75,11 @@ async function execute(interaction, client) {
             boost.save()
             guildData.act_exp_boost = 2
             guildData.save()
-            userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30)
+            userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+            if (userData.cd_remind.includes('sun')) {
+                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'sun')
+                userData.cd_remind.splice(ITEM_ID, 1)
+            }
             userData.save()
             await interaction.deferUpdate()
             const ch = await interaction.guild.channels.fetch(ch_list.main)
@@ -160,7 +163,11 @@ async function execute(interaction, client) {
 
             collector.on('end', async (err) => {
                 await interaction.deleteReply()
-                userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('sun')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'sun')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
             })
 
@@ -223,7 +230,11 @@ async function execute(interaction, client) {
 
             collector.on('end', async (err) => {
                 await interaction.deleteReply()
-                userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30)
+                userData.cooldowns.sun = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
+                if (userData.cd_remind.includes('sun')) {
+                    let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'sun')
+                    userData.cd_remind.splice(ITEM_ID, 1)
+                }
                 userData.save()
             })
         }

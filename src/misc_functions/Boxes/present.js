@@ -3,7 +3,7 @@ const { SlashCommandBuilder, ActionRowBuilder, UserSelectMenuBuilder } = require
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`);
+
 const { changeProperty } = require('../../functions');
 
 

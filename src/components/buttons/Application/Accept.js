@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, channelLink, ChannelType, EmbedBuilder, } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`)
 const ch_list = require(`../../../discord structure/channels.json`)
 /**
  * 
@@ -74,7 +73,7 @@ async function execute(interaction, client) {
             )
         const embed = new EmbedBuilder()
             .setTitle(`Заявка на вступление пользователя ${interaction.user.username}`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setDescription(`**ЗАЯВКА**
 1. Имя - \`${appData.que1}\`.
 2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.

@@ -5,13 +5,15 @@ const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { calcActLevel, getLevel, mentionCommand } = require(`../../functions`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin } = require("../../functions");
+const { EmbedBuilder } = require("discord.js")
 
 class ActExp {
-    id = 'items';
-    name = "Предметы";
+    /** @private */
+    static id = 'items';
+    /** @private */
+    static name = "Предметы";
     /**
      * 
      * @param {String} userid Discord User ID
@@ -90,7 +92,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTitle(`Награда за уровень была получена!`)
                                         .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Проверьте свои роли, чтобы посмотреть награду!`)
                                         .setTimestamp(Date.now())
-                                        .setColor(Number(linksInfo.bot_color))
+                                        .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
     
                                     await channel.send({
@@ -106,7 +108,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTitle(`Награда за уровень была сохранена!`)
                                         .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Используйте ${mentionCommand(client, 'rewards claim')}, чтобы получить свою награду!`)
                                         .setTimestamp(Date.now())
-                                        .setColor(Number(linksInfo.bot_color))
+                                        .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
     
                                     await channel.send({
@@ -132,7 +134,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTitle(`Награда за уровень была получена!`)
                                         .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Проверьте свои роли, чтобы посмотреть награду!`)
                                         .setTimestamp(Date.now())
-                                        .setColor(Number(linksInfo.bot_color))
+                                        .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
     
                                     await channel.send({
@@ -154,7 +156,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTitle(`Награда за уровень была получена!`)
                                         .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Проверьте свои роли, чтобы посмотреть награду!`)
                                         .setTimestamp(Date.now())
-                                        .setColor(Number(linksInfo.bot_color))
+                                        .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
     
                                     await channel.send({

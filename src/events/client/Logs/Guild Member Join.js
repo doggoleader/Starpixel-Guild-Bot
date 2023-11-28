@@ -4,14 +4,12 @@ const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`dis
 const ch_list = require(`../../../discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
-async function execute(member) {
-    const client = member.client
+async function execute(member, client) {
     const guild = member.guild;
     if (!await checkPlugin(guild.id, plugin.id)) return
     const log_data = await Guild.findOne({ id: guild.id })
@@ -50,7 +48,7 @@ async function execute(member) {
 Дата вступления: <t:${joined}:f>
 
 Пригласил: ${inviter}`)
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setTimestamp(Date.now())
         .setThumbnail(member.user.displayAvatarURL())
 

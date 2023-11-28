@@ -5,7 +5,6 @@ const fetch = require(`node-fetch`);
 const ch_list = require(`../../discord structure/channels.json`)
 const marathon = require(`../../jsons/Marathon.json`)
 const upd_nick_api = process.env.hypixel_apikey, api = process.env.hypixel_apikey
-const linksInfo = require(`../../discord structure/links.json`)
 const upgrades = require(`../../jsons/Upgrades Info.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin, mentionCommand } = require("../../functions");
@@ -13,8 +12,10 @@ const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, Butt
 
 
 class MCUpdates {
-    id = 'hypixel';
-    name = 'Hypixel'
+    /** @private */
+    static id = 'hypixel';
+    /** @private */
+    static name = 'Hypixel';
     /**
      * 
      * @param {import("../../misc_functions/Classes/System/import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient").import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
@@ -181,7 +182,7 @@ class MCUpdates {
 
                                         await userData.stacked_items.push(reward.rewards)
                                         const embed = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
+                                            .setColor(Number(client.information.bot_color))
                                             .setTimestamp(Date.now())
                                             .setTitle(`Выдана награда за время в гильдии`)
                                             .setThumbnail(member.user.displayAvatarURL())
@@ -196,7 +197,7 @@ class MCUpdates {
                                     } else {
                                         await member.roles.add(reward.rewards)
                                         const embed = new EmbedBuilder()
-                                            .setColor(Number(linksInfo.bot_color))
+                                            .setColor(Number(client.information.bot_color))
                                             .setTimestamp(Date.now())
                                             .setTitle(`Выдана награда за время в гильдии`)
                                             .setThumbnail(member.user.displayAvatarURL())
@@ -295,7 +296,7 @@ class MCUpdates {
     static async top_3_gexp(client) {
         try {
             const guild = await client.guilds.fetch(`320193302844669959`)
-            if (!await checkPlugin("320193302844669959", this.id)) return;
+            if (!await checkPlugin(guild.id, this.id)) return;
 
             let userDatas = await User.find({ guildid: guild.id, onlinemode: true })
             let b = 0
@@ -382,7 +383,7 @@ class MCUpdates {
             const top_3 = new EmbedBuilder()
                 .setTitle(`Топ-3 лучших игрока по GEXP`)
                 .setDescription(`${list.join('\n')}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setTimestamp(Date.now())
 
             await msg.edit({
@@ -411,6 +412,7 @@ class MCUpdates {
      */
     static async newMarathon(client) {
         const guild = await client.guilds.fetch('320193302844669959');
+        if (!await checkPlugin(guild.id, this.id)) return;
         const channel = await guild.channels.fetch(ch_list.marathon);
         const guildData = await Guild.findOne({ id: guild.id })
         const stage1msg = await channel.messages.fetch('1173198390855733348');

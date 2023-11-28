@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`)
@@ -45,7 +45,7 @@ async function execute(interaction, client) {
 Чтобы отправиться на урок к питомцу, необходимо прописать команду \`/pets\` и тип того питомца, к которому вы хотите отправиться.
 
 Как только вы изучите все 3 урока определённой стихии, вы получите стихию, которая будет вам давать дополнительные награды каждую неделю. Для использования стихии вам необходимо написать команду \`/elements\` и выбрать стихию, которая у вас имеется`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 11/${list.length}` })
             .setTimestamp(Date.now())
             .setImage(`attachment://${attach.name}`)

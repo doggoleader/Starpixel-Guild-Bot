@@ -2,13 +2,14 @@ const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { changeProperty } = require(`../../functions`)
 const { checkPlugin } = require("../../functions");
 
 class TempItems {
-    id = "items";
-    name = `Предметы`
+    /** @private */
+    static id = "items";
+    /** @private */
+    static name = `Предметы`
     /**
      * @param {String} userid Discord User ID
      * @param {String} guildid Discord Guild ID

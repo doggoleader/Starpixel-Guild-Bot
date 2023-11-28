@@ -3,7 +3,6 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder } = require("discord.js")
-const linksInfo = require(`../../discord structure/links.json`)
 const { checkPlugin } = require("../../functions");
 const { User } = require("../../schemas/userdata")
 const fetch = require(`node-fetch`);
@@ -11,8 +10,10 @@ const api = process.env.hypixel_apikey;
 
 
 class ChannelUpdates {
-    id = "channels";
-    name = 'Каналы';
+    /** @private */
+    static id = "channels";
+    /** @private */
+    static name = 'Каналы';
 
     /**
      * 
@@ -28,16 +29,16 @@ class ChannelUpdates {
             if (!birthday_jan[0]) {
                 await msg_jan.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_jan.sort((a, b) => a.day - b.day)
+                let sort = await birthday_jan.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 20) {
+                    if (memberdata.birthday.day <= 20) {
                         zodiak = `♑`
-                    } else if (memberdata.day >= 21) {
+                    } else if (memberdata.birthday.day >= 21) {
                         zodiak = `♒`
                     }
-                    return `${zodiak} ${memberdata.day} января - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} января - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_jan.edit(`${promise.join(`\n`)}`)
@@ -50,17 +51,17 @@ class ChannelUpdates {
                 await msg_feb.edit(`\`Праздников нет.\``)
             } else if (birthday_feb) {
 
-                let sort = await birthday_feb.sort((a, b) => a.day - b.day)
+                let sort = await birthday_feb.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
 
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 19) {
+                    if (memberdata.birthday.day <= 19) {
                         zodiak = `♒`
-                    } else if (memberdata.day >= 20) {
+                    } else if (memberdata.birthday.day >= 20) {
                         zodiak = `♓`
                     }
-                    return `${zodiak} ${memberdata.day} февраля - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} февраля - ${user}`
 
 
                 })
@@ -74,16 +75,16 @@ class ChannelUpdates {
             if (!birthday_mar[0]) {
                 await msg_mar.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_mar.sort((a, b) => a.day - b.day)
+                let sort = await birthday_mar.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 20) {
+                    if (memberdata.birthday.day <= 20) {
                         zodiak = `♓`
-                    } else if (memberdata.day >= 21) {
+                    } else if (memberdata.birthday.day >= 21) {
                         zodiak = `♈`
                     }
-                    return `${zodiak} ${memberdata.day} марта - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} марта - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_mar.edit(`${promise.join(`\n`)}`)
@@ -94,16 +95,16 @@ class ChannelUpdates {
             if (!birthday_apr[0]) {
                 await msg_apr.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_apr.sort((a, b) => a.day - b.day)
+                let sort = await birthday_apr.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 20) {
+                    if (memberdata.birthday.day <= 20) {
                         zodiak = `♈`
-                    } else if (memberdata.day >= 21) {
+                    } else if (memberdata.birthday.day >= 21) {
                         zodiak = `♉`
                     }
-                    return `${zodiak} ${memberdata.day} апреля - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} апреля - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_apr.edit(`${promise.join(`\n`)}`)
@@ -114,16 +115,16 @@ class ChannelUpdates {
             if (!birthday_may) {
                 await msg_may.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_may.sort((a, b) => a.day - b.day)
+                let sort = await birthday_may.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 21) {
+                    if (memberdata.birthday.day <= 21) {
                         zodiak = `♉`
-                    } else if (memberdata.day >= 22) {
+                    } else if (memberdata.birthday.day >= 22) {
                         zodiak = `♊`
                     }
-                    return `${zodiak} ${memberdata.day} мая - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} мая - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_may.edit(`${promise.join(`\n`)}`)
@@ -134,16 +135,16 @@ class ChannelUpdates {
             if (!birthday_jun[0]) {
                 await msg_jun.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_jun.sort((a, b) => a.day - b.day)
+                let sort = await birthday_jun.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 21) {
+                    if (memberdata.birthday.day <= 21) {
                         zodiak = `♊`
-                    } else if (memberdata.day >= 22) {
+                    } else if (memberdata.birthday.day >= 22) {
                         zodiak = `♋`
                     }
-                    return `${zodiak} ${memberdata.day} июня - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} июня - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_jun.edit(`${promise.join(`\n`)}`)
@@ -154,16 +155,16 @@ class ChannelUpdates {
             if (!birthday_jul[0]) {
                 await msg_jul.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_jul.sort((a, b) => a.day - b.day)
+                let sort = await birthday_jul.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 22) {
+                    if (memberdata.birthday.day <= 22) {
                         zodiak = `♋`
-                    } else if (memberdata.day >= 23) {
+                    } else if (memberdata.birthday.day >= 23) {
                         zodiak = `♌`
                     }
-                    return `${zodiak} ${memberdata.day} июля - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} июля - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_jul.edit(`${promise.join(`\n`)}`)
@@ -174,16 +175,16 @@ class ChannelUpdates {
             if (!birthday_aug[0]) {
                 await msg_aug.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_aug.sort((a, b) => a.day - b.day)
+                let sort = await birthday_aug.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 21) {
+                    if (memberdata.birthday.day <= 21) {
                         zodiak = `♌`
-                    } else if (memberdata.day >= 22) {
+                    } else if (memberdata.birthday.day >= 22) {
                         zodiak = `♍`
                     }
-                    return `${zodiak} ${memberdata.day} августа - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} августа - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_aug.edit(`${promise.join(`\n`)}`)
@@ -194,16 +195,16 @@ class ChannelUpdates {
             if (!birthday_sep[0]) {
                 await msg_sep.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_sep.sort((a, b) => a.day - b.day)
+                let sort = await birthday_sep.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 23) {
+                    if (memberdata.birthday.day <= 23) {
                         zodiak = `♍`
-                    } else if (memberdata.day >= 24) {
+                    } else if (memberdata.birthday.day >= 24) {
                         zodiak = `♎`
                     }
-                    return `${zodiak} ${memberdata.day} сентября - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} сентября - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_sep.edit(`${promise.join(`\n`)}`)
@@ -214,16 +215,16 @@ class ChannelUpdates {
             if (!birthday_oct[0]) {
                 await msg_oct.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_oct.sort((a, b) => a.day - b.day)
+                let sort = await birthday_oct.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 23) {
+                    if (memberdata.birthday.day <= 23) {
                         zodiak = `♎`
-                    } else if (memberdata.day >= 24) {
+                    } else if (memberdata.birthday.day >= 24) {
                         zodiak = `♏`
                     }
-                    return `${zodiak} ${memberdata.day} октября - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} октября - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_oct.edit(`${promise.join(`\n`)}`)
@@ -234,16 +235,16 @@ class ChannelUpdates {
             if (!birthday_nov[0]) {
                 await msg_nov.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_nov.sort((a, b) => a.day - b.day)
+                let sort = await birthday_nov.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 22) {
+                    if (memberdata.birthday.day <= 22) {
                         zodiak = `♏`
-                    } else if (memberdata.day >= 23) {
+                    } else if (memberdata.birthday.day >= 23) {
                         zodiak = `♐`
                     }
-                    return `${zodiak} ${memberdata.day} ноября - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} ноября - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_nov.edit(`${promise.join(`\n`)}`)
@@ -254,16 +255,16 @@ class ChannelUpdates {
             if (!birthday_dec[0]) {
                 await msg_dec.edit(`\`Праздников нет.\``)
             } else {
-                let sort = await birthday_dec.sort((a, b) => a.day - b.day)
+                let sort = await birthday_dec.sort((a, b) => a.birthday.day - b.birthday.day)
                 const map = sort.map(async (memberdata) => {
                     const user = await guild.members.fetch(memberdata.userid)
                     let zodiak
-                    if (memberdata.day <= 22) {
+                    if (memberdata.birthday.day <= 22) {
                         zodiak = `♐`
-                    } else if (memberdata.day >= 23) {
+                    } else if (memberdata.birthday.day >= 23) {
                         zodiak = `♑`
                     }
-                    return `${zodiak} ${memberdata.day} декабря - ${user}`
+                    return `${zodiak} ${memberdata.birthday.day} декабря - ${user}`
                 })
                 let promise = await Promise.all(map)
                 await msg_dec.edit(`${promise.join(`\n`)}`)
@@ -365,7 +366,7 @@ class ChannelUpdates {
 
             const staff = new EmbedBuilder()
                 .setTitle(`ПЕРСОНАЛ ГИЛЬДИИ`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(`**Правление гильдии**
 ${adminres.join('\n')}
 
@@ -403,7 +404,7 @@ ${offres.join('\n')}`)
             if (premres.length <= 0) premres = [`\`Нет участников.\``]
             const premmembers = new EmbedBuilder()
                 .setTitle(`VIP УЧАСТНИКИ`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(`${premres.join('\n')}`)
             await premmsg.edit({
                 content: ``,
@@ -439,7 +440,7 @@ ${offres.join('\n')}`)
             if (ms2.length <= 0) ms2 = [`\`Нет участников на странице 2.\``]
             const memberslist1 = new EmbedBuilder()
                 .setTitle(`УЧАСТНИКИ ГИЛЬДИИ ЧАСТЬ 1`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(
                     `${await ms1.join('\n')}`
                 )
@@ -449,7 +450,7 @@ ${offres.join('\n')}`)
             })
             const memberslist2 = new EmbedBuilder()
                 .setTitle(`УЧАСТНИКИ ГИЛЬДИИ ЧАСТЬ 2`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(
                     `${await ms2.join('\n')}`
                 )
@@ -473,7 +474,7 @@ ${offres.join('\n')}`)
 
             const noLicenseList = new EmbedBuilder()
                 .setTitle(`УЧАСТНИКИ ГИЛЬДИИ БЕЗ ЛИЦЕНЗИИ MINECRAFT`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(
                     `${await noLicenseMap.join('\n')}`
                 )

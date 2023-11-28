@@ -3,7 +3,6 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Compo
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 ;
 
 async function Mystery(interaction, client) {

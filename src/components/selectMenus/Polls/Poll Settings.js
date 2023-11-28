@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -265,7 +265,7 @@ async function execute(interaction, client) {
             let timestamp = Math.round(expire / 1000)
             const pollEmbed = new EmbedBuilder()
                 .setTitle(`${pollData.question}`)
-                .setColor(Number(linksInfo.bot_color))
+                .setColor(Number(client.information.bot_color))
                 .setDescription(`<@${pollData.userid}> создал новый опрос!
                 
 **ВОПРОС:** \`${pollData.question}\`

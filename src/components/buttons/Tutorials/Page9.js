@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`)
@@ -47,7 +47,7 @@ async function execute(interaction, client) {
 • 300 опыта рангов
 
 За выполнение всех стандартных достижений вы получите наградную роль и коробку. Посмотреть список достижений вы можете в канале <#${ch_list.achs}>!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 9/${list.length}` })
             .setTimestamp(Date.now())
         //.setImage(attach)

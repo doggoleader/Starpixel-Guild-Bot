@@ -1,6 +1,5 @@
 const chalk = require(`chalk`);
 const { ChannelType, EmbedBuilder } = require("discord.js");
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "channels",
@@ -12,7 +11,7 @@ async function execute(message, client) {
         if (!await checkPlugin(guild.id, plugin.id)) return
         const channel = await guild.channels.fetch(`982551755340537866`)
         const message_embed = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setThumbnail(message.author.displayAvatarURL())
             .setTitle(`НОВОЕ СООБЩЕНИЕ В ЛИЧНЫХ СООБЩЕНИЯХ C ${message.channel.recipient.tag}`)
             .setTimestamp(Date.now())

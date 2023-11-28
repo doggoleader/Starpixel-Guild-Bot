@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActionRow } = require('discord.js');
 
 const { ClientSettings } = require(`../../schemas/client`)
-const linksInfo = require(`../../discord structure/links.json`)
 const Nodeactyl = require(`nodeactyl`)
 
 /**
@@ -20,19 +19,19 @@ async function execute(interaction, client) {
                 new ButtonBuilder()
                     .setLabel(`Сервер Discord`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_discord)
+                    .setURL(client.information.guild_discord)
             )
             .addComponents(
                 new ButtonBuilder()
                     .setLabel(`Группа VK`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_vk)
+                    .setURL(client.information.guild_vk)
             )
             .addComponents(
                 new ButtonBuilder()
                     .setLabel(`Канал YouTube`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_youtube)
+                    .setURL(client.information.guild_youtube)
             )
 
         const buttons2 = new ActionRowBuilder()
@@ -40,33 +39,33 @@ async function execute(interaction, client) {
                 new ButtonBuilder()
                     .setLabel(`TikTok`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_tiktok)
+                    .setURL(client.information.guild_tiktok)
             )
             .addComponents(
                 new ButtonBuilder()
                     .setLabel(`Канал Telegram`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_telegram)
+                    .setURL(client.information.guild_telegram)
             ).addComponents(
                 new ButtonBuilder()
                     .setLabel(`Hypixel`)
                     .setStyle(ButtonStyle.Link)
-                    .setURL(linksInfo.guild_forumpost)
+                    .setURL(client.information.guild_forumpost)
             )
         const allInfo = await nodeactyl.getServerDetails('fa48d9d8')
         const curInfo = await nodeactyl.getServerUsages('fa48d9d8')
         const msg = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Основная информация о боте Starpixel`)
             .setDescription(`Основная информация о боте:
-Профиль бота - <@${linksInfo.bot_id}>
-Разработчик бота - <@${linksInfo.bot_dev}>
-Описание бота - \`${linksInfo.bot_descr}\`
+Профиль бота - <@${client.information.bot_id}>
+Разработчик бота - <@${client.information.bot_dev}>
+Описание бота - \`${client.information.bot_descr}\`
 Версия бота - \`v${client.getVersion()}\`
 Если вы нашли какой-либо баг, опишите его в канале <#1036346705827868753>
 Если у вас есть какая-либо идея для гильдии или бота, расскажите о ней в канале <#1060946225442074764>
 
-Официальная электронная почта гильдии: \`${linksInfo.guild_email}\`
+Официальная электронная почта гильдии: \`${client.information.guild_email}\`
 
 Если вы хотите перейти к **социальным сетям** гильдии, используйте кнопки ниже!
 
@@ -85,28 +84,9 @@ SSD: \`${(curInfo.resources.disk_bytes / (1024 * 1024)).toFixed(3)} / ${(allInfo
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

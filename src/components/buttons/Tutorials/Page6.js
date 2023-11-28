@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 const { ClientSettings } = require(`../../../schemas/client`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require('../../../schemas/userdata');
 const ch_list = require(`../../../discord structure/channels.json`)
 const fs = require(`fs`);
@@ -37,7 +37,7 @@ async function execute(interaction, client) {
 Опыт активности можно получить, общаясь в чате, открывая коробки и участвуя в различных мероприятиях. Посмотрев на ваш опыт активности можно понять, насколько вы активны в гильдии. Помимо этого, за достижение определённого опыта активности вы можете получить награды. О них вы можете прочитать в канале <#${ch_list.lvls}>. 
 
 После открытия коробки, весь ваш опыт активности будет отправлять в канал <#${ch_list.act}>. Он также считается автоматически и, чтобы посмотреть ваш опыт, пропишите ${mentionCommand(client, 'profile')}!`)
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 6/${list.length}` })
             .setTimestamp(Date.now())
             .setImage(`attachment://${attach.name}`)

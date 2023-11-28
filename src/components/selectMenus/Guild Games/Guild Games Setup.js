@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js');
 const { Apply } = require(`../../../schemas/applications`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
@@ -107,7 +107,7 @@ async function execute(interaction, client) {
                     )
 
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTitle(`Настройка дней недели`)
                     .setDescription(`С помощью меню ниже настройте дни недели совместной игры и её ведущих. Чтобы отменить все совместные игры, выберите кнопку \`Отменить совместные\`!`)
                 await interaction.reply({
@@ -192,7 +192,7 @@ async function execute(interaction, client) {
                     .setTitle(`Список песен в автовоспроизведении`)
                     .setDescription(`Список:
 ${listProm.join(`\n`)}`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setThumbnail(interaction.guild.iconURL())
                     .setFooter({ text: `Страница ${n + 1}/${totalPages}` })
                     .setTimestamp(Date.now())
@@ -320,7 +320,7 @@ ${listProm.join(`\n`)}`)
                 }
                 const embed = new EmbedBuilder()
                     .setTitle(`Установленные настройки совместных игр`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setTimestamp(Date.now())
                     .setDescription(`**Предыгровая песня**: [Нажмите здесь](${guildData.guildgames.pregame_song})
 **Начало совместной игры**: \`${hour_start}:${min_start}\` по московскому времени

@@ -1,7 +1,7 @@
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`);
+
 const { User } = require("../../../schemas/userdata");
 const { checkPlugin } = require("../../../functions");
 let plugin = {

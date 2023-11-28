@@ -3,7 +3,6 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, AttachmentBuilder, EmbedBuilder } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "new_users",
@@ -48,7 +47,7 @@ async function execute(member, client) {
     await appData.save();
     const embedJoin = new EmbedBuilder()
         .setTitle(`Пользователь присоединился`)
-        .setColor(Number(linksInfo.bot_color))
+        .setColor(Number(client.information.bot_color))
         .setDescription(`${member} (${member.user.tag}, ${member.user.id}) присоединился!
 Он является #${member.guild.memberCount}-ым участником сервера!
 

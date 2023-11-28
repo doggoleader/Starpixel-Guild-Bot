@@ -3,13 +3,14 @@ const chalk = require(`chalk`);
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
-const linksInfo = require(`../../discord structure/links.json`)
 const cron = require(`node-cron`)
 const { checkPlugin } = require("../../functions");
 
 class NewYear {
-    id = 'seasonal';
-    name = 'Сезонное'
+    /** @private */
+    static id = 'seasonal';
+    /** @private */
+    static name = 'Сезонное'
 
     /**
      * 
@@ -1744,7 +1745,7 @@ class NewYear {
                 }).join(`\n`)
                 const embed = new EmbedBuilder()
                     .setTitle(`С НОВЫМ ГОДОМ! 🎄`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`От лица администрации поздравляю с **НОВЫМ 2024 ГОДОМ** всех участников гильдии в следующих регионах:
 
 ${list}`)
@@ -1790,7 +1791,7 @@ ${list}`)
                 }).join(`\n`)
                 const embed = new EmbedBuilder()
                     .setTitle(`С НОВЫМ ГОДОМ! 🎄`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`От лица администрации поздравляю с **НОВЫМ 2024 ГОДОМ** всех участников гильдии в следующих часовых поясах:
 
 ${list}`)
@@ -1939,7 +1940,7 @@ ${list}`)
                 }
 
                 const embed = new EmbedBuilder()
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setAuthor({
                         name: `Лучшие пользователи по новогодним очкам`
                     })
@@ -1969,7 +1970,7 @@ ${list}`)
                 await wait(3000)
                 const finalEmbed = new EmbedBuilder()
                     .setTitle(`Награды за призовые места`)
-                    .setColor(Number(linksInfo.bot_color))
+                    .setColor(Number(client.information.bot_color))
                     .setDescription(`Помимо главной награды, награду за призовое место получают все участники с 1 по 5 место в независимости от того, получил ли он главную награду или нет:
 1 место - <@${sort[0].userid}>. Награда: \`3x 🥇\`
 2 место - <@${sort[1].userid}>. Награда: \`3x 🥈\`
@@ -2125,7 +2126,7 @@ ${list}`)
                 if (seasonal.new_year.achievements.num1 == true && seasonal.new_year.achievements.num2 == true && seasonal.new_year.achievements.num3 == true && seasonal.new_year.achievements.num4 == true && seasonal.new_year.achievements.num5 == true && seasonal.new_year.achievements.num6 == true && !member.roles.cache.has(`1030757867373998190`)) {
                     const done = new EmbedBuilder()
                         .setTitle(`Выдана сезонная роль`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
                         .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757867373998190`).name}\`! Теперь он может использовать сезонный цвет!`)

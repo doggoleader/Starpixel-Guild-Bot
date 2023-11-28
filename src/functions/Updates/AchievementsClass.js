@@ -3,14 +3,15 @@ const chalk = require(`chalk`);
 const { EmbedBuilder } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const role_list = require(`../../discord structure/roles.json`)
-const linksInfo = require(`../../discord structure/links.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin } = require("../../functions");
 
 
 class Achievements {
-    id = 'items';
-    name = 'Предметы'
+    /** @private */
+    static id = 'items';
+    /** @private */
+    static name = 'Предметы'
     /**
      * 
      * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
@@ -45,7 +46,7 @@ class Achievements {
                         let ch = await guild.channels.fetch(ch_list.main)
                         const embed = new EmbedBuilder()
                             .setTitle(`Выполнены все стандартные достижения`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} выполнил все **обычные достижения**! Поздравляем! Награда была добавлена вам в профиль!`)
@@ -75,7 +76,7 @@ class Achievements {
                         let ch = await guild.channels.fetch(ch_list.main)
                         const embed = new EmbedBuilder()
                             .setTitle(`Выполнены все достижения`)
-                            .setColor(Number(linksInfo.bot_color))
+                            .setColor(Number(client.information.bot_color))
                             .setThumbnail(member.user.displayAvatarURL())
                             .setTimestamp(Date.now())
                             .setDescription(`${member} выполнил **все достижения** гильдии! Поздравляем!

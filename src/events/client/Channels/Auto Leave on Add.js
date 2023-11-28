@@ -3,7 +3,6 @@ const { ReactionCollector, ChannelType } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
 const { isURL } = require(`../../../functions`)
 const wait = require(`node:timers/promises`).setTimeout
-const linksInfo = require(`../../../discord structure/links.json`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "admin",

@@ -347,10 +347,18 @@ class GuildProgress {
                                         taskData.claimed_items.push(perk)
                                     }
                                 }
-                            }
+                            } 
                                 break;
                             case 'store_items': {
                                 if (userData.perks[perk] >= 1) {
+                                    if (!taskData.claimed_items.includes(perk)) {
+                                        taskData.claimed_items.push(perk)
+                                    }
+                                }
+                            }
+                                break;
+                            case 'decrease_cooldowns': {
+                                if (userData.perks[perk] >= 5) {
                                     if (!taskData.claimed_items.includes(perk)) {
                                         taskData.claimed_items.push(perk)
                                     }

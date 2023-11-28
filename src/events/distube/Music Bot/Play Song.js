@@ -2,14 +2,13 @@ const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require(`discord.js`)
 const { Guild } = require(`../../../schemas/guilddata`)
-const linksInfo = require(`../../../discord structure/links.json`)
-async function execute(queue, song) {
+async function execute(queue, song, client) {
     try {
         const guild = queue.textChannel.guild
         const guildData = await Guild.findOne({ id: guild.id })
         if (guildData.guildgames.started >= 1) return
         const playing = new EmbedBuilder()
-            .setColor(Number(linksInfo.bot_color))
+            .setColor(Number(client.information.bot_color))
             .setTitle(`Сейчас играет... 🎶`)
             .setTimestamp(Date.now())
             .setDescription(`**Название**: \`${song.name}\`
@@ -52,7 +51,7 @@ async function execute(queue, song) {
                     songR = await queue.previous()
                     const result = new EmbedBuilder()
                         .setTitle(`Переключено на предыдущую песню... ✅`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Вы снова включили \`${songR.name}\`!`)
 
@@ -71,7 +70,7 @@ async function execute(queue, song) {
                 try {
                     const result = new EmbedBuilder()
                         .setTitle(`Песня пропущена... ✅`)
-                        .setColor(Number(linksInfo.bot_color))
+                        .setColor(Number(client.information.bot_color))
                         .setTimestamp(Date.now())
                         .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
                     songR = await queue.skip()
