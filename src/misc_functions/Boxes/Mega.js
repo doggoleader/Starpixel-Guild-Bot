@@ -1,10 +1,10 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const { User } = require(`../../schemas/userdata`)
-
+const wait = require('node:timers/promises').setTimeout;
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
-;
+    ;
 
 async function Mega(interaction, client) {
     try {
@@ -46,7 +46,7 @@ async function Mega(interaction, client) {
             } else {
                 sum_loot += loot[i_loot].chance * 1
                 chances.push(loot[i_loot].chance * 1)
-                console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
             }
         }
         let r_loot1 = Math.floor(Math.random() * sum_loot);
@@ -78,14 +78,6 @@ async function Mega(interaction, client) {
         let finalChance2 = ((loot[i_loot2].chance / allChances) * 100).toFixed(1)
 
         //Отправка сообщения о луте    
-        const boxesk = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-                .setCustomId('boxesk')
-                .setLabel('Установить')
-                .setStyle(ButtonStyle.Success)
-                .setEmoji(`⬆️`)
-        )
-
         const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
             .send({
                 content: `◾
@@ -97,14 +89,27 @@ ${loot[i_loot1].description}
 **2.** \`${loot[i_loot2].name}\` (Шанс: \`${finalChance2}%\`)
 ${loot[i_loot2].description}
 ╰───────₪۞₪───────╯
-Дополнительная косметическая награда из огромной коробки: ${cosmetic[i_cosmetic].loot_name}
+Дополнительная косметическая награда из огромной коробки: ${cosmetic[i_cosmetic].name}
 ${cosmetic[i_cosmetic].loot_description}
-◾`,
-                components: [boxesk]
+◾`
             })
 
         //Выдача лут 1
-        if (loot[i_loot1].type == "Box" || userData.perks.store_items !== 0) {
+        if (loot[i_loot1].type == "Color") {
+            if (userData.rank_number < 6) {
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Легендой гильдии**, чтобы получать цвета из коробок!`
+                })
+                await r_loot_msg.react("🚫")
+            } else {
+                if (!userData.cosmetics_storage.colors.includes(loot[i_loot1].role)) {
+                    userData.cosmetics_storage.colors.push(loot[i_loot1].role)
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                }
+            }
+        } else if (loot[i_loot1].type == "Box" || userData.perks.store_items !== 0) {
             if (!member.roles.cache.has(loot[i_loot1].role) && (loot[i_loot1].role == `1020400007989444678` || loot[i_loot1].role == `1020400017330163712` || loot[i_loot1].role == `1020400015300120638`) && userData.rank_number >= 9) {
                 await member.roles.add(loot[i_loot1].role)
                 await r_loot_msg.react(`✅`)
@@ -138,7 +143,21 @@ ${cosmetic[i_cosmetic].loot_description}
         }
 
 
-        if (loot[i_loot2].type == "Box" || userData.perks.store_items !== 0) {
+        if (loot[i_loot2].type == "Color") {
+            if (userData.rank_number < 6) {
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Легендой гильдии**, чтобы получать цвета из коробок!`
+                })
+                await r_loot_msg.react("🚫")
+            } else {
+                if (!userData.cosmetics_storage.colors.includes(loot[i_loot2].role)) {
+                    userData.cosmetics_storage.colors.push(loot[i_loot2].role)
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                }
+            }
+        } else if (loot[i_loot2].type == "Box" || userData.perks.store_items !== 0) {
             if (!member.roles.cache.has(loot[i_loot2].role) && (loot[i_loot2].role == `1020400007989444678` || loot[i_loot2].role == `1020400017330163712` || loot[i_loot2].role == `1020400015300120638`) && userData.rank_number >= 9) {
                 await member.roles.add(loot[i_loot2].role)
                 await r_loot_msg.react(`✅`)
@@ -171,55 +190,79 @@ ${cosmetic[i_cosmetic].loot_description}
             }
         }
 
-
-
-        const filter = (i) => (i.user.id == interaction.user.id && i.customId === 'boxesk');
-
-        const coll1 = r_loot_msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000 })
-
-        coll1.on('collect', async (i) => {
-            if (i.user.id === interaction.member.user.id) {
-                if (cosmetic[i_cosmetic].loot_name.includes(`ПОСТФИКС ДЛЯ НИКНЕЙМА`) && userData.rank_number >= 8) {
-                    userData.displayname.suffix = cosmetic[i_cosmetic].symbol
-                    userData.save()
-                    await boxesk.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`🕓`)
-                        .setLabel(`Идёт обработка...`)
-                    i.reply({
-                        content: `Ожидайте! Скоро ваш значок будет установлен! Если этого не произойдет в течение 15 минут, обратитесь в вопрос-модерам!`,
-                        ephemeral: true
-                    })
-                } else {
-                    i.reply({
-                        content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#931620901882068992>!`,
-                        ephemeral: true
-                    })
-                    await boxesk.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`❌`)
-                        .setLabel(`Низкий ранг`)
-                }
-
-                await r_loot_msg.edit({
-                    components: [boxesk]
+        if (cosmetic[i_cosmetic].type == 'symbol') {
+            if (userData.rank_number < 4) {
+                await r_loot_msg.react("🚫")
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Чемпионом гильдии** или выше для получения косметического значка!`
                 })
-
             } else {
-                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                if (!userData.cosmetics_storage.symbols.includes(cosmetic[i_cosmetic].symbol)) {
+                    userData.cosmetics_storage.symbols.push(cosmetic[i_cosmetic].symbol)
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                    await r_loot_msg.reply({
+                        content: `У вас в инвентаре уже имеется данный значок!`
+                    })
+                }
             }
-        })
-        coll1.on('end', async (err) => {
-            await boxesk.components[0]
-                .setDisabled(true)
-                .setStyle(ButtonStyle.Secondary)
+        } else if (cosmetic[i_cosmetic].type == 'frame') {
+            if (userData.rank_number < 5) {
+                await r_loot_msg.react("🚫")
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Звёздочкой гильдии** или выше для получения косметической рамки!`
+                })
+            } else {
+                if (!userData.cosmetics_storage.ramkas.includes({ ramka1: cosmetic[i_cosmetic].symbol, ramka2: cosmetic[i_cosmetic].symbol })) {
+                    userData.cosmetics_storage.ramkas.push({
+                        ramka1: cosmetic[i_cosmetic].symbol,
+                        ramka2: cosmetic[i_cosmetic].symbol
+                    })
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                    await r_loot_msg.reply({
+                        content: `У вас в инвентаре уже имеется данная рамка!`
+                    })
+                }
+            }
+        } else if (cosmetic[i_cosmetic].type == 'suffix') {
+            if (userData.rank_number < 8) {
+                await r_loot_msg.react("🚫")
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Лордом гильдии** или выше для получения косметического постфикса!`
+                })
+            } else {
+                if (!userData.cosmetics_storage.suffixes.includes(cosmetic[i_cosmetic].symbol)) {
+                    userData.cosmetics_storage.suffixes.push(cosmetic[i_cosmetic].symbol)
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                    await r_loot_msg.reply({
+                        content: `У вас в инвентаре уже имеется данный постфикс!`
+                    })
+                }
+            }
+        } else if (cosmetic[i_cosmetic].type == 'rank') {
+            if (userData.rank_number < 10) {
+                await r_loot_msg.react("🚫")
+                await r_loot_msg.reply({
+                    content: `Вы должны быть **Повелителем гильдии** или выше для получения косметического значка ранга!`
+                })
+            } else {
+                if (!userData.cosmetics_storage.rank.includes(cosmetic[i_cosmetic].symbol)) {
+                    userData.cosmetics_storage.rank.push(cosmetic[i_cosmetic].symbol)
+                    await r_loot_msg.react("✅")
+                } else {
+                    await r_loot_msg.react("🚫")
+                    await r_loot_msg.reply({
+                        content: `У вас в инвентаре уже имеется данный значок ранга!`
+                    })
+                }
+            }
+        }
 
-            await r_loot_msg.edit({
-                components: [boxesk]
-            })
-        });
         //Румбики (если необходимо)
 
         //Рандом - румбики
@@ -299,7 +342,8 @@ ${interaction.member} +${actExp}🌀
 
         userData.save();
         client.ActExp(userData.userid)
-        client.ProgressUpdate(interaction.member);
+        await wait(1000)
+            client.ProgressUpdate(interaction.member);
 
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл сокровище]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов, +${rumbik[i_rumb].amount} румбиков,  ${loot[i_loot1].name} и ${loot[i_loot2].name}`))
 
@@ -307,28 +351,9 @@ ${interaction.member} +${actExp}🌀
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

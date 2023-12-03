@@ -12,25 +12,33 @@ let plugin = {
     name: "Музыка"
 }
 async function execute(message) {
-    if (message.channel.type == ChannelType.DM) return
-    if (!await checkPlugin(message.guild.id, plugin.id)) return
-    if (message.author.bot) return
-    const guildData = await Guild.findOne({ id: message.guild.id })
-    if (guildData.plugins.guildgames === false) return
-    const words = message.content.split(` `)
-    const results = []
-    words.forEach(word => results.push(isURL(word)))
+    try {
+        if (message.channel.type == ChannelType.DM) return
+        if (!await checkPlugin(message.guild.id, plugin.id)) return
+        if (message.author.bot) return
+        const guildData = await Guild.findOne({ id: message.guild.id })
+        if (guildData.plugins.guildgames === false) return
+        const words = message.content.split(` `)
+        const results = []
+        words.forEach(word => results.push(isURL(word)))
 
-    if (message.channel.id == ch_list.your_music && results.includes(true)) {
-        message.react(`❤️`)
-    } else if (message.channel.id == ch_list.your_music && !results.includes(true)) {
+        if (message.channel.id == ch_list.your_music && results.includes(true)) {
+            message.react(`❤️`)
+        } else if (message.channel.id == ch_list.your_music && !results.includes(true)) {
 
-        const warnMsg = await message.reply({
-            content: `${message.author}, в этом канале разрешено публиковать только ссылки на музыку!`
-        })
-        await message.delete()
-        await wait(10000);
-        await warnMsg.delete()
+            const warnMsg = await message.reply({
+                content: `${message.author}, в этом канале разрешено публиковать только ссылки на музыку!`
+            })
+            await message.delete()
+            await wait(10000);
+            await warnMsg.delete()
+        }
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 

@@ -54,14 +54,16 @@ const User = new mongoose.Schema({
         ]
     },
 
+    stacked_items: [String],
     cosmetics_storage: {
-        symbols: [String],
+        symbols: [String], //20 for max progress (1 point per)
         ramkas: [{
             ramka1: { type: String },
             ramka2: { type: String }
-        }],
-        rank: [String],
-        suffixes: [String]
+        }], // 10 for max progress (1 point per)
+        rank: [String], //5 for max progress (2 points per)
+        suffixes: [String], // 10 for max progress (2 points per)
+        colors: [String] //all for max progress (1 point per)
     },
 
 
@@ -191,7 +193,7 @@ const User = new mongoose.Schema({
         max_purchases_tier: { type: Number, default: 1 },
         max_sells_tier: { type: Number, default: 1 },
         bank_account_tier: { type: Number, default: 1 },
-        veterans_quests_tier: { type: Number, default: 1}
+        veterans_quests_tier: { type: Number, default: 1 }
     },
     daily: {
         purchases: { type: Number, default: 0 },
@@ -404,7 +406,6 @@ const User = new mongoose.Schema({
         },
     },
     visited_games: { type: Number, default: 0 },
-    stacked_items: [String],
     custom_color: {
         hex: { type: String },
         role: { type: String },
@@ -423,7 +424,7 @@ const User = new mongoose.Schema({
                 required: { type: Number, default: Infinity },
                 status: { type: Boolean, default: true },
                 reward: { type: String, default: `` },
-                activation:  [Number]
+                activation: [Number]
             }
         },
         mars: {

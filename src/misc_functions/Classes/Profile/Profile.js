@@ -571,6 +571,11 @@ class Profile {
                 userData.medal_2 = 0
                 userData.medal_3 = 0
                 userData.stacked_items = []
+                userData.cosmetics_storage.rank = [];
+                userData.cosmetics_storage.ramkas = [];
+                userData.cosmetics_storage.suffixes = [];
+                userData.cosmetics_storage.symbols = [];
+                userData.cosmetics_storage.colors = [];
 
                 userData.perks.act_discount = 0
                 userData.perks.change_items = 0
@@ -593,9 +598,11 @@ class Profile {
                 userData.upgrades.inventory_size_tier = 1
                 userData.upgrades.max_purchases_tier = 1
                 userData.upgrades.max_sells_tier = 1
+                userData.upgrades.veterans_quests_tier = 1
                 userData.upgrades.inventory_size = 10
                 userData.upgrades.max_purchases = 15
                 userData.upgrades.max_sells = 15
+                userData.upgrades.veterans_quests = 10
 
                 userData.rank_number = 0
                 userData.shop_costs = 1
@@ -1987,7 +1994,7 @@ ${map.join(`\n`)}
         collector.on('collect', async (i) => {
             if (i.customId == `profile_removecolor_getuser`) {
                 const member = await i.guild.members.fetch(i.values[0]);
-                const userData = await User.findOne({ userid: member.user.id, guildid: guild.id })
+                const userData = await User.findOne({ userid: member.user.id, guildid: i.guild.id })
                 if (!userData) return i.reply({
                     content: `Указанный пользователь должен быть участником гильдии и не должен быть ботом!`,
                     ephemeral: true
@@ -2001,6 +2008,7 @@ ${map.join(`\n`)}
                 userData.custom_color.created = false
                 userData.custom_color.hex = ``
                 userData.custom_color.role = ``
+                userData.custom_color.custom_name = ``
                 userData.save()
                 await i.reply({
                     content: `Вы успешно удалили пользовательский цвет игрока ${member}!`,

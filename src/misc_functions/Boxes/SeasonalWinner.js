@@ -66,7 +66,7 @@ async function SeasonalWinner(interaction, client) {
             i_act++;
         }
 
-        let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+        let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
         interaction.guild.channels.cache.get(ch_list.act).send(
             `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -106,7 +106,7 @@ async function SeasonalWinner(interaction, client) {
             } else {
                 sum_loot += loot[i_loot].chance * 1
                 chances.push(loot[i_loot].chance * 1)
-                console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
             }
         }
         let r_loot = Math.floor(Math.random() * sum_loot);
@@ -128,7 +128,7 @@ async function SeasonalWinner(interaction, client) {
                 content: `◾ 🏆 ◾
 <@${opener}> открывает коробку сезонного победителя...
 ╭────────۞────────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}.
 ╰────────۞────────╯
 ◾ 🏆 ◾`
@@ -154,7 +154,7 @@ ${loot[i_loot].loot_description}.
         }
         userData.save();
         client.ActExp(userData.userid)
-        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл сезонного победителя]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, ${loot[i_loot].loot_name}`))
+        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл сезонного победителя]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, ${loot[i_loot].name}`))
 
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)

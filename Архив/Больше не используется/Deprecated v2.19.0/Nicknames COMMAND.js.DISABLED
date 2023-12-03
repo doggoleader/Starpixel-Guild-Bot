@@ -4,17 +4,17 @@ const { joinVoiceChannel } = require('@discordjs/voice');
 const wait = require('node:timers/promises').setTimeout;
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
-const { User } = require(`../../schemas/userdata`)
-const { Guild } = require(`../../schemas/guilddata`)
+const { User } = require(`../../../src/schemas/userdata`)
+const { Guild } = require(`../../../src/schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { isOneEmoji } = require(`is-emojis`);
-const { rankName } = require('../../functions');
+const { rankName } = require('../../../src/functions');
 
 /**
  * 
  * @param {import("discord.js").ChatInputCommandInteraction} interaction Interaction
- * @param {import("../../misc_functions/Exporter").StarpixelClient} client Client
+ * @param {import("../../../src/misc_functions/Exporter").StarpixelClient} client Client
  * 
  * Interaction main function
  */

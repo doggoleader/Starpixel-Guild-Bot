@@ -1,6 +1,106 @@
 [
     {
         "price": 150,
+        "name": "МАЛЕНЬКИЙ НОВОГОДНИЙ НАБОР",
+        "emoji": "🎄",
+        "description": "Поздравьте своих друзей с Новым годом!",
+        "items": [
+            {
+                "id": "",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "🎄 Маленький новогодний набор",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "seasonal.new_year.available_packs.pack_1",
+                "multiplier": 1,
+                "type": "static"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 250,
+        "name": "СРЕДНИЙ НОВОГОДНИЙ НАБОР",
+        "emoji": "🎄",
+        "description": "Поздравьте своих друзей с Новым годом!",
+        "items": [
+            {
+                "id": "",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "🎄 Средний новогодний набор",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "seasonal.new_year.available_packs.pack_2",
+                "multiplier": 1,
+                "type": "static"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 400,
+        "name": "БОЛЬШОЙ НОВОГОДНИЙ НАБОР",
+        "emoji": "🎄",
+        "description": "Поздравьте своих друзей с Новым годом!",
+        "items": [
+            {
+                "id": "",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "🎄 Большой новогодний набор",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "seasonal.new_year.available_packs.pack_3",
+                "multiplier": 1,
+                "type": "static"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 550,
+        "name": "ГИГАНТСКИЙ НОВОГОДНИЙ НАБОР",
+        "emoji": "🎄",
+        "description": "Поздравьте своих друзей с Новым годом!",
+        "items": [
+            {
+                "id": "",
+                "expire": 0,
+                "amount": 1,
+                "stackable": false,
+                "name": "🎄 Гигантский новогодний набор",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "seasonal.new_year.available_packs.pack_4",
+                "multiplier": 1,
+                "type": "static"
+            }
+        ],
+        "sellable": false
+    },
+    {
+        "price": 150,
         "name": "ТАЛИСМАН МОЩИ",
         "emoji": "🧿",
         "description": "Весь ваш опыт активности умножается в 2 раза в ежедневных коробках.",

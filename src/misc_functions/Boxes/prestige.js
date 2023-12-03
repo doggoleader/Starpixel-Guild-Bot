@@ -72,7 +72,7 @@ async function Prestige(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -93,17 +93,17 @@ async function Prestige(interaction, client) {
                     `◾
 <@${opener}> использует талисман счастья. :nazar_amulet:
 ╭═────═────═╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 ╰═────═────═╯
 ◾`)
             if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     await r_loot_msg.react("❌")
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                         await userData.stacked_items.push(loot[i_loot].loot_roleID)
                         await r_loot_msg.react("✅")
@@ -115,12 +115,12 @@ ${loot[i_loot].loot_description}
                     }
                 }
             } else {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     await r_loot_msg.react("❌")
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("❌")
                 }
             }
@@ -137,7 +137,7 @@ ${loot[i_loot].loot_description}
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀

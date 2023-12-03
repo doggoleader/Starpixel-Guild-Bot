@@ -340,80 +340,6 @@ function isURL(string) {
     }
 }
 
-/**
- *
- * @param {PluginName} string 
- * @returns ID of the plugin
- * @deprecated Use getPluginName(id) instead!
- */
-function SettingsPluginsGetID(string) {
-    let id
-    switch (string) {
-        case `Коробки`: { id = 0 }
-            break;
-        case `Косметика`: { id = 1 }
-            break;
-        case `Достижения`: { id = 2 }
-            break;
-        case `Питомцы`: { id = 3 }
-            break;
-        case `Активность`: { id = 4 }
-            break;
-        case `Ранги`: { id = 5 }
-            break;
-        case `Магазин`: { id = 6 }
-            break;
-        case `Система никнеймов`: { id = 7 }
-            break;
-        case `Премиум`: { id = 8 }
-            break;
-        case `Новые участники`: { id = 9 }
-            break;
-        case `Дни рождения`: { id = 10 }
-            break;
-        case `Служба поддержки`: { id = 11 }
-            break;
-        case `Модерация`: { id = 12 }
-            break;
-        case `Безопасность`: { id = 13 }
-            break;
-        case `Временные каналы`: { id = 14 }
-            break;
-        case `Личные сообщения бота`: { id = 15 }
-            break;
-        case `Логи`: { id = 16 }
-            break;
-        case `Временные роли`: { id = 17 }
-            break;
-        case `Автороли`: { id = 18 }
-            break;
-        case `Обновление пользователей`: { id = 19 }
-            break;
-        case `Обновление каналов`: { id = 20 }
-            break;
-        case `Опыт гильдии`: { id = 21 }
-            break;
-        case `Музыка`: { id = 22 }
-            break;
-        case `Запись звука`: { id = 23 }
-            break;
-        case `Предметы`: { id = 24 }
-            break;
-        case `Сезонное`: { id = 25 }
-            break;
-        case `Совместные игры`: { id = 26 }
-            break;
-        case `Марафоны`: { id = 27 }
-            break;
-        case `Бот Hypixel`: { id = 28 }
-            break;
-        default: { id = 9999 }
-            break;
-    }
-
-    return id
-}
-
 function toggleOnOff(boolean) {
     let err = new Error(`\`Выбранная опция должны иметь тип Boolean!\``)
     if (typeof boolean !== "boolean") return err
@@ -618,14 +544,18 @@ async function getProperty(object, query) {
     let property = object
     let queryKeys = query.split(`.`);
     while (queryKeys.length > 1) {
-        if (property !== null && property !== undefined) {
+        
+        if (property) {
             property = property[queryKeys[0]]
             queryKeys.splice(0, 1)
+            if (!property) return null;
         } else {
             return null
         }
     }
-    return property[queryKeys[0]]
+    if (!property[queryKeys[0]]) {
+        return null
+    } else return property[queryKeys[0]]
 }
 /**
  * Делит массив на страницы, в котором находятся по несколько элементов. 
@@ -1337,6 +1267,7 @@ async function createBingoProfile(userData, season_id, bingo) {
             for (let task of row) {
                 if (task.type == 'discord') {
                     let curWins = await getProperty(userData, task.code)
+                    if (!curWins) curWins = 0
                     usRow.push({
                         id: task.id,
                         before: curWins,
@@ -1345,7 +1276,9 @@ async function createBingoProfile(userData, season_id, bingo) {
                         description: task.description
                     })
                 } else if (task.type == 'hypixel') {
+                    //console.log(userData.nickname + "    " + task.code)
                     let curWins = await getProperty(json.player, task.code)
+                    if (!curWins) curWins = 0
                     usRow.push({
                         id: task.id,
                         before: curWins,
@@ -1409,7 +1342,7 @@ function getCooldownUsage(key) {
     const names = {
         "daily": `Открытие ежедневной коробки`,
         "weekly": `Открытие еженедельной коробки`,
-        "monthly": `Открытие ежемесячной коробки`, 
+        "monthly": `Открытие ежемесячной коробки`,
         "staffbox": `Открытие коробки персонала`,
         "seasonalWinner": `Открытие коробки сезонного победителя`,
         "prof_update": `Обновление профиля`,
@@ -1447,10 +1380,36 @@ function getCooldownUsage(key) {
         "ny_santa_rew": `Новогодняя награда`,
         "mc_link": `Привязка аккаунта Minecraft`,
         "mc_unlink": `Отвязка аккаунта Minecraft`,
-        
+
     }
 
     return names[key]
+}
+
+function getBoxLoot(key) {
+    const object = {
+        "big": require(`./misc_functions/Boxes/Box loot/big.json`),
+        "daily": require(`./misc_functions/Boxes/Box loot/daily.json`),
+        "monthly": require(`./misc_functions/Boxes/Box loot/monthly.json`),
+        "weekly": require(`./misc_functions/Boxes/Box loot/weekly.json`),
+        "spooky": require(`./misc_functions/Boxes/Box loot/spooky.json`),
+        "mystery": require(`./misc_functions/Boxes/Box loot/mystery.json`),
+        "activity": require(`./misc_functions/Boxes/Box loot/activity.json`),
+        "staff": require(`./misc_functions/Boxes/Box loot/staffbox.json`),
+        "king": require(`./misc_functions/Boxes/Box loot/king.json`),
+        "summer": require(`./misc_functions/Boxes/Box loot/summer.json`),
+        "small": require(`./misc_functions/Boxes/Box loot/small.json`),
+        "bag": require(`./misc_functions/Boxes/Box loot/bag.json`),
+        "present": require(`./misc_functions/Boxes/Box loot/present.json`),
+        "mega": require(`./misc_functions/Boxes/Box loot/mega.json`),
+        "easter": require(`./misc_functions/Boxes/Box loot/easter.json`),
+        "myth": require(`./misc_functions/Boxes/Box loot/myth.json`),
+        "seasonal_winner": require(`./misc_functions/Boxes/Box loot/seasonalWinner.json`),
+        "treasure": require(`./misc_functions/Boxes/Box loot/treasure.json`),
+        "prestige": require(`./misc_functions/Boxes/Box loot/prestige.json`),
+    }
+
+    return object[key]
 }
 
 module.exports = {
@@ -1461,7 +1420,6 @@ module.exports = {
     getLevel,
     permToName,
     isURL,
-    SettingsPluginsGetID,
     toggleOnOff,
     replaceTrueFalse,
     defaultShop,
@@ -1483,5 +1441,6 @@ module.exports = {
     getPerkName,
     getUpgradeName,
     mentionCommand,
-    getCooldownUsage
+    getCooldownUsage,
+    getBoxLoot
 }

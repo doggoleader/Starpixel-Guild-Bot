@@ -8,6 +8,14 @@ const wait = require(`node:timers/promises`).setTimeout
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 const { checkPlugin } = require("../../functions");
 
+const SeasonChannels = [
+    "1031224528505933824",
+    "1104777624607273051",
+    "1031224549649428510",
+    "1031224615466450945"
+    
+]
+
 class Summer {
     /** @private */
     static id = 'seasonal';
@@ -25,9 +33,9 @@ class Summer {
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                guildData.seasonal.summer.channels.forEach(async ch => {
+                SeasonChannels.forEach(async ch => {
 
-                    const channel = await g.channels.fetch(ch.id).then(async chan => {
+                    const channel = await g.channels.fetch(ch).then(async chan => {
                         await chan.edit({
                             permissionOverwrites: [
                                 {
@@ -47,8 +55,7 @@ class Summer {
                             ]
                         })
                     }).catch(async (err) => {
-                        let i = guildData.seasonal.summer.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.summer.channels.splice(i, 1)
+                        console.log(err)
                     })
 
 
@@ -181,12 +188,9 @@ class Summer {
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -224,7 +228,7 @@ class Summer {
                         .setColor(Number(client.information.bot_color))
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
-                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757074839277608`).name}\`! Теперь он может использовать сезонный цвет!
+                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757074839277608`).name}\`! В течение часа ему станет доступен сезонный цвет!
                         
 В качестве бонуса он также получает <@&781069821953441832>!`)
                     await member.roles.add(`1030757074839277608`)
@@ -244,12 +248,9 @@ class Summer {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -261,9 +262,9 @@ class Summer {
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                for (let ch of guildData.seasonal.summer.channels) {
+                for (let ch of SeasonChannels) {
                     try {
-                        const channel = await g.channels.fetch(ch.id)
+                        const channel = await g.channels.fetch(ch)
                         await channel.edit({
                             permissionOverwrites: [
                                 {
@@ -285,9 +286,7 @@ class Summer {
                             ]
                         })
                     } catch (e) {
-                        let i = guildData.seasonal.summer.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.summer.channels.splice(i, 1)
-                        guildData.save()
+                        console.log(e)
                     }
 
                 }
@@ -340,12 +339,9 @@ class Summer {
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {

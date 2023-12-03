@@ -9,10 +9,18 @@ let plugin = {
     name: "Новые пользователи"
 }
 async function execute(invite, client) {
-    if (!await checkPlugin(invite.guild.id, plugin.id)) return
-    const { invites } = client
-    await invites.get(invite.guild.id).set(invite.code, invite.uses);
-    await askForBypass(invite, client)
+    try {
+        if (!await checkPlugin(invite.guild.id, plugin.id)) return
+        const { invites } = client
+        await invites.get(invite.guild.id).set(invite.code, invite.uses);
+        await askForBypass(invite, client)
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
+    }
 }
 
 module.exports = {

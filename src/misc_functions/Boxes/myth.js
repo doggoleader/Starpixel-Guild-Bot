@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 
+const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
@@ -65,7 +66,7 @@ async function Myth(interaction, client) {
                 } else {
                     sum_loot1 += loot[i_loot1].chance * 1
                     chances1.push(loot[i_loot1].chance * 1)
-                    console.log(`Предмет ${loot[i_loot1].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot1].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot1 = Math.floor(Math.random() * sum_loot1);
@@ -102,7 +103,7 @@ async function Myth(interaction, client) {
                 } else {
                     sum_loot3 += loot[i_loot3].chance * 1
                     chances3.push(loot[i_loot3].chance * 1)
-                    console.log(`Предмет ${loot[i_loot3].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot3].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot3 = Math.floor(Math.random() * sum_loot3);
@@ -139,7 +140,7 @@ async function Myth(interaction, client) {
                 } else {
                     sum_loot4 += loot[i_loot4].chance * 1
                     chances4.push(loot[i_loot4].chance * 1)
-                    console.log(`Предмет ${loot[i_loot4].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot4].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot4 = Math.floor(Math.random() * sum_loot4);
@@ -193,16 +194,16 @@ async function Myth(interaction, client) {
 
 <@${opener}> открывает Подарок судьбы...
 
-\`${mythical[i_mythical].mythical_name}\` (Шанс: \`${finalChance1}%\`)
+\`${mythical[i_mythical].name}\` (Шанс: \`${finalChance1}%\`)
 ${mythical[i_mythical].mythical_description}.
 
-\`${loot[i_loot1].loot_name}\` (Шанс: \`${finalChance2}%\`)
+\`${loot[i_loot1].name}\` (Шанс: \`${finalChance2}%\`)
 ${loot[i_loot1].loot_description}.
 
-\`${loot[i_loot3].loot_name}\` (Шанс: \`${finalChance3}%\`)
+\`${loot[i_loot3].name}\` (Шанс: \`${finalChance3}%\`)
 ${loot[i_loot3].loot_description}.
 
-\`${loot[i_loot4].loot_name}\` (Шанс: \`${finalChance4}%\`)
+\`${loot[i_loot4].name}\` (Шанс: \`${finalChance4}%\`)
 ${loot[i_loot4].loot_description}.
 
    ☆                                                                       ☆
@@ -214,7 +215,7 @@ ${loot[i_loot4].loot_description}.
 
             for (let reward of rewards) {
                 if (reward.type == "Box" || userData.perks.store_items !== 0) {
-                    if (userData.rank_number < 2 && (reward.loot_name == `🪐 ᅠМЕРКУРИЙ` || reward.loot_name == `🪐 ᅠВЕНЕРА` || reward.loot_name == `🪐 ᅠЛУНА` || reward.loot_name == `🪐 ᅠМАРС` || reward.loot_name == `🪐 ᅠЮПИТЕР` || reward.loot_name == `🪐 ᅠСАТУРН` || reward.loot_name == `🪐 ᅠУРАН` || reward.loot_name == `🪐 ᅠНЕПТУН` || reward.loot_name == `🪐 ᅠПЛУТОН`)) {
+                    if (userData.rank_number < 2 && (reward.name == `🪐 ᅠМЕРКУРИЙ` || reward.name == `🪐 ᅠВЕНЕРА` || reward.name == `🪐 ᅠЛУНА` || reward.name == `🪐 ᅠМАРС` || reward.name == `🪐 ᅠЮПИТЕР` || reward.name == `🪐 ᅠСАТУРН` || reward.name == `🪐 ᅠУРАН` || reward.name == `🪐 ᅠНЕПТУН` || reward.name == `🪐 ᅠПЛУТОН`)) {
                         await r_loot_msg.react("🚫")
                         await r_loot_msg.reply({
                             content: `Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`553593136895623208`).name}\` или выше, чтобы получить данный предмет!`
@@ -236,7 +237,7 @@ ${loot[i_loot4].loot_description}.
                         }
                     }
                 } else {
-                    if (userData.rank_number < 2 && (reward.loot_name == `🪐 ᅠМЕРКУРИЙ` || reward.loot_name == `🪐 ᅠВЕНЕРА` || reward.loot_name == `🪐 ᅠЛУНА` || reward.loot_name == `🪐 ᅠМАРС` || reward.loot_name == `🪐 ᅠЮПИТЕР` || reward.loot_name == `🪐 ᅠСАТУРН` || reward.loot_name == `🪐 ᅠУРАН` || reward.loot_name == `🪐 ᅠНЕПТУН` || reward.loot_name == `🪐 ᅠПЛУТОН`)) {
+                    if (userData.rank_number < 2 && (reward.name == `🪐 ᅠМЕРКУРИЙ` || reward.name == `🪐 ᅠВЕНЕРА` || reward.name == `🪐 ᅠЛУНА` || reward.name == `🪐 ᅠМАРС` || reward.name == `🪐 ᅠЮПИТЕР` || reward.name == `🪐 ᅠСАТУРН` || reward.name == `🪐 ᅠУРАН` || reward.name == `🪐 ᅠНЕПТУН` || reward.name == `🪐 ᅠПЛУТОН`)) {
                         await r_loot_msg.react("🚫")
                         await r_loot_msg.reply({
                             content: `Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`553593136895623208`).name}\` или выше, чтобы получить данный предмет!`
@@ -264,7 +265,7 @@ ${loot[i_loot4].loot_description}.
             for (let s = rumbik[0].chance; s <= r_rumbik; s += rumbik[i_rumb].chance) {
                 i_rumb++;
             }
-            let rumb_amount = rumbik[i_rumb].rumb_amount * userData.pers_rumb_boost
+            let rumb_amount = rumbik[i_rumb].amount * userData.pers_rumb_boost
             //Сообщение - румбики                       
             interaction.guild.channels.cache.get(ch_list.rumb).send(
                 `╔═════════♡════════╗
@@ -293,7 +294,7 @@ ${loot[i_loot4].loot_description}.
             }
 
             //Сообщение - опыт рангов       
-            let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+            let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
             userData.rank += formula_rank
             interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
@@ -316,7 +317,7 @@ ${loot[i_loot4].loot_description}.
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -327,8 +328,9 @@ ${loot[i_loot4].loot_description}.
 
             userData.save();
             client.ActExp(userData.userid)
+            await wait(1000)
             client.ProgressUpdate(interaction.member);
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} румбиков, ${mythical[i_mythical].mythical_name}, ${loot[i_loot1].loot_name}, ${loot[i_loot3].loot_name} и ${loot[i_loot4].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов, +${rumbik[i_rumb].amount} румбиков, ${mythical[i_mythical].name}, ${loot[i_loot1].name}, ${loot[i_loot3].name} и ${loot[i_loot4].name}`))
 
         } else {
             await interaction.reply({
@@ -339,28 +341,9 @@ ${loot[i_loot4].loot_description}.
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

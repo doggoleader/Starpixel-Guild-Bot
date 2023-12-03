@@ -27,9 +27,30 @@ class UpdatesNicknames {
                 if (result.black_hole.enabled !== true) {
                     if (result.userid !== `491343958660874242`) {
                         const { userid, displayname } = result;
-                        const { rank, ramka1, name, ramka2, suffix, symbol, premium } = displayname;
+                        let { rank, ramka1, name, ramka2, suffix, symbol, premium } = displayname;
                         const member = await guild.members.fetch(userid)
                         const oldNickname = member.nickname;
+                        if (!result.displayname.custom_rank) {
+                            const ranks = {
+                                0: "🦋",
+                                1: "🥥",
+                                2: "🍕",
+                                3: "🍂",
+                                4: "🍁",
+                                5: "⭐",
+                                6: "🏅",
+                                7: "🍓",
+                                8: "🧨",
+                                9: "💎",
+                                10: "🍇",
+                            }
+                            if (result.displayname.rank !== ranks[result.rank_number]) {
+                                result.displayname.rank = ranks[result.rank_number]
+                                result.save()
+
+                                rank = result.displayname.rank;
+                            }
+                        }
                         let newNickname = `「${rank}」${ramka1}${name}${ramka2}${suffix} ${symbol}┇${premium}`
                         if (newNickname !== oldNickname) {
                             await member.setNickname(newNickname)
@@ -44,12 +65,9 @@ class UpdatesNicknames {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }

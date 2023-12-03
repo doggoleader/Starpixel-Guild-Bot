@@ -1,7 +1,7 @@
 {
     "loot": [
         {
-            "loot_name": "❕ 🎁 МАЛЕНЬКАЯ /small",
+            "name": "❕ 🎁 МАЛЕНЬКАЯ /small",
             "chance": 35,
             "loot_roleID": "510932601721192458",
             "rarity": "Common",
@@ -9,7 +9,7 @@
             "loot_description" : "Открой, чтобы получить награды."
         },
         {
-            "loot_name": "💰 МЕШОЧЕК /bag",
+            "name": "💰 МЕШОЧЕК /bag",
             "chance": 30,
             "loot_roleID": "819930814388240385",
             "rarity": "Common",
@@ -17,14 +17,14 @@
             "loot_description" : "Открой, чтобы получить опыт активности."
         },
         {
-            "loot_name": "Награды нет.",
+            "name": "Награды нет.",
             "chance": 20,
             "rarity": "Common",
             "type": "Empty",
             "loot_description" : "Коробка пуста."
         },
         {
-            "loot_name": "❕ 🎁 БОЛЬШАЯ /big",
+            "name": "❕ 🎁 БОЛЬШАЯ /big",
             "chance": 15,
             "loot_roleID": "521248091853291540",
             "rarity": "Uncommon",
@@ -34,37 +34,37 @@
     ],
     "act_exp": [
         {
-            "act_amount": 100,
+            "amount": 100,
             "chance": 40
         },
         {
-            "act_amount": 120,
+            "amount": 120,
             "chance": 40
         },
         {
-            "act_amount": 140,
+            "amount": 140,
             "chance": 15
         },
         {
-            "act_amount": 150,
+            "amount": 150,
             "chance": 5
         }
     ],
     "rank_exp": [
         {
-            "rank_amount": 10,
+            "amount": 10,
             "chance": 50
         },
         {
-            "rank_amount": 15,
+            "amount": 15,
             "chance": 30
         },
         {
-            "rank_amount": 20,
+            "amount": 20,
             "chance": 15
         },
         {
-            "rank_amount": 25,
+            "amount": 25,
             "chance": 5
         }
     ]

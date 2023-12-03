@@ -1,26 +1,16 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
 
-const { Temp } = require(`../../schemas/temp_items`)
+const { Temp } = require(`../../../src/schemas/temp_items`)
 const chalk = require(`chalk`);
-const { User } = require('../../schemas/userdata');
+const { User } = require('../../../src/schemas/userdata');
 
-const { mentionCommand } = require('../../functions');
+const { mentionCommand } = require('../../../src/functions');
 
-async function autoComplete(interaction, client) {
-
-    const focusedValue = interaction.options.getFocused();
-    const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Ализариновый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный', 'Летний', 'Хэллоуинский', 'Новогодний', 'Пасхальный'];
-    const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));
-    await interaction.respond(
-        filtered.map(choice => ({ name: choice, value: choice })),
-    );
-
-}
 
 /**
  * 
  * @param {import("discord.js").ChatInputCommandInteraction} interaction Interaction
- * @param {import("../../misc_functions/Exporter").StarpixelClient} client Client
+ * @param {import("../../../src/misc_functions/Exporter").StarpixelClient} client Client
  * 
  * Interaction main function
  */
@@ -29,474 +19,421 @@ async function execute(interaction, client) {
         const { roles } = interaction.member //Участник команды
         const { member, user, guild } = interaction
         const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
-        const r1 = `595893144055316490`; //Чёрный
-        const r2 = `595892599693246474`; //Лазурный
-        const r3 = `595892677451710468`; //Пурпурный
-        const r4 = `595892238370996235`; //Сиреневый
-        const r5 = `589770984391966760`; //Фламинговый
-        const r6 = `595893568485326862`; //Изумрудный 
-        const r7 = `630395361508458516`; //Яблочный
-        const r8 = `595892930204401665`; //Салатовый
-        const r9 = `595889341058777088`; //Песочный
-        const r10 = `1024741633947873401`; //Ализариновый
-        const r11 = `1030760792359960607`; //Летний
-        const r12 = `1030760791722434620`; //Хэллоуинский
-        const r13 = `1030760793991565422`; //Новогодний
-        const r14 = `1030760793672785991`; //Пасхальный
-        switch (interaction.options.getSubcommandGroup()) {
-            case `custom`: {
-                if (userData.rank_number < 7) return interaction.reply({
-                    content: `Вы не можете использовать эту команду, так как ваш ранг ниже Владыки!`,
+        const r1 = {
+            name: `Чёрный`,
+            id: `595893144055316490`
+        };
+        const r2 = {
+            name: `Лазурный`,
+            id: `595892599693246474`
+        };
+        const r3 = {
+            name: `Пурпурный`,
+            id: `595892677451710468`
+        };
+        const r4 = {
+            name: `Сиреневый`,
+            id: `595892238370996235`
+        };
+        const r5 = {
+            name: `Фламинговый`,
+            id: `589770984391966760`
+        };
+        const r6 = {
+            name: `Изумрудный`,
+            id: `595893568485326862`
+        };
+        const r7 = {
+            name: `Яблочный`,
+            id: `630395361508458516`
+        };
+        const r8 = {
+            name: `Салатовый`,
+            id: `595892930204401665`
+        };
+        const r9 = {
+            name: `Песочный`,
+            id: `595889341058777088`
+        };
+        const r10 = {
+            name: `Ализариновый`,
+            id: `1024741633947873401`
+        };
+        const r11 = {
+            name: `Летний`,
+            id: `1030760792359960607`
+        };
+        const r12 = {
+            name: `Хэллоуинский`,
+            id: `1030760791722434620`
+        };
+        const r13 = {
+            name: `Новогодний`,
+            id: `1030760793991565422`
+        };
+        const r14 = {
+            name: `Пасхальный`,
+            id: `1030760793672785991`
+        };
+        const colorsObj = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14];
+        const colors = [r1.id, r2.id, r3.id, r4.id, r5.id, r6.id, r7.id, r8.id, r9.id, r10.id, r11.id, r12.id, r13.id, r14.id]
+
+        let options = []
+        for (let color of colorsObj) {
+            if (userData.cosmetics_storage.colors.includes(color.id) || userData.sub_type >= 4) {
+                options.push({
+                    label: color.name,
+                    value: color.id
+                })
+            }
+        }
+
+        let menuNormal
+        if (options.length > 0) {
+            menuNormal = new ActionRowBuilder()
+                .addComponents(
+                    new StringSelectMenuBuilder()
+                        .setCustomId('colors_normal_set')
+                        .setPlaceholder(`Установить цвет`)
+                        .setOptions(options)
+                )
+        } else {
+            menuNormal = new ActionRowBuilder()
+                .addComponents(
+                    new StringSelectMenuBuilder()
+                        .setCustomId('colors_normal_set')
+                        .setPlaceholder(`Установить цвет`)
+                        .setDisabled(true)
+                        .setOptions([
+                            {
+                                label: "Цветов нет",
+                                value: "no_colors"
+                            }
+                        ])
+                )
+        }
+        const buttonCustom = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`colors_normal_takeoff`)
+                    .setLabel(`Снять цвет`)
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji(`❌`)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`colors_switch_custom`)
+                    .setLabel(`К пользовательскому цвету`)
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji(`➡`)
+            )
+        const buttonNormal = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`colors_switch_normal`)
+                    .setLabel(`К стандартным цветам`)
+                    .setStyle(ButtonStyle.Primary)
+                    .setEmoji(`⬅`)
+            )
+        const menuCustom = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId('colors_custom_settings')
+                    .setPlaceholder(`Настройки пользовательского цвета`)
+                    .setOptions([
+                        {
+                            label: `Приобрести цвет`,
+                            value: `buy`,
+                            description: `Приобрести пользовательский цвет за 200 румбиков`
+                        },
+                        {
+                            label: `Установить цвет`,
+                            value: `set`,
+                            description: `Устанавливает ваш пользовательский цвет`
+                        },
+                        {
+                            label: `Снять цвет`,
+                            value: `remove`,
+                            description: `Снимает ваш пользовательский цвет`
+                        },
+                        {
+                            label: `Изменить цвет`,
+                            value: `set_color`,
+                            description: `Изменить цвет пользовательского цвета`
+                        },
+                        {
+                            label: `Изменить имя роли`,
+                            value: `set_name`,
+                            description: `Изменяет имя вашего пользовательского цвета`
+                        }
+                    ])
+            )
+
+
+        const embed = new EmbedBuilder()
+            .setColor(Number(client.information.bot_color))
+            .setDescription(`## Настройки цвета
+**Текущее меню**: \`Стандартные цвета\`
+В данном меню вы можете установить стандартные цвета гильдии. Найти их вы можете в коробках гильдии или, если у вас есть подписка VIP, сразу же установить их, используя меню ниже!
+
+:arrow_right: **Чтобы перейти к настройкам пользовательского цвета, нажмите на кнопку ниже** :arrow_right:`)
+
+        const msg = await interaction.reply({
+            embeds: [embed],
+            components: [menuNormal, buttonCustom],
+            ephemeral: true,
+            fetchReply: true
+        })
+
+        const collector = msg.createMessageComponentCollector();
+        collector.on('collect', async (i) => {
+            if (i.customId == 'colors_normal_set') {
+                await i.deferReply({ fetchReply: true, ephemeral: true })
+                await i.member.roles.remove(colors).catch();
+                if (userData.custom_color.created) {
+                    await i.member.roles.remove(userData.custom_color.role);
+                }
+                await i.member.roles.add(i.values[0])
+                await interaction.editReply({
+                    components: [menuNormal, buttonCustom]
+                })
+                await i.editReply({
+                    content: `Вы успешно установили следующий цвет: <@&${i.values[0]}>!`
+                })
+            } else if (i.customId == `colors_normal_takeoff`) {
+                await i.deferReply({ fetchReply: true, ephemeral: true })
+                await i.member.roles.remove(colors).catch();
+                if (userData.custom_color.created) {
+                    await i.member.roles.remove(userData.custom_color.role);
+                }
+
+                await i.editReply({
+                    content: `Вы успешно сняли все цвета!`
+                })
+            } else if (i.customId == 'colors_switch_custom') {
+                if (userData.rank_number < 7) return i.reply({
+                    content: `Вы не можете открыть это меню, так как не являетесь **Владыкой гильдии**!`,
                     ephemeral: true
                 })
+                await i.deferUpdate()
 
-                switch (interaction.options.getSubcommand()) {
-                    case `create`: {
-                        if (userData.custom_color.created === true) return interaction.reply({
-                            content: `У вас уже имеется собственный цвет! Используйте команду ${mentionCommand(client, 'colors custom change')}, чтобы изменить код вашего цвета!`,
-                            ephemeral: true
-                        })
-                        if (userData.rumbik < 200) return interaction.reply({
-                            content: `Вы не можете создать собственный цвет, так как на вашем балансе меньше 200 румбиков!`,
-                            ephemeral: true
-                        })
-                        let hex = interaction.options.getString(`код`)
-                        if (!hex.startsWith(`#`)) hex = `#${interaction.options.getString(`код`)}`
-                        var test = /^#[0-9A-F]{6}$/i.test(hex)
-                        if (test == false) return interaction.reply({
-                            content: `Введённый вами код не является цветовым кодом hex!`,
-                            ephemeral: true
-                        })
-                        const exampleRole = await interaction.guild.roles.fetch(`563793535250464809`)
-                        const position = exampleRole.position - 3
-                        const role = await guild.roles.create({
-                            name: `ᅠᅠᅠЛИЧНЫЙ ЦВЕТ`,
-                            color: hex,
-                            position: position
-                        })
-                        userData.rumbik -= 200
-                        userData.custom_color.created = true
-                        userData.custom_color.hex = hex
-                        userData.custom_color.role = role.id
-                        userData.save()
+                embed.setDescription(`## Настройки цвета
+**Текущее меню**: \`Пользовательский цвет\`
+В данном меню вы можете настроить или приобрести пользовательский цвет.
 
-                        await member.roles.add(role.id)
-                        await interaction.reply({
-                            content: `Вы приобрели свой собственный цвет! ${role}`
-                        })
-                    }
-                        break;
-                    case `change`: {
-                        if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
-                            ephemeral: true
-                        })
+:arrow_left: **Чтобы перейти к стандартным цветам, нажмите на кнопку ниже** :arrow_left:`)
 
-                        const role = await guild.roles.fetch(userData.custom_color.role)
-                        let hex = interaction.options.getString(`код`)
-                        if (!hex.startsWith(`#`)) hex = `#${interaction.options.getString(`код`)}`
-                        var test = /^#[0-9A-F]{6}$/i.test(hex)
-                        if (test == false) return interaction.reply({
-                            content: `Введённый вами код не является цветовым кодом hex!`,
-                            ephemeral: true
-                        })
-                        await role.setColor(hex)
-                        userData.custom_color.hex = hex
-                        userData.save()
-
-                        await interaction.reply({
-                            content: `Вы изменили цветовой код вашего цвета! ${role}`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                    case `rename`: {
-                        if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
-                            ephemeral: true
-                        })
-                        const role = await guild.roles.fetch(userData.custom_color.role)
-                        let name = interaction.options.getString(`имя`).toUpperCase()
-                        await role.setName(`ᅠᅠᅠЛР ➖ ${name}`)
-                        userData.custom_color.custom_name = name
-                        userData.save()
-
-                        await interaction.reply({
-                            content: `Вы изменили цветовой код вашего цвета! ${role}`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                    case `set`: {
-                        if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
-                            ephemeral: true
-                        })
-                        if (member.roles.cache.has(userData.custom_color.role)) return interaction.reply({
-                            content: `У вас уже установлен собственный цвет!`,
-                            ephemeral: true
-                        })
-                        await member.roles.add(userData.custom_color.role)
-                        await interaction.reply({
-                            content: `Вы установили свой цвет!`,
-                            ephemeral: true
-                        })
-
-                    }
-                        break;
-                    case `reset`: {
-                        if (userData.custom_color.created === false) return interaction.reply({
-                            content: `У вас нет собственного цвета! Используйте команду ${mentionCommand(client, 'colors custom create')}, чтобы приобрести его!`,
-                            ephemeral: true
-                        })
-                        if (!member.roles.cache.has(userData.custom_color.role)) return interaction.reply({
-                            content: `У вас не установлен собственный цвет!`,
-                            ephemeral: true
-                        })
-                        await member.roles.remove(userData.custom_color.role)
-                        await interaction.reply({
-                            content: `Вы убрали свой цвет!`,
-                            ephemeral: true
-                        })
-
-
-                    }
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-                break;
-
-            default:
-                break;
-        }
-        if (interaction.options.getSubcommandGroup()) return
-        switch (interaction.options.getSubcommand()) {
-            case `set`: {
-
-
-                switch (interaction.options.getString(`цвет`)) {
-                    case `Чёрный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r1) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r1)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Лазурный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r2) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r2)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r1, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Пурпурный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r3) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r3)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r1, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Сиреневый`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r4) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r4)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r1, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Фламинговый`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r5) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r5)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r1, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Изумрудный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r6) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r6)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r1, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Яблочный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r7) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r7)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r1, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Салатовый`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r8) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r8)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r1, r9, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-                    case `Песочный`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r9) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r9)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r10, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-
-                        break;
-
-                    case `Ализариновый`: {
-                        if (userData.sub_type < 3 && userData.rank_number < 6) return interaction.reply({
-                            content: `У вас нет подписки III уровня или ранга "Легенда", чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r10) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r10)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-                        break;
-                    case `Летний`: {
-                        if (!member.roles.cache.has(`1030757074839277608`)) return interaction.reply({
-                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r11) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r11)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r10, r12, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-                        break;
-                    case `Хэллоуинский`: {
-                        if (!member.roles.cache.has(`1030757644320915556`)) return interaction.reply({
-                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r12) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r12)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r10, r13, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-                        break;
-                    case `Новогодний`: {
-                        if (!member.roles.cache.has(`1030757867373998190`)) return interaction.reply({
-                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r13) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r13)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r10, r14]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-                        break;
-                    case `Пасхальный`: {
-                        if (!member.roles.cache.has(`1030757633231167538`)) return interaction.reply({
-                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
-                            ephemeral: true
-                        })
-                        const role = await interaction.guild.roles
-                            .fetch(r14) //ID цвета
-                            .catch(console.error);
-                        if (roles.cache.has(r14)) return interaction.reply({
-                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        });
-                        interaction.reply({
-                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
-                            ephemeral: true
-                        })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r13, r10]).catch(console.error)
-                        await roles.add(role).catch(console.error)
-                    }
-                        break;
-
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                }
-            }
-
-                break;
-
-            case `reset`: {
-                const tempData = await Temp.findOne({ userid: interaction.user.id, guildid: interaction.guild.id, color: true })
-                if (tempData) {
-                    tempData.delete()
-                }
-                await interaction.reply({
-                    content: `Вы убрали свой цвет!`,
-                    ephemeral: true
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: [menuCustom, buttonNormal]
                 })
-                await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r10, r11, r12, r13, r14]).catch(console.error)
-            }
-            default:
-                break;
-        }
-        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.green(`[Использована команда]`) + chalk.gray(`: ${interaction.user.tag} использовал команду /colors ${interaction.options.getSubcommand()}`))
+            } else if (i.customId == 'colors_switch_normal') {
+                await i.deferUpdate();
 
+                embed.setDescription(`## Настройки цвета
+**Текущее меню**: \`Стандартные цвета\`
+В данном меню вы можете установить стандартные цвета гильдии. Найти их вы можете в коробках гильдии или, если у вас есть подписка VIP, сразу же установить их, используя меню ниже!
+
+:arrow_right: **Чтобы перейти к настройкам пользовательского цвета, нажмите на кнопку ниже** :arrow_right:`)
+
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: [menuNormal, buttonCustom]
+                })
+            } else if (i.customId == 'colors_custom_settings') {
+                await interaction.editReply({
+                    components: [menuCustom, buttonNormal]
+                })
+                if (i.values[0] == 'buy') {
+                    if (userData.custom_color.created === true) return i.reply({
+                        content: `У вас уже имеется собственный цвет! Используйте команду ${mentionCommand(client, 'colors')}, чтобы изменить код вашего цвета!`,
+                        ephemeral: true
+                    })
+                    if (userData.rumbik < 200) return i.reply({
+                        content: `Вы не можете создать собственный цвет, так как на вашем балансе меньше 200 румбиков!`,
+                        ephemeral: true
+                    })
+                    const modal = new ModalBuilder()
+                        .setTitle(`Приобрести цвет`)
+                        .setCustomId(`color_custom_buy`)
+                        .addComponents(
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    new TextInputBuilder()
+                                        .setCustomId(`color_custom_buy_color`)
+                                        .setLabel(`Цветовой (hex) код цвета`)
+                                        .setPlaceholder(`Например, #000fff`)
+                                        .setMinLength(6)
+                                        .setMaxLength(7)
+                                        .setRequired(true)
+                                        .setStyle(TextInputStyle.Short)
+                                )
+                        )
+                        .addComponents(
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    new TextInputBuilder()
+                                        .setCustomId(`color_custom_buy_name`)
+                                        .setLabel(`Имя цвета`)
+                                        .setPlaceholder(`Например, Мой цвет`)
+                                        .setMinLength(4)
+                                        .setMaxLength(16)
+                                        .setRequired(false)
+                                        .setStyle(TextInputStyle.Short)
+                                )
+
+                        )
+
+                    await i.showModal(modal);
+                    i.awaitModalSubmit({ time: 1000000000 })
+                        .then(async (int) => {
+                            let hex = int.fields.getTextInputValue(`color_custom_buy_color`)
+                            if (!hex.startsWith(`#`)) hex = `#${int.fields.getTextInputValue(`color_custom_buy_color`)}`
+                            var test = /^#[0-9A-F]{6}$/i.test(hex)
+                            if (test == false) return int.reply({
+                                content: `Введённый вами код не является цветовым кодом hex!`,
+                                ephemeral: true
+                            })
+                            const exampleRole = await int.guild.roles.fetch(`563793535250464809`)
+                            const position = exampleRole.position - 3
+                            let name = int.fields?.getTextInputValue(`color_custom_buy_name`) ? `ᅠᅠᅠЛР ➖ ${int.fields?.getTextInputValue(`color_custom_buy_name`).toUpperCase()}` : `ᅠᅠᅠЛИЧНЫЙ ЦВЕТ`
+                            const role = await int.guild.roles.create({
+                                name: name,
+                                color: hex,
+                                position: position
+                            })
+                            userData.rumbik -= 200
+                            userData.custom_color.created = true
+                            userData.custom_color.hex = hex
+                            userData.custom_color.custom_name = name;
+                            userData.custom_color.role = role.id
+                            userData.save()
+
+                            await member.roles.add(role.id).catch()
+                            await int.reply({
+                                content: `Вы приобрели свой собственный цвет! ${role}`,
+                                ephemeral: true
+                            })
+                        })
+                        .catch(e => {
+
+                        })
+
+
+
+                } else if (i.values[0] == 'set') {
+                    if (!userData.custom_color.created) return i.reply({
+                        content: `Вы не приобрели свой пользовательский цвет!`,
+                        ephemeral: true
+                    })
+                    await i.member.roles.remove(colors).catch()
+                    await i.member.roles.add(userData.custom_color.role).catch();
+                    await i.reply({
+                        content: `Вы установили пользовательский цвет!`,
+                        ephemeral: true
+                    })
+                } else if (i.values[0] == 'remove') {
+                    if (!userData.custom_color.created) return i.reply({
+                        content: `Вы не приобрели свой пользовательский цвет!`,
+                        ephemeral: true
+                    })
+                    await i.member.roles.remove(userData.custom_color.role).catch();
+                    await i.reply({
+                        content: `Вы сняли пользовательский цвет!`,
+                        ephemeral: true
+                    })
+                } else if (i.values[0] == 'set_color') {
+                    if (!userData.custom_color.created) return i.reply({
+                        content: `Вы не приобрели свой пользовательский цвет!`,
+                        ephemeral: true
+                    })
+
+
+                    const modal = new ModalBuilder()
+                        .setTitle(`Редактировать цвет`)
+                        .setCustomId(`color_custom_edit`)
+                        .addComponents(
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    new TextInputBuilder()
+                                        .setCustomId(`color_custom_edit_color`)
+                                        .setLabel(`Цветовой (hex) код цвета`)
+                                        .setPlaceholder(`Например, #000fff`)
+                                        .setMinLength(6)
+                                        .setMaxLength(7)
+                                        .setRequired(true)
+                                        .setStyle(TextInputStyle.Short)
+                                )
+                        )
+
+                    await i.showModal(modal);
+                    i.awaitModalSubmit({ time: 1000000000 })
+                        .then(async (int) => {
+                            let hex = int.fields.getTextInputValue(`color_custom_edit_color`)
+                            const role = await int.guild.roles.fetch(userData.custom_color.role)
+                            if (!hex.startsWith(`#`)) hex = `#${int.fields.getTextInputValue(`color_custom_edit_color`)}`
+                            var test = /^#[0-9A-F]{6}$/i.test(hex)
+                            if (test == false) return int.reply({
+                                content: `Введённый вами код не является цветовым кодом hex!`,
+                                ephemeral: true
+                            })
+                            await role.setColor(hex)
+                            userData.custom_color.hex = hex
+                            userData.save()
+
+                            await int.reply({
+                                content: `Вы изменили цвет вашей роли! ${role}`,
+                                ephemeral: true
+                            })
+                        })
+                        .catch(e => {
+
+                        })
+                } else if (i.values[0] == 'set_name') {
+                    if (!userData.custom_color.created) return i.reply({
+                        content: `Вы не приобрели свой пользовательский цвет!`,
+                        ephemeral: true
+                    })
+
+
+                    const modal = new ModalBuilder()
+                        .setTitle(`Редактировать цвет`)
+                        .setCustomId(`color_custom_edit`)
+                        .addComponents(
+                            new ActionRowBuilder()
+                                .addComponents(
+                                    new TextInputBuilder()
+                                        .setCustomId(`color_custom_edit_name`)
+                                        .setLabel(`Имя цвета`)
+                                        .setPlaceholder(`Например, Мой цвет`)
+                                        .setMinLength(4)
+                                        .setMaxLength(16)
+                                        .setRequired(true)
+                                        .setStyle(TextInputStyle.Short)
+                                )
+
+                        )
+
+                    await i.showModal(modal);
+                    i.awaitModalSubmit({ time: 1000000000 })
+                        .then(async (int) => {
+                            const role = await int.guild.roles.fetch(userData.custom_color.role)
+                            let name = int.fields?.getTextInputValue(`color_custom_edit_name`) ? `ᅠᅠᅠЛР ➖ ${int.fields?.getTextInputValue(`color_custom_edit_name`).toUpperCase()}` : `ᅠᅠᅠЛИЧНЫЙ ЦВЕТ`
+                            await role.setName(name)
+                            userData.custom_color.custom_name = name
+                            userData.save()
+
+                            await int.reply({
+                                content: `Вы изменили имя вашей роли! ${role}`,
+                                ephemeral: true
+                            })
+                        })
+                        .catch(e => {
+
+                        })
+                }
+            }
+        })
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
@@ -510,71 +447,12 @@ async function execute(interaction, client) {
 module.exports = {
     category: `set`,
     plugin: {
-        id: "misc",
-        name: "Разное"
+        id: "items",
+        name: "Предметы"
     },
     data: new SlashCommandBuilder()
         .setName(`colors`)
-        .setDescription(`Выбрать цвет вашего ника`)
-        .setDMPermission(false)
-        .addSubcommand(subcommand => subcommand
-            .setName(`set`)
-            .setDescription(`Установить цвет`)
-            .addStringOption(option => option
-                .setName(`цвет`)
-                .setDescription(`Выберите цвет, который хотите поставить`)
-                .setAutocomplete(true)
-                .setRequired(true))
-        )
-        .addSubcommand(subcommand => subcommand
-            .setName(`reset`)
-            .setDescription(`Сбросить текущий цвет`)
-        )
-        .addSubcommandGroup(gr => gr
-            .setName(`custom`)
-            .setDescription(`Пользовательский цвет никнейма (Владыка+)`)
-            .addSubcommand(sb => sb
-                .setName(`create`)
-                .setDescription(`Приобрести собственный цвет за 200 румбиков`)
-                .addStringOption(o => o
-                    .setName(`код`)
-                    .setDescription(`Цветовой код вашего цвета в формате hex`)
-                    .setRequired(true)
-                    .setMaxLength(7)
-                    .setMinLength(6)
-                )
-            )
-            .addSubcommand(sb => sb
-                .setName(`change`)
-                .setDescription(`Изменить цветовой код личного цвета`)
-                .addStringOption(o => o
-                    .setName(`код`)
-                    .setDescription(`Цветовой код вашего нового цвета в формате hex`)
-                    .setRequired(true)
-                    .setMaxLength(7)
-                    .setMinLength(6)
-                )
-            )
-            .addSubcommand(sb => sb
-                .setName(`rename`)
-                .setDescription(`Изменить имя роли личного цвета`)
-                .addStringOption(o => o
-                    .setName(`имя`)
-                    .setDescription(`Новое имя роли вашего личного цвета`)
-                    .setRequired(true)
-                    .setMaxLength(16)
-                    .setMinLength(2)
-                )
-            )
-            .addSubcommand(sb => sb
-                .setName(`set`)
-                .setDescription(`Установить пользовательский цвет`)
-            )
-            .addSubcommand(sb => sb
-                .setName(`reset`)
-                .setDescription(`Убрать пользовательский цвет`)
-            )
-        ),
-    autoComplete,
+        .setDescription(`Изменить цвет вашего никнейма`)
+        .setDMPermission(false),
     execute,
 };

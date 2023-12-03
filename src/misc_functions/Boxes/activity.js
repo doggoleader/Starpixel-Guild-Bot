@@ -61,7 +61,7 @@ async function Activity(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -82,7 +82,7 @@ async function Activity(interaction, client) {
                     `◾
 ${opener} открывает коробку активности.
 ╭═────═⌘═────═╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ╰═────═⌘═────═╯
 ◾`)
             if (loot[i_loot].id == 1) {
@@ -151,7 +151,7 @@ ${opener} открывает коробку активности.
             }
 
             userData.save();
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку активности]`) + chalk.gray(`: +${loot[i_loot].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку активности]`) + chalk.gray(`: +${loot[i_loot].name}`))
 
         } else {
             await interaction.reply({

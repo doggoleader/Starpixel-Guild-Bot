@@ -7,7 +7,7 @@
             "description": "Сезонный набор! **НОВИНКА**",
             "items": [
                 {
-                    "id": "572124606870192143",
+                    "id": "925799156679856240",
                     "expire": 0,
                     "amount": 5,
                     "stackable": true,
@@ -48,7 +48,7 @@
             "description": "Сезонный набор! **НОВИНКА**",
             "items": [
                 {
-                    "id": "572124606870192143",
+                    "id": "925799156679856240",
                     "expire": 0,
                     "amount": 7,
                     "stackable": true,
@@ -105,7 +105,7 @@
             "description": "Сезонный набор! **НОВИНКА**",
             "items": [
                 {
-                    "id": "572124606870192143",
+                    "id": "925799156679856240",
                     "expire": 0,
                     "amount": 10,
                     "stackable": true,
@@ -153,7 +153,7 @@
                     "type": "role"
                 },
                 {
-                    "id": "1046475276080648302",
+                    "id": "",
                     "expire": 0,
                     "amount": true,
                     "stackable": false,
@@ -178,7 +178,7 @@
             "description": "Сезонный набор! **НОВИНКА**",
             "items": [
                 {
-                    "id": "572124606870192143",
+                    "id": "925799156679856240",
                     "expire": 0,
                     "amount": 15,
                     "stackable": true,
@@ -226,7 +226,7 @@
                     "type": "role"
                 },
                 {
-                    "id": "1046475276080648302",
+                    "id": "",
                     "expire": 0,
                     "amount": true,
                     "stackable": false,
@@ -242,7 +242,7 @@
                     "type": "static"
                 },
                 {
-                    "id": "1046475276080648302",
+                    "id": "",
                     "expire": 0,
                     "amount": true,
                     "stackable": false,
@@ -258,7 +258,7 @@
                     "type": "static"
                 },
                 {
-                    "id": "1046475276080648302",
+                    "id": "",
                     "expire": 0,
                     "amount": true,
                     "stackable": false,
@@ -274,7 +274,7 @@
                     "type": "static"
                 },
                 {
-                    "id": "1046475276080648302",
+                    "id": "",
                     "expire": 0,
                     "amount": true,
                     "stackable": false,
