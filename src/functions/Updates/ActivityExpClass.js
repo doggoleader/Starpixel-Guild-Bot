@@ -33,7 +33,7 @@ class ActExp {
             let exp = level_exp[1]
             result.exp = exp
             result.level = level
-    
+
             if (lvl_before < level) {
                 await guild.channels.cache.get(ch_list.main).send(
                     `:black_medium_small_square:
@@ -46,20 +46,17 @@ ${member} повысил уровень активности до ${result.level
 :black_medium_small_square:`);
             }
             result.save();
-    
-    
+
+
             client.act_rewards();
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
-    
+
     }
 
     /**
@@ -76,9 +73,9 @@ ${member} повысил уровень активности до ${result.level
                 for (const reward of rewards) {
                     const member = await guild.members.fetch(userid)
                     let rew = await result.act_rewards.find(rewa => rewa == reward.level)
-    
+
                     if (!rew && reward.level <= level) {
-    
+
                         try {
                             if (reward.type == "box") {
                                 const role = await guild.roles.fetch(reward.role)
@@ -86,7 +83,7 @@ ${member} повысил уровень активности до ${result.level
                                     result.act_rewards.push(reward.level);
                                     await member.roles.add(role.id)
                                     console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                                     const channel = await guild.channels.fetch(ch_list.main)
                                     const embed = new EmbedBuilder()
                                         .setTitle(`Награда за уровень была получена!`)
@@ -94,7 +91,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTimestamp(Date.now())
                                         .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
-    
+
                                     await channel.send({
                                         embeds: [embed]
                                     })
@@ -102,20 +99,20 @@ ${member} повысил уровень активности до ${result.level
                                     result.act_rewards.push(reward.level);
                                     result.stacked_items.push(role.id)
                                     console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                                     const channel = await guild.channels.fetch(ch_list.main)
                                     const embed = new EmbedBuilder()
                                         .setTitle(`Награда за уровень была сохранена!`)
-                                        .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Используйте ${mentionCommand(client, 'rewards claim')}, чтобы получить свою награду!`)
+                                        .setDescription(`Награда за ${reward.level} уровень активности у пользователя ${member} была сохранена! Используйте ${mentionCommand(client, 'inventory')}, чтобы получить свою награду!`)
                                         .setTimestamp(Date.now())
                                         .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
-    
+
                                     await channel.send({
                                         embeds: [embed]
                                     })
                                 }
-    
+
                             } else if (reward.type == "premium") {
                                 const role = await guild.roles.fetch(reward.role)
                                 if (reward.expire == `7d` && !member.roles.cache.has(role.id)) {
@@ -136,7 +133,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTimestamp(Date.now())
                                         .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
-    
+
                                     await channel.send({
                                         embeds: [embed]
                                     })
@@ -158,7 +155,7 @@ ${member} повысил уровень активности до ${result.level
                                         .setTimestamp(Date.now())
                                         .setColor(Number(client.information.bot_color))
                                         .setThumbnail(member.user.displayAvatarURL())
-    
+
                                     await channel.send({
                                         embeds: [embed]
                                     })
@@ -167,9 +164,9 @@ ${member} повысил уровень активности до ${result.level
                                     const item = await Temp.findOne({ userid: member.user.id, roleid: role.id })
                                     if (!item) {
                                         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                                     } else {
-    
+
                                         item.expire += item.expire.getTime() + 1000 * 60 * 60 * 24 * 7
                                         item.save()
                                     }
@@ -178,9 +175,9 @@ ${member} повысил уровень активности до ${result.level
                                     const item = await Temp.findOne({ userid: member.user.id, roleid: role.id })
                                     if (!item) {
                                         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                                     } else {
-    
+
                                         item.expire = item.expire.getTime() + 1000 * 60 * 60 * 24 * 30
                                         item.save()
                                     }
@@ -189,35 +186,32 @@ ${member} повысил уровень активности до ${result.level
                                 result.act_rewards.push(reward.level);
                                 result.rank += reward.amount
                                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                             } else if (reward.type == "leg_reward") {
                                 const role = await guild.roles.fetch(reward.role)
                                 if (!member.roles.cache.has(role.id)) {
                                     result.act_rewards.push(reward.level);
                                     await member.roles.add(role.id)
                                     console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${reward.level} уровень!`))
-    
+
                                 }
                             }
                         } catch (error) {
                             console.log(chalk.blackBright(`[${new Date()}]`) + `Роль за уровень ${reward.level} не существует!` + error)
                         }
                     }
-    
+
                 }
                 await result.save()
             }
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
-    
+
     }
 }
 

@@ -53,12 +53,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -136,12 +133,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -190,7 +184,7 @@ class MCUpdates {
 Период: \`${reward.name}\`
 Награда: ${role}
 
-Ваша награда была сохранена! Используйте ${mentionCommand(client, 'rewards claim')}, чтобы получить её!`)
+Ваша награда была сохранена! Используйте ${mentionCommand(client, 'inventory')}, чтобы получить её!`)
                                         await ch.send({
                                             embeds: [embed]
                                         })
@@ -223,12 +217,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -253,12 +244,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -279,12 +267,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -393,12 +378,9 @@ class MCUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -415,11 +397,11 @@ class MCUpdates {
         if (!await checkPlugin(guild.id, this.id)) return;
         const channel = await guild.channels.fetch(ch_list.marathon);
         const guildData = await Guild.findOne({ id: guild.id })
-        const stage1msg = await channel.messages.fetch('1173198390855733348');
-        const stage2msg = await channel.messages.fetch('1173198391967219745');
-        const stage3msg = await channel.messages.fetch('1173198393380720671');
-        const stage4msg = await channel.messages.fetch('1173198394798387280');
-        const stage5msg = await channel.messages.fetch('1173198415556001824');
+        const stage1msg = await channel.messages.fetch('1177977101085835365');
+        const stage2msg = await channel.messages.fetch('1177977102776143942');
+        const stage3msg = await channel.messages.fetch('1177977104290304182');
+        const stage4msg = await channel.messages.fetch('1177977124234207324');
+        const stage5msg = await channel.messages.fetch('1177977125635108986');
 
         let curType = guildData.marathon.marathon_type;
         let types = marathon.types
@@ -429,11 +411,11 @@ class MCUpdates {
         const marathonNew = marathon[newType];
         guildData.marathon.marathon_type = newType;
         guildData.save();
-        const stage1 = marathonNew.filter(mar => mar.stage == 1);
-        const stage2 = marathonNew.filter(mar => mar.stage == 2);
-        const stage3 = marathonNew.filter(mar => mar.stage == 3);
-        const stage4 = marathonNew.filter(mar => mar.stage == 4);
-        const stage5 = marathonNew.filter(mar => mar.stage == 5);
+        const stage1 = marathonNew.ids.filter(mar => mar.stage == 1);
+        const stage2 = marathonNew.ids.filter(mar => mar.stage == 2);
+        const stage3 = marathonNew.ids.filter(mar => mar.stage == 3);
+        const stage4 = marathonNew.ids.filter(mar => mar.stage == 4);
+        const stage5 = marathonNew.ids.filter(mar => mar.stage == 5);
 
 
         const buttons1 = new ActionRowBuilder()

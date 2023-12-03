@@ -1,10 +1,20 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require(`discord.js`)
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require(`discord.js`)
+const wait = require(`timers/promises`).setTimeout
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const cron = require(`node-cron`)
-const { checkPlugin } = require("../../functions");
+const { checkPlugin, createBingoProfile } = require("../../functions");
+const bingo = require(`../../jsons/NewYearBingo.json`)
+
+const SeasonChannels = [
+    "1031224366370914394",
+    "1035245590805757995",
+    "1031224393189302292",
+    "1031224437967683605",
+    "1031224424034213999",
+]
 
 class NewYear {
     /** @private */
@@ -23,7 +33,7 @@ class NewYear {
             const guildData = await Guild.findOne({ id: guild.id })
             if (guildData.seasonal.new_year.enabled === false) return
             const channel = await guild.channels.fetch(ch_list.ny_calendar)
-            const msg1 = await channel.messages.fetch(`1045768545281257523`)
+            const msg1 = await channel.messages.fetch(`1045768548515057726`)
             const msg2 = await channel.messages.fetch(`1045768549928550420`)
             const row1 = new ActionRowBuilder()
                 .addComponents(
@@ -266,15 +276,14 @@ class NewYear {
             await msg2.edit({
                 components: [row6, row7, row8]
             })
+
+            this.AdventCalendar(client)
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -337,9 +346,10 @@ class NewYear {
                     .addComponents(
                         new ButtonBuilder()
                             .setCustomId(`december_1`)
-                            .setStyle(ButtonStyle.Success)
+                            .setStyle(ButtonStyle.Secondary)
                             .setEmoji(`🎁`)
                             .setLabel(`1-е декабря`)
+                            .setDisabled(true)
                     )
                     .addComponents(
                         new ButtonBuilder()
@@ -1710,12 +1720,9 @@ class NewYear {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -1762,12 +1769,9 @@ ${list}`)
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -1808,12 +1812,9 @@ ${list}`)
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -1833,9 +1834,9 @@ ${list}`)
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                guildData.seasonal.new_year.channels.forEach(async ch => {
+                SeasonChannels.forEach(async ch => {
 
-                    const channel = await g.channels.fetch(ch.id).then(async chan => {
+                    const channel = await g.channels.fetch(ch).then(async chan => {
                         await chan.edit({
                             permissionOverwrites: [
                                 {
@@ -1855,8 +1856,7 @@ ${list}`)
                             ]
                         })
                     }).catch(async (err) => {
-                        let i = guildData.seasonal.new_year.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.new_year.channels.splice(i, 1)
+                        console.log(err)
                     })
 
 
@@ -1990,12 +1990,9 @@ ${list}`)
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -2045,12 +2042,9 @@ ${list}`)
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -2097,12 +2091,9 @@ ${list}`)
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -2129,7 +2120,7 @@ ${list}`)
                         .setColor(Number(client.information.bot_color))
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
-                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757867373998190`).name}\`! Теперь он может использовать сезонный цвет!`)
+                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757867373998190`).name}\`! В течение часа ему станет доступен сезонный цвет!`)
                     await member.roles.add(`1030757867373998190`)
                     await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
@@ -2141,12 +2132,9 @@ ${list}`)
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -2162,9 +2150,9 @@ ${list}`)
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                guildData.seasonal.new_year.channels.forEach(async ch => {
+                SeasonChannels.forEach(async ch => {
                     try {
-                        const channel = await g.channels.fetch(ch.id)
+                        const channel = await g.channels.fetch(ch)
                         await channel.edit({
                             permissionOverwrites: [
                                 {
@@ -2186,9 +2174,7 @@ ${list}`)
                             ]
                         })
                     } catch (e) {
-                        let i = guildData.seasonal.new_year.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.new_year.channels.splice(i, 1)
-                        guildData.save()
+                        console.log(e)
                     }
 
                 })
@@ -2225,18 +2211,31 @@ ${list}`)
                     userData.seasonal.new_year.snowflakes = 0
                     if (userData.onlinemode == true) {
                         await createBingoProfile(userData, "new_year", bingo)
+                    } else {
+                        userData.save()
                     }
-                    userData.save()
                 })
+
+
+                const news = await g.channels.fetch(`849313479924252732`)
+                const embed = new EmbedBuilder()
+                    .setTitle(`Новогодний сезон`)
+                    .setDescription(`Сегодня, <t:${Math.floor(new Date().getTime() / 1000)}:f>, гильдия Starpixel открывает новогодний сезон.
+Смело открывайте канал <#${ch_list.ny_main}> и зарабатывайте очки, чтобы стать лучшим игроком новогоднего сезона!`)
+                const msg = await news.send({
+                    content: `@everyone`,
+                    embeds: [embed],
+                    allowedMentions: {
+                        parse: ["everyone"]
+                    }
+                })
+                await msg.react(`✅`)
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -2255,7 +2254,7 @@ ${list}`)
             if (!await checkPlugin("320193302844669959", this.id)) return;
             const guildData = await Guild.findOne({ id: guild.id })
 
-            cron.schedule(`0 * * * *`, async () => {
+            cron.schedule(`0,30 * * * *`, async () => {
                 if (guildData.seasonal.new_year.enabled == false) return
                 const items = [true, false, false, false]
                 const item = items[Math.floor(Math.random() * items.length)]
@@ -2367,7 +2366,10 @@ ${list}`)
 \`${prize.name} x${prize.amount}\` 🎁
 **Подарок, к сожалению, никто не забрал!**`,
                                 components: []
-                            })
+                            })  
+
+                            await wait(60000)
+                            await msg.delete();
                         }
                     })
 
@@ -2382,12 +2384,9 @@ ${list}`)
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }

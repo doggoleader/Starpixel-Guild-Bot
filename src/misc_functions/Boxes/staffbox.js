@@ -63,7 +63,7 @@ async function StaffBox(interaction, client) {
         }
 
         //Сообщение - опыт рангов                       
-        let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+        let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
         userData.rank += formula_rank
         interaction.guild.channels.cache.get(ch_list.rank).send(
             `╔═════════♡════════╗
@@ -86,7 +86,7 @@ async function StaffBox(interaction, client) {
             i_act++;
         }
 
-        let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+        let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
         interaction.guild.channels.cache.get(ch_list.act).send(
             `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -149,7 +149,7 @@ ${interaction.member} +${rumb_amount}<:Rumbik:883638847056003072>
             } else {
                 sum_loot += loot[i_loot].chance * 1
                 chances.push(loot[i_loot].chance * 1)
-                console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
             }
         }
         let r_loot = Math.floor(Math.random() * sum_loot);
@@ -171,7 +171,7 @@ ${interaction.member} +${rumb_amount}<:Rumbik:883638847056003072>
                 content: `◾ 💼 ◾
 <@${opener}> открывает коробку персонала...
 ╭────────۞────────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}.
 ╰────────۞────────╯
 ◾ 💼 ◾`
@@ -197,8 +197,9 @@ ${loot[i_loot].loot_description}.
         }
         userData.save();
         client.ActExp(userData.userid)
-        client.ProgressUpdate(interaction.member);
-        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку персонала]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot[i_loot].loot_name}`))
+        await wait(1000)
+            client.ProgressUpdate(interaction.member);
+        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл коробку персонала]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов, ${loot[i_loot].name}`))
 
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)

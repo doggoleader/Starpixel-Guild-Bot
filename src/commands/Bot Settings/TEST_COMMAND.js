@@ -24,6 +24,7 @@ const { API, Upload } = require('vk-io');
 const { SocialVerify } = require('../../schemas/verify');
 let nbt = require('prismarine-nbt');
 let zlib = require('zlib');
+const bingo = require(`../../jsons/NewYearBingo.json`)
 const { GuildProgress, UserProfile } = require('../../misc_functions/Exporter');
 
 /**
@@ -133,7 +134,8 @@ async function execute(interaction, client) {
 
             console.log(JSON.stringify(data));
         }) */
-        client.birthdayChannel();
+        await client.AdventCalendar();
+
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

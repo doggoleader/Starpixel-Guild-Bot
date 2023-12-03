@@ -252,7 +252,7 @@ async function execute(interaction, client) {
                     } else {
                         let chosen = Emotions.getPictures(chosen_value);
                         let string = `${chosen.picture}
-${chosen.messagenotag.replace(`%%u1%%`, i.member).replace('%%u2%%', ``).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+${chosen.messagenotag.replace(`%%u1%%`, i.member).replace('%%u2%%', ``)}`;
 
                         await i.reply({
                             content: `${string}`
@@ -349,7 +349,7 @@ ${chosen.messagenotag.replace(`%%u1%%`, i.member).replace('%%u2%%', ``).replace(
                     } else {
                         let chosen = Emotions.getPictures(chosen_value);
                         let string = `${chosen.picture}
-${chosen.messagetag.replace(`%%u1%%`, i.member).replace('%%u2%%', `<@${i.values[0]}>`).replace('%%code1%%', code1).replace("%%code2%%", code2)}`;
+${chosen.messagetag.replace(`%%u1%%`, i.member).replace('%%u2%%', `<@${i.values[0]}>`)}`;
 
                         await i.reply({
                             content: `${string}`

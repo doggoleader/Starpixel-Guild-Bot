@@ -61,6 +61,10 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🎏`
                                 }
+
+                                if (!result.cosmetics_storage.rank.includes(`🦋`)) {
+                                    result.cosmetics_storage.rank.push(`🦋`)
+                                }
                                 result.rank_number = 0
                                 result.save()
 
@@ -91,6 +95,9 @@ class UserUpdates {
                                     result.displayname.rank = `🥥`
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🎈`
+                                }
+                                if (!result.cosmetics_storage.rank.includes(`🥥`)) {
+                                    result.cosmetics_storage.rank.push(`🥥`)
                                 }
                                 result.rank_number = 1
                                 result.save()
@@ -124,6 +131,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🎁`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`🍕`)) {
+                                    result.cosmetics_storage.rank.push(`🍕`)
+                                }
                                 result.rank_number = 2
                                 result.save()
 
@@ -153,6 +163,9 @@ class UserUpdates {
 
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🎀`
+                                }
+                                if (!result.cosmetics_storage.rank.includes(`🍂`)) {
+                                    result.cosmetics_storage.rank.push(`🍂`)
                                 }
                                 result.rank_number = 3
                                 result.save()
@@ -186,6 +199,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🍊`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`🍁`)) {
+                                    result.cosmetics_storage.rank.push(`🍁`)
+                                }
                                 result.rank_number = 4
                                 result.save()
 
@@ -218,6 +234,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `⛄`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`⭐`)) {
+                                    result.cosmetics_storage.rank.push(`⭐`)
+                                }
                                 result.rank_number = 5
                                 result.save()
 
@@ -249,6 +268,9 @@ class UserUpdates {
 
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🎄`
+                                }
+                                if (!result.cosmetics_storage.rank.includes(`🏅`)) {
+                                    result.cosmetics_storage.rank.push(`🏅`)
                                 }
                                 result.rank_number = 6
                                 result.save()
@@ -283,6 +305,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🍷`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`🍓`)) {
+                                    result.cosmetics_storage.rank.push(`🍓`)
+                                }
                                 result.rank_number = 7
                                 result.save()
 
@@ -314,6 +339,9 @@ class UserUpdates {
 
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🧁`
+                                }
+                                if (!result.cosmetics_storage.rank.includes(`🧨`)) {
+                                    result.cosmetics_storage.rank.push(`🧨`)
                                 }
                                 result.rank_number = 8
                                 result.save()
@@ -347,6 +375,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🍧`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`💎`)) {
+                                    result.cosmetics_storage.rank.push(`💎`)
+                                }
                                 result.rank_number = 9
                                 result.save()
 
@@ -379,6 +410,9 @@ class UserUpdates {
                                 } else if (result.displayname.custom_rank === false && guildData.seasonal.new_year.enabled == true) {
                                     result.displayname.rank = `🍾`
                                 }
+                                if (!result.cosmetics_storage.rank.includes(`🍇`)) {
+                                    result.cosmetics_storage.rank.push(`🍇`)
+                                }
                                 result.rank_number = 10
                                 result.save()
 
@@ -396,12 +430,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -479,12 +510,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -588,12 +616,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -748,12 +773,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
     }
 
@@ -820,12 +842,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -877,12 +896,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -943,14 +959,59 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
+
+    }
+
+    /**
+    * 
+    * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
+    */
+    static async AutoSeasonalColors(client) {
+        const guild = await client.guilds.fetch(`320193302844669959`)
+        if (!await checkPlugin("320193302844669959", this.id)) return;
+        const userDatas = await User.find();
+
+        for (let userData of userDatas) {
+            const member = await guild.members.fetch(userData.userid);
+            const colors = [
+                {
+                    role: "1030757867373998190", //Новый год
+                    color: "1030760793991565422"
+                },
+                {
+                    role: "1030757633231167538", //Пасха
+                    color: "1030760793672785991"
+                },
+                {
+                    role: "1030757074839277608", //Лето
+                    color: "1030760792359960607"
+                },
+                {
+                    role: "1030757644320915556", //Хэллоуин
+                    color: "1030760791722434620"
+                },
+                
+            ]
+            for (let color of colors) {
+                if (member.roles.cache.has(color.role)) {
+                    if (!userData.cosmetics_storage.colors.includes(color.color)) {
+                        userData.cosmetics_storage.colors.push(color.color)
+                    }
+                } else {
+                    if (userData.cosmetics_storage.colors.includes(color.color)) {
+                        const i = await userData.cosmetics_storage.colors.findIndex(color => color == color.color);
+                        userData.cosmetics_storage.colors.splice(i, 1);
+                    }
+                }
+            }
+
+            userData.save()
+        }
 
     }
 
@@ -981,12 +1042,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -1045,12 +1103,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -1091,12 +1146,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -1118,12 +1170,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
@@ -1205,12 +1254,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -1284,12 +1330,9 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -1341,15 +1384,65 @@ class UserUpdates {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
 
+    }
+
+    /**
+    * 
+    * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
+    */
+    static async CheckCollections(client) {
+        const guild = await client.guilds.fetch(`320193302844669959`)
+        if (!await checkPlugin("320193302844669959", this.id)) return;
+
+        const userDatas = await User.find();
+        for (const userData of userDatas) {
+            const dogColl = [`1020400007989444678`, `1020400017330163712`, `1020400015300120638`];
+            const catColl = [`1020400022350725122`, `1020400026045915167`, `1020400024397565962`];
+            const rabColl = [`1020400030575763587`, `1020400034853957713`, `1020400032651952168`];
+            const foxColl = [`1020400043154485278`, `1020400047260696647`, `1020400045251633163`];
+            const lioColl = [`1020400055812886529`, `1020400060636344440`, `1020400058543374388`];
+
+            const member = await guild.members.fetch(userData.userid);
+
+            if (member.roles.cache.hasAll(dogColl)) {
+                let collEmoji = '🐶'
+                if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
+                    userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+            if (member.roles.cache.hasAll(catColl)) {
+                let collEmoji = '🐱'
+                if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
+                    userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+            if (member.roles.cache.hasAll(rabColl)) {
+                let collEmoji = '🐰'
+                if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
+                    userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+            if (member.roles.cache.hasAll(foxColl)) {
+                let collEmoji = '🦊'
+                if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
+                    userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+            if (member.roles.cache.hasAll(lioColl)) {
+                let collEmoji = '🦁'
+                if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
+                    userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+
+            userData.save()
+        }
     }
 }
 

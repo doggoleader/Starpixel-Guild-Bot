@@ -62,7 +62,7 @@ async function Small(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -94,18 +94,32 @@ async function Small(interaction, client) {
                     content: `◾
 <@${opener}> открывает маленькую коробку от гильдии.
 ╭─────x─────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 ╰─────x─────╯
 ◾`,
                     components: [button]
                 })
-            if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name != `Награды нет.` || !roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
+            if (loot[i_loot].type == "Color") {
+                if (userData.rank_number < 6) {
+                    await r_loot_msg.reply({
+                        content: `Вы должны быть **Легендой гильдии**, чтобы получать цвета из коробок!`
+                    })
+                    await r_loot_msg.react("🚫")
+                } else {
+                    if (!userData.cosmetics_storage.colors.includes(loot[i_loot].loot_roleID)) {
+                        userData.cosmetics_storage.colors.push(loot[i_loot].loot_roleID)
+                        await r_loot_msg.react("✅")
+                    } else {
+                        await r_loot_msg.react("🚫")
+                    }
+                }
+            } else if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name != `Награды нет.` || !roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error);
                     await r_loot_msg.react("✅")
                 } else {
-                    if (loot[i_loot].loot_name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622")) {
+                    if (loot[i_loot].name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622")) {
                         await r_loot_msg.react("🚫")
                     } else {
                         if (userData.stacked_items.length < userData.upgrades.inventory_size) {
@@ -120,25 +134,25 @@ ${loot[i_loot].loot_description}
                     }
                 };
             } else {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name != `Награды нет.` || !roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name != `Награды нет.` || !roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error);
                     await r_loot_msg.react("✅")
                 } else {
-                    if (loot[i_loot].loot_name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622") || roles.cache.has(loot[i_loot].loot_roleID)) {
+                    if (loot[i_loot].name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622") || roles.cache.has(loot[i_loot].loot_roleID)) {
                         await r_loot_msg.react("🚫")
                     };
                 };
             }
 
 
-            if (before == true && userData.perks.change_items >= 1 && loot[i_loot].loot_name !== "Награды нет.") {
+            if (before == true && userData.perks.change_items >= 1 && loot[i_loot].name !== "Награды нет.") {
                 button.components[0].setDisabled(false)
 
                 await r_loot_msg.edit({
                     content: `◾
 <@${opener}> открывает маленькую коробку от гильдии.
 ╭─────x─────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 ╰─────x─────╯
 ◾
@@ -154,7 +168,7 @@ ${loot[i_loot].loot_description}
                 })
                 collector.on('collect', async (int) => {
                     await int.deferUpdate()
-                    let list = await loot.filter(item => item.type == loot[i_loot].type && item.rarity == loot[i_loot].rarity && item.loot_name !== loot[i_loot].loot_name)
+                    let list = await loot.filter(item => item.type == loot[i_loot].type && item.rarity == loot[i_loot].rarity && item.name !== loot[i_loot].name)
                     let sum = 0;
                     for (let i_loot = 0; i_loot < list.length; i_loot++) {
                         sum += list[i_loot].chance;
@@ -164,11 +178,25 @@ ${loot[i_loot].loot_description}
                     for (let s = list[0].chance; s <= r; s += list[i].chance) {
                         i++;
                     }
-                    if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
+                    if (list[i].type == "Color") {
+                        if (userData.rank_number < 6) {
+                            await r_loot_msg.reply({
+                                content: `Вы должны быть **Легендой гильдии**, чтобы получать цвета из коробок!`
+                            })
+                            await r_loot_msg.react("🚫")
+                        } else {
+                            if (!userData.cosmetics_storage.colors.includes(list[i].loot_roleID)) {
+                                userData.cosmetics_storage.colors.push(list[i].loot_roleID)
+                                await r_loot_msg.react("✅")
+                            } else {
+                                await r_loot_msg.react("🚫")
+                            }
+                        }
+                    } else if (list[i].type == "Box" || userData.perks.store_items !== 0) {
                         if (interaction.member.roles.cache.has(list[i].loot_roleID)) {
-                            
+
                             if (userData.stacked_items.length < userData.upgrades.inventory_size) {
-                                await userData.stacked_items.push(loot[i_loot].loot_roleID)
+                                await userData.stacked_items.push(list[i].loot_roleID)
                                 await r_loot_msg.react(`✨`)
                                 await r_loot_msg.react(`➡`)
                                 await r_loot_msg.react(`💚`)
@@ -206,7 +234,7 @@ ${loot[i_loot].loot_description}
                         content: `◾
 <@${opener}> открывает маленькую коробку от гильдии.
 ╭─────x─────╮
-\`${list[i].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${list[i].name}\` (Шанс: \`${finalChance1}%\`)
 ${list[i].loot_description}
 ╰─────x─────╯
 ◾
@@ -238,7 +266,7 @@ ${list[i].loot_description}
             }
 
             //Сообщение - опыт рангов     
-            let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+            let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
             userData.rank += formula_rank
             interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
@@ -262,7 +290,7 @@ ${list[i].loot_description}
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -273,7 +301,7 @@ ${list[i].loot_description}
 
             userData.save();
             client.ActExp(userData.userid)
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot[i_loot].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов и ${loot[i_loot].name}`))
 
         } else {
             await interaction.reply({
@@ -284,28 +312,9 @@ ${list[i].loot_description}
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

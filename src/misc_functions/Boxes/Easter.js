@@ -61,7 +61,7 @@ async function Easter(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -87,14 +87,14 @@ async function Easter(interaction, client) {
 ░░░░░░▄███▀░░░░░░░░▀███▄░░░░░░
 ░░░░░▄██▀░░░░░░░░░░░░▀██▄░░░░░
 
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 
 ░░▀██▄░░░░░░░░░░░░░░░░░░▄██▀░░
 ░░░▀███▄▄░░░░░░░░░░░░▄▄███▀░░░
 ░░░░░▀▀████▄▄▄▄▄▄▄▄████▀▀░░░░░
 ░░░░░░░░░▀▀▀██████▀▀░░░░░░░░░░`)
-            if (loot[i_loot].loot_name == `🐇 КРОЛИК`) {
+            if (loot[i_loot].name == `🐇 КРОЛИК`) {
                 if (userData.seasonal.easter.rabbit == false) {
                     userData.seasonal.easter.rabbit = true
                     await r_loot_msg.react("✅")
@@ -103,12 +103,12 @@ ${loot[i_loot].loot_description}
                 }
 
             } else if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     await r_loot_msg.react("❌")
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                         await userData.stacked_items.push(loot[i_loot].loot_roleID)
                         await r_loot_msg.react("✅")
@@ -120,12 +120,12 @@ ${loot[i_loot].loot_description}
                     }
                 }
             } else {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     await r_loot_msg.react("❌")
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("❌")
                 }
             }
@@ -146,7 +146,7 @@ ${loot[i_loot].loot_description}
             }
 
             //Сообщение - опыт рангов  
-            let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+            let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
             userData.rank += formula_rank
             interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
@@ -171,7 +171,7 @@ ${loot[i_loot].loot_description}
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -189,7 +189,7 @@ ${loot[i_loot].loot_description}
 
             userData.save();
             client.ActExp(userData.userid)
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл пасхальную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot[i_loot].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл пасхальную коробку]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов и ${loot[i_loot].name}`))
 
         } else {
             await interaction.reply({
@@ -200,28 +200,9 @@ ${loot[i_loot].loot_description}
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

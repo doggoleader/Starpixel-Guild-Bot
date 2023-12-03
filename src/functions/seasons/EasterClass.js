@@ -8,6 +8,13 @@ const wait = require(`node:timers/promises`).setTimeout
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 const { checkPlugin } = require("../../functions");
 
+const SeasonChannels = [
+    "1031224458855321720",
+    "1031224478803447808",
+    "1031224495932969071",
+    
+]
+
 class Easter {
     /** @private */
     static id = 'seasonal';
@@ -25,9 +32,9 @@ class Easter {
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                guildData.seasonal.easter.channels.forEach(async ch => {
+                SeasonChannels.forEach(async ch => {
 
-                    const channel = await g.channels.fetch(ch.id).then(async chan => {
+                    const channel = await g.channels.fetch(ch).then(async chan => {
                         await chan.edit({
                             permissionOverwrites: [
                                 {
@@ -47,8 +54,7 @@ class Easter {
                             ]
                         })
                     }).catch(async (err) => {
-                        let i = guildData.seasonal.easter.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.easter.channels.splice(i, 1)
+                        console.log(err)
                     })
 
 
@@ -181,12 +187,9 @@ class Easter {
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-    **Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {
@@ -217,7 +220,7 @@ class Easter {
                         .setColor(Number(client.information.bot_color))
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
-                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757633231167538`).name}\`! Теперь он может использовать сезонный цвет!`)
+                        .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757633231167538`).name}\`! В течение часа ему станет доступен сезонный цвет!`)
                     await member.roles.add(`1030757633231167538`)
                     await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
@@ -229,12 +232,9 @@ class Easter {
         } catch (e) {
             const admin = await client.users.fetch(`491343958660874242`)
             console.log(e)
-            var path = require('path');
-            var scriptName = path.basename(__filename);
-            await admin.send(`Произошла ошибка!`)
-            await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-            await admin.send(`◾`)
+            await admin.send({
+                content: `-> \`\`\`${e.stack}\`\`\``
+            }).catch()
         }
 
     }
@@ -250,9 +250,9 @@ class Easter {
                 const g = await client.guilds.fetch(`320193302844669959`)
                 if (!await checkPlugin("320193302844669959", this.id)) return;
                 const guildData = await Guild.findOne({ id: g.id })
-                for (let ch of guildData.seasonal.easter.channels) {
+                for (let ch of SeasonChannels) {
                     try {
-                        const channel = await g.channels.fetch(ch.id)
+                        const channel = await g.channels.fetch(ch)
                         await channel.edit({
                             permissionOverwrites: [
                                 {
@@ -274,9 +274,7 @@ class Easter {
                             ]
                         })
                     } catch (e) {
-                        let i = guildData.seasonal.easter.channels.findIndex(chan => chan.id == ch.id)
-                        guildData.seasonal.easter.channels.splice(i, 1)
-                        guildData.save()
+                       console.log(e)
                     }
 
                 }
@@ -319,12 +317,9 @@ class Easter {
             } catch (e) {
                 const admin = await client.users.fetch(`491343958660874242`)
                 console.log(e)
-                var path = require('path');
-                var scriptName = path.basename(__filename);
-                await admin.send(`Произошла ошибка!`)
-                await admin.send(`=> ${e}.
-**Файл**: ${scriptName}`)
-                await admin.send(`◾`)
+                await admin.send({
+                    content: `-> \`\`\`${e.stack}\`\`\``
+                }).catch()
             }
 
         }, {

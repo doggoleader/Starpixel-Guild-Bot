@@ -71,7 +71,7 @@ async function Daily(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -91,15 +91,29 @@ async function Daily(interaction, client) {
                     `◾
 <@${opener}> открывает ежедневную коробку...
 ╭──────────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 ╰──────────╯
 ◾`)
-            if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+            if (loot[i_loot].type == "Color") {
+                if (userData.rank_number < 6) {
+                    await r_loot_msg.reply({
+                        content: `Вы должны быть **Легендой гильдии**, чтобы получать цвета из коробок!`
+                    })
+                    await r_loot_msg.react("🚫")
+                } else {
+                    if (!userData.cosmetics_storage.colors.includes(loot[i_loot].loot_roleID)) {
+                        userData.cosmetics_storage.colors.push(loot[i_loot].loot_roleID)
+                        await r_loot_msg.react("✅")
+                    } else {
+                        await r_loot_msg.react("🚫")
+                    }
+                }
+            } else if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     if (roles.cache.has('1139849269050888202')) {
                         if (roles.cache.has('521248091853291540')) {
                             if (userData.stacked_items.length < userData.upgrades.inventory_size) {
@@ -124,7 +138,7 @@ ${loot[i_loot].loot_description}
                     } else {
                         await r_loot_msg.react("❌")
                     }
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                         await userData.stacked_items.push(loot[i_loot].loot_roleID)
                         await r_loot_msg.react("✅")
@@ -136,10 +150,10 @@ ${loot[i_loot].loot_description}
                     }
                 }
             } else {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     if (roles.cache.has('1139849269050888202')) {
                         await r_loot_msg.reply({
                             content: `Так как у вас имеется талисман пустоты, к вам в профиль была добавлена большая коробка!`
@@ -149,7 +163,7 @@ ${loot[i_loot].loot_description}
                     } else {
                         await r_loot_msg.react("❌")
                     }
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("❌")
                 }
             }
@@ -170,7 +184,7 @@ ${loot[i_loot].loot_description}
             }
 
             //Сообщение - опыт рангов 
-            let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+            let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
             interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
 <@${opener}> +${formula_rank}💠
@@ -195,7 +209,7 @@ ${loot[i_loot].loot_description}
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -216,7 +230,7 @@ ${loot[i_loot].loot_description}
 
             userData.save();
             client.ActExp(userData.userid)
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл ежедневную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot[i_loot].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл ежедневную коробку]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов и ${loot[i_loot].name}`))
 
         } else if (!roles.cache.has("504887113649750016")) {
             await interaction.reply({

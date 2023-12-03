@@ -68,6 +68,9 @@ async function execute(interaction, client) {
             userData.seasonal.summer.points -= price
             userData.seasonal.summer.su_cosm = true
             userData.displayname.symbol = symb
+            if (!userData.cosmetics_storage.symbols.includes(symb)) {
+                userData.cosmetics_storage.symbols.push(symb)
+            }
             userData.save()
             await interaction.reply({
                 content: `Вы приобрели ${name} за ${price} летних очков! В скором времени данный значок появится в вашем никнейме! Если этого не произойдёт в течение 15 минут, обратитесь в вопрос-модерам!
@@ -84,7 +87,13 @@ async function execute(interaction, client) {
             userData.seasonal.summer.points -= price
             userData.seasonal.summer.su_cosm = true
             userData.displayname.symbol = symb
+            if (!userData.cosmetics_storage.symbols.includes(symb)) {
+                userData.cosmetics_storage.symbols.push(symb)
+            }
             userData.displayname.suffix = postfix
+            if (!userData.cosmetics_storage.suffixes.includes(postfix)) {
+                userData.cosmetics_storage.suffixes.push(postfix)
+            }
             userData.save()
             await interaction.reply({
                 content: `Вы приобрели ${name} за ${price} летних очков! В скором времени данный значок появится в вашем никнейме! Если этого не произойдёт в течение 15 минут, обратитесь в вопрос-модерам!`,
@@ -95,28 +104,9 @@ async function execute(interaction, client) {
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**ID кнопки**: \`${interaction.customId}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 

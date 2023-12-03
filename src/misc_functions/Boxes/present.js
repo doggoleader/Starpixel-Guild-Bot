@@ -106,7 +106,7 @@ async function Present(interaction, client) {
                     } else {
                         sum_loot += loot[i_loot].chance * 1
                         chances.push(loot[i_loot].chance * 1)
-                        console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                        console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                     }
                 }
                 let r_loot = Math.floor(Math.random() * sum_loot);
@@ -143,7 +143,7 @@ async function Present(interaction, client) {
                         `<@${opener}> открывает подарок:
 
 ╔━═━︽︾︽︾🎅︾︽︾︽━═━╗
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 Получатель: ${userToReceive.join(`, `)}
 ${r_song}!
 ╚━═━︽︾︽︾🎅︾︽︾︽━═━╝`)
@@ -209,7 +209,7 @@ ${r_song}!
                     i_act++;
                 }
 
-                let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+                let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
                 interaction.guild.channels.cache.get(ch_list.act).send(
                     `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -223,7 +223,7 @@ ${r_song}!
                 userData.seasonal.new_year.opened_gifts += 1
                 userData.save();
                 client.ActExp(userData.userid)
-                console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл подарок]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности и ${loot[i_loot].loot_name}`))
+                console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл подарок]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности и ${loot[i_loot].name}`))
                 collector.stop()
             })
             collector.on('end', async err => {
@@ -240,28 +240,9 @@ ${r_song}!
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**Команда**: \`${interaction.commandName}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 module.exports = {

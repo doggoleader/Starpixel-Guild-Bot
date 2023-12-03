@@ -19,7 +19,11 @@ async function execute(queue, client) {
             embeds: [playing]
         })
     } catch (e) {
-
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 }
 

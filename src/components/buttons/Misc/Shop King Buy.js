@@ -250,7 +250,7 @@ ${itemsInfo.join(`\n`)}
                                     }
                                 } else {
                                     let amount = item.amount
-                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь ${mentionCommand(client, 'rewards unclaimed')}!`)
+                                    notes.push(`**${a++}**. <@&${item.id}> - Так как предмет в наборе не один, он был автоматически перемещён в ваш инвентарь ${mentionCommand(client, 'inventory')}!`)
                                     for (let c = 0; c < amount; c++) {
                                         if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                                             userData.stacked_items.push(item.id)
@@ -306,7 +306,12 @@ ${itemsInfo.join(`\n`)}
                                 case `symbol`: {
                                     if (userData.rank_number < 4) {
                                         notes.push(`**${a++}**. ${item.name} (${item.value}) - Необходим ранг **Чемпион гильдии** или выше для покупки косметического значка! Предмет сгорел.`)
-                                    } else userData.displayname.symbol = item.value
+                                    } else {
+                                        userData.displayname.symbol = item.value
+                                        if (!userData.cosmetics_storage.symbols.includes(item.value)) {
+                                            userData.cosmetics_storage.symbols.push(item.value)
+                                        }
+                                    }
                                 }
                                     break;
                                 case `ramka`: {
@@ -316,6 +321,14 @@ ${itemsInfo.join(`\n`)}
 
                                         userData.displayname.ramka1 = item.values[0]
                                         userData.displayname.ramka2 = item.values[1]
+
+
+                                        if (!userData.cosmetics_storage.ramkas.includes({ ramka1: item.values[0], ramka2: item.values[1] })) {
+                                            userData.cosmetics_storage.ramkas.push({
+                                                ramka1: item.values[0],
+                                                ramka2: item.values[1]
+                                            })
+                                        }
                                     }
                                 }
                                     break;
@@ -326,13 +339,21 @@ ${itemsInfo.join(`\n`)}
 
                                         userData.displayname.rank = item.value
                                         userData.displayname.custom_rank = true
+                                        if (!userData.cosmetics_storage.rank.includes(item.value)) {
+                                            userData.cosmetics_storage.rank.push(item.value)
+                                        }
                                     }
                                 }
                                     break;
                                 case `suffix`: {
                                     if (userData.rank_number < 8) {
                                         notes.push(`**${a++}**. ${item.name} (${item.value}) - Необходим ранг **Лорд гильдии** или выше для покупки косметического значка! Предмет сгорел.`)
-                                    } else userData.displayname.suffix = item.value
+                                    } else {
+                                        userData.displayname.suffix = item.value
+                                        if (!userData.cosmetics_storage.suffixes.includes(item.value)) {
+                                            userData.cosmetics_storage.suffixes.push(item.value)
+                                        }
+                                    }
                                 }
 
                                     break;
@@ -421,28 +442,9 @@ ${itemsInfo.join(`\n`)}
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
-        let options = interaction?.options.data.map(a => {
-            return `{
-"status": true,
-"name": "${a.name}",
-"type": ${a.type},
-"autocomplete": ${a?.autocomplete ? true : false},
-"value": "${a?.value ? a.value : "No value"}",
-"user": "${a?.user?.id ? a.user.id : "No User"}",
-"channel": "${a?.channel?.id ? a.channel.id : "No Channel"}",
-"role": "${a?.role?.id ? a.role.id : "No Role"}",
-"attachment": "${a?.attachment?.url ? a.attachment.url : "No Attachment"}"
-}`
-        })
-        await admin.send(`Произошла ошибка!`)
-        await admin.send(`=> ${e}.
-**ID кнопки**: \`${interaction.customId}\`
-**Пользователь**: ${interaction.member}
-**Канал**: ${interaction.channel}
-**Опции**: \`\`\`json
-${interaction.options.data.length <= 0 ? `{"status": false}` : options.join(`,\n`)}
-\`\`\``)
-        await admin.send(`◾`)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
     }
 
 }

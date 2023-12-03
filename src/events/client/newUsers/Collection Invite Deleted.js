@@ -10,10 +10,18 @@ let plugin = {
     name: "Новые пользователи"
 }
 async function execute(invite, client) {
-    if (!await checkPlugin(invite.guild.id, plugin.id)) return
-    const { invites } = client
-    await invites.get(invite.guild.id).delete(invite.code);
-    await checkIfExist(invite, client)
+    try {
+        if (!await checkPlugin(invite.guild.id, plugin.id)) return
+        const { invites } = client
+        await invites.get(invite.guild.id).delete(invite.code);
+        await checkIfExist(invite, client)
+    } catch (e) {
+        const admin = await client.users.fetch(`491343958660874242`)
+        console.log(e)
+        await admin.send({
+            content: `-> \`\`\`${e.stack}\`\`\``
+        }).catch()
+    }
 }
 
 module.exports = {

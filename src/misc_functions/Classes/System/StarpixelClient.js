@@ -120,7 +120,6 @@ class StarpixelClient extends Client {
                             else connection.on(event.name, (...args) => event.execute(...args, this));
                             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (MongoDB)`))
                         }
-
                     }
                 }
                     break;
@@ -302,6 +301,8 @@ class StarpixelClient extends Client {
             this.AutoStars(); //Автовыдача звезд
             this.checkSubscription(); //Проверка на наличие подписки
             this.ProgressUpdate(null); //Обновление информации о прогрессе
+            this.CheckCollections();
+            this.AutoSeasonalColors();
 
             //Seasonal
             this.halloweenRewards(); //Выдача хэллоуинских наград (Если сезон активен)
@@ -323,7 +324,7 @@ class StarpixelClient extends Client {
         });
 
 
-        cron.schedule(`0 12 * * *`, async () => {
+        cron.schedule(`0 5 * * *`, async () => {
 
             this.UpdateNicknames(); //Обновление никнеймов в базе данных
             this.birthdayChannel(); //Обновление канала с днями рождения
@@ -491,6 +492,12 @@ class StarpixelClient extends Client {
     }
     async removeNonPremiumColors() {
         await UserUpdates.removeNonPremiumColors(this.client);
+    }
+    async CheckCollections() {
+        await UserUpdates.CheckCollections(this.client);
+    }
+    async AutoSeasonalColors() {
+        await UserUpdates.AutoSeasonalColors(this.client)
     }
 
     //UpdatesNicknames

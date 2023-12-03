@@ -74,7 +74,13 @@ class GuildProgress {
             "MARATHON": "Выполнение марафона",
             "NEW_START": "Задания из нового начала",
             "STARWAY": "Звёздный путь",
-            "SUBS": "Наивысший уровень подписки"
+            "SUBS": "Наивысший уровень подписки",
+            "COSMETIC_COLORS": "Косметические цвета",
+            "COSMETIC_SYMBOLS": "Косметические значки",
+            "COSMETIC_FRAMES": "Косметические рамки",
+            "COSMETIC_SUFFIXES": "Косметические постфиксы",
+            "COSMETIC_RANKS": "Косметические значки ранга",
+
         }
         return tasks[key]
     }
@@ -102,7 +108,12 @@ class GuildProgress {
             "MARATHON": `Завершить марафон ${file.requirements.find(f => f.name == "MARATHON").total} раз`,
             "NEW_START": "Выполнить все задания из Нового начала",
             "STARWAY": "Завершить звёздный путь",
-            "SUBS": "Получить подписку наивысшего уровня хотя бы раз"
+            "SUBS": "Получить подписку наивысшего уровня хотя бы раз",
+            "COSMETIC_COLORS": `Иметь в инвентаре все ${file.requirements.find(f => f.name == "COSMETIC_COLORS").total} стандартных цвета`,
+            "COSMETIC_SYMBOLS": `Иметь в инвентаре ${file.requirements.find(f => f.name == "COSMETIC_SYMBOLS").total} косметических значков`,
+            "COSMETIC_FRAMES": `Иметь в инвентаре ${file.requirements.find(f => f.name == "COSMETIC_FRAMES").total} косметических рамок`,
+            "COSMETIC_SUFFIXES": `Иметь в инвентаре ${file.requirements.find(f => f.name == "COSMETIC_SUFFIXES").total} косметических постфиксов`,
+            "COSMETIC_RANKS": `Иметь в инвентаре ${file.requirements.find(f => f.name == "COSMETIC_RANKS").total} косметических значков ранга`,
         }
         return tasks[key]
     }
@@ -347,7 +358,7 @@ class GuildProgress {
                                         taskData.claimed_items.push(perk)
                                     }
                                 }
-                            } 
+                            }
                                 break;
                             case 'store_items': {
                                 if (userData.perks[perk] >= 1) {
@@ -575,6 +586,106 @@ class GuildProgress {
                         taskData = await userData.progress.items.find(it => it.name == req.name)
                     }
                     let cur = userData.sub_type
+                    if (taskData.max_items < cur) taskData.max_items = cur
+                    sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
+
+                    tasks.push(
+                        {
+                            name: req.name,
+                            sum: sum
+                        }
+                    )
+                }
+                    break;
+                case 'COSMETIC_COLORS': {
+                    if (!taskData) {
+                        userData.progress.items.push({
+                            name: req.name,
+                            max_items: userData.cosmetics_storage.colors.length
+                        })
+                        taskData = await userData.progress.items.find(it => it.name == req.name)
+                    }
+                    let cur = userData.cosmetics_storage.colors.length
+                    if (taskData.max_items < cur) taskData.max_items = cur
+                    sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
+
+                    tasks.push(
+                        {
+                            name: req.name,
+                            sum: sum
+                        }
+                    )
+                }
+                    break;
+                case 'COSMETIC_SYMBOLS': {
+                    if (!taskData) {
+                        userData.progress.items.push({
+                            name: req.name,
+                            max_items: userData.cosmetics_storage.symbols.length
+                        })
+                        taskData = await userData.progress.items.find(it => it.name == req.name)
+                    }
+                    let cur = userData.cosmetics_storage.symbols.length
+                    if (taskData.max_items < cur) taskData.max_items = cur
+                    sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
+
+                    tasks.push(
+                        {
+                            name: req.name,
+                            sum: sum
+                        }
+                    )
+                }
+                    break;
+                case 'COSMETIC_FRAMES': {
+                    if (!taskData) {
+                        userData.progress.items.push({
+                            name: req.name,
+                            max_items: userData.cosmetics_storage.ramkas.length
+                        })
+                        taskData = await userData.progress.items.find(it => it.name == req.name)
+                    }
+                    let cur = userData.cosmetics_storage.ramkas.length
+                    if (taskData.max_items < cur) taskData.max_items = cur
+                    sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
+
+                    tasks.push(
+                        {
+                            name: req.name,
+                            sum: sum
+                        }
+                    )
+                }
+                    break;
+                case 'COSMETIC_SUFFIXES': {
+                    if (!taskData) {
+                        userData.progress.items.push({
+                            name: req.name,
+                            max_items: userData.cosmetics_storage.suffixes.length
+                        })
+                        taskData = await userData.progress.items.find(it => it.name == req.name)
+                    }
+                    let cur = userData.cosmetics_storage.suffixes.length
+                    if (taskData.max_items < cur) taskData.max_items = cur
+                    sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
+
+                    tasks.push(
+                        {
+                            name: req.name,
+                            sum: sum
+                        }
+                    )
+                }
+                    break;
+                case 'COSMETIC_RANKS': {
+                    if (!taskData) {
+                        userData.progress.items.push({
+                            name: req.name,
+                            max_items: userData.cosmetics_storage.rank.length
+                        })
+                        taskData = await userData.progress.items.find(it => it.name == req.name)
+                    }
+                    let cur = userData.cosmetics_storage.rank.length
                     if (taskData.max_items < cur) taskData.max_items = cur
                     sum = taskData.max_items < req.total ? ((taskData.max_items / req.point_every) * req.points_per).toFixed(1) : ((req.total / req.point_every) * req.points_per).toFixed(1)
 

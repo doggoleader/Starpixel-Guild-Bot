@@ -220,12 +220,6 @@
             ]
         },
         {
-            "name": "GG_REWARDS",
-            "points_per": 5,
-            "point_every": 1,
-            "total": 7
-        },
-        {
             "name": "MARS",
             "points_per": 1,
             "point_every": 1,
@@ -251,7 +245,7 @@
         },
         {
             "name": "STARWAY",
-            "points_per": 2,
+            "points_per": 5,
             "point_every": 1,
             "total": 10
         },
@@ -260,6 +254,36 @@
             "points_per": 5,
             "point_every": 1,
             "total": 4
+        },
+        {
+            "name": "COSMETIC_COLORS",
+            "points_per": 2,
+            "point_every": 1,
+            "total": 14
+        },
+        {
+            "name": "COSMETIC_SYMBOLS",
+            "points_per": 1,
+            "point_every": 1,
+            "total": 20
+        },
+        {
+            "name": "COSMETIC_FRAMES",
+            "points_per": 1,
+            "point_every": 1,
+            "total": 20
+        },
+        {
+            "name": "COSMETIC_SUFFIXES",
+            "points_per": 2,
+            "point_every": 1,
+            "total": 20
+        },
+        {
+            "name": "COSMETIC_RANKS",
+            "points_per": 3,
+            "point_every": 1,
+            "total": 15
         }
     ]
 }

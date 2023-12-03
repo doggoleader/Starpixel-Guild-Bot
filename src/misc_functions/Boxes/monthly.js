@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`); //ДОБАВИТЬ В ДРУГИЕ
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-
+const wait = require('node:timers/promises').setTimeout;
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 
@@ -73,7 +73,7 @@ async function Monthly(interaction, client) {
                 } else {
                     sum_loot += loot[i_loot].chance * 1
                     chances.push(loot[i_loot].chance * 1)
-                    console.log(`Предмет ${loot[i_loot].loot_name} имеет неправильное отображение редкости!`)
+                    console.log(`Предмет ${loot[i_loot].name} имеет неправильное отображение редкости!`)
                 }
             }
             let r_loot = Math.floor(Math.random() * sum_loot);
@@ -93,15 +93,15 @@ async function Monthly(interaction, client) {
                     `◾
 <@${opener}> открывает ежемесячную коробку...
 ╭──────────╮
-\`${loot[i_loot].loot_name}\` (Шанс: \`${finalChance1}%\`)
+\`${loot[i_loot].name}\` (Шанс: \`${finalChance1}%\`)
 ${loot[i_loot].loot_description}
 ╰──────────╯
 ◾`)
             if (loot[i_loot].type == "Box" || userData.perks.store_items !== 0) {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     if (roles.cache.has('1139849269050888202')) {
                         if (roles.cache.has('521248091853291540')) {
                             if (userData.stacked_items.length < userData.upgrades.inventory_size) {
@@ -126,7 +126,7 @@ ${loot[i_loot].loot_description}
                     } else {
                         await r_loot_msg.react("❌")
                     }
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     if (userData.stacked_items.length < userData.upgrades.inventory_size) {
                         await userData.stacked_items.push(loot[i_loot].loot_roleID)
                         await r_loot_msg.react("✅")
@@ -138,10 +138,10 @@ ${loot[i_loot].loot_description}
                     }
                 }
             } else {
-                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                if (!roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("✅")
                     await roles.add(loot[i_loot].loot_roleID).catch(console.error)
-                } else if (loot[i_loot].loot_name == `Награды нет.`) {
+                } else if (loot[i_loot].name == `Награды нет.`) {
                     if (roles.cache.has('1139849269050888202')) {
                         await r_loot_msg.reply({
                             content: `Так как у вас имеется талисман пустоты, к вам в профиль была добавлена большая коробка!`
@@ -151,7 +151,7 @@ ${loot[i_loot].loot_description}
                     } else {
                         await r_loot_msg.react("❌")
                     }
-                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].loot_name !== `Награды нет.`) {
+                } else if (roles.cache.has(loot[i_loot].loot_roleID) && loot[i_loot].name !== `Награды нет.`) {
                     await r_loot_msg.react("❌")
                 }
             }
@@ -172,7 +172,7 @@ ${loot[i_loot].loot_description}
             }
 
             //Сообщение - опыт рангов                  
-            let formula_rank = rank_exp[i_rank].rank_amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].rank_amount * userData.perks.rank_boost * 0.05)
+            let formula_rank = rank_exp[i_rank].amount * userData.pers_rank_boost + Math.round(rank_exp[i_rank].amount * userData.perks.rank_boost * 0.05)
             userData.rank += formula_rank
             interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
@@ -194,7 +194,7 @@ ${loot[i_loot].loot_description}
             for (let s = rumbik[0].chance; s <= r_rumbik; s += rumbik[i_rumb].chance) {
                 i_rumb++;
             }
-            let rumb_amount = rumbik[i_rumb].rumb_amount * userData.pers_rumb_boost
+            let rumb_amount = rumbik[i_rumb].amount * userData.pers_rumb_boost
             //Сообщение - румбики                       
             interaction.guild.channels.cache.get(ch_list.rumb).send(
                 `╔═════════♡════════╗
@@ -224,7 +224,7 @@ ${loot[i_loot].loot_description}
                 i_act++;
             }
 
-            let actExp = act_exp[i_act].act_amount * userData.pers_act_boost * guildData.act_exp_boost
+            let actExp = act_exp[i_act].amount * userData.pers_act_boost * guildData.act_exp_boost
             interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${actExp}🌀
@@ -242,8 +242,9 @@ ${loot[i_loot].loot_description}
 
             userData.save();
             client.ActExp(userData.userid)
+            await wait(1000)
             client.ProgressUpdate(interaction.member);
-            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл ежемесячную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot[i_loot].loot_name}`))
+            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magentaBright(`[${interaction.user.tag} открыл ежемесячную коробку]`) + chalk.gray(`: +${act_exp[i_act].amount} опыта активности, +${rank_exp[i_rank].amount} опыта рангов, +${rumbik[i_rumb].amount} и ${loot[i_loot].name}`))
 
         } else if (!roles.cache.has("504887113649750016")) {
             await interaction.reply({

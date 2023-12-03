@@ -56,7 +56,7 @@ async function execute(interaction, client) {
         if (member.roles.cache.has(reward)) {
             userData.stacked_items.push(reward)
             await interaction.reply({
-                content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду ${mentionCommand(client, 'rewards claim')}! Для просмотра списка неполученных наград пропишите ${mentionCommand(client, 'rewards unclaimed')}!`,
+                content: `Награда была добавлена в инвентарь! Чтобы получить награду, откройте коробки и пропишите команду ${mentionCommand(client, 'inventory')}! Для просмотра списка неполученных наград пропишите ${mentionCommand(client, 'inventory')}!`,
                 ephemeral: true
             })
         } else {
