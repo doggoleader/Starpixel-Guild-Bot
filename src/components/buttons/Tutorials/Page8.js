@@ -37,7 +37,7 @@ async function execute(interaction, client) {
 
 ❗ Для получения румбиков вам необходим ранг "Мастер гильдии"!
 
-Полученные румбики вы можете посмотреть в канале <#${ch_list.rumb}>.`)
+Полученные румбики вы можете посмотреть в канале <#${ch_list.box}>.`)
             .setColor(Number(client.information.bot_color))
             .setFooter({ text: `Если у вас есть какие-либо вопросы, вы можете задать их в ${askChannel.name}! • Страница 8/${list.length}` })
             .setTimestamp(Date.now())

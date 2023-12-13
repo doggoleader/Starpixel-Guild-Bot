@@ -7,7 +7,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { Polls } = require(`../../schemas/polls`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { toOrdinalSuffix, secondPage } = require(`../../functions`)
 
 /**

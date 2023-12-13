@@ -18,6 +18,7 @@ class Inventory {
         this.client = client;
         this.member = member;
         this.cur_timestamp = Date.now()
+        this.userData = this.findUserData();
     }
 
     /**

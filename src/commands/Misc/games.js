@@ -7,7 +7,6 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 
 const { Games } = require('../../schemas/games');
 

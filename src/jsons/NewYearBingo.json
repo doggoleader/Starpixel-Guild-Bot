@@ -2,10 +2,10 @@
     "bingo": [
         [
             {
-                "description": "Победите 20 раз на карте Snowfall в Murder Mystery",
+                "description": "Победите 5 раз на карте Snowfall в Murder Mystery",
                 "type": "hypixel",
                 "id": 1,
-                "req_wins": 20,
+                "req_wins": 5,
                 "code": "stats.MurderMystery.wins_snowfall"
             },
             {
@@ -16,10 +16,10 @@
                 "code": "stats.TNTGames.wins_tntrun"
             },
             {
-                "description": "Отгадайте 20 тем в Guess The Build",
+                "description": "Отгадайте 10 тем в Guess The Build",
                 "type": "hypixel",
                 "id": 3,
-                "req_wins": 20,
+                "req_wins": 10,
                 "code": "stats.BuildBattle.correct_guesses"
             },
             {
@@ -83,11 +83,11 @@
                 "code": "stats.Arcade.kills_dragonwars2"
             },
             {
-                "description": "Имейте в профиле 30 снежинок",
+                "description": "Заработайте 30 снежинок в Discord",
                 "type": "discord",
                 "id": 12,
                 "req_wins": 30,
-                "code": "seasonal.new_year.snowflakes"
+                "code": "seasonal.new_year.total_snowflakes"
             },
             {
                 "description": "Выиграйте 25 игр в SkyWars",
@@ -97,11 +97,11 @@
                 "code": "stats.SkyWars.wins"
             },
             {
-                "description": "Застрелите из лука 30 человек в Murder Mystery Classic",
+                "description": "Застрелите из лука 30 человек в Murder Mystery",
                 "type": "hypixel",
                 "id": 14,
                 "req_wins": 30,
-                "code": "stats.MurderMystery.bow_kills_MURDER_CLASSIC"
+                "code": "stats.MurderMystery.bow_kills"
             },
             {
                 "description": "Сделайте 1 победу в Bow Spleef",
@@ -113,11 +113,11 @@
         ],
         [
             {
-                "description": "Сделайте 3 победы в Pixel Party",
+                "description": "Проживите 50 раундов в Pixel Party",
                 "type": "hypixel",
                 "id": 16,
-                "req_wins": 3,
-                "code": "stats.Arcade.pixel_party.wins"
+                "req_wins": 50,
+                "code": "stats.Arcade.pixel_party.rounds_completed"
             },
             {
                 "description": "Сделайте 50 убийств с помощью ножа в Murder Mystery",
@@ -161,27 +161,27 @@
                 "type": "hypixel",
                 "id": 22,
                 "req_wins": 10,
-                "code": "stats.Arcade.dropper.maps_completed"
+                "code": "stats.Arcade.dropper.games_finished"
             },
             {
                 "description": "Сделайте 20 убийств за Ice Wizard в TNT Wizards",
                 "type": "hypixel",
                 "id": 23,
-                "req_wins": 5,
+                "req_wins": 20,
                 "code": "stats.TNTGames.new_icewizard_kills"
             },
             {
-                "description": "Выиграйте 10 игр в SkyWars Lucky Blocks",
+                "description": "Выиграйте 1 игру в SkyWars Lucky Blocks",
                 "type": "hypixel",
                 "id": 24,
-                "req_wins": 10,
+                "req_wins": 1,
                 "code": "stats.SkyWars.lab_win_lucky_blocks_lab"
             },
             {
-                "description": "Сделайте 250 убийств в Bedwars",
+                "description": "Сделайте 100 убийств в Bedwars",
                 "type": "hypixel",
                 "id": 25,
-                "req_wins": 250,
+                "req_wins": 100,
                 "code": "stats.Bedwars.kills_bedwars"
             }
         ]

@@ -1,0 +1,24 @@
+{
+    "act_exp": [
+        {
+            "amount": 100,
+            "chance": 40
+        },
+        {
+            "amount": 120,
+            "chance": 20
+        },
+        {
+            "amount": 150,
+            "chance": 3
+        },
+        {
+            "amount": 140,
+            "chance": 7
+        },
+        {
+            "amount": 110,
+            "chance": 30
+        }
+    ]
+}

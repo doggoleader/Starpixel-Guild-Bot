@@ -8,7 +8,6 @@ const { Temp } = require(`../../../schemas/temp_items`);
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../../discord structure/channels.json`)
 const { isOneEmoji } = require(`is-emojis`)
 /**
@@ -30,7 +29,13 @@ async function execute(interaction, client) {
             content: `Данный символ не является эмоджи или не поддерживается!`,
             ephemeral: true
         })
+        if (userData.cosmetics_storage.symbols.includes(symbol)) return interaction.reply({
+            content: `Данный косметический значок уже есть в вашем инвентаре!`,
+            ephemeral: true
+        })
         userData.displayname.symbol = symbol;
+        userData.cosmetics_storage.symbols.push(symbol)
+        userData.save()
         await member.roles.remove(role)
 
         await interaction.reply({
@@ -39,7 +44,6 @@ async function execute(interaction, client) {
 Предпросмотр вашего никнейма в Discord: \`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}\``,
             ephemeral: true
         })
-        userData.save()
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

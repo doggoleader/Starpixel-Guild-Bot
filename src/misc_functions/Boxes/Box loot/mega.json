@@ -5,6 +5,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "566528019208863744",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 200
         },
@@ -13,6 +15,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571743750049497089",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 200
         },
@@ -21,6 +25,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571745411929341962",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 200
         },
@@ -29,6 +35,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571744516894228481",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 200
         },
@@ -37,6 +45,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571757459732168704",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 100
         },
@@ -45,6 +55,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571757461380399106",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 100
         },
@@ -53,6 +65,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571757462219128832",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 100
         },
@@ -61,6 +75,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "571757463876141077",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Emotion",
             "chance": 100
         },
@@ -69,6 +85,8 @@
             "description": "Используйте цвета, чтобы изменить цвет отображения вашего никнейма.",
             "role": "1024741633947873401",
             "rarity": "Uncommon",
+            "itemType": "role",
+            "expire": 0,
             "type": "Color",
             "chance": 100
         },
@@ -77,6 +95,8 @@
             "description": "Используйте цвета, чтобы изменить цвет отображения вашего никнейма.",
             "role": "595892599693246474",
             "rarity": "Uncommon",
+            "itemType": "role",
+            "expire": 0,
             "type": "Color",
             "chance": 100
         },
@@ -85,6 +105,8 @@
             "description": "Откройте, чтобы получить опыт активности.",
             "role": "819930814388240385",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Box",
             "chance": 120
         },
@@ -93,6 +115,8 @@
             "description": "Откройте, чтобы получить награды.",
             "role": "510932601721192458",
             "rarity": "Common",
+            "itemType": "role",
+            "expire": 0,
             "type": "Box",
             "chance": 140
         },
@@ -101,6 +125,8 @@
             "description": "Откройте, чтобы получить награды.",
             "role": "521248091853291540",
             "rarity": "Uncommon",
+            "itemType": "role",
+            "expire": 0,
             "type": "Box",
             "chance": 100
         },
@@ -109,6 +135,8 @@
             "description": "Откройте, чтобы получить награды. **УЛЬТРАРЕДКАЯ НАГРАДА**",
             "role": "992820488298578041",
             "rarity": "RNG",
+            "itemType": "role",
+            "expire": 0,
             "type": "Box",
             "chance": 1
         },
@@ -117,6 +145,8 @@
             "description": "Обучайтесь различным навыкам у питомцев.",
             "role": "553638061817200650",
             "rarity": "Legendary",
+            "itemType": "role",
+            "expire": 0,
             "type": "Pet",
             "chance": 80
         },
@@ -125,6 +155,8 @@
             "description": "Обучайтесь различным навыкам у питомцев.",
             "role": "553638054238093364",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Pet",
             "chance": 120
         },
@@ -133,6 +165,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "850079173149065277",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Picture",
             "chance": 150
         },
@@ -141,6 +175,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "642810535737425930",
             "rarity": "Rare",
+            "itemType": "role",
+            "expire": 0,
             "type": "Picture",
             "chance": 150
         },
@@ -149,6 +185,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "642810538518118430",
             "rarity": "Legendary",
+            "itemType": "role",
+            "expire": 0,
             "type": "Picture",
             "chance": 120
         },
@@ -157,6 +195,8 @@
             "description": "Используйте её, чтобы лучше показать свои эмоции в чате.",
             "role": "642819600429481997",
             "rarity": "Legendary",
+            "itemType": "role",
+            "expire": 0,
             "type": "Picture",
             "chance": 120
         },
@@ -165,6 +205,8 @@
             "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
             "role": "531158683883929602",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Star",
             "chance": 60
         },
@@ -173,6 +215,8 @@
             "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
             "role": "531158275400531988",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Star",
             "chance": 60
         },
@@ -181,6 +225,8 @@
             "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
             "role": "553660120379293696",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Star",
             "chance": 60
         },
@@ -189,6 +235,8 @@
             "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
             "role": "553660121444515842",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Star",
             "chance": 60
         },
@@ -197,6 +245,8 @@
             "description": "Соберите все звёзды, созвездия, пыль и кометы, чтобы собрать звёздный комплект.",
             "role": "931866162508230696",
             "rarity": "Epic",
+            "itemType": "role",
+            "expire": 0,
             "type": "Star",
             "chance": 60
         },
@@ -205,6 +255,8 @@
             "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.  **УЛЬТРАРЕДКАЯ НАГРАДА**",
             "role": "1020400007989444678",
             "rarity": "RNG",
+            "itemType": "role",
+            "expire": 0,
             "type": "Collection",
             "chance": 20
         },
@@ -213,6 +265,8 @@
             "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.  **УЛЬТРАРЕДКАЯ НАГРАДА**",
             "role": "1020400017330163712",
             "rarity": "RNG",
+            "itemType": "role",
+            "expire": 0,
             "type": "Collection",
             "chance": 20
         },
@@ -221,6 +275,8 @@
             "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.  **УЛЬТРАРЕДКАЯ НАГРАДА**",
             "role": "1020400015300120638",
             "rarity": "RNG",
+            "itemType": "role",
+            "expire": 0,
             "type": "Collection",
             "chance": 20
         }
@@ -229,72 +285,82 @@
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ᶜᵒᵒᶫ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ᶜᵒᵒᶫ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ᵍᵍ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ᵍᵍ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ᶜᶫᵒʷᶰ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ᶜᶫᵒʷᶰ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ᵇᵒᵒᵖ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ᵇᵒᵒᵖ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ᶻᶻᶻ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ᶻᶻᶻ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ʷᵒʷ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ʷᵒʷ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ˣʸᶻ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ˣʸᶻ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ˢᵗᵃʳ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ˢᵗᵃʳ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ʰʸᵖᵉ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ʰʸᵖᵉ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         },
         {
             "name": "`ПОСТФИКС ДЛЯ НИКНЕЙМА ʰᵘʰ`",
             "type": "suffix",
+            "rarity": "Epic",
             "symbol": "ʰᵘʰ",
             "chance": 40,
-            "loot_description": ":beginner: Необходим ранг `Лорд гильдии`."
+            "description": ":beginner: Необходим ранг `Лорд гильдии`."
         }
     ],
     "act_exp": [

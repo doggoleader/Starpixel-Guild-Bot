@@ -8,9 +8,9 @@ const { Temp } = require(`../../../schemas/temp_items`);
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../../discord structure/channels.json`)
-const { isOneEmoji } = require(`is-emojis`)
+const { isOneEmoji } = require(`is-emojis`);
+const { calcCooldown } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -43,7 +43,7 @@ async function execute(interaction, client) {
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
-            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.sun - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.sun - Date.now())}!`)
 
         if (userData.cooldowns.sun > Date.now()) return interaction.reply({
             embeds: [cd],

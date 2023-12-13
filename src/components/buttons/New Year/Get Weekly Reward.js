@@ -5,8 +5,7 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const { User } = require(`../../../schemas/userdata`)
 
 const { Temp } = require("../../../schemas/temp_items");
-const prettyMilliseconds = require(`pretty-ms`)
-const { mentionCommand } = require('../../../functions');
+const { mentionCommand, calcCooldown } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -26,7 +25,7 @@ async function execute(interaction, client) {
                         .setAuthor({
                             name: `Вы не можете использовать эту команду`
                         })
-                        .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.ny_santa_rew - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                        .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.ny_santa_rew - Date.now())}!`)
                 ],
                 ephemeral: true
             });

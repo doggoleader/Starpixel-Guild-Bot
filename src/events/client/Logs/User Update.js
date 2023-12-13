@@ -2,8 +2,7 @@ const { User } = require(`../../../../src/schemas/userdata`)
 const { Guild } = require(`../../../../src/schemas/guilddata`)
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`discord.js`)
 const ch_list = require(`../../../../src/discord structure/channels.json`)
-const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const chalk = require(`chalk`); //ДОБАВИТЬ В ДРУГИЕ
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",
@@ -19,10 +18,10 @@ async function execute(oldM, newM, client) {
                 return;
             }
         }
-        const guild = oldM.guild || newM.guild
+        const guild = client.guilds.fetch("320193302844669959")
         if (!await checkPlugin('320193302844669959', plugin.id)) return
         const log_data = await Guild.findOne({ id: guild.id })
-        const channel = await guild.channels.cache.get(ch_list.log)
+        const channel = await guild.channels.fetch(ch_list.log)
         const webhookF = await channel.fetchWebhooks().then(hooks => hooks.find(webhook => webhook.name == `Starpixel Logs`))
         let webhook
         if (!webhookF) {

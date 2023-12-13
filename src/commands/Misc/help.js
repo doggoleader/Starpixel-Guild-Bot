@@ -9,7 +9,6 @@ const { Guild } = require(`../../schemas/guilddata`)
 const cron = require(`node-cron`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
 const { gameConstructor, calcActLevel, getLevel, isURL, getRes } = require(`../../functions`)
 const toXLS = require(`json2xls`);

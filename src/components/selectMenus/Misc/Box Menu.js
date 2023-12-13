@@ -33,79 +33,98 @@ async function execute(interaction, client) {
         })
         switch (value) {
             case `big`: {
-                await Boxes.Big(interaction, client)
+                const box = new Boxes.Big(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `daily`: {
-                await Boxes.Daily(interaction, client)
+                const box = new Boxes.Daily(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `monthly`: {
-                await Boxes.Monthly(interaction, client)
+                const box = new Boxes.Monthly(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `weekly`: {
-                await Boxes.Weekly(interaction, client)
+                const box = new Boxes.Weekly(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `spooky`: {
-                await Boxes.Spooky(interaction, client)
+                const box = new Boxes.Spooky(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `mystery`: {
-                await Boxes.Mystery(interaction, client)
+                const box = new Boxes.Mystery(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `activity`: {
-                await Boxes.Activity(interaction, client)
+                const box = new Boxes.Activity(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `staff`: {
-                await Boxes.StaffBox(interaction, client)
+                const box = new Boxes.Staffbox(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `king`: {
-                await Boxes.King(interaction, client)
+                const box = new Boxes.King(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `summer`: {
-                await Boxes.Summer(interaction, client)
+                const box = new Boxes.Summer(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `small`: {
-                await Boxes.Small(interaction, client)
+                const box = new Boxes.Small(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `bag`: {
-                await Boxes.Bag(interaction, client)
+                const box = new Boxes.Bag(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `present`: {
-                await Boxes.Present(interaction, client)
+                const box = new Boxes.Present(interaction, client);
+                await box.getReceivers();
             }
                 break;
             case `mega`: {
-                await Boxes.Mega(interaction, client)
+                const box = new Boxes.Mega(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `easter`: {
-                await Boxes.Easter(interaction, client)
+                const box = new Boxes.Easter(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `myth`: {
-                await Boxes.Myth(interaction, client)
+                const box = new Boxes.Myth(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `treasure`: {
-                await Boxes.Treasure(interaction, client)
+                const box = new Boxes.Treasure(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `prestige`: {
-                await Boxes.Prestige(interaction, client)
+                const box = new Boxes.Prestige(interaction, client);
+                await box.sendBox();
             }
                 break;
             case `seasonal_winner`: {
-                await Boxes.SeasonalWinner(interaction, client)
+                const box = new Boxes.SeasonalWinner(interaction, client);
+                await box.sendBox();
             }
                 break;
 

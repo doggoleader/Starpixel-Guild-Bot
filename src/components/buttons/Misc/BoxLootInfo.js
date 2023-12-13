@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, E
 const { Apply } = require(`../../../schemas/applications`)
 const { User } = require(`../../../schemas/userdata`)
 const chalk = require(`chalk`);
-const { boxesMenu } = require('../../../misc_functions/Exporter');
+const { boxesInfo } = require('../../../misc_functions/Exporter');
 const { getBoxLoot } = require('../../../functions');
 /**
  * 
@@ -13,8 +13,7 @@ const { getBoxLoot } = require('../../../functions');
  */
 async function execute(interaction, client) {
     try {
-        const selectMenu = boxesMenu
-        selectMenu.components[0].setCustomId(`boxes_lootinfo`)
+        const selectMenu = boxesInfo
 
         const msg = await interaction.reply({
             content: `Выберите коробку, информацию о которой вы хотите получить!`,
@@ -79,6 +78,7 @@ ${loot ? `**Лут из коробки**\n${loot.array.join(`\n`)}` : ``}${mythi
             await i.editReply({
                 embeds: [embed]
             })
+
         })
 
     } catch (e) {

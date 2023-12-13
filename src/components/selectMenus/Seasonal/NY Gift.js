@@ -4,7 +4,6 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
-const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js")
 
@@ -125,6 +124,9 @@ async function execute(interaction, client) {
                 } else if (item.type == 'static') {
                     if (typeof item.amount == 'number') {
                         await changeProperty(userDataTo, item.db_code, await getProperty(userDataTo, item.db_code) + item.amount)
+                        if (item.db_code == `seasonal.new_year.snowflakes`) {
+                            userDataTo.seasonal.new_year.total_snowflakes += item.amount
+                        }
                     } else if (typeof item.amount == 'boolean') {
                         await changeProperty(userDataTo, item.db_code, item.amount)
                     }

@@ -1,25 +1,7 @@
-const { Activity } = require(`./Boxes/activity`)
-const { Bag } = require(`./Boxes/bag`)
-const { Big } = require(`./Boxes/big`)
-const { Daily } = require(`./Boxes/daily`)
-const { Easter } = require(`./Boxes/Easter`)
-const { King } = require(`./Boxes/king`)
-const { Mega } = require(`./Boxes/Mega`)
-const { Monthly } = require(`./Boxes/monthly`)
-const { Mystery } = require(`./Boxes/mystery`)
-const { Myth } = require(`./Boxes/myth`)
-const { Present } = require(`./Boxes/present`)
-const { Prestige } = require(`./Boxes/prestige`)
-const { Small } = require(`./Boxes/small`)
-const { Spooky } = require(`./Boxes/spooky`)
-const { Treasure } = require(`./Boxes/treasure`)
-const { Summer } = require(`./Boxes/Summer`)
-const { StaffBox } = require(`./Boxes/staffbox`)
-const { Weekly } = require(`./Boxes/weekly`)
-const { SeasonalWinner } = require(`./Boxes/SeasonalWinner`)
+const { Activity, Bag, Big, Daily, Easter, King, Mega, Monthly, Mystery, Myth, Present, Prestige, SeasonalWinner, Small, Spooky, Staffbox, Summer, Treasure, Weekly, Spet, Epet, Lpet, Mpet, Earth, Air, Water, Fire, Sub1, Sub2, Sub3, SubPrem } = require(`./Boxes/AllBoxesClasses`)
 const { embed } = require(`./Premade Interactions & Embeds/Profile Settings Embed`)
 const { selectmenu } = require(`./Premade Interactions & Embeds/Profile Settings Menu`)
-const { boxesMenu } = require(`./Premade Interactions & Embeds/Boxes`)
+const { boxesMenu, boxesInfo } = require(`./Premade Interactions & Embeds/Boxes`)
 const { UserProfile } = require(`./Classes/Profile/UserProfile`)
 const { GuildProgress } = require(`./Classes/Profile/progress_class`)
 const { StarpixelClient } = require(`./Classes/System/StarpixelClient`)
@@ -47,15 +29,31 @@ module.exports = {
     Spooky,
     Treasure,
     Weekly,
-    StaffBox,
+    Staffbox,
     Summer,
     SeasonalWinner,
+
+    Spet,
+    Epet,
+    Lpet,
+    Mpet,
+    Earth,
+    Air,
+    Water,
+    Fire,
+
+    Sub1,
+    Sub2,
+    Sub3,
+    SubPrem,
+    
     embed,
     selectmenu,
     boxesMenu,
-    menuCheckMarathon, 
-    menuCheckNewStart, 
-    menuCheckVeterans, 
+    boxesInfo,
+    menuCheckMarathon,
+    menuCheckNewStart,
+    menuCheckVeterans,
     selectTaskNewStart,
 
     lb_newyear,

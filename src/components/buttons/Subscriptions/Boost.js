@@ -6,8 +6,8 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const ch_list = require(`../../../discord structure/channels.json`)
+const ch_list = require(`../../../discord structure/channels.json`);
+const { calcCooldown } = require('../../../functions');
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -38,7 +38,7 @@ async function execute(interaction, client) {
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
             })
-            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.boost - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.boost - Date.now())}!`)
             .setTimestamp(Date.now())
             .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
 

@@ -1,6 +1,6 @@
 {
   "name": "starpixel-bot",
-  "version": "2.19.0",
+  "version": "2.20.0",
   "description": "",
   "engines": {
     "npm": ">=8.15.0",
@@ -45,7 +45,6 @@
     "node-fetch": "^2.6.7",
     "node-opus": "^0.3.3",
     "nodeactyl": "^3.3.0",
-    "pretty-ms": "^7.0.1",
     "prism-media": "^2.0.0-alpha.0",
     "prismarine-nbt": "^2.2.1",
     "server.js": "^1.0.0",

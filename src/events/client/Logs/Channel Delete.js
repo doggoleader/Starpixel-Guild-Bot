@@ -2,8 +2,7 @@ const { User } = require(`../../../../src/schemas/userdata`)
 const { Guild } = require(`../../../../src/schemas/guilddata`)
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`discord.js`)
 const ch_list = require(`../../../../src/discord structure/channels.json`)
-const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const chalk = require(`chalk`); //ДОБАВИТЬ В ДРУГИЕ
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "logs",

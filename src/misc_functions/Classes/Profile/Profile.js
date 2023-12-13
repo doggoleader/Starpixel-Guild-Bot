@@ -10,8 +10,7 @@ const { Temp } = require("../../../schemas/temp_items")
 const { UserProfile } = require(`./UserProfile`);
 const { embed: settingsEmbed } = require(`../../Premade Interactions & Embeds/Profile Settings Embed`)
 const { selectmenu } = require(`../../Premade Interactions & Embeds/Profile Settings Menu`)
-const { calcActLevel, monthName, mentionCommand } = require("../../../functions")
-const prettyMilliseconds = require(`pretty-ms`)
+const { calcActLevel, monthName, mentionCommand, calcCooldown } = require("../../../functions")
 const { GuildProgress } = require(`./progress_class`)
 const wait = require(`timers/promises`).setTimeout
 const fs = require(`fs`)
@@ -66,20 +65,24 @@ class Profile {
                     ephemeral: true,
                     fetchReply: true
                 })
-                const memberDM = await interaction.guild.members.fetch(i.values[0])
+                const memberDM = await i.guild.members.fetch(i.values[0])
                 const user = memberDM.user;
-                const appData = await Apply.findOne({ userid: user.id, guildid: interaction.guild.id })
-                const realname = appData.que1
-                const playername = appData.que2
-                const thread = await interaction.guild.channels.fetch(appData.threadid)
-                await thread.setLocked(true).catch()
-                await thread.setArchived(true).catch()
-
-                const userData = new User({ userid: user.id, name: user.username })
-                if (userData) return i.editReply({
+                const check = await User.findOne({ userid: user.id, name: user.username })
+                
+                if (check) return i.editReply({
                     content: `Профиль пользователя ${user} уже существует!`
                 })
-                const creator = await User.findOne({ userid: interaction.member.user.id })
+                const userData = new User({ userid: user.id, name: user.username })
+                const appData = await Apply.findOne({ userid: user.id, guildid: i.guild.id })
+                const realname = appData.que1
+                const playername = appData.que2
+                const thread = await i.guild.channels.fetch(appData.threadid)
+                if (thread) {
+                    await thread.setLocked(true).catch()
+                    await thread.setArchived(true).catch()
+                }
+
+                const creator = await User.findOne({ userid: i.member.user.id })
 
                 if (creator.cooldowns.prof_create > Date.now()) return i.editReply({
                     embeds: [
@@ -90,7 +93,7 @@ class Profile {
                             .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                             .setColor(`DarkRed`)
                             .setTimestamp(Date.now())
-                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(creator.cooldowns.prof_create - Date.now(), { secondsDecimalDigits: 0 })}!`)
+                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(creator.cooldowns.prof_create - Date.now())}!`)
                     ],
                     ephemeral: true
                 });
@@ -181,7 +184,7 @@ class Profile {
                 let rloot1 = randombox[Math.floor(Math.random() * randombox.length)];
                 await memberDM.roles.add(roles).catch()
                 await memberDM.roles.add(rloot1).catch()
-                const channel = await interaction.guild.channels.fetch(ch_list.apply)
+                const channel = await i.guild.channels.fetch(ch_list.apply)
                 const msg = await channel.messages.fetch(appData.applicationid)
                 const buttons = new ActionRowBuilder()
                     .addComponents(
@@ -224,7 +227,7 @@ class Profile {
 7. Как вы узнали о нашей гильдии?
 \`${appData.que7}\`.
 
-**Заявка обработана офицером ${interaction.member}**
+**Заявка обработана офицером ${i.member}**
 **Статус заявки**: ${appData.status}`)
                     .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })
                 await msg.edit({
@@ -265,7 +268,7 @@ class Profile {
                     .setColor(Number(client.information.bot_color))
                     .setTitle(`Профиль игрока успешно создан!`)
                     .setTimestamp(Date.now())
-                    .setThumbnail(interaction.guild.iconURL())
+                    .setThumbnail(i.guild.iconURL())
                     .setDescription(
                         `**${d++}.** Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. ✅
 **${d++}.** Необходимые роли были добавлены. ✅
@@ -293,7 +296,7 @@ class Profile {
 Пропишите команд ${mentionCommand(client, 'help')}, чтобы получить полный список команд!
 
 Если модерация гильдии до сих пор не добавила вас, пожалуйста, подождите некоторое время. Вас скоро добавят!`)
-                await interaction.guild.channels.cache.get(ch_list.main).send({
+                await i.guild.channels.cache.get(ch_list.main).send({
                     content: `@here`,
                     embeds: [embed1, embed2],
                     allowedMentions: {
@@ -328,7 +331,7 @@ class Profile {
                 .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                 .setColor(`DarkRed`)
                 .setTimestamp(Date.now())
-                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.prof_update - Date.now(), { secondsDecimalDigits: 0 })}!`)
+                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.prof_update - Date.now())}!`)
             ],
             ephemeral: true
         })
@@ -819,7 +822,8 @@ class Profile {
      */
     static async profileInfo(interaction, client) {
         const msg = await interaction.deferReply({
-            fetchReply: true
+            fetchReply: true,
+            ephemeral: true
         })
         let user = interaction.user;
         const guild = interaction.guild

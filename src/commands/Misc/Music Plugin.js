@@ -7,7 +7,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { gameConstructor, calcActLevel, getLevel, isURL, secondPage, mentionCommand } = require(`../../functions`);
 const { SearchResultType, DisTubeVoice, Song, Playlist } = require('distube');
 

@@ -4,7 +4,6 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
-const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 
