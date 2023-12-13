@@ -64,9 +64,10 @@ async function execute(interaction, client) {
             await interaction.deferUpdate()
         }
         await member.roles.add(role)
-
-        userData.rank += 50 * userData.pers_rank_boost + Math.round(50 * userData.perks.rank_boost * 0.05)
-        userData.exp += 300;
+        let addAct = Math.round(300 * userData.pers_act_boost * guildData.act_exp_boost)
+        let addRank = Math.round(100 * (userData.pers_rank_boost + userData.perks.rank_boost * 0.05))
+        userData.rank += addRank
+        userData.exp += addAct;
         await client.CountAchievements()
         userData.save()
         const condition_meet = new EmbedBuilder()
@@ -76,23 +77,19 @@ async function execute(interaction, client) {
             .setTimestamp(Date.now())
             .setDescription(`${user} выполнил достижение \`${name}\`!
 Он уже получил приз. Хочешь и ты? Тогда тебе в <#${ch_list.achs}>!
-    
-Достижений выполнено: \`${userData.achievements.normal + 1}/${roles_info.achievements_normal.length}\`
-Мифических достижений выполнено: \`${userData.achievements.mythical}/${roles_info.achievements_myth.length}\``)
 
+Достижений выполнено: \`${userData.achievements.normal}/${roles_info.achievements_normal.length}\`
+Мифических достижений выполнено: \`${userData.achievements.mythical + 1}/${roles_info.achievements_myth.length}\`
 
-        await interaction.guild.channels.cache.get(ch_list.act).send(
-            `╒══════════════════╕
-${user} +300 🌀
-\`Выполнение достижения.\`
-╘══════════════════╛`)
+**Награды:**
+1. <@&${reward}>
+2. \`${addAct}\`🌀
+3. \`${addRank}\`💠`)
 
-        await interaction.guild.channels.cache.get(ch_list.rank).send(
-            `╒══════════════════╕
-${user} +50 💠
-\`Выполнение достижения.\`
-╘══════════════════╛`)
         await interaction.guild.channels.cache.get(ch_list.main).send({
+            embeds: [condition_meet]
+        })
+        await interaction.guild.channels.cache.get(ch_list.box).send({
             embeds: [condition_meet]
         })
     } catch (e) {

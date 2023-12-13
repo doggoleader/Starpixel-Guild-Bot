@@ -330,6 +330,7 @@ const User = new mongoose.Schema({
             },
             gifted_packs: { type: Number, default: 0 },
             snowflakes: { type: Number, default: 0 },
+            total_snowflakes: { type: Number, default: 0},
             bingo_rewards: [String],
             bingo: [
                 [

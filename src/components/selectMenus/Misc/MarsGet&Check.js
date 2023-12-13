@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
-const prettyMilliseconds = require(`pretty-ms`)
 const { Temp } = require(`../../../schemas/temp_items`)
 
 const ch_list = require(`../../../discord structure/channels.json`);
@@ -7,7 +6,7 @@ const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
 const { tasks } = require(`../../../jsons/New Start.json`);
 const fetch = require(`node-fetch`);
-const { getProperty } = require('../../../functions');
+const { getProperty, calcCooldown } = require('../../../functions');
 const quests = require(`../../../jsons/Quests.json`)
 /**
  * 
@@ -274,7 +273,7 @@ async function execute(interaction, client) {
                 .setAuthor({
                     name: `Вы не можете использовать эту команду`
                 })
-                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.mars - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.mars - Date.now())}!`)
 
             if (userData.cooldowns.mars > Date.now()) return interaction.editReply({
                 embeds: [cd],

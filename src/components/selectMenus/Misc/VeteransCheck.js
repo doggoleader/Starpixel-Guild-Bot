@@ -5,7 +5,6 @@ const ch_list = require(`../../../discord structure/channels.json`);
 const { User } = require('../../../schemas/userdata');
 const api = process.env.hypixel_apikey
 const { tasks } = require(`../../../jsons/New Start.json`);
-const prettyMilliseconds = require(`pretty-ms`)
 const fetch = require(`node-fetch`);
 const { getProperty } = require('../../../functions');
 const veterans = require(`../../../jsons/Veterans.json`);

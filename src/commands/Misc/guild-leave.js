@@ -7,7 +7,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Apply } = require(`../../schemas/applications`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
 const fs = require(`fs`)
 

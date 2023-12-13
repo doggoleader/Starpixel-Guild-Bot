@@ -1,8 +1,7 @@
 const { Apply } = require(`../../../schemas/applications`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, AttachmentBuilder, EmbedBuilder } = require(`discord.js`)
-const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const chalk = require(`chalk`); //ДОБАВИТЬ В ДРУГИЕ
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "new_users",

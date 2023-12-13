@@ -37,19 +37,7 @@ class StarpixelClient extends Client {
     voiceManager = new Collection();
     invites = new Collection();
 
-    information = {
-        "bot_color": "0x5700FC",
-        "bot_id": "883421063369859122",
-        "bot_dev": "491343958660874242",
-        "bot_descr": "➡️ Официальный бот гильдии Starpixel",
-        "guild_discord": "https://discord.gg/CjNwZfSvej",
-        "guild_youtube": "https://www.youtube.com/channel/UCadHvRQQgqdU0WwqT_XnzGg",
-        "guild_tiktok": "https://tiktok.com/@starpixel_guild",
-        "guild_telegram": "https://t.me/starpixel",
-        "guild_vk": "https://vk.com/starpixel_guild",
-        "guild_email": "starpixel.guild@gmail.com",
-        "guild_forumpost": "https://hypixel.net/threads/Русская-Гильдия-hypixel-•starpixel-•-level-172-•-Топ-107-•-Все-мини-игры-•-discord.4761422/"
-    }
+    information;
 
     commandArray = [];
     /**
@@ -73,6 +61,19 @@ class StarpixelClient extends Client {
         })
 
         this.client = this;
+        this.information = {
+            "bot_color": "0x5700FC",
+            "bot_id": "883421063369859122",
+            "bot_dev": "491343958660874242",
+            "bot_descr": "➡️ Официальный бот гильдии Starpixel",
+            "guild_discord": "https://discord.gg/CjNwZfSvej",
+            "guild_youtube": "https://www.youtube.com/channel/UCadHvRQQgqdU0WwqT_XnzGg",
+            "guild_tiktok": "https://tiktok.com/@starpixel_guild",
+            "guild_telegram": "https://t.me/starpixel",
+            "guild_vk": "https://vk.com/starpixel_guild",
+            "guild_email": "starpixel.guild@gmail.com",
+            "guild_forumpost": "https://hypixel.net/threads/Русская-Гильдия-hypixel-•starpixel-•-level-172-•-Топ-107-•-Все-мини-игры-•-discord.4761422/"
+        }
     }
 
 
@@ -98,8 +99,8 @@ class StarpixelClient extends Client {
 
                         for (const file of eventFiles) {
                             const event = require(`../../../events/${folder}/${eventFolder}/${file}`)
-                            if (event.once) this.once(event.name, (...args) => event.execute(...args, this))
-                            else this.on(event.name, (...args) => event.execute(...args, this));
+                            if (event.once) this.once(event.name, (...args) => event.execute(...args, this.client))
+                            else this.on(event.name, (...args) => event.execute(...args, this.client));
                             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (Discord.js)`))
                         }
 
@@ -116,8 +117,8 @@ class StarpixelClient extends Client {
 
                         for (const file of eventFiles) {
                             const event = require(`../../../events/${folder}/${eventFolder}/${file}`)
-                            if (event.once) connection.once(event.name, (...args) => event.execute(...args, this))
-                            else connection.on(event.name, (...args) => event.execute(...args, this));
+                            if (event.once) connection.once(event.name, (...args) => event.execute(...args, this.client))
+                            else connection.on(event.name, (...args) => event.execute(...args, this.client));
                             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (MongoDB)`))
                         }
                     }
@@ -132,8 +133,8 @@ class StarpixelClient extends Client {
 
                         for (const file of eventFiles) {
                             const event = require(`../../../events/${folder}/${eventFolder}/${file}`)
-                            if (event.once) this.distube.once(event.name, (...args) => event.execute(...args, this))
-                            else this.distube.on(event.name, (...args) => event.execute(...args, this));
+                            if (event.once) this.distube.once(event.name, (...args) => event.execute(...args, this.clientv))
+                            else this.distube.on(event.name, (...args) => event.execute(...args, this.client));
                             console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (Distube)`))
                         }
 

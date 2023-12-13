@@ -1,0 +1,24 @@
+{
+    "rumbik": [
+        {
+            "amount": 50,
+            "chance": 40
+        },
+        {
+            "amount": 70,
+            "chance": 20
+        },
+        {
+            "amount": 100,
+            "chance": 3
+        },
+        {
+            "amount": 90,
+            "chance": 7
+        },
+        {
+            "amount": 60,
+            "chance": 30
+        }
+    ]
+}

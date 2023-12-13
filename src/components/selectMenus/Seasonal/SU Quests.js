@@ -4,11 +4,10 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
-const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
-const { achievementStats, found, getProperty } = require(`../../../functions`)
+const { achievementStats, found, getProperty, calcCooldown } = require(`../../../functions`)
 const { mentionCommand } = require('../../../functions');
 const { lb_summer, stats_summer, quests_summer } = require("../../../misc_functions/Exporter")
 const api = process.env.hypixel_apikey
@@ -58,7 +57,7 @@ async function execute(interaction, client) {
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
-                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.su_quest - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.su_quest - Date.now())}!`)
                     ],
                     ephemeral: true
                 });

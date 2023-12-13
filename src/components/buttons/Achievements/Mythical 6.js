@@ -86,12 +86,13 @@ async function execute(interaction, client) {
                 await interaction.deferUpdate()
             }
             await member.roles.add(role)
-
-
-            userData.rank += 500 * userData.pers_rank_boost + Math.round(500 * userData.perks.rank_boost * 0.05)
-            userData.exp += 1000;
+            let addAct = Math.round(700 * userData.pers_act_boost * guildData.act_exp_boost)
+            let addRank = Math.round(300 * (userData.pers_rank_boost + userData.perks.rank_boost * 0.05))
+            userData.rank += addRank
+            userData.exp += addAct;
             await client.CountAchievements()
             userData.save()
+            client.ActExp(userData.userid)
             const condition_meet = new EmbedBuilder()
                 .setColor(Number(client.information.bot_color))
                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
@@ -101,21 +102,17 @@ async function execute(interaction, client) {
 Он уже получил приз. Хочешь и ты? Тогда тебе в <#${ch_list.achs}>!
     
 Достижений выполнено: \`${userData.achievements.normal}/${roles_info.achievements_normal.length}\`
-Мифических достижений выполнено: \`${userData.achievements.mythical + 1}/${roles_info.achievements_myth.length}\``)
+Мифических достижений выполнено: \`${userData.achievements.mythical + 1}/${roles_info.achievements_myth.length}\`
 
+**Награды:**
+1. <@&${reward}>
+2. \`${addAct}\`🌀
+3. \`${addRank}\`💠`)
 
-            await interaction.guild.channels.cache.get(ch_list.act).send(
-                `╒══════════════════╕
-${user} +1000 🌀
-\`Выполнение достижения.\`
-╘══════════════════╛`)
-
-            await interaction.guild.channels.cache.get(ch_list.rank).send(
-                `╒══════════════════╕
-${user} +500 💠
-\`Выполнение достижения.\`
-╘══════════════════╛`)
             await interaction.guild.channels.cache.get(ch_list.main).send({
+                embeds: [condition_meet]
+            })
+            await interaction.guild.channels.cache.get(ch_list.box).send({
                 embeds: [condition_meet]
             })
         }

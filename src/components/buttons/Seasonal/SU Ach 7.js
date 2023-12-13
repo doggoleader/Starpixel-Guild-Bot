@@ -4,7 +4,6 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
-const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
@@ -79,9 +78,11 @@ async function execute(interaction, client) {
         }
         userData.seasonal.summer.achievements.num7 = true
 
-        userData.rank += 50
-        userData.exp += 300;
         userData.seasonal.summer.points += 5
+        let addAct = Math.round(300 * userData.pers_act_boost * guildData.act_exp_boost)
+        let addRank = Math.round(100 * (userData.pers_rank_boost + userData.perks.rank_boost * 0.05))
+        userData.rank += addRank
+        userData.exp += addAct;
         userData.save()
         client.ActExp(userData.userid)
         const condition_meet = new EmbedBuilder()
@@ -89,28 +90,22 @@ async function execute(interaction, client) {
             .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
             .setTitle(`✅ Достижение выполнено!`)
             .setTimestamp(Date.now())
-            .setDescription(`${member} выполнил достижение \`${name}\`!
-Он уже получил достижение! Хочешь и ты? Тогда тебе в <#${ch_list.su_achs}>
+            .setDescription(`${user} выполнил достижение \`${name}\`!
+Он уже получил приз. Хочешь и ты? Тогда тебе в <#${ch_list.su_achs}>!
 
-Чтобы проверить статистику ваших достижений, используйте меню статистики в канале <#${ch_list.su_main}>!`)
+Чтобы проверить статистику ваших достижений, используйте меню статистики в канале <#${ch_list.su_main}>!
 
+**Награды:**
+1. <@&${reward}>
+2. \`${addAct}\`🌀
+3. \`${addRank}\`💠`)
 
-        await interaction.guild.channels.cache.get(ch_list.act).send(
-            `╒══════════════════╕
-${member} +300 🌀
-\`Выполнение достижения.\`
-╘══════════════════╛`)
-
-        await interaction.guild.channels.cache.get(ch_list.rank).send(
-            `╒══════════════════╕
-${member} +50 💠
-\`Выполнение достижения.\`
-╘══════════════════╛`)
         await interaction.guild.channels.cache.get(ch_list.main).send({
             embeds: [condition_meet]
         })
-        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${member.user.username} выполнил достижение ${name}!`)))
-
+        await interaction.guild.channels.cache.get(ch_list.box).send({
+            embeds: [condition_meet]
+        })
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

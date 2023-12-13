@@ -4,10 +4,9 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
-const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
-const { mentionCommand } = require('../../../functions');
+const { mentionCommand, calcCooldown } = require('../../../functions');
 
 const { achievementStats, found, getProperty, createBingoProfile, changeProperty } = require(`../../../functions`)
 const { lb_newyear, gift_newyear, stats_newyear, quests_newyear } = require("../../../misc_functions/Exporter")
@@ -59,7 +58,7 @@ async function execute(interaction, client) {
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })
-                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.ny_quest - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(userData.cooldowns.ny_quest - Date.now())}!`)
                     ],
                     ephemeral: true
                 });
@@ -325,6 +324,13 @@ async function execute(interaction, client) {
                 )
 
 
+            let TaskProgress = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId(`ny_bingo_progress`)
+                        .setLabel(`Прогресс заданий`)
+                        .setStyle(ButtonStyle.Primary)
+                )
             const file = new AttachmentBuilder()
                 .setFile(`./src/assets/Seasonal/NewYearBingo.png`)
                 .setName(`NewYearBingo.png`)
@@ -370,7 +376,7 @@ async function execute(interaction, client) {
             const msg = await interaction.reply({
                 embeds: [embed],
                 files: [file],
-                components: [claimRewardsR, claimRewardsS, claimRewardsD],
+                components: [claimRewardsR, claimRewardsS, claimRewardsD, TaskProgress],
                 ephemeral: true,
                 fetchReply: true
             })
@@ -378,440 +384,441 @@ async function execute(interaction, client) {
 
             const collector = await msg.createMessageComponentCollector();
             collector.on('collect', async i => {
-                let msg_text = ``;
-                switch (i.customId) {
-                    case `r1`: {
-                        let index = 0
-                        if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
+                if (i.customId !== 'ny_bingo_progress') {
+                    let msg_text = ``;
+                    switch (i.customId) {
+                        case `r1`: {
+                            let index = 0
+                            if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
 
-                        let result = []
-                        for (let item of bingo.bingo[index]) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
-                            result.push(usItem.finished)
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном ряду!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.r1)
-                        userData.seasonal.new_year.bingo_rewards.push(`Р1`);
-                        msg_text = `Вы успешно получили награду за 1 ряд заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `r2`: {
-                        let index = 1
-                        if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-                        let result = []
-                        for (let item of bingo.bingo[index]) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
-                            result.push(usItem.finished)
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном ряду!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.r2)
-                        userData.seasonal.new_year.bingo_rewards.push(`Р2`);
-                        msg_text = `Вы успешно получили награду за 2 ряд заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `r3`: {
-                        let index = 2
-                        if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-                        let result = []
-                        for (let item of bingo.bingo[index]) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
-                            result.push(usItem.finished)
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном ряду!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.r3)
-                        userData.seasonal.new_year.bingo_rewards.push(`Р3`);
-                        msg_text = `Вы успешно получили награду за 3 ряд заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `r4`: {
-                        let index = 3
-                        if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-                        let result = []
-                        for (let item of bingo.bingo[index]) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
-                            result.push(usItem.finished)
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном ряду!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.r4)
-                        userData.seasonal.new_year.bingo_rewards.push(`Р4`);
-                        msg_text = `Вы успешно получили награду за 4 ряд заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `r5`: {
-                        let index = 4
-                        if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-                        let result = []
-                        for (let item of bingo.bingo[index]) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
-                            result.push(usItem.finished)
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном ряду!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.r5)
-                        userData.seasonal.new_year.bingo_rewards.push(`Р5`);
-                        msg_text = `Вы успешно получили награду за 5 ряд заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `s1`: {
-                        let index = 0
-                        if (rew_arr.includes(`С${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        let index2 = 0
-                        for (let item of bingo.bingo) {
-                            let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
-                            result.push(usItem.finished)
-                            index2++
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном стобце!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.s1)
-                        userData.seasonal.new_year.bingo_rewards.push(`С1`);
-                        msg_text = `Вы успешно получили награду за 1 столбец заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `s2`: {
-                        let index = 1
-                        if (rew_arr.includes(`С${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        let index2 = 0
-                        for (let item of bingo.bingo) {
-                            let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
-                            result.push(usItem.finished)
-                            index2++
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном стобце!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.s2)
-                        userData.seasonal.new_year.bingo_rewards.push(`С2`);
-                        msg_text = `Вы успешно получили награду за 2 столбец заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `s3`: {
-                        let index = 2
-                        if (rew_arr.includes(`С${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        let index2 = 0
-                        for (let item of bingo.bingo) {
-                            let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
-                            result.push(usItem.finished)
-                            index2++
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном стобце!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.s3)
-                        userData.seasonal.new_year.bingo_rewards.push(`С3`);
-                        msg_text = `Вы успешно получили награду за 3 столбец заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `s4`: {
-                        let index = 3
-                        if (rew_arr.includes(`С${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        let index2 = 0
-                        for (let item of bingo.bingo) {
-                            let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
-                            result.push(usItem.finished)
-                            index2++
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном стобце!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.s4)
-                        userData.seasonal.new_year.bingo_rewards.push(`С4`);
-                        msg_text = `Вы успешно получили награду за 4 столбец заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `s5`: {
-                        let index = 4
-                        if (rew_arr.includes(`С${index + 1}`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        let index2 = 0
-                        for (let item of bingo.bingo) {
-                            let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
-                            result.push(usItem.finished)
-                            index2++
-                        }
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данном стобце!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.s5)
-                        userData.seasonal.new_year.bingo_rewards.push(`С5`);
-                        msg_text = `Вы успешно получили награду за 5 столбец заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `d1`: {
-                        if (rew_arr.includes(`Д1`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        for (let index = 0; index < 5; index++) {
-                            let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == bingo.bingo[index][index].id)
-                            result.push(usItem.finished)
-                        }
-
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данной диагонали!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.d1)
-                        userData.seasonal.new_year.bingo_rewards.push(`Д1`);
-                        msg_text = `Вы успешно получили награду за 1 диагональ заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `d2`: {
-                        if (rew_arr.includes(`Д2`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        for (let index1 = 0, index2 = 4; index1 < 5 && index2 >= 0; index1++, index2--) {
-                            let usItem = userData.seasonal.new_year.bingo[index1].find(it => it.id == bingo.bingo[index1][index2].id)
-                            result.push(usItem.finished)
-                        }
-
-
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в данной диагонали!`,
-                            ephemeral: true
-                        })
-
-                        await AddReward(i.guild, userData, bingo.rewards.d2)
-                        userData.seasonal.new_year.bingo_rewards.push(`Д2`);
-                        msg_text = `Вы успешно получили награду за 2 диагональ заданий Бинго-марафона!`
-                    }
-                        break;
-                    case `all`: {
-                        if (rew_arr.includes(`ВСЕ`)) return i.reply({
-                            content: `Вы уже получили данную награду!`,
-                            ephemeral: true
-                        })
-
-                        let result = []
-                        for (let usItems of userData.seasonal.new_year.bingo) {
-                            for (let usItem of usItems) {
+                            let result = []
+                            for (let item of bingo.bingo[index]) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
                                 result.push(usItem.finished)
                             }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном ряду!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.r1)
+                            userData.seasonal.new_year.bingo_rewards.push(`Р1`);
+                            msg_text = `Вы успешно получили награду за 1 ряд заданий Бинго-марафона!`
                         }
+                            break;
+                        case `r2`: {
+                            let index = 1
+                            if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+                            let result = []
+                            for (let item of bingo.bingo[index]) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
+                                result.push(usItem.finished)
+                            }
 
-                        if (result.includes(false)) return i.reply({
-                            content: `Вы не завершили все задания в Бинго-марафоне!`,
-                            ephemeral: true
-                        })
-                        await AddReward(i.guild, userData, bingo.rewards.all)
-                        userData.seasonal.new_year.bingo_rewards.push(`ВСЕ`);
-                        msg_text = `Вы успешно получили награду за завершение Бинго-марафона!`
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном ряду!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.r2)
+                            userData.seasonal.new_year.bingo_rewards.push(`Р2`);
+                            msg_text = `Вы успешно получили награду за 2 ряд заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `r3`: {
+                            let index = 2
+                            if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+                            let result = []
+                            for (let item of bingo.bingo[index]) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
+                                result.push(usItem.finished)
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном ряду!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.r3)
+                            userData.seasonal.new_year.bingo_rewards.push(`Р3`);
+                            msg_text = `Вы успешно получили награду за 3 ряд заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `r4`: {
+                            let index = 3
+                            if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+                            let result = []
+                            for (let item of bingo.bingo[index]) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
+                                result.push(usItem.finished)
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном ряду!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.r4)
+                            userData.seasonal.new_year.bingo_rewards.push(`Р4`);
+                            msg_text = `Вы успешно получили награду за 4 ряд заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `r5`: {
+                            let index = 4
+                            if (rew_arr.includes(`Р${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+                            let result = []
+                            for (let item of bingo.bingo[index]) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == item.id);
+                                result.push(usItem.finished)
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном ряду!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.r5)
+                            userData.seasonal.new_year.bingo_rewards.push(`Р5`);
+                            msg_text = `Вы успешно получили награду за 5 ряд заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `s1`: {
+                            let index = 0
+                            if (rew_arr.includes(`С${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            let index2 = 0
+                            for (let item of bingo.bingo) {
+                                let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
+                                result.push(usItem.finished)
+                                index2++
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном стобце!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.s1)
+                            userData.seasonal.new_year.bingo_rewards.push(`С1`);
+                            msg_text = `Вы успешно получили награду за 1 столбец заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `s2`: {
+                            let index = 1
+                            if (rew_arr.includes(`С${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            let index2 = 0
+                            for (let item of bingo.bingo) {
+                                let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
+                                result.push(usItem.finished)
+                                index2++
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном стобце!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.s2)
+                            userData.seasonal.new_year.bingo_rewards.push(`С2`);
+                            msg_text = `Вы успешно получили награду за 2 столбец заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `s3`: {
+                            let index = 2
+                            if (rew_arr.includes(`С${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            let index2 = 0
+                            for (let item of bingo.bingo) {
+                                let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
+                                result.push(usItem.finished)
+                                index2++
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном стобце!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.s3)
+                            userData.seasonal.new_year.bingo_rewards.push(`С3`);
+                            msg_text = `Вы успешно получили награду за 3 столбец заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `s4`: {
+                            let index = 3
+                            if (rew_arr.includes(`С${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            let index2 = 0
+                            for (let item of bingo.bingo) {
+                                let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
+                                result.push(usItem.finished)
+                                index2++
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном стобце!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.s4)
+                            userData.seasonal.new_year.bingo_rewards.push(`С4`);
+                            msg_text = `Вы успешно получили награду за 4 столбец заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `s5`: {
+                            let index = 4
+                            if (rew_arr.includes(`С${index + 1}`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            let index2 = 0
+                            for (let item of bingo.bingo) {
+                                let usItem = userData.seasonal.new_year.bingo[index2].find(it => it.id == item[index].id)
+                                result.push(usItem.finished)
+                                index2++
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данном стобце!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.s5)
+                            userData.seasonal.new_year.bingo_rewards.push(`С5`);
+                            msg_text = `Вы успешно получили награду за 5 столбец заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `d1`: {
+                            if (rew_arr.includes(`Д1`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            for (let index = 0; index < 5; index++) {
+                                let usItem = userData.seasonal.new_year.bingo[index].find(it => it.id == bingo.bingo[index][index].id)
+                                result.push(usItem.finished)
+                            }
+
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данной диагонали!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.d1)
+                            userData.seasonal.new_year.bingo_rewards.push(`Д1`);
+                            msg_text = `Вы успешно получили награду за 1 диагональ заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `d2`: {
+                            if (rew_arr.includes(`Д2`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            for (let index1 = 0, index2 = 4; index1 < 5 && index2 >= 0; index1++, index2--) {
+                                let usItem = userData.seasonal.new_year.bingo[index1].find(it => it.id == bingo.bingo[index1][index2].id)
+                                result.push(usItem.finished)
+                            }
+
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в данной диагонали!`,
+                                ephemeral: true
+                            })
+
+                            await AddReward(i.guild, userData, bingo.rewards.d2)
+                            userData.seasonal.new_year.bingo_rewards.push(`Д2`);
+                            msg_text = `Вы успешно получили награду за 2 диагональ заданий Бинго-марафона!`
+                        }
+                            break;
+                        case `all`: {
+                            if (rew_arr.includes(`ВСЕ`)) return i.reply({
+                                content: `Вы уже получили данную награду!`,
+                                ephemeral: true
+                            })
+
+                            let result = []
+                            for (let usItems of userData.seasonal.new_year.bingo) {
+                                for (let usItem of usItems) {
+                                    result.push(usItem.finished)
+                                }
+                            }
+
+                            if (result.includes(false)) return i.reply({
+                                content: `Вы не завершили все задания в Бинго-марафоне!`,
+                                ephemeral: true
+                            })
+                            await AddReward(i.guild, userData, bingo.rewards.all)
+                            userData.seasonal.new_year.bingo_rewards.push(`ВСЕ`);
+                            msg_text = `Вы успешно получили награду за завершение Бинго-марафона!`
+                        }
+                            break;
+
+                        default:
+                            break;
                     }
-                        break;
-
-                    default:
-                        break;
-                }
 
 
-                userData.save();
-                rew_arr = userData.seasonal.new_year.bingo_rewards;
+                    userData.save();
+                    rew_arr = userData.seasonal.new_year.bingo_rewards;
 
-                await i.reply({
-                    content: msg_text,
-                    ephemeral: true
-                })
+                    await i.reply({
+                        content: msg_text,
+                        ephemeral: true
+                    })
 
-                claimRewardsR = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`r1`)
-                            .setLabel(`Р1`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Р1`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`r2`)
-                            .setLabel(`Р2`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Р2`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`r3`)
-                            .setLabel(`Р3`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Р3`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`r4`)
-                            .setLabel(`Р4`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Р4`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`r5`)
-                            .setLabel(`Р5`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Р5`) ? true : false)
-                    )
-                claimRewardsS = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`s1`)
-                            .setLabel(`С1`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`С1`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`s2`)
-                            .setLabel(`С2`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`С2`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`s3`)
-                            .setLabel(`С3`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`С3`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`s4`)
-                            .setLabel(`С4`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`С4`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`s5`)
-                            .setLabel(`С5`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`С5`) ? true : false)
-                    )
+                    claimRewardsR = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`r1`)
+                                .setLabel(`Р1`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Р1`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`r2`)
+                                .setLabel(`Р2`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Р2`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`r3`)
+                                .setLabel(`Р3`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Р3`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`r4`)
+                                .setLabel(`Р4`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Р4`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`r5`)
+                                .setLabel(`Р5`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Р5`) ? true : false)
+                        )
+                    claimRewardsS = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`s1`)
+                                .setLabel(`С1`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`С1`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`s2`)
+                                .setLabel(`С2`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`С2`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`s3`)
+                                .setLabel(`С3`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`С3`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`s4`)
+                                .setLabel(`С4`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`С4`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`s5`)
+                                .setLabel(`С5`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`С5`) ? true : false)
+                        )
 
-                claimRewardsD = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`d1`)
-                            .setLabel(`Д1`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Д1`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`d2`)
-                            .setLabel(`Д2`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(rew_arr.includes(`Д2`) ? true : false)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`dev1`)
-                            .setLabel(`➖`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(true)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`dev2`)
-                            .setLabel(`➖`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(true)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`all`)
-                            .setLabel(`Итоговая`)
-                            .setStyle(ButtonStyle.Success)
-                            .setDisabled(rew_arr.includes(`ВСЕ`) ? true : false)
-                    )
+                    claimRewardsD = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`d1`)
+                                .setLabel(`Д1`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Д1`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`d2`)
+                                .setLabel(`Д2`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(rew_arr.includes(`Д2`) ? true : false)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`dev1`)
+                                .setLabel(`➖`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(true)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`dev2`)
+                                .setLabel(`➖`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(true)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`all`)
+                                .setLabel(`Итоговая`)
+                                .setStyle(ButtonStyle.Success)
+                                .setDisabled(rew_arr.includes(`ВСЕ`) ? true : false)
+                        )
 
-                embed = new EmbedBuilder()
-                    .setColor(Number(client.information.bot_color))
-                    .setImage(`attachment://${file.name}`)
-                    .setDescription(`## НОВОГОДНИЙ БИНГО-МАРАФОН
+                    embed = new EmbedBuilder()
+                        .setColor(Number(client.information.bot_color))
+                        .setImage(`attachment://${file.name}`)
+                        .setDescription(`## НОВОГОДНИЙ БИНГО-МАРАФОН
 \`Д1\` ◾ \`С1\` \`С2\` \`С3\` \`С4\` \`С5\` ◾ \`Д2\`    
 ◾ ↘ ⬇ ⬇ ⬇ ⬇ ⬇ ↙ ◾
 ${map.join(`\n`)}
@@ -820,40 +827,85 @@ ${map.join(`\n`)}
  
  
 **Если у вас имеются неполученные награды, то нажмите на кнопки ниже, чтобы получить их!**`)
-                    .addFields([
-                        {
-                            name: `РЯДЫ`,
-                            value: `\`Ряд 1\` -> ${rew_arr.includes(`Р1`) ? "✅" : '❌'}
+                        .addFields([
+                            {
+                                name: `РЯДЫ`,
+                                value: `\`Ряд 1\` -> ${rew_arr.includes(`Р1`) ? "✅" : '❌'}
 \`Ряд 2\` -> ${rew_arr.includes(`Р2`) ? "✅" : '❌'}
 \`Ряд 3\` -> ${rew_arr.includes(`Р3`) ? "✅" : '❌'}
 \`Ряд 4\` -> ${rew_arr.includes(`Р4`) ? "✅" : '❌'}
 \`Ряд 5\` -> ${rew_arr.includes(`Р5`) ? "✅" : '❌'}`,
-                            inline: true
-                        },
-                        {
-                            name: `СТОЛБЦЫ`,
-                            value: `\`Столбец 1\` -> ${rew_arr.includes(`С1`) ? "✅" : '❌'}
+                                inline: true
+                            },
+                            {
+                                name: `СТОЛБЦЫ`,
+                                value: `\`Столбец 1\` -> ${rew_arr.includes(`С1`) ? "✅" : '❌'}
 \`Столбец 2\` -> ${rew_arr.includes(`С2`) ? "✅" : '❌'}
 \`Столбец 3\` -> ${rew_arr.includes(`С3`) ? "✅" : '❌'}
 \`Столбец 4\` -> ${rew_arr.includes(`С4`) ? "✅" : '❌'}
 \`Столбец 5\` -> ${rew_arr.includes(`С5`) ? "✅" : '❌'}`,
-                            inline: true
-                        },
-                        {
-                            name: `ДИАГОНАЛИ`,
-                            value: `\`Диагональ 1\` -> ${rew_arr.includes(`Д1`) ? "✅" : '❌'}
+                                inline: true
+                            },
+                            {
+                                name: `ДИАГОНАЛИ`,
+                                value: `\`Диагональ 1\` -> ${rew_arr.includes(`Д1`) ? "✅" : '❌'}
 \`Диагональ 2\` -> ${rew_arr.includes(`Д2`) ? "✅" : '❌'}`,
-                            inline: true
-                        },
+                                inline: true
+                            },
 
-                    ])
+                        ])
 
-                await interaction.editReply({
-                    embeds: [embed],
-                    files: [file],
-                    components: [claimRewardsR, claimRewardsS, claimRewardsD],
-                    fetchReply: true
-                })
+                    await interaction.editReply({
+                        embeds: [embed],
+                        files: [file],
+                        components: [claimRewardsR, claimRewardsS, claimRewardsD, TaskProgress],
+                        fetchReply: true
+                    })
+                } else if (i.customId == `ny_bingo_progress`) {
+                    await i.deferReply({ ephemeral: true, fetchReply: true })
+                    let a = 0;
+                    let qNum = 1;
+                    let strings = []
+                    for (let itemBig of userData.seasonal.new_year.bingo) {
+                        for (let itemSmall of itemBig) {
+                            let bingoQuest = bingo.bingo[a].find(q => q.id == itemSmall.id)
+                            if (!bingoQuest) {
+                                const before = a;
+                                while (!bingoQuest) {
+                                    a++
+                                    bingoQuest = bingo.bingo[a].find(q => q.id == itemSmall.id)
+                                }
+                                a = before;
+                            }
+                            let left = 0;
+                            if (bingoQuest.type == 'discord') {
+                                let cur = await getProperty(userData, bingoQuest.code)
+                                if (!cur) cur = 0;
+                                left = itemSmall.requirement - cur
+                            } else if (bingoQuest.type == 'hypixel') {
+                                let cur = await getProperty(json.player, bingoQuest.code)
+                                if (!cur) cur = 0;
+                                left = itemSmall.requirement - cur
+                            }
+
+                            if (left < 0) left = 0
+
+                            strings.push(`**${qNum++}.** ${bingoQuest.description}.
+- Осталось выполнить: ${left} ${left <= 0 ? `**ЗАДАНИЕ ВЫПОЛНЕНО** ✅` : ``}\n`)
+                        }
+                        a++
+                    }
+
+                    const embed = new EmbedBuilder()
+                    .setColor(Number(client.information.bot_color))
+                    .setDescription(`## Прогресс заданий новогоднего Бинго-марафона
+                    
+${strings.join(`\n`)}`)
+
+                    await i.editReply({
+                        embeds: [embed]
+                    })
+                }
             })
         }
 

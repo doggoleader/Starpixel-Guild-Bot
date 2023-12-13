@@ -9,9 +9,8 @@ const { Guild } = require(`../../schemas/guilddata`)
 const cron = require(`node-cron`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
-const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
-const { gameConstructor, calcActLevel, getLevel, isURL, getRes, getApplicationTemplates, createBingoProfile, mentionCommand } = require(`../../functions`)
+const { gameConstructor, calcActLevel, getLevel, isURL, getRes, getApplicationTemplates, createBingoProfile, mentionCommand, getProperty, calcCooldown } = require(`../../functions`)
 const toXLS = require(`json2xls`);
 const { Chart } = require(`chart.js`)
 const { isOneEmoji } = require(`is-emojis`)
@@ -26,6 +25,8 @@ let nbt = require('prismarine-nbt');
 let zlib = require('zlib');
 const bingo = require(`../../jsons/NewYearBingo.json`)
 const { GuildProgress, UserProfile } = require('../../misc_functions/Exporter');
+const { PersInfo } = require('../../functions/Updates/PersonalInfoClass');
+const { Model } = require('mongoose');
 
 /**
  * 
@@ -136,6 +137,8 @@ async function execute(interaction, client) {
         }) */
         await client.AdventCalendar();
 
+
+
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
@@ -143,9 +146,8 @@ async function execute(interaction, client) {
             content: `-> \`\`\`${e.stack}\`\`\``
         }).catch()
     }
-
-
 }
+
 module.exports = {
     category: `admin_only`,
     plugin: {

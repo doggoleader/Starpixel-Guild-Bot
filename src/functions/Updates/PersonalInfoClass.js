@@ -34,6 +34,7 @@ class PersInfo {
                     type: ChannelType.PrivateThread,
                     invitable: false
                 })
+                let bday
                 if (userData.birthday.day && userData.birthday.month && userData.birthday.year) bday = `${userData.birthday.day}.${userData.birthday.month}.${userData.birthday.year}`
                 else bday = `Нет данных.`
                 userData.pers_info.channel = thread.id

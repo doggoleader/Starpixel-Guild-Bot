@@ -1302,9 +1302,9 @@ async function createBingoProfile(userData, season_id, bingo) {
 function getPerkName(key) {
     let names = {
         "rank_boost": "🔺 Повышение опыта рангов",
-        "shop_discount": "🔻 Скидка в королевском магазине",
-        "king_discount": "🔻 Скидка в магазине активности",
-        "act_discount": "🔻 Скидка в обычном магазине гильдии",
+        "shop_discount": "🔻 Скидка в обычном магазине гильдии",
+        "king_discount": "🔻 Скидка в королевском магазине",
+        "act_discount": "🔻 Скидка в магазине активности",
         "temp_items": "🕒 Увеличение времени действия временных предметов",
         "sell_items": "💰 Возможность продавать предметы из профиля",
         "ticket_discount": "🏷️ Уменьшение опыта гильдии для получения билета",
@@ -1345,6 +1345,7 @@ function getCooldownUsage(key) {
         "monthly": `Открытие ежемесячной коробки`,
         "staffbox": `Открытие коробки персонала`,
         "seasonalWinner": `Открытие коробки сезонного победителя`,
+        "prestige": "Открытие талисмана счастья",
         "prof_update": `Обновление профиля`,
         "prof_create": `Создание профиля игроку`,
         "spet": `Питомец Земли`,
@@ -1412,6 +1413,47 @@ function getBoxLoot(key) {
     return object[key]
 }
 
+/**
+ * 
+ * @param {number} time Time left for the cooldown (in Milliseconds & above 0)
+ * @returns {string} String display for the cooldowns
+ */
+function calcCooldown(time) {
+    if (time <= 0) return `Time parameter has to be above 0`
+    let timeRounded = Math.round(time / 1000);
+    let d = 0, h = 0, m = 0, s = 0;
+    let finalString = ``;
+    //Days
+    if (timeRounded >= 86400) {
+        d = Math.floor(timeRounded / 86400)
+        timeRounded = timeRounded % 86400
+        finalString += `${d} дн. `
+    } 
+
+    //Hours
+    if (timeRounded >= 3600) {
+        h = Math.floor(timeRounded / 3600)
+        timeRounded = timeRounded % 3600
+        finalString += `${h} ч. `
+    } 
+
+    //Minutes
+    if (timeRounded >= 60) {
+        m = Math.floor(timeRounded / 60)
+        timeRounded = timeRounded % 60
+        finalString += `${m} мин. `
+    } 
+
+    //Seconds
+    if (timeRounded > 0) {
+        s = Math.floor(timeRounded)
+        timeRounded = timeRounded - s
+        finalString += `${s} сек.`
+    } 
+
+    return finalString
+}
+
 module.exports = {
     toOrdinalSuffix,
     suffix,
@@ -1442,5 +1484,6 @@ module.exports = {
     getUpgradeName,
     mentionCommand,
     getCooldownUsage,
-    getBoxLoot
+    getBoxLoot,
+    calcCooldown
 }

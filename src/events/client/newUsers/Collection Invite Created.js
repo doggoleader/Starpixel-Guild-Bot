@@ -2,7 +2,6 @@ const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require(`discord.js`)
 const chalk = require(`chalk`);
-const prettyMilliseconds = require(`pretty-ms`)
 const { checkPlugin } = require("../../../functions");
 let plugin = {
     id: "new_users",

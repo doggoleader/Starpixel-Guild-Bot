@@ -2209,6 +2209,7 @@ ${list}`)
                     userData.seasonal.new_year.bingo = []
                     userData.seasonal.new_year.gifted_packs = 0
                     userData.seasonal.new_year.snowflakes = 0
+                    userData.seasonal.new_year.total_snowflakes = 0
                     if (userData.onlinemode == true) {
                         await createBingoProfile(userData, "new_year", bingo)
                     } else {
@@ -2338,6 +2339,7 @@ ${list}`)
                             userData.seasonal.new_year.points += prize.amount
                         } else if (prize.id == 6 || prize.id == 7 || prize.id == 8) {
                             userData.seasonal.new_year.snowflakes += prize.amount
+                            userData.seasonal.new_year.total_snowflakes += prize.amount
                         }
 
                         userData.save()
