@@ -68,7 +68,7 @@ class Profile {
                 const memberDM = await i.guild.members.fetch(i.values[0])
                 const user = memberDM.user;
                 const check = await User.findOne({ userid: user.id, name: user.username })
-                
+
                 if (check) return i.editReply({
                     content: `Профиль пользователя ${user} уже существует!`
                 })
@@ -864,7 +864,7 @@ class Profile {
             }
         }
 
-        const selectMenu = new ActionRowBuilder()
+        let selectMenu = new ActionRowBuilder()
             .addComponents(
                 new StringSelectMenuBuilder()
                     .setCustomId(`profilemenu`)
@@ -879,12 +879,27 @@ class Profile {
                     .setMaxValues(1)
                     .setPlaceholder(`Пользователь, которого хотите посмотреть`)
             )
+        const share_update = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`profile_update`)
+                    .setLabel(`Обновить информацию о профиле`)
+                    .setEmoji(`📄`)
+                    .setStyle(ButtonStyle.Primary)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`profile_share`)
+                    .setLabel(`Поделиться текущим меню`)
+                    .setEmoji(`📨`)
+                    .setStyle(ButtonStyle.Primary)
+            )
 
 
         let main = await profileData.find(pf => pf.value == `main`).embed
         await interaction.editReply({
             embeds: [main],
-            components: [selectMenu, userMenu],
+            components: [selectMenu, userMenu, share_update],
             fetchReply: true
         })
 
@@ -992,12 +1007,12 @@ class Profile {
                             )
                         await i.update({
                             embeds: [embed],
-                            components: [button, selectMenu, userMenu]
+                            components: [button, selectMenu, userMenu, share_update]
                         })
                     } else {
                         await i.update({
                             embeds: [embed],
-                            components: [selectMenu, userMenu]
+                            components: [selectMenu, userMenu, share_update]
                         })
                     }
                 }
@@ -1079,6 +1094,10 @@ class Profile {
                         fetchReply: true
                     })
                 } else if (interaction.user.id !== i.user.id) {
+                    /**
+                     * @deprecated since v2.20.0 due to the message has become ephemeral.
+                     * If this somehow happen, then it will be executed otherwise it's not used
+                     */
                     await i.deferReply({ fetchReply: true, ephemeral: true })
                     const us = await guild.members.fetch(i.values[0])
 
@@ -1117,6 +1136,79 @@ class Profile {
                     })
                 }
 
+            } else if (i.customId == `profile_update`) {
+                await i.deferReply({ fetchReply: true, ephemeral: true })
+                profile = new UserProfile(member, client)
+                userData = await profile.getUserData()
+                if (!userData) {
+                    await interaction.editReply({
+                        content: `Не удалось найти информацию о данном пользователе!`,
+                        fetchReply: true
+                    })
+                    await wait(10000)
+                    await interaction.deleteReply()
+                    return
+                }
+
+                profileData = await profile.getAllProfile();
+                options = [];
+                for (let data of profileData) {
+                    if (data.value == 'main') {
+                        options.push({
+                            label: data.label,
+                            description: data.description,
+                            emoji: data.emoji,
+                            default: true,
+                            value: data.value
+                        })
+                    } else {
+                        options.push({
+                            label: data.label,
+                            description: data.description,
+                            emoji: data.emoji,
+                            default: false,
+                            value: data.value
+                        })
+                    }
+                }
+
+                selectMenu = new ActionRowBuilder()
+                    .addComponents(
+                        new StringSelectMenuBuilder()
+                            .setCustomId(`profilemenu`)
+                            .setPlaceholder(`Выберите меню, которое хотите увидеть`)
+                            .addOptions(options)
+                    )
+                main = await profileData.find(pf => pf.value == `main`).embed
+                await i.deleteReply();
+                await interaction.editReply({
+                    embeds: [main],
+                    components: [selectMenu, userMenu, share_update]
+                })
+            } else if (i.customId == `profile_share`) {
+                await i.deferReply({ fetchReply: true, ephemeral: true })
+                let value = null;
+                let pageName = null
+                await selectMenu.components[0].options.forEach(option => {
+                    if (option.data.default == true) {
+                        value = option.data.value;
+                        pageName = `${option.data.emoji ? option.data.emoji.name + ' ' : ''}${option.data.label}`;
+                    }
+                })
+                if (!value) return i.editReply({
+                    content: `Произошла ошибка во время обработки вашего запроса! Попробуйте ещё раз!`
+                })
+
+                const embed = await profileData.find(pf => pf.value == value).embed
+                const ch = await i.guild.channels.fetch(ch_list.main);
+                await i.deleteReply();
+                await ch.send({
+                    content: `${i.member} поделился своим профилем на странице \`${pageName}\`!`,
+                    embeds: [embed],
+                    allowedMentions: {
+                        parse: []
+                    }
+                })
             }
         })
     }

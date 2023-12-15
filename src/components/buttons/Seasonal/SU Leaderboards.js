@@ -18,9 +18,10 @@ const api = process.env.hypixel_apikey
  */
 async function execute(interaction, client) {
     try {
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const guildData = await Guild.findOne({ id: interaction.guild.id })
-        if (guildData.plugins.seasonal === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
-        if (guildData.seasonal.summer.enabled === false) return interaction.reply({
+        if (guildData.plugins.seasonal === false) return interaction.editReply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+        if (guildData.seasonal.summer.enabled === false) return interaction.editReply({
             content: `Сейчас не время для Лета! Попробуйте сделать это в период **1 июня по 31 августа**!`,
             ephemeral: true
         })
@@ -40,7 +41,7 @@ async function execute(interaction, client) {
         const mapProm = await Promise.all(map)
 
         if (map.length < 1) {
-            await interaction.reply({
+            await interaction.editReply({
                 content: `Пока что никто не заработал ни одного летнего очка!`,
                 ephemeral: true
             })
@@ -54,7 +55,7 @@ async function execute(interaction, client) {
                 .setTimestamp(Date.now())
                 .setDescription(`${mapProm.join('\n')}`)
 
-            await interaction.reply({
+            await interaction.editReply({
                 embeds: [embed],
                 ephemeral: true
             })

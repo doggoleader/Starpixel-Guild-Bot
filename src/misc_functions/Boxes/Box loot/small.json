@@ -182,7 +182,7 @@
         },
         {
             "name": "Награды нет.",
-            "chance": 5000,
+            "chance": 5,
             "roleID": "521248091853291540",
             "rarity": "Rare",
             "itemType": "role",

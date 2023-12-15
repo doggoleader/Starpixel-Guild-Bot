@@ -15,6 +15,7 @@ const { Air } = require('../../../misc_functions/Exporter');
  */
 async function execute(interaction, client) {
     try {
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const { member, user, channel, guild } = interaction
         const box = new Air(interaction, client);
         await box.sendBox();

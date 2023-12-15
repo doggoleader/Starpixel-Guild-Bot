@@ -17,6 +17,7 @@ const { Sub1 } = require('../../../misc_functions/Exporter');
  */
 async function execute(interaction, client) {
     try {
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const { user, member, guild, channel } = interaction
         const box = new Sub1(interaction, client);
         await box.sendBox()

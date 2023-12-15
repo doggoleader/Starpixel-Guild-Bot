@@ -321,6 +321,12 @@
                     "amount": 3
                 },
                 {
+                    "type": "role",
+                    "id": "1132678509307904210",
+                    "expire": 0,
+                    "amount": 1
+                },
+                {
                     "type": "static",
                     "id": "rank",
                     "name": "💠",
