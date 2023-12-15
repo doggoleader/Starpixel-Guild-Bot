@@ -18,6 +18,7 @@ const { SubPrem } = require('../../../misc_functions/Exporter');
  */
 async function execute(interaction, client) {
     try {
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const { user, member, guild, channel } = interaction
         const box = new SubPrem(interaction, client);
         await box.sendBox();

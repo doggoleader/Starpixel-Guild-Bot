@@ -328,7 +328,6 @@ class Mega extends Boxes {
             return `<@${r}>`
         })
         return `◾
-${interaction.member} открывает огромную коробку от гильдии.
 ╭───────₪۞₪───────╮
 ${map.join(`, `)} получа${map.length > 1 ? "ют" : "ет" } следующие предметы:
 %%loot%%
@@ -473,22 +472,18 @@ class Myth extends Boxes {
         let map = this.receivers.map(r => {
             return `<@${r}>`
         })
-        return `☆
-
-        ☆                                  ☆
-
-☆                                                                       ☆
+        return `☆   :boom:   :comet:   ☆   ☆   ☆   ☆   :comet:   :boom:   ☆
+:sparkles:   ☆   ☆   :comet:   ☆   ☆   :comet:   ☆   ☆   :sparkles:
+☆   :star2:   ☆   ☆   :star:   :star:   ☆   ☆   :star2:   ☆
 
 
 ${map.join(`, `)} получа${map.length > 1 ? "ют" : "ет" } следующие предметы:
 
 %%loot%%
 
-☆                                                                       ☆
-
-        ☆                                  ☆
-
-☆`
+☆   :star2:   ☆   ☆   :star:   :star:   ☆   ☆   :star2:   ☆
+:sparkles:   ☆   ☆   :comet:   ☆   ☆   :comet:   ☆   ☆   :sparkles:
+☆   :boom:   :comet:   ☆   ☆   ☆   ☆   :comet:   :boom:   ☆`
     }
 }
 /**
@@ -564,7 +559,7 @@ ${r_song}!
                     .setCustomId(`user_present`)
                     .setPlaceholder(`Выберите пользователя`)
             )
-        const rr = await interaction.reply({
+        const rr = await interaction.editReply({
             content: `Выберите пользователя, который станет получателем подарка!`,
             ephemeral: true,
             components: [userSelect],
@@ -572,16 +567,17 @@ ${r_song}!
         })
         const collector = rr.createMessageComponentCollector()
         collector.on('collect', async i => {
+            await i.deferReply({ ephemeral: true, fetchReply: true })
             const toReceive = await i.guild.members.fetch(i.values[0])
-            if (toReceive.user.id == i.user.id) return i.reply({
+            if (toReceive.user.id == i.user.id) return i.editReply({
                 content: `Вы не можете отправить подарок самому себе!`,
                 ephemeral: true
             })
-            if (!toReceive.roles.cache.has(`504887113649750016`)) return i.reply({
+            if (!toReceive.roles.cache.has(`504887113649750016`)) return i.editReply({
                 content: `Вы не можете отправить подарок гостю гильдии!`,
                 ephemeral: true
             })
-            if (toReceive.user.bot) return i.reply({
+            if (toReceive.user.bot) return i.editReply({
                 content: `Вы не можете отправить подарок боту!`,
                 ephemeral: true
             })

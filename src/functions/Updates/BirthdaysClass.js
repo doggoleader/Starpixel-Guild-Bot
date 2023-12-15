@@ -5,11 +5,12 @@ const ch_list = require(`../../discord structure/channels.json`)
 const role_list = require(`../../discord structure/roles.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin } = require("../../functions");
+const { Temp } = require(`../../schemas/temp_items`)
 
 class Birthdays {
 
     /** @private */
-    static id = "birthdays";
+    static id = "birthday";
     /** @private */
     static name = 'Дни рождения';
     /**
@@ -19,17 +20,14 @@ class Birthdays {
     static async wish_birthday(client) {
         try {
             const Guilds = client.guilds.cache
-
-
             Guilds.forEach(async g => {
                 if (await checkPlugin(g.id, this.id)) {
                     const data = await User.find({ guild: g.id }).catch(err => { })
                     if (!data) return
-
                     data.forEach(async userData => {
-                        const channel = g.channels.cache.get(`983440987328229446`)
+                        const channel = g.channels.cache.get(ch_list.birthdays)
                         if (!channel) return
-                        const member = await g.members.fetch(b.userid) || `Неизвестный пользователь#0000`
+                        const member = await g.members.fetch(userData.userid) || `Неизвестный пользователь#0000`
                         const Day = userData.birthday.day
                         const Month = userData.birthday.month
                         const Year = userData.birthday.year
@@ -59,7 +57,6 @@ class Birthdays {
                                     m.react(`🎂`)
                                 })
                             }
-
                             await member.roles.add(`983441364903665714`).catch()
                             const hpb = new Temp({ userid: member.user.id, guildid: g.id, roleid: `983441364903665714`, expire: Date.now() + (1000 * 60 * 60 * 20) })
                             hpb.save()
@@ -70,7 +67,6 @@ class Birthdays {
                                 await member.roles.add(`584673040470769667`).catch()
                             }
                             userData.age += 1
-                            b.save()
                             userData.save()
                         }
 

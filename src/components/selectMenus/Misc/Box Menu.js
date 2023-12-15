@@ -17,6 +17,7 @@ const { boxesMenu } = require(`../../../misc_functions/Exporter`)
  */
 async function execute(interaction, client) {
     try {
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
         const value = interaction.values[0]
         const selectMenu = boxesMenu
         const getInfoButton = new ActionRowBuilder()

@@ -821,14 +821,14 @@ class Boxes {
                     if (this.removeRole) {
                         await interaction.member.roles.remove(this.id).catch()
                     }
-                } else return interaction.reply({
+                } else return interaction.editReply({
                     content: `У вас отсутствует **${this.name.toUpperCase()}**! Выполняйте задания и открывайте коробки более высокого уровня, чтобы получить её!`,
                     ephemeral: true
                 })
             }
         }
         if (this.hasCD) {
-            if (userData.cooldowns[this.boxID] > Date.now()) return interaction.reply({
+            if (userData.cooldowns[this.boxID] > Date.now()) return interaction.editReply({
                 content: `Команда находится на перезарядке! Пожалуйста, подождите ещё \`${calcCooldown(userData.cooldowns[this.boxID] - Date.now())}\`!`,
                 ephemeral: true
             })
@@ -842,7 +842,6 @@ class Boxes {
         }
 
 
-        await interaction.deferReply({ ephemeral: true, fetchReply: true });
         await interaction.deleteReply();
         const typeList = this.allTypes;
         const fullBox = await this.createBox(types);
@@ -954,7 +953,8 @@ ${perks_msg}`)
             const collector = await msg.createMessageComponentCollector({ time: 60_000 });
             collector.on('collect', async (int) => {
                 if (int.customId == 'change_item') {
-                    if (int.user.id !== interaction.user.id) return int.reply({
+                    await int.deferReply({ ephemeral: true, fetchReply: true })
+                    if (int.user.id !== interaction.user.id) return int.editReply({
                         content: `Вы не можете использовать эту кнопку!`,
                         ephemeral: true
                     })
@@ -1009,7 +1009,6 @@ ${perks_msg}`)
                         let find2 = await find1.result.findIndex(t => t.roleID == def.result.roleID)
                         find1.result[find2] = loot.result;
                     }
-                    await int.deferUpdate();
                     comps[0].components[0].setDisabled(true);
                     i = 1;
                     perks_msg = `~~У вас есть умение \`✨ Изменение предметов\`, поэтому вы можете попытать удачу и изменить предмет, нажав на кнопку в течение следующих 60 секунд!~~`
@@ -1251,12 +1250,12 @@ ${perks_msg}`)
                                         await msg.react(`❌`)
                                     }
                                 } else if (item.type == 'Color') {
-                                    if (userData.rank_number < 6) {
+                                    if (usRece.rank_number < 6) {
                                         await msg.react(`❌`);
                                         toReply.push(`**${i++}.** Вы должны быть **Легендой гильдии** или выше, чтобы получать цвета гильдии!`)
                                     } else {
-                                        if (!userData.cosmetics_storage.colors.includes(item.roleID)) {
-                                            userData.cosmetics_storage.colors.push(item.roleID)
+                                        if (!usRece.cosmetics_storage.colors.includes(item.roleID)) {
+                                            usRece.cosmetics_storage.colors.push(item.roleID)
                                             await msg.react("✅")
                                         } else {
                                             await msg.react("❌")

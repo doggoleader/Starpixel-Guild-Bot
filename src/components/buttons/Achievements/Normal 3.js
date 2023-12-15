@@ -84,8 +84,8 @@ async function execute(interaction, client) {
             .setDescription(`${user} выполнил достижение \`${name}\`!
 Он уже получил приз. Хочешь и ты? Тогда тебе в <#${ch_list.achs}>!
 
-Достижений выполнено: \`${userData.achievements.normal}/${roles_info.achievements_normal.length}\`
-Мифических достижений выполнено: \`${userData.achievements.mythical + 1}/${roles_info.achievements_myth.length}\`
+Достижений выполнено: \`${userData.achievements.normal + 1}/${roles_info.achievements_normal.length}\`
+Мифических достижений выполнено: \`${userData.achievements.mythical}/${roles_info.achievements_myth.length}\`
 
 **Награды:**
 1. <@&${reward}>

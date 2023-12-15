@@ -39,7 +39,7 @@
             "expire": 0,
             "upgradeable": true,
             "req_to_upg": [
-                ""  
+                "1139849269050888202"  
             ],
             "type": "Empty",
             "description": "Коробка пуста."
