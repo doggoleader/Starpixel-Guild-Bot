@@ -25,7 +25,7 @@ class Birthdays {
                     const data = await User.find({ guild: g.id }).catch(err => { })
                     if (!data) return
                     data.forEach(async userData => {
-                        const channel = g.channels.cache.get(ch_list.test)
+                        const channel = g.channels.cache.get(ch_list.birthdays)
                         if (!channel) return
                         const member = await g.members.fetch(userData.userid) || `Неизвестный пользователь#0000`
                         const Day = userData.birthday.day
