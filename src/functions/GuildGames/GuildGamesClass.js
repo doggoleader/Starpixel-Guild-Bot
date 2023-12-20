@@ -304,7 +304,7 @@ class GuildGames {
                             played: 1
                         })
                     } else if (gameList.played >= game.max || voiceMembers.size >= game.rest_num) {
-                        return this.randomGame()
+                        return client.randomGame()
                     } else {
                         gameList.played += 1
                     }
@@ -404,7 +404,7 @@ class GuildGames {
                             played: 1
                         })
                     } else if (gameList.played >= game.max) {
-                        return this.randomGame()
+                        return client.randomGame()
                     } else {
                         gameList.played += 1
                     }
@@ -510,7 +510,7 @@ class GuildGames {
                                 await msg.reply({
                                     content: `Выбранная игра (${game1.name}) достигла своего лимита на данной совместной игре... Идёт выбор новой игры...`
                                 })
-                                return this.randomGame()
+                                return client.randomGame()
                             } else {
                                 gameList.played += 1
                             }
@@ -535,7 +535,7 @@ class GuildGames {
                                 await msg.reply({
                                     content: `Выбранная игра (${game2.name}) достигла своего лимита на данной совместной игре... Идёт выбор новой игры...`
                                 })
-                                return this.randomGame()
+                                return client.randomGame()
                             } else {
                                 gameList.played += 1
                             }
@@ -591,7 +591,7 @@ class GuildGames {
                             played: 1
                         })
                     } else if (gameList.played >= game.max || voiceMembersCheck.size >= game.rest_num) {
-                        return this.randomGame()
+                        return client.randomGame()
                     } else {
                         gameList.played += 1
                     }
@@ -704,7 +704,7 @@ class GuildGames {
                     userData.seasonal.summer.events.events_attended += 1
                 }
                 userData.save()
-                await this.GuildGamesCheckRewards(member)
+                await client.GuildGamesCheckRewards(member)
                 inGame.push(memberID)
             }
             let i = 1
@@ -1113,7 +1113,7 @@ class GuildGames {
             }
             if (!weekDays) return
             cron.schedule(`${min_remind.join(`,`)} ${hour_remind.join(`,`)} * * ${weekDays}`, async () => {
-                this.ReminderForOfficer()
+                client.ReminderForOfficer()
             }, {
                 timezone: `Europe/Moscow`,
                 name: `ReminderForOfficer`,
@@ -1156,7 +1156,7 @@ class GuildGames {
             }
             if (!weekDaysPreStart) return
             cron.schedule(`${min_remindPreStart} ${hour_remindPreStart} * * ${weekDaysPreStart}`, async () => {
-                this.GamePreStart()
+                client.GamePreStart()
             }, {
                 timezone: `Europe/Moscow`,
                 name: `GamePreStart`,
@@ -1188,7 +1188,7 @@ class GuildGames {
         }
         if (!weekDaysGameStart) return
         cron.schedule(`${startMinGameStart} ${startHourGameStart} * * ${weekDaysGameStart}`, async () => {
-            this.GuildGameStart()
+            client.GuildGameStart()
         }, {
             timezone: `Europe/Moscow`,
             name: `GuildGameStart`,

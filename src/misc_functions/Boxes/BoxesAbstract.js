@@ -1020,7 +1020,7 @@ ${perks_msg}`)
 ${this.message.replace(`%%loot%%`, mapGot.join(`\n`))}
 :black_medium_small_square:
 ${perks_msg}`)
-
+                    await int.deleteReply()
                     await msg.edit({
                         components: comps,
                         embeds: [embed]

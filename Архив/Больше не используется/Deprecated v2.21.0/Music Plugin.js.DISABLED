@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, WebhookClient, PermissionsBitField, PermissionFlagsBits, ComponentType } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
-
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)

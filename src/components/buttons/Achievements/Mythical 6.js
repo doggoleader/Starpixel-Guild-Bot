@@ -67,7 +67,7 @@ async function execute(interaction, client) {
             userData.save()
 
             await wait(20000)
-            Functins.AchMyth6()
+            client.AchMyth6()
         } else {
             let reward = `781069821953441832`
             if (member.roles.cache.has(reward)) {

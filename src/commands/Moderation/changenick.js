@@ -171,4 +171,7 @@ module.exports = {
             .setName(`значение`)
             .setDescription(`Символ, на который нужно изменить`)
         ),
+
+    execute,
+    autoComplete
 };
