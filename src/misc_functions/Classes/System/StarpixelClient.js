@@ -1,12 +1,12 @@
 const { Client, Collection } = require("discord.js");
-const { DisTube } = require(`distube`);
+const { DisTube, Song } = require(`distube`);
 const fs = require(`fs`);
 const { REST } = require("@discordjs/rest");
 const wait = require(`timers/promises`).setTimeout
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { Routes } = require("discord-api-types/v10");
-const { connection } = require("mongoose");
+const { connection, Model } = require("mongoose");
 const { MCUpdates } = require("../../../functions/Updates/MCUpdates")
 const { NewYear } = require("../../../functions/seasons/NewYearClass")
 const { UserUpdates } = require("../../../functions/Updates/UpdatesClass")
@@ -23,7 +23,8 @@ const { PollsUpdates } = require("../../../functions/Polls/PollsClass")
 const { Halloween } = require("../../../functions/seasons/HalloweenClass")
 const { GuildGames } = require("../../../functions/GuildGames/GuildGamesClass")
 const { Achievements } = require(`../../../functions/Updates/AchievementsClass`)
-const { ActExp } = require(`../../../functions/Updates/ActivityExpClass`)
+const { ActExp } = require(`../../../functions/Updates/ActivityExpClass`);
+const { User } = require("../../../schemas/userdata");
 
 
 class StarpixelClient extends Client {
@@ -38,6 +39,21 @@ class StarpixelClient extends Client {
     invites = new Collection();
 
     information;
+    /**
+     * @type {Array<{
+     * guildId: String,
+     * voiceChannelId: String | null,
+     * textChannelId: String | null,
+     * messageId: String | null,
+     * enabled: Boolean,
+     * volume: Number,
+     * queue: Array<Song>,
+     * autoplay: Boolean,
+     * paused: Boolean,
+     * loopmode: Number
+     * }>}
+     */
+    musicSession = [];
 
     commandArray = [];
     /**
@@ -165,6 +181,24 @@ class StarpixelClient extends Client {
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.blue(`[Бот Starpixel] События запущены!`))
     }
 
+    async setupMusicPlugin() {
+        await this.client.guilds.cache.forEach(async guild => {
+            this.musicSession.push(
+                {
+                    guildId: guild.id,
+                    voiceChannelId: null,
+                    textChannelId: null,
+                    messageId: null,
+                    enabled: false,
+                    volume: 50,
+                    queue: [],
+                    autoplay: false,
+                    paused: false,
+                    loopmode: 0,
+                }
+            )
+        })
+    }
     async handleCommands() {
         const commandFolders = fs.readdirSync('./src/commands');
         let i = 1

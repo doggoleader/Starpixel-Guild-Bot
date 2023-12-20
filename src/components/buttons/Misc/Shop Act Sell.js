@@ -35,6 +35,10 @@ async function execute(interaction, client) {
             pers_price = Math.round((item.price * guildData.global_settings.shop_prices * userData.act_costs) / 2)
             currency = `🏷`
 
+            let boxes = item.items.filter(it => it.itemType == 'Box')
+            if (boxes.length >= 1) {
+                pers_price = Math.round(pers_price * userData.pers_rumb_boost / boxes.length)
+            }
             let list = item.items.map(it => {
                 if (it.type == `role`) {
                     let exp = `всегда`
@@ -90,9 +94,9 @@ async function execute(interaction, client) {
                 label: `${item.name}`,
                 emoji: `${item.emoji}`,
                 description: `ЦЕНА: ${pers_price} билетов`,
-                value: `${i++}`
+                value: `${item.name}`
             })
-            return `**${i}.** Товар: \`${item.emoji} ${item.name}\`:
+            return `**${++i}.** Товар: \`${item.emoji} ${item.name}\`:
 - Описание: \`${item.description}\`
 - Цена: ${pers_price} ${currency}
 - Товар включает в себя следующие предметы:
@@ -220,8 +224,13 @@ ${itemsInfo.join(`\n`)}
                 })
             } else if (i.customId == `sell_item`) {
                 await i.deferReply({ fetchReply: true, ephemeral: true })
-                let sold = shop[Number(i.values[0])]
+                let sold = shop.find(item => item.name == i.values[0])
                 let price = Math.round((sold.price * guildData.global_settings.shop_prices * userData.act_costs) / 2)
+
+                let boxes = sold.items.filter(it => it.itemType == 'Box')
+                if (boxes.length >= 1) {
+                    price = Math.round(price * userData.pers_rumb_boost / boxes.length)
+                }
                 let itemsSold = sold.items.length
                 if (userData.upgrades.max_sells - userData.daily.sells <= 0) return i.editReply({
                     content: `Ваш сегодняшний лимит на продажу товаров ИСЧЕРПАН! Увеличить его вы можете в канале <#1141026403765211136>!`,

@@ -1,8 +1,8 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
-const { Guild } = require(`../../../schemas/guilddata`)
-async function execute(queue, playlist, client) {
+const { Guild } = require(`../../../src/schemas/guilddata`)
+async function execute(queue, song, client) {
 
     try {
         const guild = queue.textChannel.guild
@@ -10,13 +10,13 @@ async function execute(queue, playlist, client) {
         if (guildData.guildgames.started >= 1) return
         const playing = new EmbedBuilder()
             .setColor(Number(client.information.bot_color))
-            .setTitle(`Добавлен плейлист... 🎶`)
+            .setTitle(`Добавлена песня... 🎶`)
             .setTimestamp(Date.now())
-            .setDescription(`**Название**: \`${playlist.name}\`
-**Запросил**: ${playlist.user}
-**Длительность**: \`${playlist.formattedDuration}\`
+            .setDescription(`**Название**: \`${song.name}\`
+**Запросил**: ${song.user}
+**Длительность**: \`${song.formattedDuration}\`
 
-[Нажмите здесь, чтобы получить ссылку](${playlist.url})`)
+[Нажмите здесь, чтобы получить ссылку](${song.url})`)
         await queue.textChannel.send({
             embeds: [playing]
         })
@@ -30,6 +30,6 @@ async function execute(queue, playlist, client) {
 }
 
 module.exports = {
-    name: 'addList',
+    name: 'addSong',
     execute
 }

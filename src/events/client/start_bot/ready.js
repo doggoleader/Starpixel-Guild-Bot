@@ -14,6 +14,7 @@ async function execute(client) {
     try {
         await wait(1000)
         await client.application.commands.fetch();
+        await client.setupMusicPlugin();
         console.log(chalk.blackBright(`[${new Date()}]`) + chalk.blue(`[Бот Starpixel] Бот был успешно запущен!`))
         const { invites } = client
         client.guilds.cache.forEach(async (guild) => {

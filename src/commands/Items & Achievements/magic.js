@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, GuildMember, ButtonBuilder, ButtonStyle, UserSelectMenuBuilder } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 
 const fetch = require(`node-fetch`);
@@ -7,75 +7,6 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 
-async function autoComplete(interaction, client) {
-    switch (interaction.options.getSubcommand()) {
-        case `first`: {
-            const focusedValue = interaction.options.getFocused();
-            const choices = [
-                'blow',
-                'cold',
-                'flame'
-            ];
-            const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
-            await interaction.respond(
-                filtered.map(choice => ({ name: choice, value: choice })),
-            );
-        }
-
-            break;
-        case `second`: {
-            const focusedValue = interaction.options.getFocused();
-            const choices = [
-                'bat',
-                'curse',
-                'potion'
-            ];
-            const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
-            await interaction.respond(
-                filtered.map(choice => ({ name: choice, value: choice })),
-            );
-        }
-
-            break;
-        case `third`: {
-            const focusedValue = interaction.options.getFocused();
-            const choices = [
-                'blood',
-                'frog',
-                'scare'
-            ];
-            const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
-            await interaction.respond(
-                filtered.map(choice => ({ name: choice, value: choice })),
-            );
-        }
-
-            break;
-        case `fourth`: {
-            const focusedValue = interaction.options.getFocused();
-            const choices = [
-                'attack',
-                'baby',
-                'scan'
-            ];
-            const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
-            await interaction.respond(
-                filtered.map(choice => ({ name: choice, value: choice })),
-            );
-        }
-
-            break;
-
-        default: {
-            await interaction.reply({
-                content: `Данной опции не существует! Выберите одну из предложенных!`,
-                ephemeral: true
-            })
-        }
-            break;
-    }
-
-}
 /**
  * 
  * @param {import("discord.js").ChatInputCommandInteraction} interaction Interaction
@@ -85,330 +16,198 @@ async function autoComplete(interaction, client) {
  */
 async function execute(interaction, client) {
     try {
-
-        const user = interaction.options.getUser(`пользователь`)
-        const member = interaction.member
-
-        switch (interaction.options.getSubcommand()) {
-            case `first`: {
-                const embed = new EmbedBuilder()
-                    .setAuthor({
-                        name: `❗ Отсутствует необходимая роль!`
-                    })
-                    .setDescription(`Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`553593734479216661`).name}\` или выше, чтобы использовать данную команду!`)
-                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                    .setColor(`DarkRed`)
-                    .setTimestamp(Date.now())
-
-
-
-                if (!member.roles.cache.has(`553593734479216661`) && !member.roles.cache.has(`553593136895623208`) && !member.roles.cache.has(`553593133884112900`) && !member.roles.cache.has(`553593136027533313`) && !member.roles.cache.has(`553593976037310489`) && !member.roles.cache.has(`780487593485008946`) && !member.roles.cache.has(`849695880688173087`) && !member.roles.cache.has(`992122876394225814`) && !member.roles.cache.has(`992123014831419472`) && !member.roles.cache.has(`992123019793276961`)) return interaction.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                })
-
-                switch (interaction.options.getString(`заклинание`)) {
-                    case `blow`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :cloud_tornado:`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :cloud_tornado: ${user}`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `cold`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :cold_face:`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :cold_face: ${user}`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `flame`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :fire:`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `${member} :magic_wand:   :dash:  :fire: ${user}`
-                            })
-                        }
-                    }
-
-                        break;
-
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                }
-            }
-
-                break;
-            case `second`: {
-                const embed = new EmbedBuilder()
-                    .setAuthor({
-                        name: `❗ Отсутствует необходимая роль!`
-                    })
-                    .setDescription(`Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`553593136027533313`).name}\` или выше, чтобы использовать данную команду!`)
-                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                    .setColor(`DarkRed`)
-                    .setTimestamp(Date.now())
-
-
-
-                if (!member.roles.cache.has(`553593136027533313`) && !member.roles.cache.has(`553593976037310489`) && !member.roles.cache.has(`780487593485008946`) && !member.roles.cache.has(`849695880688173087`) && !member.roles.cache.has(`992122876394225814`) && !member.roles.cache.has(`992123014831419472`) && !member.roles.cache.has(`992123019793276961`)) return interaction.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                })
-
-                switch (interaction.options.getString(`заклинание`)) {
-                    case `bat`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `:bat: ${member} превращается в летучую мышь и покидает людей...`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `:bat: ${member} превращается в летучую мышь и покидает ${user}...`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `curse`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `🈲 Проклятия... Они так ужасны... и поэтому ${member} накладывает на самого себя проклятие!`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `🈲 Проклятия... Они так ужасны... и поэтому ${member} накладывает на ${user} проклятие!`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `potion`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `🍾 ${member} варит волшебное зелье... Скорее всего, скоро кто-то будет отравлен....`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `🍾 ${member} варит волшебное зелье... Скорее всего, ${user} скоро будет отравлен....`
-                            })
-                        }
-                    }
-
-                        break;
-
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                }
-            }
-
-                break;
-            case `third`: {
-                const embed = new EmbedBuilder()
-                    .setAuthor({
-                        name: `❗ Отсутствует необходимая роль!`
-                    })
-                    .setDescription(`Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`780487593485008946`).name}\` или выше, чтобы использовать данную команду!`)
-                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                    .setColor(`DarkRed`)
-                    .setTimestamp(Date.now())
-
-
-
-                if (!member.roles.cache.has(`780487593485008946`) && !member.roles.cache.has(`849695880688173087`) && !member.roles.cache.has(`992122876394225814`) && !member.roles.cache.has(`992123014831419472`) && !member.roles.cache.has(`992123019793276961`)) return interaction.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                })
-
-                switch (interaction.options.getString(`заклинание`)) {
-                    case `blood`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `🩸 ${member} высасывает из воздуха всю кровь! Становится жутко..`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `🩸 ${member} высасывает из ${user} всю кровь! Становится жутко..`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `frog`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `:frog: ${member} превращается в лягушку... Какая жалость!`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `:frog: ${member} превращает ${user} в лягушку... Какая жалость!`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `scare`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `👻 Перед кошкой становится темно, начинается гроза... Внезапно появляется ${member} и пугает кошечку.`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `👻 Перед ${user} становится темно, начинается гроза... Внезапно появляется ${member} и пугает ${user}.`
-                            })
-                        }
-                    }
-
-                        break;
-
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                }
-            }
-
-                break;
-            case `fourth`: {
-                const embed = new EmbedBuilder()
-                    .setAuthor({
-                        name: `❗ Отсутствует необходимая роль!`
-                    })
-                    .setDescription(`Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`930520087797051452`).name}\` или выше, чтобы использовать данную команду!`)
-                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                    .setColor(`DarkRed`)
-                    .setTimestamp(Date.now())
-
-
-
-                if (!member.roles.cache.has(`930520087797051452`)) return interaction.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                })
-
-                switch (interaction.options.getString(`заклинание`)) {
-                    case `attack`: {
-                        if (!user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} атакует самого себя.
-:left_facing_fist::robot::right_facing_fist:
-
-◾`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} атакует ${user}.
-:left_facing_fist::robot::right_facing_fist:
-
-◾`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `baby`: {
-                        const choose = [`целует`, `укутывает`, `обнимает`, `смотрит на`]
-                        let random = choose[Math.floor(Math.random() * choose.length)]
-                        if (!user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} ${random} самого себя.
-:robot:  :heart: 
-
-◾`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} ${random} ${user}.
-:robot:  :heart: 
-
-◾`
-                            })
-                        }
-                    }
-
-                        break;
-                    case `scan`: {
-                        const choose = [`покушать`, `учиться`, `наблюдать за звёздами`, `поспать`, `поиграть`, `свою гильдию`, `участников гильдии`, `няню`, `себя`]
-                        let random = choose[Math.floor(Math.random() * choose.length)]
-                        if (!user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} сканирует самого себя.
-:robot: Он говорит, что этот он любит ${random}.
-
-◾`
-                            })
-                        } else if (user) {
-                            await interaction.reply({
-                                content: `◾
-
-${member} сканирует ${user}.
-:robot: Он говорит, что этот человек любит ${random}.
-
-◾`
-                            })
-                        }
-                    }
-
-                        break;
-
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
-                        break;
-                }
-            }
-
-                break;
-
-            default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
-                break;
+        let settings = {
+            magicID: null,
+            memberFrom: interaction.member,
+            memberTo: null
         }
+        await interaction.deferReply({ ephemeral: true, fetchReply: true })
+        const userData = await User.findOne({ userid: interaction.user.id })
+        if (userData.rank_number < 1) return interaction.editReply({
+            content: `Вы должны быть **Специалистом гильдии** или выше для использования магии гильдии!`
+        })
+        let options = []
+        if (userData.rank_number >= 1) {
+            options.push(
+                {
+                    label: `Заклинание ветра`,
+                    value: `blow`,
+                    emoji: `🌬️`,
+                    description: `Заклинание мага уровня I`
+                },
+                {
+                    label: `Заклинание холода`,
+                    value: `cold`,
+                    emoji: `🥶`,
+                    description: `Заклинание мага уровня I`
+                },
+                {
+                    label: `Заклинание огня`,
+                    value: `flame`,
+                    emoji: `🔥`,
+                    description: `Заклинание мага уровня I`
+                }
+            )
+        }
+        if (userData.rank_number >= 4) {
+            options.push(
+                {
+                    label: `Заклинание летучей мыши`,
+                    value: `bat`,
+                    emoji: `🦇`,
+                    description: `Заклинание мага уровня II`
+                },
+                {
+                    label: `Заклинание проклятия`,
+                    value: `curse`,
+                    emoji: `🈹`,
+                    description: `Заклинание мага уровня II`
+                },
+                {
+                    label: `Заклинания готовки зелий`,
+                    value: `potion`,
+                    emoji: `🍶`,
+                    description: `Заклинание мага уровня II`
+                }
+            )
+        }
+        if (userData.rank_number >= 6) {
+            options.push(
+                {
+                    label: `Заклинание вампира`,
+                    value: `blood`,
+                    emoji: `🩸`,
+                    description: `Заклинание мага уровня III`
+                },
+                {
+                    label: `Заклинание превращения в лягушку`,
+                    value: `frog`,
+                    emoji: `🐸`,
+                    description: `Заклинание мага уровня III`
+                },
+                {
+                    label: `Заклинание испуга`,
+                    value: `scare`,
+                    emoji: `😈`,
+                    description: `Заклинание мага уровня III`
+                }
+            )
+        }
+        if (userData.rank_number >= 8) {
+            options.push(
+                {
+                    label: `Заклинание атаки`,
+                    value: `attack`,
+                    emoji: `💪`,
+                    description: `Заклинание мага уровня IV`
+                },
+                {
+                    label: `Заклинание ухаживания`,
+                    value: `baby`,
+                    emoji: `❤`,
+                    description: `Заклинание мага уровня IV`
+                },
+                {
+                    label: `Заклинание сканирования`,
+                    value: `scan`,
+                    emoji: `🛡`,
+                    description: `Заклинание мага уровня IV`
+                }
+            )
+        }
+
+        const menu = new ActionRowBuilder()
+            .addComponents(
+                new StringSelectMenuBuilder()
+                    .setCustomId(`magic_menu`)
+                    .setDisabled(options.length <= 0)
+                    .setOptions(options.length > 0 ? options : {
+                        label: `Нет доступной магии`,
+                        value: 'no_magic'
+                    })
+            )
+
+        const embed = new EmbedBuilder()
+            .setColor(Number(client.information.bot_color))
+            .setDescription(`Выберите желаемое заклинание из перечня доступных!
+- Заклинания мага первого уровня доступны со **СПЕЦИАЛИСТА ГИЛЬДИИ**
+- Заклинания мага второго уровня доступны с **ЧЕМПИОНА ГИЛЬДИИ**
+- Заклинания мага третьего уровня доступны с **ЛЕГЕНДЫ ГИЛЬДИИ**
+- Заклинания мага четвёртого уровня доступны с **ЛОРДА ГИЛЬДИИ**`)
+
+        const msg = await interaction.editReply({
+            embeds: [embed],
+            components: [menu]
+        })
+        const collector = await msg.createMessageComponentCollector();
+        collector.on('collect', async (i) => {
+            if (i.customId == `magic_menu`) {
+                await i.deferUpdate()
+                settings.magicID = i.values[0];
+
+                const userMenu = new ActionRowBuilder()
+                    .addComponents(
+                        new UserSelectMenuBuilder()
+                            .setCustomId(`magic_usermenu`)
+                            .setPlaceholder(`Выберите человека`)
+                    )
+
+                const buttons = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`magic_back`)
+                            .setLabel(`Назад`)
+                            .setEmoji(`⬅`)
+                            .setStyle(ButtonStyle.Danger)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`magic_nouser`)
+                            .setEmoji(`❌`)
+                            .setLabel(`Без пользователя`)
+                            .setStyle(ButtonStyle.Secondary)
+                    )
+
+                const embed2 = new EmbedBuilder()
+                    .setColor(Number(client.information.bot_color))
+                    .setDescription(`Выберите пользователя, на которого хотите подействовать своей магией в главном чате!
+Выбирая "Без пользователя", вы действуете магией на весь чат.
+
+Нажмите "Назад", чтобы изменить выбранное вами заклинание!`)
+
+                await interaction.editReply({
+                    embeds: [embed2],
+                    components: [userMenu, buttons]
+                })
+            } else if (i.customId == `magic_usermenu`) {
+
+                const memberTo = i.members.first();
+                settings.memberTo = memberTo;
+
+                const msg = getMessage(settings.magicID, settings.memberFrom, settings.memberTo);
+
+                await i.reply({
+                    content: `${msg}`
+                })
+            } else if (i.customId == `magic_back`) {
+                await i.deferUpdate();
+                settings.magicID = null;
+                settings.memberTo = null;
+
+                await interaction.editReply({
+                    embeds: [embed],
+                    components: [menu]
+                })
+            } else if (i.customId == `magic_nouser`) {
+                settings.memberTo = null;
+
+                const msg = getMessage(settings.magicID, settings.memberFrom, settings.memberTo);
+
+                await i.reply({
+                    content: `${msg}`
+                })
+            }
+        })
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)
@@ -428,67 +227,58 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`magic`)
         .setDescription(`Магия гильдии`)
-        .setDMPermission(false)
-        .addSubcommand(subcommand => subcommand
-            .setName(`first`)
-            .setDescription(`Магия первого уровня`)
-            .addStringOption(option => option
-                .setName(`заклинание`)
-                .setDescription(`Заклинания мага первого уровня`)
-                .setAutocomplete(true)
-                .setRequired(true)
-            )
-            .addUserOption(option => option
-                .setName(`пользователь`)
-                .setDescription(`Пользователь, на котором хотите применить заклинание`)
-                .setRequired(false)
-            )
-        )
-        .addSubcommand(subcommand => subcommand
-            .setName(`second`)
-            .setDescription(`Магия второго уровня`)
-            .addStringOption(option => option
-                .setName(`заклинание`)
-                .setDescription(`Заклинания мага второго уровня`)
-                .setAutocomplete(true)
-                .setRequired(true)
-            )
-            .addUserOption(option => option
-                .setName(`пользователь`)
-                .setDescription(`Пользователь, на котором хотите применить заклинание`)
-                .setRequired(false)
-            )
-        )
-        .addSubcommand(subcommand => subcommand
-            .setName(`third`)
-            .setDescription(`Магия третьего уровня`)
-            .addStringOption(option => option
-                .setName(`заклинание`)
-                .setDescription(`Заклинания мага третьего уровня`)
-                .setAutocomplete(true)
-                .setRequired(true)
-            )
-            .addUserOption(option => option
-                .setName(`пользователь`)
-                .setDescription(`Пользователь, на котором хотите применить заклинание`)
-                .setRequired(false)
-            )
-        )
-        .addSubcommand(subcommand => subcommand
-            .setName(`fourth`)
-            .setDescription(`Магия четвёртого уровня`)
-            .addStringOption(option => option
-                .setName(`заклинание`)
-                .setDescription(`Заклинания мага четвёртого уровня`)
-                .setAutocomplete(true)
-                .setRequired(true)
-            )
-            .addUserOption(option => option
-                .setName(`пользователь`)
-                .setDescription(`Пользователь, на котором хотите применить заклинание`)
-                .setRequired(false)
-            )
-        ),
-    autoComplete,
+        .setDMPermission(false),
     execute
 };
+
+
+/**
+ * 
+ * @param {String} id ID of available magic
+ * @param {GuildMember} memberFrom Command Executor
+ * @param {GuildMember=} memberTo Member of the Guild
+ * @returns {String} The message of the used magic
+ */
+function getMessage(id, memberFrom, memberTo) {
+    const strings = {
+        "blow": `${memberFrom} :magic_wand:   :dash:  :cloud_tornado: ${memberTo ? memberTo : ""}`,
+        "cold": `${memberFrom} :magic_wand:   :dash:  :cold_face: ${memberTo ? memberTo : ""}`,
+        "flame": `${memberFrom} :magic_wand:   :dash:  :fire: ${memberTo ? memberTo : ""}`,
+        "bat": `:bat: ${memberFrom} превращается в летучую мышь и покидает ${memberTo ? memberTo : "людей"}...`,
+        "curse": `🈲 Проклятия... Они так ужасны... и поэтому ${memberFrom} накладывает на ${memberTo ? memberTo : "самого себя"} проклятие!`,
+        "potion": `🍾 ${memberFrom} варит волшебное зелье... Скорее всего, ${memberTo ? memberTo : "кто-то"} скоро будет отравлен....`,
+        "blood": `🩸 ${memberFrom} высасывает из ${memberTo ? memberTo : "воздуха"} всю кровь! Становится жутко..`,
+        "frog": `:frog: ${memberFrom} превращает${memberTo ? ` <@` + memberTo.id + `>` : "ся"} в лягушку... Какая жалость!`,
+        "scare": `👻 Перед ${memberTo ? memberTo : "кошкой"} становится темно, начинается гроза... Внезапно появляется ${memberFrom} и пугает ${memberTo ? memberTo : "кошку"}.`,
+        "attack": `◾
+
+${memberFrom} атакует ${memberTo ? memberTo : "самого себя"}.
+:left_facing_fist::robot::right_facing_fist:
+
+◾`,
+        "baby": `◾
+
+${memberFrom} %%word%% ${memberTo ? memberTo : "самого себя"}.
+:robot:  :heart: 
+
+◾`,
+        "scan": `◾
+
+${memberFrom} сканирует ${memberTo ? memberTo : "самого себя"}.
+:robot: Он говорит, что этот человек любит %%word%%.
+
+◾`
+    }
+
+    let finalWord = strings[id]
+    if (id == 'baby') {
+        let choose = [`целует`, `укутывает`, `обнимает`, `смотрит на`]
+        let item = choose[Math.floor(Math.random() * choose.length)]
+        finalWord = finalWord.replace(`%%word%%`, item)
+    } else if (id == 'scan') {
+        const choose = [`покушать`, `учиться`, `наблюдать за звёздами`, `поспать`, `поиграть`, `свою гильдию`, `участников гильдии`, `няню`, `себя`]
+        let item = choose[Math.floor(Math.random() * choose.length)]
+        finalWord = finalWord.replace(`%%word%%`, item)
+    }
+    return finalWord;
+}

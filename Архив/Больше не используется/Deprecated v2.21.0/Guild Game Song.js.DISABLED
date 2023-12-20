@@ -1,4 +1,4 @@
-const { Guild } = require(`../../../schemas/guilddata`)
+const { Guild } = require(`../../../src/schemas/guilddata`)
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`);

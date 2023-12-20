@@ -19,6 +19,7 @@
                 "place": "",
                 "db_code": "seasonal.new_year.available_packs.pack_1",
                 "multiplier": 1,
+                "itemType": "static",
                 "type": "static"
             }
         ],
@@ -44,6 +45,7 @@
                 "place": "",
                 "db_code": "seasonal.new_year.available_packs.pack_2",
                 "multiplier": 1,
+                "itemType": "static",
                 "type": "static"
             }
         ],
@@ -69,6 +71,7 @@
                 "place": "",
                 "db_code": "seasonal.new_year.available_packs.pack_3",
                 "multiplier": 1,
+                "itemType": "static",
                 "type": "static"
             }
         ],
@@ -94,6 +97,7 @@
                 "place": "",
                 "db_code": "seasonal.new_year.available_packs.pack_4",
                 "multiplier": 1,
+                "itemType": "static",
                 "type": "static"
             }
         ],
@@ -119,6 +123,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             }
         ],
@@ -144,6 +149,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             }
         ],
@@ -169,6 +175,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             }
         ],
@@ -194,6 +201,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             }
         ],
@@ -219,6 +227,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             }
         ],
@@ -244,6 +253,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -269,6 +279,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -294,6 +305,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -319,6 +331,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -344,6 +357,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -369,6 +383,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -385,6 +400,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -401,6 +417,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -417,6 +434,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -433,6 +451,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -458,6 +477,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -474,6 +494,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -490,6 +511,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -506,6 +528,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -522,6 +545,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -538,6 +562,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -563,6 +588,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -579,6 +605,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -595,6 +622,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -611,6 +639,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -627,6 +656,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -643,6 +673,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -659,6 +690,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -675,6 +707,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -700,6 +733,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -716,6 +750,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -732,6 +767,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -748,6 +784,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Talisman",
                 "type": "role"
             },
             {
@@ -764,6 +801,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -780,6 +818,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -796,6 +835,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -812,6 +852,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -828,6 +869,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -844,6 +886,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -860,6 +903,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -876,6 +920,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -901,6 +946,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -916,6 +962,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             },
             {
@@ -932,6 +979,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -957,6 +1005,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -982,6 +1031,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1007,6 +1057,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1032,6 +1083,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1057,6 +1109,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1082,6 +1135,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1107,6 +1161,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1132,6 +1187,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1157,6 +1213,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1182,6 +1239,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1207,6 +1265,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1232,6 +1291,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1257,6 +1317,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1282,6 +1343,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1307,6 +1369,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1332,6 +1395,7 @@
                 "place": "symbol",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1357,6 +1421,7 @@
                 "place": "ramka",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1382,6 +1447,7 @@
                 "place": "ramka",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1407,6 +1473,7 @@
                 "place": "ramka",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1432,6 +1499,7 @@
                 "place": "ramka",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1457,6 +1525,7 @@
                 "place": "ramka",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1482,6 +1551,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1507,6 +1577,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1532,6 +1603,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1557,6 +1629,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1582,6 +1655,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1607,6 +1681,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1632,6 +1707,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1657,6 +1733,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1682,6 +1759,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1707,6 +1785,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1732,6 +1811,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1757,6 +1837,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1782,6 +1863,7 @@
                 "place": "suffix",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Cosmetics",
                 "type": "cosmetic"
             }
         ],
@@ -1807,6 +1889,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1832,6 +1915,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1857,6 +1941,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1882,6 +1967,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1907,6 +1993,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1932,6 +2019,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -1957,6 +2045,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -1982,6 +2071,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2007,6 +2097,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2032,6 +2123,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2057,6 +2149,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2082,6 +2175,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2107,6 +2201,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2132,6 +2227,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2157,6 +2253,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Mythical Item",
                 "type": "role"
             }
         ],
@@ -2182,6 +2279,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Collection",
                 "type": "role"
             }
         ],
@@ -2207,6 +2305,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Collection",
                 "type": "role"
             }
         ],
@@ -2232,6 +2331,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Collection",
                 "type": "role"
             }
         ],

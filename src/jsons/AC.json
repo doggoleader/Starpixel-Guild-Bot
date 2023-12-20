@@ -19,6 +19,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Box",
                 "type": "role"
             }
         ],
@@ -44,6 +45,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -69,6 +71,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -94,6 +97,7 @@
                 "place": "",
                 "db_code": "",
                 "multiplier": 1,
+                "itemType": "Sub",
                 "type": "role"
             }
         ],
@@ -119,6 +123,7 @@
                 "place": "",
                 "db_code": "pers_act_boost",
                 "multiplier": 2,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
@@ -144,6 +149,7 @@
                 "place": "",
                 "db_code": "pers_act_boost",
                 "multiplier": 4,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
@@ -169,6 +175,7 @@
                 "place": "",
                 "db_code": "pers_act_boost",
                 "multiplier": 8,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
@@ -194,6 +201,7 @@
                 "place": "",
                 "db_code": "pers_rank_boost",
                 "multiplier": 2,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
@@ -219,6 +227,7 @@
                 "place": "",
                 "db_code": "pers_rank_boost",
                 "multiplier": 4,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
@@ -244,6 +253,7 @@
                 "place": "",
                 "db_code": "pers_rank_boost",
                 "multiplier": 8,
+                "itemType": "static",
                 "type": "booster"
             }
         ],
