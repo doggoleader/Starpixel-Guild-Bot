@@ -295,7 +295,9 @@ class UserUpdates {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1]}!
-Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!`)
+Проверить количество своего опыта ранга можно, прописав ${mentionCommand(client, 'profile')}!
+
+Так как вы достигли ранга Владыки, теперь вы можете сбросить профиль и начать развитие заново, выбрав соответствующую опцию в ${mentionCommand(client, 'profile')}.`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -995,7 +997,7 @@ class UserUpdates {
                     role: "1030757644320915556", //Хэллоуин
                     color: "1030760791722434620"
                 },
-                
+
             ]
             for (let color of colors) {
                 if (member.roles.cache.has(color.role)) {
@@ -1438,6 +1440,50 @@ class UserUpdates {
                 let collEmoji = '🦁'
                 if (!userData.cosmetics_storage.rank.includes(collEmoji)) {
                     userData.cosmetics_storage.rank.push(collEmoji)
+                }
+            }
+
+            userData.save()
+        }
+    }
+
+    /**
+    * 
+    * @param {import("../../misc_functions/Classes/System/StarpixelClient").StarpixelClient} client Discord Client
+    */
+    static async CheckRankSymbols(client) {
+        if (!await checkPlugin("320193302844669959", this.id)) return;
+
+        const userDatas = await User.find();
+        for (const userData of userDatas) {
+            let ranks = []
+            if (userData.rank_number == 0) {
+                ranks.push(`🦋`)
+            } else if (userData.rank_number == 1) {
+                ranks.push(`🦋`,`🥥`)
+            } else if (userData.rank_number == 2) {
+                ranks.push(`🦋`,`🥥`,`🍕`)
+            } else if (userData.rank_number == 3) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`)
+            } else if (userData.rank_number == 4) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`)
+            } else if (userData.rank_number == 5) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`)
+            } else if (userData.rank_number == 6) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`,`🏅`)
+            } else if (userData.rank_number == 7) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`,`🏅`,`🍓`)
+            } else if (userData.rank_number == 8) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`,`🏅`,`🍓`,`🧨`)
+            } else if (userData.rank_number == 9) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`,`🏅`,`🍓`,`🧨`,`💎`)
+            } else if (userData.rank_number == 10) {
+                ranks.push(`🦋`,`🥥`,`🍕`,`🍂`,`🍁`,`⭐`,`🏅`,`🍓`,`🧨`,`💎`,`🍇`)
+            }
+
+            for (let rank of ranks) {
+                if (!userData.cosmetics_storage.rank.includes(rank)) {
+                    userData.cosmetics_storage.rank.push(rank)
                 }
             }
 

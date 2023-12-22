@@ -42,6 +42,11 @@ const User = new mongoose.Schema({
     medal_3: { type: Number, default: 0 },
     times_reset: { type: Number, default: 0 },
     tickets: { type: Number, default: 0 },
+    invitations: {
+        users: [String],
+        invites: { type: Number, default: 0 }
+    },
+
     progress: {
         points: { type: Number, default: 0 },
         items: [
@@ -330,7 +335,7 @@ const User = new mongoose.Schema({
             },
             gifted_packs: { type: Number, default: 0 },
             snowflakes: { type: Number, default: 0 },
-            total_snowflakes: { type: Number, default: 0},
+            total_snowflakes: { type: Number, default: 0 },
             bingo_rewards: [String],
             bingo: [
                 [

@@ -235,9 +235,26 @@ class Profile {
                     components: [buttons]
                 })
 
+                if (appData.invited_by) {
+                    const invitedData = await User.findOne({ userid: appData.invited_by, guildid: i.guild.id })
+                    if (invitedData) {
+                        const invitedMember = await i.guild.members.fetch(invitedData.userid)
+                        try {
+                            await i.guild.channels.cache.get(ch_list.main).send({
+                                content: `Так как ${invitedMember} пригласил пользователя ${memberDM}, то он получает \`ОГРОМНУЮ КОРОБКУ\`! Пожалуйста, проверьте свой инвентарь!` 
+                            })
+                            invitedData.stacked_items.push('992820494900412456')
+                            invitedData.invitations.invites += 1;
+                            invitedData.invitations.users.push(memberDM.user.id);
+                            invitedData.save();
+                        } catch (e) {
+                            console.log(e);
+                        }
+
+                    }
+                }
+
                 userData.joinedGuild = Date.now()
-                /* const ch = await interaction.guild.channels.fetch(ch_list.hypixelThread)
-                await ch.send(`/g invite ${playername}`) */
                 appData.status = `Принята`
                 await creator.save()
                 await userData.save()
@@ -995,8 +1012,14 @@ class Profile {
                             option.data.default = true
                         } else option.data.default = false
                     })
+                    let comps = [];
                     const embed = await profileData.find(pf => pf.value == value).embed
                     if (value == 'progress') {
+                        if (member.user.id == i.user.id) {
+                            comps.push(button, selectMenu, userMenu, share_update)
+                        } else {
+                            comps.push(button, selectMenu, userMenu)
+                        }
                         const button = new ActionRowBuilder()
                             .addComponents(
                                 new ButtonBuilder()
@@ -1007,45 +1030,17 @@ class Profile {
                             )
                         await i.update({
                             embeds: [embed],
-                            components: [button, selectMenu, userMenu, share_update]
+                            components: comps
                         })
                     } else {
+                        if (member.user.id == i.user.id) {
+                            comps.push(selectMenu, userMenu, share_update)
+                        } else {
+                            comps.push(selectMenu, userMenu)
+                        }
                         await i.update({
                             embeds: [embed],
-                            components: [selectMenu, userMenu, share_update]
-                        })
-                    }
-                }
-                else if (i.user.id !== interaction.user.id) {
-                    const msg2 = await i.deferReply({ ephemeral: true, fetchReply: true })
-                    const embed = await profileData.find(pf => pf.value == value).embed
-                    if (value == 'progress') {
-                        const button = new ActionRowBuilder()
-                            .addComponents(
-                                new ButtonBuilder()
-                                    .setCustomId(`progress_info`)
-                                    .setLabel(`Получить дополнительную информацию`)
-                                    .setStyle(ButtonStyle.Primary)
-                                    .setEmoji(`📃`)
-                            )
-                        await i.editReply({
-                            embeds: [embed],
-                            components: [button]
-                        })
-
-                        const col2 = await msg2.createMessageComponentCollector()
-
-                        col2.on('collect', async (int) => {
-                            let progressData = await profile.getProgressInformation()
-
-                            await int.reply({
-                                embeds: [progressData],
-                                ephemeral: true
-                            })
-                        })
-                    } else {
-                        await i.editReply({
-                            embeds: [embed]
+                            components: comps
                         })
                     }
                 }
