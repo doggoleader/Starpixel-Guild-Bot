@@ -372,6 +372,7 @@ class StarpixelClient extends Client {
             this.StaffPosUpdate(null); //Обновление Staff позиции участника в гильдии
             this.ResetDailyLimits(); //Улучшения - сброс ежедневного лимита
             this.DailyEvents();
+            this.CheckRankSymbols();
         }, {
             scheduled: true,
             timezone: `Europe/Moscow`
@@ -533,6 +534,9 @@ class StarpixelClient extends Client {
     }
     async AutoSeasonalColors() {
         await UserUpdates.AutoSeasonalColors(this.client)
+    }
+    async CheckRankSymbols() {
+        await UserUpdates.CheckRankSymbols(this.client)
     }
 
     //UpdatesNicknames

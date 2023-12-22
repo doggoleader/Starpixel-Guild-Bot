@@ -1,30 +1,29 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, AttachmentBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ComponentType, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const fetch = require(`node-fetch`)
 const { joinVoiceChannel } = require('@discordjs/voice');
-
-const fetch = require(`node-fetch`);
+const wait = require(`node:timers/promises`).setTimeout
 const api = process.env.hypixel_apikey;
-const { User } = require(`../../schemas/userdata`)
-const { Apply } = require(`../../schemas/applications`)
-const { Guild } = require(`../../schemas/guilddata`)
+const { Apply } = require(`../../../schemas/applications`);
+const { User } = require(`../../../schemas/userdata`)
+const { Guild } = require(`../../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const ch_list = require(`../../discord structure/channels.json`)
+const ch_list = require(`../../../discord structure/channels.json`)
+const { isOneEmoji } = require(`is-emojis`)
 const fs = require(`fs`)
-
-const { mentionCommand } = require('../../functions');
-
 /**
  * 
- * @param {import("discord.js").ChatInputCommandInteraction} interaction Interaction
- * @param {import("../../misc_functions/Exporter").StarpixelClient} client Client
+ * @param {import("discord.js").ModalSubmitInteraction} interaction Interaction
+ * @param {import("../../../misc_functions/Exporter").StarpixelClient} client Client
  * 
  * Interaction main function
  */
 async function execute(interaction, client) {
     try {
-        let reason = interaction.options.getString('причина') || "Не указана"
-        const user = interaction.member
+        let reason = interaction.fields.getTextInputValue('q_1')
+        let feedback = interaction.fields.getTextInputValue('q_2')
+        const user = interaction.user
         const member = interaction.member
-        if (!user.roles.cache.has(`504887113649750016`)) return interaction.reply({
+        if (!member.roles.cache.has(`504887113649750016`)) return interaction.reply({
             content: `Вы не являетесь участником гильдии Starpixel, какую гильдию вы собираетесь покидать? 😂`,
             ephemeral: true
         })
@@ -43,7 +42,6 @@ async function execute(interaction, client) {
                     .setEmoji(`👋`)
             )
             .addComponents(
-
                 new ButtonBuilder()
                     .setCustomId(`g_stay`)
                     .setLabel(`Остаться в гильдии`)
@@ -53,7 +51,7 @@ async function execute(interaction, client) {
 
         const g_leave_embed = new EmbedBuilder()
             .setColor(Number(client.information.bot_color))
-            .setThumbnail(user.user.displayAvatarURL())
+            .setThumbnail(user.displayAvatarURL())
             .setTimestamp(Date.now())
             .setTitle(`Подтвердите, что вы готовы покинуть гильдию Starpixel`)
             .setDescription(`Перед тем как принять решение об уходе чётко спросите себя - не пожалеете ли вы об этом, ведь по правилам гильдии тот, кто покинул гильдию - не может в неё вернуться больше никогда. Если вы потеряли интерес к игре, то не спешите так быстро уходить из гильдии, ведь интерес может всегда вернуться. Наш совет для вас: перед тем как принять решение об уходе, свяжитесь с офицерами гильдии в <#${ch_list.ask}> и расскажите о своей ситуации. Если это какая-то депрессия, большое количество учёбы или же что-то в этом роде - мы обязательно найдём с вами решение. Главное не бойтесь написать!
@@ -63,10 +61,11 @@ async function execute(interaction, client) {
 **Чтобы покинуть гильдию, нажмите на кнопку ниже!**`)
 
         const reply = await interaction.reply({
-            content: `${user} хочет покинуть гильдию!`,
+            content: `Вы хотите покинуть гильдию!`,
             embeds: [g_leave_embed],
             components: [guild_leave],
-            fetchReply: true
+            fetchReply: true,
+            ephemeral: true
         })
 
 
@@ -76,27 +75,31 @@ async function execute(interaction, client) {
                 guild_leave.components[0].setDisabled(true)
                 guild_leave.components[1].setDisabled(true)
                 if (i.customId === `g_leave`) {
-                    const DM = await interaction.guild.members.fetch(user.user.id)
+                    const DM = await interaction.guild.members.fetch(member.user.id)
                     g_leave_embed
                         .setTitle(`Пользователь решил покинуть гильдию!`)
                         .setDescription(`${user} покинул гильдию. Все роли у него были убраны!
-                            
-                            
-**Причина ухода**: \`${reason}\``)
-                    await i.guild.members.edit(user, {
+
+**Причина ухода**: \`${reason}\`
+
+**Отзыв о гильдии**: \`${feedback}\``)
+                    await i.guild.members.edit(member, {
                         roles: [],
                         nick: ""
                     })
 
-                    console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно удалён, так как он покинул гильдию!  Причина: ${reason}`))
                     await interaction.editReply({
                         content: `${user} покинул гильдию!`,
                         embeds: [g_leave_embed],
                         components: [guild_leave]
                     })
-                    await i.reply({
-                        content: `${user} покинул гильдию Starpixel!`
+                    const ch = await i.guild.channels.fetch(ch_list.staff)
+                    await ch.send({
+                        embeds: [g_leave_embed]
                     })
+
+                    await i.deferUpdate();
+
                     if (userData) {
                         let stream = await fs.createWriteStream(`./src/files/Database/Profile.json`)
                         let json = JSON.stringify(userData, (_, v) => typeof v === 'bigint' ? v.toString() : v)
@@ -118,6 +121,7 @@ async function execute(interaction, client) {
                             files: [attach]
                         })
                         userData.delete()
+                        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно удалён, так как он покинул гильдию!  Причина: ${reason}`))
                     }
                     if (appData) {
                         appData.status = "Удалена"
@@ -129,17 +133,15 @@ async function execute(interaction, client) {
                     g_leave_embed
                         .setTitle(`Пользователь решил остаться в гильдии!`)
                         .setDescription(`${user} решил остаться в гильдии. Благодарим, что вы являетесь участником гильдии Starpixel! Мы будем радовать вас различным контентом и сделаем всё возможное, чтобы вы остались с нами!`)
-                        .setFooter({ text: `Если вы всё-таки решите нас покинуть, пропишите ${mentionCommand(client, 'guild-leave')} ещё раз!` })
+                        .setFooter({ text: `Если вы всё-таки решите нас покинуть, нажмите на кнопку ещё раз!` })
 
                     await interaction.editReply({
-                        content: `${user} остался в гильдии!`,
+                        content: `Вы остались в гильдии!`,
                         embeds: [g_leave_embed],
                         components: [guild_leave]
                     })
 
-                    await i.reply({
-                        content: `${user} остался в гильдии!`
-                    })
+                    await i.deferUpdate();
                 }
 
 
@@ -155,22 +157,14 @@ async function execute(interaction, client) {
         }).catch()
     }
 
-
-
 }
 module.exports = {
-    category: `leave`,
     plugin: {
-        id: "admin",
-        name: "Административное"
+        id: "misc",
+        name: "Разное"
     },
-    data: new SlashCommandBuilder()
-        .setName(`guild-leave`)
-        .setDescription(`Покинуть гильдию Starpixel`)
-        .addStringOption(o => o
-            .setName("причина")
-            .setDescription("Причина ухода из гильдии")
-            .setRequired(true))
-        .setDMPermission(false),
+    data: {
+        name: "guild_leave"
+    },
     execute
-};
+}

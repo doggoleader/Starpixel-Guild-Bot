@@ -115,4 +115,5 @@ module.exports = {
     data: {
         name: "ach_norm_4"
     },
+    execute
 }

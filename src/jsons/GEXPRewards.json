@@ -1,0 +1,91 @@
+[
+    {
+        "gexp": 50000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "510932601721192458",
+                "amount": 1,
+                "expire": 0
+            }
+        ]
+    },
+    {
+        "gexp": 100000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "521248091853291540",
+                "amount": 1,
+                "expire": 0
+            }
+        ]
+    },
+    {
+        "gexp": 150000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "992820494900412456",
+                "amount": 1,
+                "expire": 0
+            }
+        ]
+    },
+    {
+        "gexp": 200000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "584673040470769667",
+                "amount": 1,
+                "expire": 0
+            }
+        ]
+    },
+    {
+        "gexp": 500000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "595966177969176579",
+                "amount": 1,
+                "expire": 0
+            }
+        ]
+    },
+    {
+        "gexp": 750000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "781069821953441832",
+                "amount": 1,
+                "expire": 0
+            },
+            {
+                "type": "role",
+                "roleID": "850336260265476096",
+                "amount": 1,
+                "expire": 2592000
+            }
+        ]
+    },
+    {
+        "gexp": 1000000,
+        "rewards": [
+            {
+                "type": "role",
+                "roleID": "992820488298578041",
+                "amount": 1,
+                "expire": 0
+            },
+            {
+                "type": "role",
+                "roleID": "850336260265476096",
+                "amount": 1,
+                "expire": 7776000
+            }
+        ]
+    }
+]

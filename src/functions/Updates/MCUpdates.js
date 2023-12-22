@@ -9,6 +9,7 @@ const upgrades = require(`../../jsons/Upgrades Info.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { checkPlugin, mentionCommand } = require("../../functions");
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const { Temp } = require("../../schemas/temp_items");
 
 
 class MCUpdates {
@@ -315,6 +316,34 @@ class MCUpdates {
 
                                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Участник ${json.guild.members[i].uuid} (${userData.nickname}) заработал за неделю ${weeklyGexp} GEXP`))
 
+                                let rewardList = require(`../../jsons/GEXPRewards.json`).filter(rew => rew.gexp <= weeklyGexp);
+                                for (let reward of rewardList) {
+                                    for (let rew of reward.rewards) {
+                                        if (rew.expire <= 0) {
+                                            for (let i = 0; i < rew.amount; i++) {
+                                                userData.stacked_items.push(rew.roleID)
+                                            }
+                                        } else {
+                                            const checkTemp = await Temp.findOne({ userid: userData.userid, guildid: userData.guildid, roleid: rew.roleID })
+                                            const member = await guild.members.fetch(userData.userid)
+                                            if (checkTemp) {
+                                                checkTemp.expire = checkTemp.expire.getTime() + (1000 * rew.expire * (1 + userData.perks.temp_items))
+                                                checkTemp.save()
+                                                await member.roles.add(rew.roleID);
+                                            } else {
+                                                const newTemp = new Temp({
+                                                    userid: userData.userid,
+                                                    guildid: userData.guildid,
+                                                    roleid: rew.roleID,
+                                                    expire: Date.now() + (1000 * rew.expire * (1 + userData.perks.temp_items))
+                                                })
+                                                newTemp.save()
+                                                await member.roles.add(rew.roleID);
+
+                                            }
+                                        }
+                                    }
+                                }
 
                             } catch (error) {
                                 console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Произошла ошибка при обновлении данных о GEXP пользователя ${userData.uuid} (${userData.nickname})!`));

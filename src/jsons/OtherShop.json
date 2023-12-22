@@ -1,0 +1,366 @@
+[
+    {
+        "price": 50,
+        "name": "ПИТОМЕЦ ЗЕМЛИ",
+        "emoji": "🐛",
+        "description": "Обучайтесь различным навыкам у питомцев.",
+        "items": [
+            {
+                "id": "553637207911563264",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Pet",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 75,
+        "name": "ПИТОМЕЦ ВОЗДУХА",
+        "emoji": "🕊️",
+        "description": "Обучайтесь различным навыкам у питомцев.",
+        "items": [
+            {
+                "id": "553638054238093364",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Pet",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 100,
+        "name": "ПИТОМЕЦ ВОДЫ",
+        "emoji": "🐋",
+        "description": "Обучайтесь различным навыкам у питомцев.",
+        "items": [
+            {
+                "id": "553638061817200650",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Pet",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "ПИТОМЕЦ ОГНЯ",
+        "emoji": "🐲",
+        "description": "Обучайтесь различным навыкам у питомцев.",
+        "items": [
+            {
+                "id": "605696079819964426",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Pet",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КАРТИНКА  ghost",
+        "emoji": "👻",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "893927886766096384",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Picture",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КАРТИНКА  santa",
+        "emoji": "🎅",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "1046475276080648302",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Picture",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КАРТИНКА  egg",
+        "emoji": "🥚",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "1088824017517031544",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Picture",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 150,
+        "name": "КАРТИНКА  palm",
+        "emoji": "🌴",
+        "description": "Используйте её, чтобы разнообразить чат.",
+        "items": [
+            {
+                "id": "1088824078342832240",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Picture",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 1200,
+        "name": "КОЛЬЦО СОБАКИ",
+        "emoji": "🐶",
+        "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.",
+        "items": [
+            {
+                "id": "1020400007989444678",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 1200,
+        "name": "БРАСЛЕТ СОБАКИ",
+        "emoji": "🐶",
+        "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.",
+        "items": [
+            {
+                "id": "1020400017330163712",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 1500,
+        "name": "ОЖЕРЕЛЬЕ СОБАКИ",
+        "emoji": "🐶",
+        "description": "Соберите 3 составляющие коллекции, чтобы получить множитель опыта активности.",
+        "items": [
+            {
+                "id": "1020400015300120638",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 2000,
+        "name": "КОЛЬЦО ЛИСЫ",
+        "emoji": "🦊",
+        "description": "Коллекция Лисы позволяет своему владельцу раз в месяц получать определённое количество билетов.",
+        "items": [
+            {
+                "id": "1020400043154485278",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 2000,
+        "name": "БРАСЛЕТ ЛИСЫ",
+        "emoji": "🦊",
+        "description": "Коллекция Лисы позволяет своему владельцу раз в месяц получать определённое количество билетов.",
+        "items": [
+            {
+                "id": "1020400047260696647",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    },
+    {
+        "price": 2200,
+        "name": "ОЖЕРЕЛЬЕ ЛИСЫ",
+        "emoji": "🦊",
+        "description": "Коллекция Лисы позволяет своему владельцу раз в месяц получать определённое количество билетов.",
+        "items": [
+            {
+                "id": "1020400045251633163",
+                "expire": 0,
+                "amount": 1,
+                "stackable": true,
+                "name": "",
+                "value": "",
+                "values": [
+                    "",
+                    ""
+                ],
+                "place": "",
+                "db_code": "",
+                "multiplier": 1,
+                "itemType": "Collection",
+                "type": "role"
+            }
+        ],
+        "sellable": true
+    }
+]

@@ -103,90 +103,19 @@ async function execute(interaction, client) {
         ]
         let r_cosm = cosmetics[Math.floor(Math.random() * cosmetics.length)]
 
-        const setup = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('setup')
-                    .setLabel('Установить')
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji(`⬆️`)
-            )
-
 
         const reply = await interaction.reply({
             content: `:earth_americas: :bust_in_silhouette: :anchor: :star: :dash:
 ${user} обращается к Венере.
 Она дарит ему легендарный косметический эмодзи \`${r_cosm.name}\`.
 :beginner: Необходим ранг \"Чемпион гильдии\".
-Если хотите установить эмодзи, нажмите кнопку \"Установить\" в течение 60 секунд.
 :earth_americas: :bust_in_silhouette: :anchor: :star: :dash:`,
-            components: [setup],
             ephemeral: true,
             fetchReply: true
         })
-
-        const filter = i => i.customId === 'setup';
-
-        const collector = await reply.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000 })
-        collector.on('collect', async (i) => {
-            if (i.user.id === member.user.id) {
-                if (r_cosm.name.startsWith(`КОСМЕТИЧЕСКИЙ ЭМОДЗИ`) && userData.rank_number >= 4) {
-                    userData.displayname.symbol = r_cosm.symbol
-                    await setup.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`🕓`)
-                        .setLabel(`Идёт обработка...`)
-                    await i.reply({
-                        content: `Ожидайте! Скоро ваш значок будет установлен! Если этого не произойдет в течение 15 минут, обратитесь в вопрос-модерам!`,
-                        ephemeral: true
-                    })
-                }
-                else {
-                    await i.reply({
-                        content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#1020401349441110046>!`,
-                        ephemeral: true
-                    })
-                    await setup.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`❌`)
-                        .setLabel(`Низкий ранг`)
-                }
-
-                await interaction.editReply({
-                    content: `:earth_americas: :bust_in_silhouette: :anchor: :star: :dash:
-${user} обращается к Венере.
-Она дарит ему легендарный косметический эмодзи \`${r_cosm.name}\`.
-:beginner: Необходим ранг \"Чемпион гильдии\".
-Если хотите установить эмодзи, нажмите кнопку \"Установить\" в течение 60 секунд.
-:earth_americas: :bust_in_silhouette: :anchor: :star: :dash:`,
-                    components: [setup],
-                    fetchReply: true
-                })
-                userData.save()
-                collector.stop()
-
-            } else {
-                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
-            }
-        })
-        collector.on('end', async (err) => {
-            await setup.components[0]
-                .setDisabled(true)
-                .setStyle(ButtonStyle.Secondary)
-
-            await interaction.editReply({
-                content: `:earth_americas: :bust_in_silhouette: :anchor: :star: :dash:
-${user} обращается к Венере.
-Она дарит ему легендарный косметический эмодзи \`${r_cosm.name}\`.
-:beginner: Необходим ранг \"Чемпион гильдии\".
-Если хотите установить эмодзи, нажмите кнопку \"Установить\" в течение 60 секунд.
-:earth_americas: :bust_in_silhouette: :anchor: :star: :dash:`,
-                components: [setup],
-                fetchReply: true
-            })
-        });
+        if (!userData.cosmetics_storage.symbols.includes(r_cosm.symbol)) {
+            userData.cosmetics_storage.symbols.push(r_cosm.symbol)
+        }
 
         userData.cooldowns.venera = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
         if (userData.cd_remind.includes('venera')) {

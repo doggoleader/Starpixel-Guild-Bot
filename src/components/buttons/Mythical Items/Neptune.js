@@ -109,89 +109,19 @@ async function execute(interaction, client) {
         ]
 
         const r_ramka = ramkas[Math.floor(Math.random() * ramkas.length)]
-        const setup = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('setup')
-                    .setLabel('Установить')
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji(`⬆️`)
-            )
         const reply = await interaction.reply({
             content: `◾
 🧥 ${user}... Нептун зовёт тебя.
 В этот раз он даёт тебе \`${r_ramka.name}\`!
 :crystal_ball: Необходим ранг \"Звёздочка гильдии\".
-Если хотите установить рамку, нажмите кнопку \"Установить\" в течение 60 секунд...
 ◾`,
-            components: [setup],
             fetchReply: true,
             ephemeral: true
         });
 
-        const filter = i => i.customId === 'setup';
-
-        const collector = reply.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000 })
-
-        collector.on(`collect`, async (i) => {
-            if (i.user.id === member.user.id) {
-                if (r_ramka.name.startsWith(`РАМКА ДЛЯ НИКА`) && (userData.rank_number >= 5)) {
-                    userData.displayname.ramka1 = r_ramka.r1
-                    userData.displayname.ramka2 = r_ramka.r2
-                    i.reply({
-                        content: `Ожидайте! Скоро ваша рамка будет установлена! Если этого не произойдет в течение 15 минут, обратитесь в вопрос-модерам!`,
-                        ephemeral: true
-                    })
-                    await setup.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`🕓`)
-                        .setLabel(`Идёт обработка...`)
-                }
-                else {
-                    await setup.components[0]
-                        .setDisabled(true)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji(`❌`)
-                        .setLabel(`Низкий ранг`)
-
-                    i.reply({
-                        content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#931620901882068992>!`,
-                        ephemeral: true
-                    })
-                }
-
-                await interaction.editReply({
-                    content: `◾
-🧥 ${user}... Нептун зовёт тебя.
-В этот раз он даёт тебе \`${r_ramka.name}\`!
-:crystal_ball: Необходим ранг \"Звёздочка гильдии\".
-Если хотите установить рамку, нажмите кнопку \"Установить\" в течение 60 секунд...
-◾`,
-                    components: [setup],
-                    fetchReply: true
-                })
-                userData.save()
-                collector.stop()
-            } else {
-                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
-            }
-        })
-        collector.on(`end`, async (err) => {
-            await setup.components[0]
-                .setDisabled(true)
-                .setStyle(ButtonStyle.Secondary)
-
-            await interaction.editReply({
-                content: `◾
-🧥 ${user}... Нептун зовёт тебя.
-В этот раз он даёт тебе \`${r_ramka.name}\`!
-:crystal_ball: Необходим ранг \"Звёздочка гильдии\".
-Если хотите установить рамку, нажмите кнопку \"Установить\" в течение 60 секунд...
-◾`,
-                components: [setup]
-            })
-        });
+        if (!userData.cosmetics_storage.ramkas.includes({ ramka1: r_ramka.r1, ramka2: r_ramka.r2 })) {
+            userData.cosmetics_storage.ramkas.push({ ramka1: r_ramka.r1, ramka2: r_ramka.r2 })
+        }
 
         userData.cooldowns.neptune = Date.now() + (1000 * 60 * 60 * 24 * 30) * (1 - (userData.perks.decrease_cooldowns * 0.1))
         if (userData.cd_remind.includes('neptune')) {
