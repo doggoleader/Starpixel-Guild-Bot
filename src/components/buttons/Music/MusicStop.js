@@ -24,7 +24,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
 
-        await queue.stop()
+        queue.stop()
 
         await interaction.reply({
             content: `Вы остановили проигрывание музыки и очистили очередь! Если хотите включить музыку, добавьте песню с помощью кнопки ниже!`,

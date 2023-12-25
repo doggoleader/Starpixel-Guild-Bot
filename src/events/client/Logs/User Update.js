@@ -18,7 +18,7 @@ async function execute(oldM, newM, client) {
                 return;
             }
         }
-        const guild = client.guilds.fetch("320193302844669959")
+        const guild = await client.guilds.fetch("320193302844669959")
         if (!await checkPlugin('320193302844669959', plugin.id)) return
         const log_data = await Guild.findOne({ id: guild.id })
         const channel = await guild.channels.fetch(ch_list.log)

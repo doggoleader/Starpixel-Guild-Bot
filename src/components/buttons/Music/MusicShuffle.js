@@ -24,7 +24,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
 
-        await queue.shuffle()
+        queue.shuffle()
 
         await interaction.reply({
             content: `Вы перемешали все песни в очереди...`,

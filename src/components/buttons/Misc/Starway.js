@@ -17,10 +17,13 @@ const { starway } = require(`../../../jsons/Starway Rewards.json`)
  */
 async function execute(interaction, client) {
     try {
-
+        await interaction.deferReply({
+            ephemeral: true,
+            fetchReply: true
+        })
         const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
         let check = userData.starway.claimed.find(cl => cl == userData.starway.current)
-        if (check) return interaction.reply({
+        if (check) return interaction.editReply({
             content: `Вы уже получили награду за \`${userData.starway.current}-й\` этап звёздного пути!`,
             ephemeral: true
         })
@@ -76,10 +79,10 @@ async function execute(interaction, client) {
 
             }
             userData.save()
-            await interaction.reply({
+            await interaction.editReply({
                 content: `Вы получили награду за сбор ${userData.starway.current}-го звёздного комплекта!`,
             })
-        } else return interaction.reply({
+        } else return interaction.editReply({
             content: `Вы не собрали полностью звёздный комплект! Попробуйте ещё раз, когда соберёте его!`,
             ephemeral: true
         })

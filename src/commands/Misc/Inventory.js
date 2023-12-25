@@ -885,7 +885,6 @@ ${map.length <= 0 ? '\`Инвентарь пуст.\`' : `${map.join(`\n`)}`}
 
                 curPage = 1
                 itemOnPage = 10;
-                totalPages = Math.ceil(map.length / itemOnPage)
                 pages = []
                 if (allItems[0].length > 0) {
                     pages = await divideOnPages(allItems[0], itemOnPage, curPage);
@@ -893,6 +892,7 @@ ${map.length <= 0 ? '\`Инвентарь пуст.\`' : `${map.join(`\n`)}`}
                 map = pages.map((item, i = itemOnPage * (curPage - 1) + 1) => {
                     return `- <@&${item}>`
                 })
+                totalPages = Math.ceil(map.length / itemOnPage)
 
                 curType = types.ITEMS
                 embed

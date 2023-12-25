@@ -23,7 +23,8 @@
                 "type": "role"
             }
         ],
-        "sellable": false
+        "sellable": false,
+        "id": 1
     },
     {
         "price": 10,
@@ -49,7 +50,8 @@
                 "type": "role"
             }
         ],
-        "sellable": false
+        "sellable": false,
+        "id": 2
     },
     {
         "price": 30,
@@ -75,7 +77,8 @@
                 "type": "role"
             }
         ],
-        "sellable": false
+        "sellable": false,
+        "id": 3
     },
     {
         "price": 50,
@@ -101,7 +104,8 @@
                 "type": "role"
             }
         ],
-        "sellable": false
+        "sellable": false,
+        "id": 4
     },
     {
         "price": 75,
@@ -127,7 +131,8 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 5
     },
     {
         "price": 130,
@@ -153,7 +158,8 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 6
     },
     {
         "price": 200,
@@ -179,7 +185,8 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 7
     },
     {
         "price": 150,
@@ -205,7 +212,8 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 8
     },
     {
         "price": 250,
@@ -231,7 +239,8 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 9
     },
     {
         "price": 400,
@@ -257,6 +266,7 @@
                 "type": "booster"
             }
         ],
-        "sellable": true
+        "sellable": true,
+        "id": 10
     }
 ]

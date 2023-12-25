@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, E
 const { Apply } = require(`../../../schemas/applications`)
 const { User } = require(`../../../schemas/userdata`)
 const chalk = require(`chalk`)
+const wait = require(`timers/promises`).setTimeout
 /**
  * 
  * @param {import("discord.js").ButtonInteraction} interaction Interaction
@@ -11,7 +12,6 @@ const chalk = require(`chalk`)
  */
 async function execute(interaction, client) {
     try {
-        console.log(-1)
         let guildMusicSession = client.musicSession.find(m => m.guildId == interaction.guild.id);
         const no_queue = new EmbedBuilder()
             .setTitle(`❗ Нет песен в очереди!`)
@@ -25,7 +25,8 @@ async function execute(interaction, client) {
             ephemeral: true
         })
         try {
-            const song = await queue.skip();
+            
+            await queue.skip().then().catch(err => console.log(err));
 
             await interaction.reply({
                 content: `Вы пропустили текущую песню...1`,
@@ -33,7 +34,7 @@ async function execute(interaction, client) {
             })
         } catch (e) {
             if (queue.songs[0]) {
-                await queue.seek(queue.songs[0].duration)
+                queue.seek(queue.songs[0].duration)
 
                 await interaction.reply({
                     content: `Вы пропустили текущую песню...2`,

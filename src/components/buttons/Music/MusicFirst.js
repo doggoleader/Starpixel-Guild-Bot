@@ -25,7 +25,7 @@ async function execute(interaction, client) {
         })
         try {
             let prevSongs = queue.previousSongs;
-            await queue.jump(-(prevSongs.length - 1));
+            queue.jump(-(prevSongs.length - 1));
 
             await interaction.reply({
                 content: `Включена первая песня в очереди...`,

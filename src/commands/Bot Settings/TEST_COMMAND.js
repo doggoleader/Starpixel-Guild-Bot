@@ -135,12 +135,7 @@ async function execute(interaction, client) {
 
             console.log(JSON.stringify(data));
         }) */
-        await client.AdventCalendar();
-
-        
-
-        
-
+        //await client.AdventCalendar();
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

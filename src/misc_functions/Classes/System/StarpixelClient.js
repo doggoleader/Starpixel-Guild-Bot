@@ -24,8 +24,6 @@ const { Halloween } = require("../../../functions/seasons/HalloweenClass")
 const { GuildGames } = require("../../../functions/GuildGames/GuildGamesClass")
 const { Achievements } = require(`../../../functions/Updates/AchievementsClass`)
 const { ActExp } = require(`../../../functions/Updates/ActivityExpClass`);
-const { User } = require("../../../schemas/userdata");
-
 
 class StarpixelClient extends Client {
     client;
@@ -157,22 +155,6 @@ class StarpixelClient extends Client {
                     }
                 }
                     break;
-                /* case "hypixelbot": {
-                    for (const eventFolder of eventFolders) {
-                        const eventFiles = fs
-                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
-                            .filter((file) => file.endsWith(`.js`));;
-
-                        for (const file of eventFiles) {
-                            const event = require(`../../../events/${folder}/${eventFolder}/${file}`)
-                            if (event.once) McClient.once(event.name, (...args) => event.execute(...args, this))
-                            else McClient.on(event.name, (...args) => event.execute(...args, this));
-                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (Hypixel Bot)`))
-                        }
-
-                    }
-                }
-                    break; */
                 default:
                     break;
             }

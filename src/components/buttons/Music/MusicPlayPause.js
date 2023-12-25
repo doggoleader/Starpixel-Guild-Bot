@@ -25,12 +25,12 @@ async function execute(interaction, client) {
         })
 
         if (queue.paused) {
-            await queue.resume()
+            queue.resume()
             const comp = interaction.component;
             comp.data.emoji.name = `⏸`
             guildMusicSession.paused = false
         } else {
-            await queue.pause()
+            queue.pause()
             const comp = interaction.component;
             comp.data.emoji.name = `▶`
             guildMusicSession.paused = true

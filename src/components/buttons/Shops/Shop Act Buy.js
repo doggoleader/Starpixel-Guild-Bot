@@ -88,7 +88,7 @@ async function execute(interaction, client) {
                 label: `${item.name}`,
                 emoji: `${item.emoji}`,
                 description: `ЦЕНА: ${pers_price} билетов`,
-                value: `${item.name}`
+                value: `${item.id}`
             })
             return `**${++i}.** Товар: \`${item.emoji} ${item.name}\`:
 - Описание: \`${item.description}\`
@@ -218,12 +218,12 @@ ${itemsInfo.join(`\n`)}
                 })
             } else if (i.customId == `buy_item`) {
                 await i.deferReply({ fetchReply: true, ephemeral: true })
-                let purchased = shop.find(item => item.name == i.values[0])
+                let purchased = shop.find(item => item.id == Number(i.values[0]))
                 let price = Math.round(purchased.price * guildData.global_settings.shop_prices * userData.act_costs)
 
                 let boxes = purchased.items.filter(it => it.itemType == 'Box')
                 if (boxes.length >= 1) {
-                    price = Math.round(price * userData.pers_rumb_boost / boxes.length)
+                    price = Math.round(price * userData.pers_rumb_boost)
                 }
                 if (userData.upgrades.max_purchases - userData.daily.purchases <= 0) return i.editReply({
                     content: `Ваш сегодняшний лимит на приобретение товаров ИСЧЕРПАН! Увеличить его вы можете в канале <#1141026403765211136>!`,

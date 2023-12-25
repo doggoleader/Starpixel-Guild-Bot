@@ -27,10 +27,6 @@ async function execute(interaction, client) {
             content: `Вы не являетесь участником гильдии Starpixel, какую гильдию вы собираетесь покидать? 😂`,
             ephemeral: true
         })
-        if (interaction.channel.id !== `849516805529927700`) return interaction.reply({
-            content: `Пожалуйста, перейдите в канал <#${ch_list.ask}>, чтобы использовать данную команду!`,
-            ephemeral: true
-        })
         const userData = await User.findOne({ userid: member.user.id, guildid: member.guild.id })
         const appData = await Apply.findOne({ userid: member.user.id })
         const guild_leave = new ActionRowBuilder()
