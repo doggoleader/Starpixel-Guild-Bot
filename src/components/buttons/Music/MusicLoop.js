@@ -26,19 +26,19 @@ async function execute(interaction, client) {
         })
         if (queue.repeatMode == RepeatMode.DISABLED) {
             guildMusicSession.loopmode = RepeatMode.QUEUE
-            await queue.setRepeatMode(RepeatMode.QUEUE)
+            queue.setRepeatMode(RepeatMode.QUEUE)
             const comp = interaction.component;
             comp.data.style = ButtonStyle.Success
             comp.data.emoji.name = `🔁`
         } else if (queue.repeatMode == RepeatMode.QUEUE) {
             guildMusicSession.loopmode = RepeatMode.SONG
-            await queue.setRepeatMode(RepeatMode.SONG)
+            queue.setRepeatMode(RepeatMode.SONG)
             const comp = interaction.component;
             comp.data.style = ButtonStyle.Success
             comp.data.emoji.name = `🔂`
         } else if (queue.repeatMode == RepeatMode.SONG) {
             guildMusicSession.loopmode = RepeatMode.DISABLED
-            await queue.setRepeatMode(RepeatMode.DISABLED)
+            queue.setRepeatMode(RepeatMode.DISABLED)
             const comp = interaction.component;
             comp.data.style = ButtonStyle.Secondary
             comp.data.emoji.name = `🔁`

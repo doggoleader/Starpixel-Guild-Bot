@@ -24,7 +24,7 @@ async function execute(interaction, client) {
             ephemeral: true
         })
         try {
-            await queue.previous()
+            queue.previous()
 
             await interaction.reply({
                 content: `Вы пропустили текущую песню...`,

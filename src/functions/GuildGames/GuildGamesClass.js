@@ -855,6 +855,22 @@ class GuildGames {
                 await connection.setSelfDeaf(false)
                 await connection.setSelfMute(false)
             })
+            let musicSession = client.musicSession.find(s => s.guildId == guild.id)
+
+            const embed = new EmbedBuilder()
+            .setColor(Number(client.information.bot_color))
+            .setDescription(`## Музыкальный бот...`)
+            const msg = await MusicCommandsChannel.send({
+                embeds: [embed]
+            })
+
+            musicSession.autoplay = false
+            musicSession.enabled = true
+            musicSession.loopmode = 0
+            musicSession.textChannelId = MusicCommandsChannel.id;
+            musicSession.voiceChannelId = voice.id;
+            musicSession.messageId = msg.id
+            
             if (memberInfo) {
                 const member = await guild.members.fetch(memberInfo)
                 await channel.send({

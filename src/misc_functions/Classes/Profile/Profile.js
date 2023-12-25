@@ -1015,11 +1015,6 @@ class Profile {
                     let comps = [];
                     const embed = await profileData.find(pf => pf.value == value).embed
                     if (value == 'progress') {
-                        if (member.user.id == i.user.id) {
-                            comps.push(button, selectMenu, userMenu, share_update)
-                        } else {
-                            comps.push(button, selectMenu, userMenu)
-                        }
                         const button = new ActionRowBuilder()
                             .addComponents(
                                 new ButtonBuilder()
@@ -1028,6 +1023,11 @@ class Profile {
                                     .setStyle(ButtonStyle.Primary)
                                     .setEmoji(`📃`)
                             )
+                        if (member.user.id == i.user.id) {
+                            comps.push(button, selectMenu, userMenu, share_update)
+                        } else {
+                            comps.push(button, selectMenu, userMenu)
+                        }
                         await i.update({
                             embeds: [embed],
                             components: comps

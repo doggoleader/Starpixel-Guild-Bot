@@ -94,7 +94,7 @@ async function execute(interaction, client) {
                 label: `${item.name}`,
                 emoji: `${item.emoji}`,
                 description: `ЦЕНА: ${pers_price} билетов`,
-                value: `${item.name}`
+                value: `${item.id}`
             })
             return `**${++i}.** Товар: \`${item.emoji} ${item.name}\`:
 - Описание: \`${item.description}\`
@@ -224,12 +224,12 @@ ${itemsInfo.join(`\n`)}
                 })
             } else if (i.customId == `sell_item`) {
                 await i.deferReply({ fetchReply: true, ephemeral: true })
-                let sold = shop.find(item => item.name == i.values[0])
+                let sold = shop.find(item => item.id == Number(i.values[0]))
                 let price = Math.round((sold.price * guildData.global_settings.shop_prices * userData.act_costs) / 2)
 
                 let boxes = sold.items.filter(it => it.itemType == 'Box')
                 if (boxes.length >= 1) {
-                    price = Math.round(price * userData.pers_rumb_boost / boxes.length)
+                    price = Math.round(price * userData.pers_rumb_boost)
                 }
                 let itemsSold = sold.items.length
                 if (userData.upgrades.max_sells - userData.daily.sells <= 0) return i.editReply({
