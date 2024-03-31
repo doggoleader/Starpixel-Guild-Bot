@@ -37,7 +37,7 @@ async function execute(interaction, client) {
 
             let boxes = item.items.filter(it => it.itemType == 'Box')
             if (boxes.length >= 1) {
-                pers_price = Math.round(pers_price * userData.pers_rumb_boost / boxes.length)
+                pers_price = Math.round(pers_price * userData.pers_ticket_boost / boxes.length)
             }
             let list = item.items.map(it => {
                 if (it.type == `role`) {
@@ -229,7 +229,7 @@ ${itemsInfo.join(`\n`)}
 
                 let boxes = sold.items.filter(it => it.itemType == 'Box')
                 if (boxes.length >= 1) {
-                    price = Math.round(price * userData.pers_rumb_boost)
+                    price = Math.round(price * userData.pers_ticket_boost)
                 }
                 let itemsSold = sold.items.length
                 if (userData.upgrades.max_sells - userData.daily.sells <= 0) return i.editReply({

@@ -48,7 +48,7 @@ async function execute(interaction, client) {
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
             .setTimestamp(Date.now())
 
-        if (userData.buys.normal <= 0) return interaction.reply({
+        if (userData.buys.normal <= 0 && userData.buys.activity <= 0 && userData.buys.king <= 0) return interaction.reply({
             embeds: [no_condition],
             ephemeral: true
         })

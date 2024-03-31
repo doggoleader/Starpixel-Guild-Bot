@@ -245,7 +245,7 @@
             "type": "role",
             "id": "992820494900412456",
             "expire": 0,
-            "amount": 0
+            "amount": 1
         },
         "d1": {
             "type": "pack",

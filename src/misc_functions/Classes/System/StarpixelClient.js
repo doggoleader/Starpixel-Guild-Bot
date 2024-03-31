@@ -654,8 +654,8 @@ class StarpixelClient extends Client {
     async ActExp(userid) {
         await ActExp.ActExp(userid, this.client);
     }
-    async act_rewards() {
-        await ActExp.act_rewards(this.client);
+    async act_rewards(userid) {
+        await ActExp.act_rewards(this.client, userid);
     }
 
     //Notifications

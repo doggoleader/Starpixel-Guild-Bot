@@ -78,7 +78,13 @@ class gameConstructor {
 }
 
 
-//Получить ВСЕГО ОПЫТА АКТИВНОСТИ
+/**
+ * 
+ * @param {Number} i 
+ * @param {Number} level 
+ * @param {Number} exp 
+ * @returns 
+ */
 function calcActLevel(i, level, exp) {
     let sum0 = []
     let sum1 = 0

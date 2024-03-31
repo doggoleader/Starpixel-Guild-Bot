@@ -73,6 +73,10 @@ const quests_halloween = new ActionRowBuilder()
                     label: `Закончить квест`,
                     value: `end_quest`
                 },
+                {
+                    label: `Хэллоуинский Бинго-марафон`,
+                    value: `bingo`
+                }
 
             )
     )
@@ -111,6 +115,10 @@ const quests_easter = new ActionRowBuilder()
                     label: `Закончить квест`,
                     value: `end_quest`
                 },
+                {
+                    label: `Пасхальный Бинго-марафон`,
+                    value: `bingo`
+                }
 
             )
     )
@@ -149,6 +157,10 @@ const quests_summer = new ActionRowBuilder()
                 {
                     label: `Закончить квест`,
                     value: `end_quest`
+                },
+                {
+                    label: `Летний Бинго-марафон`,
+                    value: `bingo`
                 }
             )
     )

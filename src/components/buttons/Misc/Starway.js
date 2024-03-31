@@ -7,6 +7,7 @@ const api = process.env.hypixel_apikey;
 const info = require(`../../../jsons/Marathon.json`);
 const fetch = require(`node-fetch`)
 const { getProperty } = require("../../../functions");
+const ch_list = require(`../../../discord structure/channels.json`)
 const { starway } = require(`../../../jsons/Starway Rewards.json`)
 /**
  * 
@@ -82,6 +83,20 @@ async function execute(interaction, client) {
             await interaction.editReply({
                 content: `Вы получили награду за сбор ${userData.starway.current}-го звёздного комплекта!`,
             })
+
+            if (userData.starway.current == 10) {
+                const main = await interaction.guild.channels.fetch(ch_list.main)
+                await main.send({
+                    content: `:boom:   :star:   :comet:   :star2:   :comet:   :sparkles:   :boom:   :sparkles:   :comet:   :star2:   :comet:   :star:   :boom:
+
+**ПОЛЬЗОВАТЕЛЬ ${interaction.member} ПОЛНОСТЬЮ ЗАВЕРШИЛ ПРОХОЖДЕНИЕ ЗВЁЗДНОГО ПУТИ И ТЕПЕРЬ ОН ДОСТОЕН ЗВАНИЯ <@&856866046387683338>!** @here
+
+:boom:   :star:   :comet:   :star2:   :comet:   :sparkles:   :boom:   :sparkles:   :comet:   :star2:   :comet:   :star:   :boom:`,
+                    allowedMentions: {
+                        parse: ["everyone"]
+                    }
+                })
+            }
         } else return interaction.editReply({
             content: `Вы не собрали полностью звёздный комплект! Попробуйте ещё раз, когда соберёте его!`,
             ephemeral: true

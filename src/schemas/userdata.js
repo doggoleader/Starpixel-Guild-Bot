@@ -257,6 +257,8 @@ const User = new mongoose.Schema({
     pers_act_boost: { type: Number, default: 1 },
     pers_rank_boost: { type: Number, default: 1 },
     pers_rumb_boost: { type: Number, default: 1 },
+    pers_ticket_boost: { type: Number, default: 1 },
+    pers_medal_boost: { type: Number, default: 1 },
 
     act_rewards: [Number],
     in_guild_rewards: [Number],
@@ -377,6 +379,7 @@ const User = new mongoose.Schema({
             opened_eggs: { type: Number, default: 0 },
             ea_cosm: { type: Boolean, default: false },
             rabbit: { type: Boolean, default: false },
+            cakes: { type: Number, default: 0 } //Added 28.12.2023
         },
         summer: {
             points: { type: Number, default: 0 },

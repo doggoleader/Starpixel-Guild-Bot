@@ -1,0 +1,332 @@
+{
+    "bingo": [
+        [
+            {
+                "description": "Сделайте 10 побед в Bed Wars",
+                "type": "hypixel",
+                "id": 1,
+                "req_wins": 10,
+                "code": "stats.Bedwars.wins_bedwars"
+            },
+            {
+                "description": "Убейте 30 игроков в Murder Mystery",
+                "type": "hypixel",
+                "id": 2,
+                "req_wins": 30,
+                "code": "stats.MurderMystery.kills"
+            },
+            {
+                "description": "Откройте 50 сундуков в SkyWars",
+                "type": "hypixel",
+                "id": 3,
+                "req_wins": 50,
+                "code": "stats.SkyWars.chests_opened"
+            },
+            {
+                "description": "Завершите прохождение игры 30 раз в Dropper",
+                "type": "hypixel",
+                "id": 4,
+                "req_wins": 30,
+                "code": "stats.Arcade.dropper.games_finished"
+            },
+            {
+                "description": "Выиграйте в TNT Run 5 раз",
+                "type": "hypixel",
+                "id": 5,
+                "req_wins": 5,
+                "code": "stats.TNTGames.wins_tntrun"
+            }
+        ],
+        [
+            {
+                "description": "Выполните первым 30 заданий в Hypixel Says",
+                "type": "hypixel",
+                "id": 6,
+                "req_wins": 30,
+                "code": "stats.Arcade.round_wins_simon_says"
+            },
+            {
+                "description": "Сделайте 30 убийств в Wool Wars",
+                "type": "hypixel",
+                "id": 7,
+                "req_wins": 30,
+                "code": "stats.WoolGames.wool_wars.stats.kills"
+            },
+            {
+                "description": "Выиграйте 1 раз в TNT Wizards",
+                "type": "hypixel",
+                "id": 8,
+                "req_wins": 1,
+                "code": "stats.TNTGames.wins_capture"
+            },
+            {
+                "description": "Выиграйте 10 раз в SkyWars",
+                "type": "hypixel",
+                "id": 9,
+                "req_wins": 10,
+                "code": "stats.SkyWars.wins"
+            },
+            {
+                "description": "Подберите 10 бонусов в Pixel Party",
+                "type": "hypixel",
+                "id": 10,
+                "req_wins": 10,
+                "code": "stats.Arcade.pixel_party.power_ups_collected"
+            }
+        ],
+        [
+            {
+                "description": "Заработайте 50 звёзд в Party Games",
+                "type": "hypixel",
+                "id": 11,
+                "req_wins": 50,
+                "code": "stats.Arcade.total_stars_party"
+            },
+            {
+                "description": "Выиграйте в TNT Games 10 раз",
+                "type": "hypixel",
+                "id": 12,
+                "req_wins": 10,
+                "code": "stats.TNTGames.wins"
+            },
+            {
+                "description": "Выиграйте 5 раз на карте Gold Rush в Murder Mystery",
+                "type": "hypixel",
+                "id": 13,
+                "req_wins": 5,
+                "code": "stats.MurderMystery.wins_gold_rush"
+            },
+            {
+                "description": "Найдите 30 изумрудов в Bed Wars",
+                "type": "hypixel",
+                "id": 14,
+                "req_wins": 30,
+                "code": "stats.Bedwars.emerald_resources_collected_bedwars"
+            },
+            {
+                "description": "Бросьте 500 яиц в SkyWars",
+                "type": "hypixel",
+                "id": 15,
+                "req_wins": 500,
+                "code": "stats.SkyWars.egg_thrown"
+            }
+        ],
+        [
+            {
+                "description": "Выиграйте в Wool Wars 10 раз",
+                "type": "hypixel",
+                "id": 16,
+                "req_wins": 10,
+                "code": "stats.WoolGames.wool_wars.stats.wins"
+            },
+            {
+                "description": "Сделайте 50 финальных убийств в Bed Wars",
+                "type": "hypixel",
+                "id": 17,
+                "req_wins": 50,
+                "code": "stats.Bedwars.final_kills_bedwars"
+            },
+            {
+                "description": "Победите в Dropper 5 раз",
+                "type": "hypixel",
+                "id": 18,
+                "req_wins": 5,
+                "code": "stats.Arcade.dropper.wins"
+            },
+            {
+                "description": "Забейте 30 голов в The Bridge Duels",
+                "type": "hypixel",
+                "id": 19,
+                "req_wins": 30,
+                "code": "stats.Duels.goals"
+            },
+            {
+                "description": "Сделайте 10 убийств в Blitz SG",
+                "type": "hypixel",
+                "id": 20,
+                "req_wins": 10,
+                "code": "stats.HungerGames.kills"
+            }
+        ],
+        [
+            {
+                "description": "Выиграйте 1 раз за маньяка в Murder Mystery",
+                "type": "hypixel",
+                "id": 21,
+                "req_wins": 1,
+                "code": "stats.MurderMystery.murderer_wins"
+            },
+            {
+                "description": "Убейте 50 игроков в SkyWars",
+                "type": "hypixel",
+                "id": 22,
+                "req_wins": 50,
+                "code": "stats.SkyWars.kills"
+            },
+            {
+                "description": "Поймайте 30 рыб в воде в главном лобби",
+                "type": "hypixel",
+                "id": 23,
+                "req_wins": 30,
+                "code": "stats.MainLobby.fishing.stats.permanent.water.fish"
+            },
+            {
+                "description": "Сделайте 30 убийств в TNT Wizards",
+                "type": "hypixel",
+                "id": 24,
+                "req_wins": 30,
+                "code": "stats.TNTGames.kills_capture"
+            },
+            {
+                "description": "Сделайте 20 убийств в Capture The Wool",
+                "type": "hypixel",
+                "id": 25,
+                "req_wins": 20,
+                "code": "stats.Arcade.woolhunt_kills"
+            }
+        ]
+    ],
+    "rewards": {
+        "r1": {
+            "type": "static",
+            "id": "rumbik",
+            "name": "<:Rumbik:883638847056003072>",
+            "amount": 50
+        },
+        "r2": {
+            "type": "role",
+            "id": "1007718117809606736",
+            "expire": 0,
+            "amount": 1
+        },
+        "r3": {
+            "type": "static",
+            "id": "seasonal.easter.cakes",
+            "name": "🧁",
+            "amount": 1
+        },
+        "r4": {
+            "type": "static",
+            "id": "rank",
+            "name": "💠",
+            "amount": 150
+        },
+        "r5": {
+            "type": "role",
+            "id": "992820494900412456",
+            "expire": 0,
+            "amount": 1
+        },
+        "s1": {
+            "type": "role",
+            "id": "1007718117809606736",
+            "expire": 0,
+            "amount": 1
+        },
+        "s2": {
+            "type": "static",
+            "id": "exp",
+            "name": "🌀",
+            "amount": 500
+        },
+        "s3": {
+            "type": "static",
+            "id": "tickets",
+            "name": "🏷",
+            "amount": 20
+        },
+        "s4": {
+            "type": "role",
+            "id": "510932601721192458",
+            "expire": 0,
+            "amount": 1
+        },
+        "s5": {
+            "type": "role",
+            "id": "992820494900412456",
+            "expire": 0,
+            "amount": 1
+        },
+        "d1": {
+            "type": "pack",
+            "items": [
+                {
+                    "type": "role",
+                    "id": "521248091853291540",
+                    "expire": 0,
+                    "amount": 1
+                },
+                {
+                    "type": "role",
+                    "id": "510932601721192458",
+                    "expire": 0,
+                    "amount": 1
+                },
+                {
+                    "type": "role",
+                    "id": "1007718117809606736",
+                    "expire": 0,
+                    "amount": 1
+                }
+            ]
+        },
+        "d2": {
+            "type": "pack",
+            "items": [
+                {
+                    "type": "static",
+                    "id": "rumbik",
+                    "name": "<:Rumbik:883638847056003072>",
+                    "amount": 250
+                },
+                {
+                    "type": "role",
+                    "id": "1007718117809606736",
+                    "expire": 0,
+                    "amount": 2
+                },
+                {
+                    "type": "static",
+                    "id": "rank",
+                    "name": "💠",
+                    "amount": 300
+                }
+            ]
+        },
+        "all": {
+            "type": "pack",
+            "items": [
+                {
+                    "type": "static",
+                    "id": "rumbik",
+                    "name": "<:Rumbik:883638847056003072>",
+                    "amount": 300
+                },
+                {
+                    "type": "role",
+                    "id": "1007718117809606736",
+                    "expire": 0,
+                    "amount": 5
+                },
+                {
+                    "type": "role",
+                    "id": "1132678509307904210",
+                    "expire": 0,
+                    "amount": 1
+                },
+                {
+                    "type": "static",
+                    "id": "tickets",
+                    "name": "🏷",
+                    "amount": 50
+                },
+                {
+                    "type": "static",
+                    "id": "exp",
+                    "name": "🌀",
+                    "amount": 1000
+                }
+            ]
+        }
+    }
+}

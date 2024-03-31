@@ -30,7 +30,7 @@ async function execute(interaction, client) {
 
             let boxes = item.items.filter(it => it.itemType == 'Box')
             if (boxes.length >= 1) {
-                pers_price = Math.round(pers_price * userData.pers_rumb_boost / boxes.length)
+                pers_price = Math.round(pers_price * userData.pers_ticket_boost / boxes.length)
             }
 
             let list = item.items.map(it => {
@@ -223,7 +223,7 @@ ${itemsInfo.join(`\n`)}
 
                 let boxes = purchased.items.filter(it => it.itemType == 'Box')
                 if (boxes.length >= 1) {
-                    price = Math.round(price * userData.pers_rumb_boost)
+                    price = Math.round(price * userData.pers_ticket_boost)
                 }
                 if (userData.upgrades.max_purchases - userData.daily.purchases <= 0) return i.editReply({
                     content: `Ваш сегодняшний лимит на приобретение товаров ИСЧЕРПАН! Увеличить его вы можете в канале <#1141026403765211136>!`,

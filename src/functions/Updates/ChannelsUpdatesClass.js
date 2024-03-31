@@ -6,6 +6,7 @@ const { EmbedBuilder } = require("discord.js")
 const { checkPlugin } = require("../../functions");
 const { User } = require("../../schemas/userdata")
 const fetch = require(`node-fetch`);
+const ch_list = require(`../../discord structure/channels.json`)
 const api = process.env.hypixel_apikey;
 
 
@@ -547,15 +548,28 @@ ${offres.join('\n')}`)
             guilddata.save()
             if (before < guilddata.hypixel_lvl) {
                 const chat = await guild.channels.fetch(ch_list.main)
-                await chat.send({
-                    content: `**НОВЫЙ УРОВЕНЬ ГИЛЬДИИ** @here
+                if (guilddata.hypixel_lvl % 100 == 0) {
+                    await chat.send({
+                        content: `**НОВЫЙ УРОВЕНЬ ГИЛЬДИИ** @everyone
 
 Уровень гильдии на Hypixel повышен!
 \`${before}\` ➡ \`${guilddata.hypixel_lvl}\``,
-                    allowedMentions: {
-                        parse: ["everyone"]
-                    }
-                })
+                        allowedMentions: {
+                            parse: ["everyone"]
+                        }
+                    })
+                } else {
+                    await chat.send({
+                        content: `**НОВЫЙ УРОВЕНЬ ГИЛЬДИИ** @here
+
+Уровень гильдии на Hypixel повышен!
+\`${before}\` ➡ \`${guilddata.hypixel_lvl}\``,
+                        allowedMentions: {
+                            parse: ["everyone"]
+                        }
+                    })
+                }
+
             }
 
             const channel_level = await guild.channels.fetch(`1017729617739665408`)

@@ -802,7 +802,7 @@ class Boxes {
         const client = this.client;
         const userData = await this.findUserData();
         const guildData = await this.findGuildData();
-        const changeable = this.changeable;
+        let changeable = this.changeable;
         const seasonType = this.seasonType;
         const receivers = this.receivers;
         const types = this.loot_types;
@@ -1026,6 +1026,8 @@ ${perks_msg}`)
                         embeds: [embed]
                     })
 
+                    changeable = false;
+
                     await giveRewards(finalLootToGiveNew);
                     await collector.stop();
                 }
@@ -1222,33 +1224,39 @@ ${perks_msg}`)
                                     }
                                 } else if (item.type == 'Empty') {
                                     let tools = [];
-                                    for (let tool of item.req_to_upg) {
-                                        if (member.roles.cache.has(tool)) {
-                                            tools.push(true)
-                                        } else {
-                                            tools.push(false)
-                                        }
-                                    }
-
-                                    if (tools.includes(true)) {
-                                        if (member.roles.cache.has(item.roleID)) {
-                                            if (usRece.stacked_items.length < usRece.upgrades.inventory_size && usRece.perks.store_items >= 1) {
-                                                await usRece.stacked_items.push(item.roleID)
-                                                await msg.react(`✅`)
-                                                toReply.push(`**${i++}.** Так как у вас имеется необходимый предмет, то вы получаете <@&${item.roleID}>!`)
+                                    if (item?.req_to_upg) {
+                                        for (let tool of item?.req_to_upg) {
+                                            if (member.roles.cache.has(tool)) {
+                                                tools.push(true)
                                             } else {
-                                                await msg.react(`❌`)
-                                                toReply.push(`**${i++}.** У вас нет умения \`📦 Сохранение дубликатов из коробок в инвентаре\` или в вашем инвентаре недостаточно места!`)
+                                                tools.push(false)
+                                            }
+                                        }
 
+                                        if (tools.includes(true)) {
+                                            if (member.roles.cache.has(item.roleID)) {
+                                                if (usRece.stacked_items.length < usRece.upgrades.inventory_size && usRece.perks.store_items >= 1) {
+                                                    await usRece.stacked_items.push(item.roleID)
+                                                    await msg.react(`✅`)
+                                                    toReply.push(`**${i++}.** Так как у вас имеется необходимый предмет, то вы получаете <@&${item.roleID}>!`)
+                                                } else {
+                                                    await msg.react(`❌`)
+                                                    toReply.push(`**${i++}.** У вас нет умения \`📦 Сохранение дубликатов из коробок в инвентаре\` или в вашем инвентаре недостаточно места!`)
+
+                                                }
+                                            } else {
+                                                await member.roles.add(item.roleID)
+                                                await msg.react(`✅`);
+                                                toReply.push(`**${i++}.** Так как у вас имеется необходимый предмет, то вы получаете <@&${item.roleID}>!`)
                                             }
                                         } else {
-                                            await member.roles.add(item.roleID)
-                                            await msg.react(`✅`);
-                                            toReply.push(`**${i++}.** Так как у вас имеется необходимый предмет, то вы получаете <@&${item.roleID}>!`)
+                                            await msg.react(`❌`)
                                         }
                                     } else {
                                         await msg.react(`❌`)
                                     }
+
+
                                 } else if (item.type == 'Color') {
                                     if (usRece.rank_number < 6) {
                                         await msg.react(`❌`);
@@ -1418,7 +1426,12 @@ ${perks_msg}`)
                 if (toReply.length >= 1) {
                     await msg.reply({
                         content: `${member}
-${toReply.join(`\n`)}`
+${toReply.join(`\n`)}`, 
+                        allowedMentions: {
+                            roles: [],
+                            parse: [],
+                            users: []
+                        }
                     })
                 }
 

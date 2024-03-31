@@ -892,7 +892,7 @@ ${map.length <= 0 ? '\`Инвентарь пуст.\`' : `${map.join(`\n`)}`}
                 map = pages.map((item, i = itemOnPage * (curPage - 1) + 1) => {
                     return `- <@&${item}>`
                 })
-                totalPages = Math.ceil(map.length / itemOnPage)
+                totalPages = Math.ceil(allItems[0].length / itemOnPage)
 
                 curType = types.ITEMS
                 embed

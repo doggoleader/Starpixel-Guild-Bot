@@ -1,13 +1,20 @@
 const { User } = require(`../../../../src/schemas/userdata`)
 const { Guild } = require(`../../../../src/schemas/guilddata`)
-const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`discord.js`)
+const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder, Message } = require(`discord.js`)
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`); //ДОБАВИТЬ В ДРУГИЕ
 const { checkPlugin } = require("../../../functions");
+const { StarpixelClient } = require("../../../misc_functions/Exporter");
 let plugin = {
     id: "logs",
     name: "Журнал аудита"
 }
+/**
+ * 
+ * @param {Message} message 
+ * @param {StarpixelClient} client 
+ * @returns 
+ */
 async function execute(message, client) {
     try {
         if (message.channel.type == ChannelType.DM) return
@@ -40,7 +47,7 @@ async function execute(message, client) {
         });
 
         const auditLog = fetchedLogs.entries.first();
-        if (auditLog.createdTimestamp > Date.now() - 2000) {
+        if (auditLog?.createdTimestamp && auditLog.createdTimestamp > Date.now() - 2000) {
             let executor
             if (!auditLog) {
                 executor = `Пользователь не найден`
