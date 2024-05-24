@@ -55,7 +55,7 @@ async function execute(interaction, client) {
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
             .setTimestamp(Date.now())
 
-        if (userData.seasonal.easter.rabbit == true) return interaction.reply({
+        if (userData.seasonal.easter.rabbit == false) return interaction.reply({
             embeds: [no_condition],
             ephemeral: true
         })

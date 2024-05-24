@@ -48,18 +48,14 @@ async function execute(interaction, client) {
             .setTitle(`Заявка на вступление пользователя ${interaction.user.username}`)
             .setColor(Number(client.information.bot_color))
             .setDescription(`**ЗАЯВКА**
-1. Имя - \`${appData.que1}\`.
+  1. Имя - \`${appData.que1}\`.
 2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.
-3. Возраст - \`${appData.que3}\`.
-4. Готовность пойти в голосовой канал - \`${appData.que4}\`.
-5. Знакомство с правилами - \`${appData.que5}\`.
-        
-6. Почему вы желаете вступить именно к нам в гильдию?
+3. Знакомство с правилами - \`${appData.que5}\`.
+4. Слышали о разработке гильдией своего сервера?
 \`${appData.que6}\`.
-        
-7. Как вы узнали о нашей гильдии?
-\`${appData.que7}\`.
-
+5. Как вы узнали о нашей гильдии?
+\`${appData.que7 ? appData.que7 : "Ответ не дан"}\`.
+    
 **Заявка обработана офицером ${interaction.member}**
 **Статус заявки**: ${appData.status}`)
             .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })

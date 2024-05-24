@@ -618,15 +618,15 @@ ${k++}. **Управление сезонными мероприятиями.** 
                     const appChannel = await guild.channels.fetch(ch_list.application)
                     const msg1 = await appChannel.messages.fetch(`1162100209518653641`)
                     const msg2 = await appChannel.messages.fetch(`1162100211318018088`)
-                    const items = getApplicationTemplates()
+                    const items = getApplicationTemplates(client)
                     if (v == `enabled_everyone`) {
-                        let it = items[3]
+                        let it = items[0]
                         await msg1.edit({
                             embeds: [it[0]]
                         })
                         await msg2.edit({
                             embeds: [it[1]],
-                            components: [it[2], it[3], it[4], it[5]]
+                            components: [it[2], it[3], it[4]]
                         })
                         await i.reply({
                             content: `Установлен следующий режим подачи заявок для пользователей без лицензионного аккаунта: \`Открытый доступ\``,

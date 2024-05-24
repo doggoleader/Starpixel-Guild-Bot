@@ -41,114 +41,69 @@ async function execute(interaction, client) {
         if (appData.applied == true) return interaction.reply({
             content: `Вы уже подали заявку в гильдию!`,
             ephemeral: true
-        })
-        let haveAcc = appData.onlinemode
+        })/* 
         if (guildData.global_settings.no_license_applications == "enabled_everyone") {
             if (!haveAcc) return interaction.reply({
                 content: `Вы не выполнили шаг 1!`,
                 ephemeral: true
             })
 
-        }
+        } */
 
-        if (haveAcc == "no") {
 
-            if (appData.status == `На рассмотрении`) return interaction.reply({
-                content: `Вы уже подали заявку! Если вы хотите её изменить, пожалуйста, удалите её с помощью кнопки \`Удалить заявку\` и измените необходимые поля! (После удаления поля, которые вы заполнили, сохранятся!)`,
-                ephemeral: true
-            })
-            let apply = new ModalBuilder()
-                .setCustomId(`apply1`)
-                .setTitle(`Заявка на вступление (1/2)`)
+        if (appData.applied) return interaction.reply({
+            content: `Вы уже подали заявку! Если вы хотите её изменить, пожалуйста, удалите её с помощью кнопки \`Удалить заявку\` и измените необходимые поля! (После удаления поля, которые вы заполнили, сохранятся!)`,
+            ephemeral: true
+        })
+        let apply = new ModalBuilder()
+            .setCustomId(`apply1`)
+            .setTitle(`Заявка на вступление (1/2)`)
 
-            let question1 = new TextInputBuilder()
-                .setCustomId(`first`)
-                .setLabel(`Как вас зовут?`)
-                .setPlaceholder(`Введите ваше реальное имя.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que1)
+        let question1 = new TextInputBuilder()
+            .setCustomId(`first`)
+            .setLabel(`Как вас зовут?`)
+            .setPlaceholder(`Введите ваше реальное имя.`)
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setValue(appData.que1 ? appData.que1 : "")
 
-            let question3 = new TextInputBuilder()
-                .setCustomId(`third`)
-                .setLabel(`Сколько вам лет?`)
-                .setPlaceholder(`Введите ваш возраст числом без лишних символов! Например: 17`)
-                .setRequired(true)
-                .setMaxLength(2)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que3)
 
-            let question4 = new TextInputBuilder()
-                .setCustomId(`fourth`)
-                .setLabel(`Можете ли вы пойти в голосовой канал?`)
-                .setPlaceholder(`Наличие микрофона тоже обязательно.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que4)
+        let question2 = new TextInputBuilder()
+            .setCustomId(`second`)
+            .setLabel(`Какой у вас никнейм в Minecraft?`)
+            .setPlaceholder(`Введите ваш игровой никнейм (опционально)`)
+            .setRequired(false)
+            .setStyle(TextInputStyle.Short)
+            .setMaxLength(16)
+            .setValue(appData.que2 ? appData.que2 : "")
 
-            let question5 = new TextInputBuilder()
-                .setCustomId(`fifth`)
-                .setLabel(`Ознакомились ли вы с правилами?`)
-                .setPlaceholder(`Напишите, готовы ли соблюдать правила и ознакомились ли вы с ними.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que5)
+        let question3 = new TextInputBuilder()
+            .setCustomId(`third`)
+            .setLabel(`Знакомство с правилами?`)
+            .setPlaceholder(`Напишите, готовы ли соблюдать правила и ознакомились ли вы с ними.`)
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setValue(appData.que5 ? appData.que5 : "")
 
-            apply.addComponents(new ActionRowBuilder().addComponents(question1)).addComponents(new ActionRowBuilder().addComponents(question3)).addComponents(new ActionRowBuilder().addComponents(question4)).addComponents(new ActionRowBuilder().addComponents(question5))
-            await interaction.showModal(apply)
-        } else {
-            if (appData.status == `На рассмотрении`) return interaction.reply({
-                content: `Вы уже подали заявку! Если вы хотите её изменить, пожалуйста, удалите её с помощью кнопки \`Удалить заявку\` и измените необходимые поля! (После удаления поля, которые вы заполнили, сохранятся!)`,
-                ephemeral: true
-            })
-            let apply = new ModalBuilder()
-                .setCustomId(`apply1`)
-                .setTitle(`Заявка на вступление (1/2)`)
+        let question4 = new TextInputBuilder()
+            .setCustomId(`fourth`)
+            .setLabel(`Слышали о разработке гильдией своего сервера?`)
+            .setPlaceholder(`Сервер создаётся по мотивам далёких земель.`)
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setValue(appData.que6 ? appData.que6 : "")
 
-            let question1 = new TextInputBuilder()
-                .setCustomId(`first`)
-                .setLabel(`Как вас зовут?`)
-                .setPlaceholder(`Введите ваше реальное имя.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que1)
+        let question5 = new TextInputBuilder()
+            .setCustomId(`fifth`)
+            .setLabel(`Как вы узнали о нашей гильдии?`)
+            .setPlaceholder(`Напишите, где и как вы узнали о нашей гильдии. (опционально)`)
+            .setRequired(false)
+            .setStyle(TextInputStyle.Paragraph)
+            .setValue(appData.que7 ? appData.que7 : "")
 
-            let question2 = new TextInputBuilder()
-                .setCustomId(`second`)
-                .setLabel(`Какой у вас никнейм в Minecraft?`)
-                .setPlaceholder(`Введите ваш игровой никнейм.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setMaxLength(16)
-                .setValue(appData.que2)
+        apply.addComponents(new ActionRowBuilder().addComponents(question1)).addComponents(new ActionRowBuilder().addComponents(question2)).addComponents(new ActionRowBuilder().addComponents(question3)).addComponents(new ActionRowBuilder().addComponents(question4)).addComponents(new ActionRowBuilder().addComponents(question5))
+        await interaction.showModal(apply)
 
-            let question3 = new TextInputBuilder()
-                .setCustomId(`third`)
-                .setLabel(`Сколько вам лет?`)
-                .setPlaceholder(`Введите ваш возраст числом без лишних символов! Например: 17`)
-                .setRequired(true)
-                .setMaxLength(2)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que3)
-
-            let question4 = new TextInputBuilder()
-                .setCustomId(`fourth`)
-                .setLabel(`Можете ли вы пойти в голосовой канал?`)
-                .setPlaceholder(`Наличие микрофона тоже обязательно.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que4)
-
-            let question5 = new TextInputBuilder()
-                .setCustomId(`fifth`)
-                .setLabel(`Ознакомились ли вы с правилами?`)
-                .setPlaceholder(`Напишите, готовы ли соблюдать правила и ознакомились ли вы с ними.`)
-                .setRequired(true)
-                .setStyle(TextInputStyle.Short)
-                .setValue(appData.que5)
-            apply.addComponents(new ActionRowBuilder().addComponents(question1)).addComponents(new ActionRowBuilder().addComponents(question2)).addComponents(new ActionRowBuilder().addComponents(question3)).addComponents(new ActionRowBuilder().addComponents(question4)).addComponents(new ActionRowBuilder().addComponents(question5))
-            await interaction.showModal(apply)
-        }
     } catch (e) {
         const admin = await client.users.fetch(`491343958660874242`)
         console.log(e)

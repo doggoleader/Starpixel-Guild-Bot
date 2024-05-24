@@ -22,17 +22,13 @@ async function execute(interaction, client) {
         })
         await interaction.editReply({
             content: `Ваша заявка на вступление в гильдию:
-1. Имя - \`${appData.que1 ? appData.que1 : 'Пусто'}\`.
-2. Никнейм - \`${appData.que2 ? appData.que2 : 'Пусто'}\`.
-3. Возраст - \`${appData.que3 ? appData.que3 : 'Пусто'}\`.
-4. Готовность пойти в голосовой канал - \`${appData.que4 ? appData.que4 : 'Пусто'}\`.
-5. Знакомство с правилами - \`${appData.que5 ? appData.que5 : 'Пусто'}\`.
-            
-6. Почему вы желаете вступить именно к нам в гильдию?
-\`${appData.que6 ? appData.que6 : 'Пусто'}\`.
-            
-7. Как вы узнали о нашей гильдии?
-\`${appData.que7 ? appData.que7 : 'Пусто'}\`.
+1. Имя - \`${appData.que1}\`.
+2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.
+3. Знакомство с правилами - \`${appData.que5}\`.
+4. Слышали о разработке гильдией своего сервера?
+\`${appData.que6}\`.
+5. Как вы узнали о нашей гильдии?
+\`${appData.que7 ? appData.que7 : "Ответ не дан"}\`.
             
 :arrow_down:    :arrow_down:    :arrow_down: 
             

@@ -61,266 +61,276 @@ class Profile {
 
         collector.on('collect', async (i) => {
             if (i.customId == 'profile_create_user') {
-                await i.deferReply({
-                    ephemeral: true,
-                    fetchReply: true
-                })
+
                 const memberDM = await i.guild.members.fetch(i.values[0])
                 const user = memberDM.user;
                 const check = await User.findOne({ userid: user.id, name: user.username })
 
-                if (check) return i.editReply({
-                    content: `Профиль пользователя ${user} уже существует!`
-                })
-                const userData = new User({ userid: user.id, name: user.username })
-                const appData = await Apply.findOne({ userid: user.id, guildid: i.guild.id })
-                const realname = appData.que1
-                const playername = appData.que2
-                const thread = await i.guild.channels.fetch(appData.threadid)
-                if (thread) {
-                    await thread.setLocked(true).catch()
-                    await thread.setArchived(true).catch()
-                }
-
-                const creator = await User.findOne({ userid: i.member.user.id })
-
-                if (creator.cooldowns.prof_create > Date.now()) return i.editReply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setAuthor({
-                                name: `Команда на перезарядке!`
-                            })
-                            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                            .setColor(`DarkRed`)
-                            .setTimestamp(Date.now())
-                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(creator.cooldowns.prof_create - Date.now())}!`)
-                    ],
+                if (check) return i.reply({
+                    content: `Профиль пользователя ${user} уже существует!`,
                     ephemeral: true
-                });
-                if (appData.onlinemode == 'yes') {
-                    let response = await fetch(`https://api.hypixel.net/player?name=${playername}`, {
-                        headers: {
-                            "API-Key": api,
-                            "Content-Type": "application/json"
-                        }
+                })
+
+                const text1 = new TextInputBuilder().setCustomId("age").setLabel("Возраст участника").setMaxLength(2).setMinLength(1).setRequired(true).setStyle(TextInputStyle.Short);
+                const modal = new ModalBuilder().setCustomId("user_age").setTitle("Введите необходимые данные").addComponents(new ActionRowBuilder().addComponents(text1));
+
+                await i.showModal(modal);
+
+                i.awaitModalSubmit({ time: 1_000_000_000 }).then(async int => {
+                    await int.deferReply({
+                        ephemeral: true,
+                        fetchReply: true
                     })
-                    try {
-                        let json = await response.json()
 
-                        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Ник игрока - ${json.player.displayname}, UUID - ${json.player.uuid}`))
-                        userData.nickname = json.player.displayname;
-                        userData.markModified(`nickname`)
-                        userData.uuid = json.player.uuid;
-                        userData.onlinemode = true;
-                        userData.markModified(`uuid`)
-                        userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
-                        if (userData.cd_remind.includes('prof_update')) {
-                            let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'prof_update')
-                            userData.cd_remind.splice(ITEM_ID, 1)
-                        }
-
-                        creator.cooldowns.prof_create = Date.now() + (1000 * 60)
-                        if (creator.cd_remind.includes('prof_create')) {
-                            let ITEM_ID = creator.cd_remind.findIndex(item_id => item_id == 'prof_create')
-                            creator.cd_remind.splice(ITEM_ID, 1)
-                        }
-                        creator.markModified(`prof_create`)
-                    } catch (error) {
-                        userData.onlinemode = false;
-                        await i.followUp({
-                            content: `Пользователь ${memberDM} не имеет лицензионного аккаунта Minecraft (Введено: \`${playername}\`), поэтому он не будет иметь доступ к возможностям, требующим лицензию Minecraft!`
-                        })
-                        await memberDM.send({
-                            content: `У вас нет лицензионного аккаунта Minecraft (Введено: \`${playername}\`), поэтому у вас не будет доступа к возможностям, требующим лицензию Minecraft!`
-                        }).catch()
-                        console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Игрока с никнеймом ${playername} не существует `));
+                    const userData = new User({ userid: user.id, name: user.username })
+                    const appData = await Apply.findOne({ userid: user.id, guildid: int.guild.id })
+                    const realname = appData.que1
+                    const playername = appData.que2
+                    const thread = await int.guild.channels.fetch(appData.threadid)
+                    if (thread) {
+                        await thread.setLocked(true).catch()
+                        await thread.setArchived(true).catch()
                     }
-                } else {
-                    userData.onlinemode = false;
-                }
 
-                try {
-                    const age = Number(appData.que3)
-                    if (age <= 0) return i.editReply({
-                        content: `Возраст не может быть отрицательным!`,
+                    const creator = await User.findOne({ userid: int.member.user.id })
+
+                    if (creator.cooldowns.prof_create > Date.now()) return int.editReply({
+                        embeds: [
+                            new EmbedBuilder()
+                                .setAuthor({
+                                    name: `Команда на перезарядке!`
+                                })
+                                .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                .setColor(`DarkRed`)
+                                .setTimestamp(Date.now())
+                                .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${calcCooldown(creator.cooldowns.prof_create - Date.now())}!`)
+                        ],
                         ephemeral: true
-                    })
-                    userData.age = age
-                } catch (e) {
-                    await i.followUp({
-                        content: `Произошла ошибка при обработке вашего возраста \`${appData.que3}\`! Если это ошибка, пожалуйста, обратитесь в <#849516805529927700>, сообщив ваш возраст!`
-                    })
-                    await memberDM.send({
-                        content: `Произошла ошибка при обработке вашего возраста \`${appData.que3}\`! Если это ошибка, пожалуйста, обратитесь в <#849516805529927700>, сообщив ваш возраст!`
-                    }).catch()
-                }
+                    });
+                    if (appData.onlinemode == 'yes') {
+                        let response = await fetch(`https://api.hypixel.net/player?name=${playername}`, {
+                            headers: {
+                                "API-Key": api,
+                                "Content-Type": "application/json"
+                            }
+                        })
+                        try {
+                            let json = await response.json()
 
-                userData.name = user.username
-                userData.displayname.name = realname
+                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Ник игрока - ${json.player.displayname}, UUID - ${json.player.uuid}`))
+                            userData.nickname = json.player.displayname;
+                            userData.markModified(`nickname`)
+                            userData.uuid = json.player.uuid;
+                            userData.onlinemode = true;
+                            userData.markModified(`uuid`)
+                            userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
+                            if (userData.cd_remind.includes('prof_update')) {
+                                let ITEM_ID = userData.cd_remind.findIndex(item_id => item_id == 'prof_update')
+                                userData.cd_remind.splice(ITEM_ID, 1)
+                            }
 
-                const roles = [
-                    `553593731953983498`,
-                    `504887113649750016`,
-                    `721047643370815599`,
-                    `702540345749143661`,
-                    `746440976377184388`,
-                    `722523773961633927`,
-                    `849533128871641119`,
-                    `709753395417972746`,
-                    `722533819839938572`,
-                    `722523856211935243`,
-                    `1020403089943040040`
-                ]
-                const randombox = [
-                    `819930814388240385`,
-                    `510932601721192458`,
-                    `521248091853291540`,
-                    `584673040470769667`,
-                    `893932177799135253`,
-                    `925799156679856240`,
-                    `1007718117809606736`,
-                    `992820494900412456`
-                ]
-                let rloot1 = randombox[Math.floor(Math.random() * randombox.length)];
-                await memberDM.roles.add(roles).catch()
-                await memberDM.roles.add(rloot1).catch()
-                const channel = await i.guild.channels.fetch(ch_list.apply)
-                const msg = await channel.messages.fetch(appData.applicationid)
-                const buttons = new ActionRowBuilder()
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`app_decline`)
-                            .setEmoji(`❌`)
-                            .setLabel(`Отклонить заявку`)
-                            .setStyle(ButtonStyle.Danger)
-                            .setDisabled(true)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`app_waiting`)
-                            .setEmoji(`🕑`)
-                            .setLabel(`На рассмотрение`)
-                            .setStyle(ButtonStyle.Secondary)
-                            .setDisabled(true)
-                    )
-                    .addComponents(
-                        new ButtonBuilder()
-                            .setCustomId(`app_accept`)
-                            .setEmoji(`✅`)
-                            .setLabel(`Принять заявку`)
-                            .setStyle(ButtonStyle.Success)
-                            .setDisabled(true)
-                    )
-                const embed = new EmbedBuilder()
-                    .setTitle(`Заявка на вступление пользователя ${user.username}`)
-                    .setColor(Number(client.information.bot_color))
-                    .setDescription(`**ЗАЯВКА**
+                            creator.cooldowns.prof_create = Date.now() + (1000 * 60)
+                            if (creator.cd_remind.includes('prof_create')) {
+                                let ITEM_ID = creator.cd_remind.findIndex(item_id => item_id == 'prof_create')
+                                creator.cd_remind.splice(ITEM_ID, 1)
+                            }
+                            creator.markModified(`prof_create`)
+                        } catch (error) {
+                            userData.onlinemode = false;
+                            await int.followUp({
+                                content: `Пользователь ${memberDM} не имеет лицензионного аккаунта Minecraft (Введено: \`${playername}\`), поэтому он не будет иметь доступ к возможностям, требующим лицензию Minecraft!`
+                            })
+                            try {
+                                await memberDM.send({
+                                    content: `У вас нет лицензионного аккаунта Minecraft (Введено: \`${playername}\`), поэтому у вас не будет доступа к возможностям, требующим лицензию Minecraft!`
+                                }).catch()
+                            } catch (err) {
+                                
+                            }
+                            console.log(chalk.blackBright(`[${new Date()}]`) + chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Игрока с никнеймом ${playername} не существует `));
+                        }
+                    } else {
+                        userData.onlinemode = false;
+                    }
+
+                    try {
+                        const age = Number(int.fields.getTextInputValue("age"));
+                        if (age <= 0) return int.editReply({
+                            content: `Возраст не может быть отрицательным!`,
+                            ephemeral: true
+                        })
+                        userData.age = age
+                    } catch (e) {
+                        await int.followUp({
+                            content: `Произошла ошибка при обработке вашего возраста \`${int.fields.getTextInputValue("age")}\`! Если это ошибка, пожалуйста, обратитесь в <#849516805529927700>, сообщив ваш возраст!`
+                        })
+                    }
+
+                    userData.name = user.username
+                    userData.displayname.name = realname
+
+                    const roles = [
+                        `553593731953983498`,
+                        `504887113649750016`,
+                        `721047643370815599`,
+                        `702540345749143661`,
+                        `746440976377184388`,
+                        `722523773961633927`,
+                        `849533128871641119`,
+                        `709753395417972746`,
+                        `722533819839938572`,
+                        `722523856211935243`,
+                        `1020403089943040040`
+                    ]
+                    const randombox = [
+                        `819930814388240385`,
+                        `510932601721192458`,
+                        `521248091853291540`,
+                        `584673040470769667`,
+                        `893932177799135253`,
+                        `925799156679856240`,
+                        `1007718117809606736`,
+                        `992820494900412456`
+                    ]
+                    let rloot1 = randombox[Math.floor(Math.random() * randombox.length)];
+                    await memberDM.roles.add(roles).catch()
+                    await memberDM.roles.add(rloot1).catch()
+                    const channel = await int.guild.channels.fetch(ch_list.apply)
+                    const msg = await channel.messages.fetch(appData.applicationid)
+                    const buttons = new ActionRowBuilder()
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`app_decline`)
+                                .setEmoji(`❌`)
+                                .setLabel(`Отклонить заявку`)
+                                .setStyle(ButtonStyle.Danger)
+                                .setDisabled(true)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`app_waiting`)
+                                .setEmoji(`🕑`)
+                                .setLabel(`На рассмотрение`)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setDisabled(true)
+                        )
+                        .addComponents(
+                            new ButtonBuilder()
+                                .setCustomId(`app_accept`)
+                                .setEmoji(`✅`)
+                                .setLabel(`Принять заявку`)
+                                .setStyle(ButtonStyle.Success)
+                                .setDisabled(true)
+                        )
+                    const embed = new EmbedBuilder()
+                        .setTitle(`Заявка на вступление пользователя ${user.username}`)
+                        .setColor(Number(client.information.bot_color))
+                        .setDescription(`**ЗАЯВКА**
 1. Имя - \`${appData.que1}\`.
 2. Никнейм - \`${appData.que2 ? appData.que2 : "Нет аккаунта"}\`.
-3. Возраст - \`${appData.que3}\`.
-4. Готовность пойти в голосовой канал - \`${appData.que4}\`.
-5. Знакомство с правилами - \`${appData.que5}\`.
-
-6. Почему вы желаете вступить именно к нам в гильдию?
+3. Знакомство с правилами - \`${appData.que5}\`.
+4. Слышали о разработке гильдией своего сервера?
 \`${appData.que6}\`.
-
-7. Как вы узнали о нашей гильдии?
-\`${appData.que7}\`.
-
-**Заявка обработана офицером ${i.member}**
+5. Как вы узнали о нашей гильдии?
+\`${appData.que7 ? appData.que7 : "Ответ не дан"}\`.
+    
+**Заявка обработана офицером ${int.member}**
 **Статус заявки**: ${appData.status}`)
-                    .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })
-                await msg.edit({
-                    embeds: [embed],
-                    components: [buttons]
-                })
-
-                if (appData.invited_by) {
-                    const invitedData = await User.findOne({ userid: appData.invited_by, guildid: i.guild.id })
-                    if (invitedData) {
-                        const invitedMember = await i.guild.members.fetch(invitedData.userid)
-                        try {
-                            await i.guild.channels.cache.get(ch_list.main).send({
-                                content: `Так как ${invitedMember} пригласил пользователя ${memberDM}, то он получает \`ОГРОМНУЮ КОРОБКУ\`! Пожалуйста, проверьте свой инвентарь!` 
-                            })
-                            invitedData.stacked_items.push('992820494900412456')
-                            invitedData.invitations.invites += 1;
-                            invitedData.invitations.users.push(memberDM.user.id);
-                            invitedData.save();
-                        } catch (e) {
-                            console.log(e);
-                        }
-
-                    }
-                }
-
-                userData.joinedGuild = Date.now()
-                appData.status = `Принята`
-                await creator.save()
-                await userData.save()
-                await appData.save()
-                client.PersJoinGuild(userData.userid)
-                if (memberDM.user.id !== `491343958660874242`) {
-                    await memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
-                }
-
-                const progress = new GuildProgress(memberDM, client);
-                await progress.getAndUpdateUserPoints();
-
-
-                const success = new EmbedBuilder()
-                    .setAuthor({
-                        name: `Профиль успешно создан!`
+                        .setFooter({ text: `Пожалуйста, при любом решении нажмите на одну из кнопок ниже.` })
+                    await msg.edit({
+                        embeds: [embed],
+                        components: [buttons]
                     })
-                    .setColor(Number(client.information.bot_color))
-                    .setDescription(`Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. В течение определенного времени он будет добавлен в канал с участниками!`)
-                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                    .setTimestamp(Date.now())
 
-                await i.editReply({
-                    embeds: [success]
-                })
-                let d = 1, dd = 1, ddd = 1
-                const embed1 = new EmbedBuilder()
-                    .setColor(Number(client.information.bot_color))
-                    .setTitle(`Профиль игрока успешно создан!`)
-                    .setTimestamp(Date.now())
-                    .setThumbnail(i.guild.iconURL())
-                    .setDescription(
-                        `**${d++}.** Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. ✅
-**${d++}.** Необходимые роли были добавлены. ✅
-**${d++}.** Случайный приветственный подарок в виде <@&${rloot1}> был успешно выдан. ✅
-**${d++}.** Никнейм был успешно изменён и привязан к системе никнеймов. ✅
-**${d++}.** Синхронизация с аккаунтом Hypixel прошла успешно. ✅
-**${d++}.** Прочая информация была добавлена. ✅
+                    if (appData.invited_by) {
+                        const invitedData = await User.findOne({ userid: appData.invited_by, guildid: int.guild.id })
+                        if (invitedData) {
+                            const invitedMember = await int.guild.members.fetch(invitedData.userid)
+                            try {
+                                await int.guild.channels.cache.get(ch_list.main).send({
+                                    content: `Так как ${invitedMember} пригласил пользователя ${memberDM}, то он получает \`ОГРОМНУЮ КОРОБКУ\`! Пожалуйста, проверьте свой инвентарь!`
+                                })
+                                invitedData.stacked_items.push('992820494900412456')
+                                invitedData.invitations.invites += 1;
+                                invitedData.invitations.users.push(memberDM.user.id);
+                                invitedData.save();
+                            } catch (e) {
+                                console.log(e);
+                            }
 
-**${dd++}.** Ожидаем добавления игрока в гильдию на Hypixel. 🕑
-**${dd++}.** Ожидаем данные о дне рождении игрока. 🕑`)
-
-                const embed2 = new EmbedBuilder()
-                    .setColor(Number(client.information.bot_color))
-                    .setTitle(`Добро пожаловать в гильдию Starpixel!`)
-                    .setTimestamp(Date.now())
-                    .setThumbnail(user.displayAvatarURL())
-                    .setDescription(`${memberDM}, добро пожаловать в гильдию!
-
-Чтобы получить краткую информацию о нашем Discord сервере, используйте ${mentionCommand(client, 'start')}!
-
-Пожалуйста, отправьте сообщением ниже дату вашего рождения в формате DD.MM.YYYY (DD - день, MM - месяц, YYYY - год).
-
-Помимо этого, ознакомьтесь с последними новостями гильдии в канале <#${ch_list.news}>! Вы также можете ещё раз ознакомиться с правилами в <#${ch_list.rules}>!
-
-Пропишите команд ${mentionCommand(client, 'help')}, чтобы получить полный список команд!
-
-Если модерация гильдии до сих пор не добавила вас, пожалуйста, подождите некоторое время. Вас скоро добавят!`)
-                await i.guild.channels.cache.get(ch_list.main).send({
-                    content: `@here`,
-                    embeds: [embed1, embed2],
-                    allowedMentions: {
-                        parse: ["everyone"]
+                        }
                     }
+
+                    userData.joinedGuild = Date.now()
+                    appData.status = `Принята`
+                    await creator.save()
+                    await userData.save()
+                    await appData.save()
+                    client.PersJoinGuild(userData.userid)
+                    if (memberDM.user.id !== `491343958660874242`) {
+                        await memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
+                    }
+
+                    const progress = new GuildProgress(memberDM, client);
+                    await progress.getAndUpdateUserPoints();
+
+
+                    const success = new EmbedBuilder()
+                        .setAuthor({
+                            name: `Профиль успешно создан!`
+                        })
+                        .setColor(Number(client.information.bot_color))
+                        .setDescription(`Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. В течение определенного времени он будет добавлен в канал с участниками!`)
+                        .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                        .setTimestamp(Date.now())
+
+                    await int.editReply({
+                        embeds: [success]
+                    })
+                    let d = 1, dd = 1, ddd = 1
+                    const embed1 = new EmbedBuilder()
+                        .setColor(Number(client.information.bot_color))
+                        .setTitle(`Профиль игрока успешно создан!`)
+                        .setTimestamp(Date.now())
+                        .setThumbnail(int.guild.iconURL())
+                        .setDescription(
+                            `**${d++}.** Профиль пользователя ${memberDM} (${userData.nickname ? userData.nickname : "\`Аккаунта нет\`"}) был успешно создан. ✅
+    **${d++}.** Необходимые роли были добавлены. ✅
+    **${d++}.** Случайный приветственный подарок в виде <@&${rloot1}> был успешно выдан. ✅
+    **${d++}.** Никнейм был успешно изменён и привязан к системе никнеймов. ✅
+    **${d++}.** Синхронизация с аккаунтом Hypixel прошла успешно. ✅
+    **${d++}.** Прочая информация была добавлена. ✅
+    
+    **${dd++}.** Ожидаем добавления игрока в гильдию на Hypixel. 🕑
+    **${dd++}.** Ожидаем данные о дне рождении игрока. 🕑`)
+
+                    const embed2 = new EmbedBuilder()
+                        .setColor(Number(client.information.bot_color))
+                        .setTitle(`Добро пожаловать в гильдию Starpixel!`)
+                        .setTimestamp(Date.now())
+                        .setThumbnail(user.displayAvatarURL())
+                        .setDescription(`${memberDM}, добро пожаловать в гильдию!
+    
+    Чтобы получить краткую информацию о нашем Discord сервере, используйте ${mentionCommand(client, 'start')}!
+    
+    Пожалуйста, отправьте сообщением ниже дату вашего рождения в формате DD.MM.YYYY (DD - день, MM - месяц, YYYY - год).
+    
+    Помимо этого, ознакомьтесь с последними новостями гильдии в канале <#${ch_list.news}>! Вы также можете ещё раз ознакомиться с правилами в <#${ch_list.rules}>!
+    
+    Пропишите команд ${mentionCommand(client, 'help')}, чтобы получить полный список команд!
+    
+    Если модерация гильдии до сих пор не добавила вас, пожалуйста, подождите некоторое время. Вас скоро добавят!`)
+                    await int.guild.channels.cache.get(ch_list.main).send({
+                        content: `@here`,
+                        embeds: [embed1, embed2],
+                        allowedMentions: {
+                            parse: ["everyone"]
+                        }
+                    })
+                    console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно создан!`))
                 })
-                console.log(chalk.blackBright(`[${new Date()}]`) + chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно создан!`))
+
+
             }
         })
 

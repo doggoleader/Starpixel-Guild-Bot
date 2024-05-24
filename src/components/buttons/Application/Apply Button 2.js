@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
-
+const ch_list = require(`../../../discord structure/channels.json`)
 const { Apply } = require(`../../../schemas/applications`)
 const chalk = require(`chalk`)
 /**
